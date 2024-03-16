@@ -1,4 +1,4 @@
-# Reborn-front
+# Reborn-Front
 
 ### 프론트엔드 개발팀
 
