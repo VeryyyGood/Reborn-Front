@@ -10,9 +10,11 @@ import MainScreen from '../Screens/MainScreen';
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => (
-    <Tab.Navigator ScreenOptions={{headerShown: false}}>
-        <Tab.Screen name='Main' component={MainScreen}/>
-        <Tab.Screen name='TestIntro' component={TestIntroScreen}/>
+    <Tab.Navigator screenOptions={{headerTitleAlign:"center"}}>
+        <Tab.Screen name='Main' component={MainScreen} options={{ title: "메인 화면"}}/>
+        <Tab.Screen name='TestIntro' component={TestIntroScreen} 
+        options={{tabBarStyle: { display: 'none'},
+        title: "펫로스 증후군 자가진단하기"}}/>
     </Tab.Navigator>
 )
 

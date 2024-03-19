@@ -11,7 +11,7 @@ import ScreenTwo from '../Screens/SelfTestScreens/ScreenTwo';
 const NativeStack = createNativeStackNavigator();
 
 const Stack = () =>
-<NativeStack.Navigator>
+<NativeStack.Navigator screenOptions={{headerTitleAlign:"center"}}>
     <NativeStack.Screen name ='One' component={ScreenOne} />
     <NativeStack.Screen name ='Two' component={ScreenTwo} />
 </NativeStack.Navigator>;
