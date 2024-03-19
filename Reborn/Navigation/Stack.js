@@ -2,8 +2,8 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {Text,View} from 'react-native';
 
-import ScreenOne from '../Screens/ScreenOne';
-import ScreenTwo from '../Screens/ScreenTwo';
+import ScreenOne from '../Screens/SelfTestScreens/ScreenOne';
+import ScreenTwo from '../Screens/SelfTestScreens/ScreenTwo';
 
 //const ScreenOne = ({navigation: {navigate}}) => <View><Text>One</Text></View>
 //const ScreenTwo = ({navigation: {navigate}}) => <View><Text>Two</Text></View>

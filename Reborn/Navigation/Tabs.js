@@ -3,16 +3,16 @@ import { Text,View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import TestIntroScreen from '../Screens/TestIntroScreen';
+import TestIntroScreen from '../Screens/SelfTestScreens/TestIntroScreen';
 import MainScreen from '../Screens/MainScreen';
 
 
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => (
-    <Tab.Navigator>
+    <Tab.Navigator ScreenOptions={{headerShown: false}}>
         <Tab.Screen name='Main' component={MainScreen}/>
-        <Tab.Screen name='TestInstro' component={TestIntroScreen}/>
+        <Tab.Screen name='TestIntro' component={TestIntroScreen}/>
     </Tab.Navigator>
 )
 
