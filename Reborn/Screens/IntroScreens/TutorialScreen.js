@@ -3,6 +3,8 @@ import {View, Text,StyleSheet,TouchableOpacity, Button, Image } from "react-nati
 
 import { CommonActions } from '@react-navigation/native';
 
+import { colors } from "../../theme/colors"
+import { buttonstyles } from "../../theme/buttonstyles"
 const TutorialScreen = ({navigation: {navigate}}) => {
     //버튼을 누른 횟숫
     const [pressCount, setPressCount] = useState(0);
@@ -46,7 +48,7 @@ const TutorialScreen = ({navigation: {navigate}}) => {
             <View style={{flex:0.8,}}>
                 <Text style={styles.tutoTitle}>안녕하세요{"\n"}문구가{"\n"}생각이 나지 않아요</Text>
             </View>
-            <View style={{flex:1.2,marginBottom: 30, alignItems: 'center',marginBottom:30,}}>
+            <View style={{flex:1.2, alignItems: 'center',marginBottom:30,}}>
                 <Image style={{width: 300, height: 300,}} source={require('../../Assets/Images/Intro/Intro_Image.png')}/>  
             </View>
             <View style={{flex:0.8}}>
@@ -54,9 +56,12 @@ const TutorialScreen = ({navigation: {navigate}}) => {
                     {tutoText}
                 </Text>
             </View>
-            <View style={{position: 'absolute', top: "85%", bottom: "5%",marginTop: 20}}>
-                <Button title="다음으로" onPress={handlePress} />
+            <View style={{position: 'absolute', top: "85%", bottom: "5%",}}>
+                <TouchableOpacity style={buttonstyles.nextbuttonYellow} onPress={handlePress}>
+                    <Text> 다음으로 </Text>
+                </TouchableOpacity>
             </View>
+            
         </View>
         
     );
