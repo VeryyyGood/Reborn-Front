@@ -1,6 +1,10 @@
 import React from "react";
 import {View, Text,TouchableOpacity,StyleSheet,Image} from "react-native";
 
+import { colors } from "../../theme"
+//테스트. 다음으로 버튼 테마 가져옴
+import { buttonstyles } from "../../theme/buttonstyles"
+
 
 const TestIntroScreen = ({navigation: {navigate}}) => (
     <View style={styles.container}>
@@ -13,7 +17,7 @@ const TestIntroScreen = ({navigation: {navigate}}) => (
                 </View>
             </View>
             <View>
-                <TouchableOpacity style={styles.nextbutton} onPress={() =>navigate('Stack', { screen: 'One' })}>
+                <TouchableOpacity style={buttonstyles.nextbuttonTheme} onPress={() =>navigate('Stack', { screen: 'One' })}>
                     <Text>자가진단 하러가기</Text>
                 </TouchableOpacity>
             </View>
@@ -26,14 +30,14 @@ export default TestIntroScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: colors.background,
         alignItems: 'center',
         justifyContent: 'center',
     },
     testBox: {
         width: "85%",
         height: 500,
-        backgroundColor: "#f6f6f6",
+        backgroundColor: colors.palette.Gray300,
         marginTop: 10,
         marginBottom: 20,
         borderRadius: 30,
@@ -45,8 +49,5 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontWeight: "bold",
         marginBottom: 10,
-    },
-    nextbutton: {
-        backgroundColor: "#f2cb61", paddingHorizontal:120, marginBottom: 30, borderRadius: 30,height: 50, justifyContent: "center",
     },
 });

@@ -1,3 +1,4 @@
+/*
 import { Platform } from 'react-native'
 
 // For fonts
@@ -63,3 +64,4 @@ export const typography = {
   // ! Fansy font zz
   code: Platform.select({ ios: fonts.courier, android: fonts.monospace }),
 }
+*/
