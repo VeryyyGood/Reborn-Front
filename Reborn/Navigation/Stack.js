@@ -2,7 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {Text,View} from 'react-native';
 
-import ScreenOne from '../Screens/SelfTestScreens/ScreenOne';
+import TestOneScreen from '../Screens/SelfTestScreens/TestOneScreen';
 import ScreenTwo from '../Screens/SelfTestScreens/ScreenTwo';
 
 //const ScreenOne = ({navigation: {navigate}}) => <View><Text>One</Text></View>
@@ -12,7 +12,7 @@ const NativeStack = createNativeStackNavigator();
 
 const Stack = () =>
 <NativeStack.Navigator screenOptions={{headerTitleAlign:"center"}}>
-    <NativeStack.Screen name ='One' component={ScreenOne} />
+    <NativeStack.Screen name ='TestOne' component={TestOneScreen} />
     <NativeStack.Screen name ='Two' component={ScreenTwo} />
 </NativeStack.Navigator>;
 
