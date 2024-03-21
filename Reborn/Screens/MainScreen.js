@@ -1,6 +1,7 @@
 import React from "react";
-import {View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
+import { colors } from "../theme";
 
 const MainScreen = ({navigation: {navigate}}) => (
     <View>
@@ -29,12 +30,6 @@ const MainScreen = ({navigation: {navigate}}) => (
 export default MainScreen;
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
     TestButton: {
         height: "70%",
         width: "40%",

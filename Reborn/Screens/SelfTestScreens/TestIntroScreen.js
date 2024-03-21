@@ -3,11 +3,12 @@ import {View, Text,TouchableOpacity,StyleSheet,Image} from "react-native";
 
 import { colors, palette } from "../../theme"
 //테스트. 다음으로 버튼 테마 가져옴
-import { buttonstyles } from "../../theme/buttonstyles"
+import { buttonStyles } from "../../theme/buttonStyles"
+import { Viewthemestyles } from "../../theme/viewthemeStyles";
 
 
 const TestIntroScreen = ({navigation: {navigate}}) => (
-    <View style={styles.container}>
+    <View style={Viewthemestyles.container}>
             <View style={styles.testBox}>
                 <View>
                     <Image style={{width: 200, height: 200, marginBottom:10,}} source={require('../../Assets/Images/Intro/Intro_Image.png')}/> 
@@ -27,7 +28,7 @@ const TestIntroScreen = ({navigation: {navigate}}) => (
                 </View>
             </View>
             <View>
-                <TouchableOpacity style={buttonstyles.nextbuttonBrown} onPress={() =>navigate('Stack', { screen: 'One' })}>
+                <TouchableOpacity style={buttonStyles.nextbuttonBrown} onPress={() =>navigate('Stack', { screen: 'One' })}>
                     <Text style={{color: "white"}}>자가진단 하러가기</Text>
                 </TouchableOpacity>
             </View>
@@ -38,12 +39,6 @@ export default TestIntroScreen;
 
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: colors.background,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     testBox: {
         width: "85%",
         height: 500,

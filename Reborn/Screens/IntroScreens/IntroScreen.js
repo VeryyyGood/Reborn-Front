@@ -1,12 +1,13 @@
 import React from "react";
 import {View, Text,StyleSheet, Image, TouchableOpacity} from "react-native";
+import { colors } from "../../theme";
 
 
 const IntroScreen = ({navigation: {navigate}}) => (
     <View style={styles.container}>
         <TouchableOpacity onPress={()=> navigate("Tutorial")}>
-            <View style={{flex:0.8}}>
-                <Text style={styles.introTitle}>안녕하세요{"\n"}문구가{"\n"}생각이 나지 않아요</Text>
+            <View>
+                <Text style={styles.introTitle}>PET <Text style={{color: colors.palette.Yellow}}>RE</Text>BORN{"\n"}시작하기.</Text>
             </View>
             <View style={{flex:1.2,marginBottom: 30, alignItems: 'center',marginBottom:30,}}>
                 <Image style={{width: 320, height: 320,}} source={require('../../Assets/Images/Intro/Intro_Image.png')}/>  
@@ -36,6 +37,7 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         marginTop: 30,
         fontWeight: "bold",
+        paddingVertical: 20,
     },
     introText: {
         color: "lightgrey",

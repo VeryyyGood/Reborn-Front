@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import {colors} from "./colors";
 
-export const buttonstyles = StyleSheet.create({
+export const buttonStyles = StyleSheet.create({
     nextbuttonYellow: {
         backgroundColor: colors.palette.Yellow, 
         //paddingHorizontal:120, -> width : "40%" 이런식으로 해야할듯
