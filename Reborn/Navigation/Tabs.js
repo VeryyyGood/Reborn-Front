@@ -15,6 +15,7 @@ const Tab = createBottomTabNavigator();
 const Tabs = () => (
     <Tab.Navigator screenOptions={{headerTitleAlign:"center"}}>
         <Tab.Screen name='Main' component={MainScreen} options={{ 
+            tabBarLabel: "Home",
             headerTitleAlign: 'left',
             headerTitleStyle: { fontWeight: 'bold', },
             title: "REBORN 시작하기"}}/>

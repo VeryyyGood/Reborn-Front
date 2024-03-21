@@ -16,7 +16,7 @@ const MainScreen = ({navigation: {navigate}}) => (
             <Text>main</Text>
         </View>
         <View style={{flexDirection:"row",}}>
-            <TouchableOpacity style={styles.TestButton} onPress={()=>navigate("TestIntro")}>
+            <TouchableOpacity style={styles.TestButton} onPress={() =>navigate('Stack', { screen: 'TestIntro' })}>
                 <Text>펫로스 증후군</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.EmotionalButton} onPress={()=>navigate("RediaryMain")}>
