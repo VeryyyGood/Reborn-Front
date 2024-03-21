@@ -47,5 +47,12 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>NanumSquareB.ttf</string>
+		<string>NanumSquareEB.ttf</string>
+		<string>NanumSquareL.ttf</string>
+		<string>NanumSquareR.ttf</string>
+	</array>
 </dict>
 </plist>

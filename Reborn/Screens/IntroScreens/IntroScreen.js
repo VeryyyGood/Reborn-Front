@@ -2,7 +2,6 @@ import React from "react";
 import {View, Text,StyleSheet, Image, TouchableOpacity} from "react-native";
 import { colors } from "../../theme";
 
-
 const IntroScreen = ({navigation: {navigate}}) => (
     <View style={styles.container}>
         <TouchableOpacity onPress={()=> navigate("Tutorial")}>
