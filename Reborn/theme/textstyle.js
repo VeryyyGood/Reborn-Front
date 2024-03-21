@@ -11,7 +11,7 @@ export const textstyle = StyleSheet.create({
 
     },
     header: {
-
+ 
     },
     mid_title: {
 
