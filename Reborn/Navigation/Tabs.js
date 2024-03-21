@@ -2,6 +2,7 @@ import React from "react";
 import { Text,View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { colors } from "../theme";
 
 import TestIntroScreen from '../Screens/SelfTestScreens/TestIntroScreen';
 import MainScreen from '../Screens/MainScreen';
@@ -13,7 +14,7 @@ import MypageMainScreen from "../Screens/MyPageScreens/MypageMainScreen";
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => (
-    <Tab.Navigator screenOptions={{headerTitleAlign:"center"}}>
+    <Tab.Navigator screenOptions={{tabBarActiveTintColor: colors.palette.Brown, headerTitleAlign:"center"}}>
         <Tab.Screen name='Main' component={MainScreen} options={{ 
             tabBarLabel: "Home",
             headerTitleAlign: 'left',
