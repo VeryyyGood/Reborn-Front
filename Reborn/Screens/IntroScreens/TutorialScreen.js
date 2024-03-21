@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import {View, Text,StyleSheet,TouchableOpacity, Button, Image } from "react-native";
+import { View, Text,StyleSheet,TouchableOpacity, Button, Image } from "react-native";
 
 import { CommonActions } from '@react-navigation/native';
+
+import { colors } from "../../theme/colors"
+import { buttonStyles } from "../../theme/buttonStyles"
 
 const TutorialScreen = ({navigation: {navigate}}) => {
     //버튼을 누른 횟숫
@@ -43,10 +46,10 @@ const TutorialScreen = ({navigation: {navigate}}) => {
 
     return(
         <View style={styles.container}>
-            <View style={{flex:0.8,}}>
-                <Text style={styles.tutoTitle}>안녕하세요{"\n"}문구가{"\n"}생각이 나지 않아요</Text>
+            <View style={{}}>
+                <Text style={styles.tutoTitle}>PET <Text style={{color: colors.palette.Yellow}}>RE</Text>BORN{"\n"}시작하기.</Text>
             </View>
-            <View style={{flex:1.2,marginBottom: 30, alignItems: 'center',marginBottom:30,}}>
+            <View style={{flex:1.2, alignItems: 'center',marginBottom:30,}}>
                 <Image style={{width: 300, height: 300,}} source={require('../../Assets/Images/Intro/Intro_Image.png')}/>  
             </View>
             <View style={{flex:0.8}}>
@@ -54,9 +57,12 @@ const TutorialScreen = ({navigation: {navigate}}) => {
                     {tutoText}
                 </Text>
             </View>
-            <View style={{position: 'absolute', top: "85%", bottom: "5%",marginTop: 20}}>
-                <Button title="다음으로" onPress={handlePress} />
+            <View style={{position: 'absolute', top: "85%", bottom: "5%",}}>
+                <TouchableOpacity style={buttonStyles.nextbuttonYellow} onPress={handlePress}>
+                    <Text> 다음으로 </Text>
+                </TouchableOpacity>
             </View>
+            
         </View>
         
     );
@@ -75,10 +81,12 @@ const styles = StyleSheet.create({
     tutoTitle: {
         fontSize: 30,
         textAlign: "left",
-        paddingRight: "30%",
+        paddingLeft: 20,
         marginTop: 30,
         fontWeight: "bold",
+        paddingVertical: 20,
         //backgroundColor: "red",
+        marginRight: 200,
     },
     tutoText: {
         color: "lightgrey",

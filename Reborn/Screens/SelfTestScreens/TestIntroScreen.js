@@ -1,24 +1,35 @@
 import React from "react";
 import {View, Text,TouchableOpacity,StyleSheet,Image} from "react-native";
 
-import { colors } from "../../theme"
+import { colors, palette } from "../../theme"
 //테스트. 다음으로 버튼 테마 가져옴
-import { buttonstyles } from "../../theme/buttonstyles"
+import { buttonStyles } from "../../theme/buttonStyles"
+import { Viewthemestyles } from "../../theme/viewthemeStyles";
 
 
 const TestIntroScreen = ({navigation: {navigate}}) => (
-    <View style={styles.container}>
+    <View style={Viewthemestyles.container}>
             <View style={styles.testBox}>
                 <View>
-                    <Image style={{width: 300, height: 300, marginBottom:10,}} source={require('../../Assets/Images/Intro/Intro_Image.png')}/> 
+                    <Image style={{width: 200, height: 200, marginBottom:10,}} source={require('../../Assets/Images/Intro/Intro_Image.png')}/> 
                 </View>
                 <View style={{paddingHorizontal: 20}}>
-                    <Text style={{textAlign:"center",}}>이렇게 긴 질문에 대한 디자인은 어떨가 궁금하지만 딱히 아는 질문이 없음그래서 아무말이나 지껄이는중 그림이 움직이면 안될 것 같은데 움직이네 그리고 다른 그림을 쓰겠지? 아니 버튼 패딩ㄹㅇ개배신감드네</Text>
+                    <Text style={{textAlign:"center",fontWeight: "bold",}}>
+                        <Text style={{color:palette.Brown}}>반려동물애도 설문지 검사(PDQ)</Text>는{"\n"}
+                    펜실베니아 심리학과에서 개발된{"\n"} <Text style={{color:palette.Brown}}>펫로스 증후군</Text> 상태를 알아보는 데,{"\n"}
+                    도움을 줄 수 있는 설문지 검사입니다. {"\n"}{"\n"}
+                    지금부터 <Text style={{color:palette.Brown}}>반려동물애도 설문지 검사</Text>를 통해{"\n"}
+                    당신의 <Text style={{color:palette.Brown}}>펫로스 증후군 상태</Text>를 알아보겠습니다.
+                    {"\n"}
+                    {"\n"}
+                    문제를 잘 읽고{"\n"}
+                    신중히 선택해 주시기 바랍니다.
+                    </Text>
                 </View>
             </View>
             <View>
-                <TouchableOpacity style={buttonstyles.nextbuttonTheme} onPress={() =>navigate('Stack', { screen: 'One' })}>
-                    <Text>자가진단 하러가기</Text>
+                <TouchableOpacity style={buttonStyles.nextbuttonBrown} onPress={() => navigate("TestOne")}>
+                    <Text style={{color: "white"}}>자가진단 하러가기</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -28,19 +39,13 @@ export default TestIntroScreen;
 
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: colors.background,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     testBox: {
         width: "85%",
         height: 500,
-        backgroundColor: colors.palette.Gray300,
+        backgroundColor: colors.palette.Gray200,
         marginTop: 10,
         marginBottom: 20,
-        borderRadius: 30,
+        borderRadius: 20,
         justifyContent: "center",
         alignItems:"center",
     },
