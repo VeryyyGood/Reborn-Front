@@ -1,15 +1,13 @@
 import React from "react";
 import {View, Text,TouchableOpacity,StyleSheet,Image} from "react-native";
 
-import { colors, palette } from "../../theme"
+import { colors, palette,ViewStyles,buttonStyles } from "../../theme"
 //테스트. 다음으로 버튼 테마 가져옴
-import { buttonStyles } from "../../theme/buttonStyles"
-import { Viewthemestyles } from "../../theme/viewthemeStyles";
 
 
 const TestIntroScreen = ({navigation: {navigate}}) => (
-    <View style={Viewthemestyles.container}>
-            <View style={styles.testBox}>
+    <View style={ViewStyles.container}>
+            <View style={ViewStyles.greyBox}>
                 <View>
                     <Image style={{width: 200, height: 200, marginBottom:10,}} source={require('../../Assets/Images/Intro/Intro_Image.png')}/> 
                 </View>
