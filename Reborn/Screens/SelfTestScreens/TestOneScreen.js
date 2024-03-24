@@ -60,7 +60,7 @@ export default function TestScreen({ navigation }) {
             </View>
             <Text style={{marginTop: 20,}}>{questions[currentQuestionIndex].index}</Text>
           </View>
-          <TouchableOpacity style={[buttonStyles.nextbuttonBrown]} onPress={handleNextQuestion}>
+          <TouchableOpacity style={[buttonStyles.buttonBrown]} onPress={handleNextQuestion}>
             <Text style={{color: "white"}}>다음으로</Text>
           </TouchableOpacity>
       </View>

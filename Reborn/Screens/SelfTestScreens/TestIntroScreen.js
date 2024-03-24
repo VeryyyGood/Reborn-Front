@@ -26,7 +26,7 @@ const TestIntroScreen = ({navigation: {navigate}}) => (
                 </View>
             </View>
             <View>
-                <TouchableOpacity style={buttonStyles.nextbuttonBrown} onPress={() => navigate("TestOne")}>
+                <TouchableOpacity style={buttonStyles.buttonBrown} onPress={() => navigate("TestOne")}>
                     <Text style={{color: "white"}}>자가진단 하러가기</Text>
                 </TouchableOpacity>
             </View>

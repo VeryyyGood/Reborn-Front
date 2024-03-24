@@ -58,7 +58,7 @@ const TutorialScreen = ({navigation: {navigate}}) => {
                 </Text>
             </View>
             <View style={{position: 'absolute', top: "85%", bottom: "5%",}}>
-                <TouchableOpacity style={buttonStyles.nextbuttonYellow} onPress={handlePress}>
+                <TouchableOpacity style={buttonStyles.buttonYellow} onPress={handlePress}>
                     <Text> 다음으로 </Text>
                 </TouchableOpacity>
             </View>

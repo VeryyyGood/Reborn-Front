@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { colors } from "../colors";
 
 export const buttonStyles = StyleSheet.create({
-    nextbuttonYellow: {
+    buttonYellow: {
         backgroundColor: colors.palette.Yellow,
         justifyContent: "center",
         alignItems: "center",
@@ -12,7 +12,7 @@ export const buttonStyles = StyleSheet.create({
         borderRadius: 30,
         height: 50,
     },
-    nextbuttonBrown: {
+    buttonBrown: {
         backgroundColor: colors.palette.Brown,
         justifyContent: "center",
         alignItems: "center",

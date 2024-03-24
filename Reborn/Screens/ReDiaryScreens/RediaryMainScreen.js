@@ -7,7 +7,7 @@ const RediaryMainScreen = ({navigation: { navigate }} ) => (
     <View style={{paddingHorizontal: 20}}>
         <Text style={styles.DiaryTitle}><Text style={{color: colors.palette.Brown}}>RE</Text>DIARY:</Text>
             <Text>(아이콘) 오늘 하루 반려동물과 무슨 일이 있었나요?</Text>
-            <TouchableOpacity style={buttonStyles.nextbuttonYellow}>
+            <TouchableOpacity style={buttonStyles.buttonYellow}>
                 <Text style={{color: "white"}}>오늘의 감정일기 쓰러 가기</Text>
             </TouchableOpacity>
     </View>
