@@ -13,9 +13,9 @@ const MypageStack = () =>
 <NativeStack.Navigator screenOptions={{headerTitleAlign:"center",}}>
     <NativeStack.Screen name = 'AccountManagement' component={AccountManagementScreen} options={{title: "계정 관리"}}/>
     <NativeStack.Screen name = 'AccountModify' component={AccountModifyScreen} options={{title: "계정 정보 수정"}}/>
-    <NativeStack.Screen name = 'PetProfileManagement' component={PetProfileManagementScreen} options={{title: "반려동물프로필"}}/>
-    <NativeStack.Screen name = 'ReviewMain' component={ReviewMainScreen} options={{title: "리뷰메인"}}/>
-    <NativeStack.Screen name = 'Expert' component={ExpertScreen} options={{title: "전문가상담"}}/>
+    <NativeStack.Screen name = 'PetProfileManagement' component={PetProfileManagementScreen} options={{title: "반려동물 프로필 관리"}}/>
+    <NativeStack.Screen name = 'ReviewMain' component={ReviewMainScreen} options={{title: "RE:VIEW"}}/>
+    <NativeStack.Screen name = 'Expert' component={ExpertScreen} options={{title: "전문가 상담"}}/>
 </NativeStack.Navigator>;
 
 export default MypageStack;
