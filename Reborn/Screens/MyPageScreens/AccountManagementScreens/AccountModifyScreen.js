@@ -2,10 +2,10 @@ import React from "react";
 import {View, Text, StyleSheet, Image, TouchableOpacity} from "react-native";
 
 
-const AccountManagementScreen = ({navigation: { navigate }} ) => (
+const AccountModifyScreen = ({navigation: { navigate }} ) => (
     <TouchableOpacity>
-        <Text>계정관리 메인</Text>
+        <Text>계정 정보 수정 화면</Text>
     </TouchableOpacity>
 );
 
-export default AccountManagementScreen;
+export default AccountModifyScreen;
