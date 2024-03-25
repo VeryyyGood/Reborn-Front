@@ -3,8 +3,8 @@ import { View, Text,StyleSheet,TouchableOpacity, Button, Image } from "react-nat
 
 import { CommonActions } from '@react-navigation/native';
 
-import { colors } from "../../theme/colors"
-import { buttonStyles } from "../../theme/buttonStyles"
+import { colors } from "../../theme"
+import { buttonStyles } from "../../theme";
 
 const TutorialScreen = ({navigation: {navigate}}) => {
     //버튼을 누른 횟숫
@@ -58,7 +58,7 @@ const TutorialScreen = ({navigation: {navigate}}) => {
                 </Text>
             </View>
             <View style={{position: 'absolute', top: "85%", bottom: "5%",}}>
-                <TouchableOpacity style={buttonStyles.nextbuttonYellow} onPress={handlePress}>
+                <TouchableOpacity style={buttonStyles.buttonYellow} onPress={handlePress}>
                     <Text> 다음으로 </Text>
                 </TouchableOpacity>
             </View>
