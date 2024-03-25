@@ -11,7 +11,6 @@ const ReviewRebornScreen = ({navigation: { navigate }} ) => (
                 </Text>
                 <Text style={styles.normalFont}>나의 반려동물과 작별하기</Text>
             </View>
-        
     </View>
 );
 
