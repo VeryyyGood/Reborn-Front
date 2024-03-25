@@ -11,11 +11,11 @@ import TestIntroScreen from "../Screens/SelfTestScreens/TestIntroScreen";
 
 const NativeStack = createNativeStackNavigator();
 
-const Stack = () =>
+const SelfTestStack = () =>
 <NativeStack.Navigator screenOptions={{headerTitleAlign:"center",}}>
     <NativeStack.Screen name ='TestIntro' component={TestIntroScreen} options={{ title: "펫로스 증후군 자가 진단하기"}}/>
     <NativeStack.Screen name ='TestOne' component={TestOneScreen} options={{ title: "펫로스 증후군 자가 진단하기"}}/>
     <NativeStack.Screen name ='Two' component={ScreenTwo} options={{ title: "펫로스 증후군 자가 진단하기"}}/>
 </NativeStack.Navigator>;
 
-export default Stack;
+export default SelfTestStack;
