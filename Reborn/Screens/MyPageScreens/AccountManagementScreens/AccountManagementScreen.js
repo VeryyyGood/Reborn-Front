@@ -19,10 +19,10 @@ const AccountManagementScreen = ({ navigation: { navigate }} ) => (
       <Text>Since: </Text>
       <Text>2024.01.24</Text>
     </Text>
-    <TouchableOpacity onPress={() => navigate('AccountModify')} style={styles.touchableStyle}>
+    <TouchableOpacity>
       <Text>로그아웃</Text>
     </TouchableOpacity>
-    <TouchableOpacity onPress={() => navigate('AccountModify')} style={styles.touchableStyle}>
+    <TouchableOpacity>
       <Text>계정 삭제하기</Text>
     </TouchableOpacity>
   </View>
