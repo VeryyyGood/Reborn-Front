@@ -8,6 +8,7 @@ import IntroStack from "./InstroStack";
 import ShareDrawers from './ShareDrawer';
 import MypageStack from "./MypageStack";
 import ReviewStack from "./ReviewStack";
+import AccountStack from "./AccountStack";
 
 const Nav = createNativeStackNavigator();
 
@@ -19,6 +20,7 @@ const Root = () => (
     <Nav.Screen name="ShareDrawers" component={ShareDrawers}/>
     <Nav.Screen name="MypageStack" component={MypageStack}/>
     <Nav.Screen name="ReviewStack" component={ReviewStack}/>
+    <Nav.Screen name="AccountStack" component={AccountStack}/>
 </Nav.Navigator>
 );
 export default Root;
