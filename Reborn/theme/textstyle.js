@@ -3,7 +3,7 @@ import { colors } from "./colors";
 
 // For use fonts, write like this
 // >> fontFamily: '(font name)',
-export const textStyle = StyleSheet.create({
+export const textstyle = StyleSheet.create({
     Titletext: {
         fontFamily: 'NanumSquareB',
     },
