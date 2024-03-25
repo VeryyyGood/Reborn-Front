@@ -19,7 +19,7 @@ const MainScreen = ({navigation: {navigate}}) => (
             <TouchableOpacity style={styles.TestButton} onPress={() =>navigate('SelfTestStack', { screen: 'TestIntro' })}>
                 <Text>펫로스 증후군</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.EmotionalButton} onPress={()=>navigate("RediaryMain")}>
+            <TouchableOpacity style={styles.EmotionalButton} onPress={()=>navigate('RememberDogStack', { screen: 'Pet' })}>
                 <Text>감정일기</Text>
             </TouchableOpacity>
         </View>
