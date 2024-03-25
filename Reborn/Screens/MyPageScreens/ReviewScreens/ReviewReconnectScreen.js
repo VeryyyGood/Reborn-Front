@@ -27,19 +27,22 @@ const ReviewReconnectScreen = ({navigation: { navigate }} ) => (
 
 export default ReviewReconnectScreen;
 
- const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: colors.palette.White,
     },
 
     backgroundImage: {
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 
     overlayImage: {
         width: '50%',
         height: '50%',
-        justifyContent: 'center',
+        marginTop: 280,
     },
 
     textContainer: {
@@ -47,7 +50,6 @@ export default ReviewReconnectScreen;
         justifyContent: 'center',
         alignItems: 'flex-start',
         paddingLeft: 20,
-        backgroundColor: colors.palette.White,
     },
     
     boldFont: {

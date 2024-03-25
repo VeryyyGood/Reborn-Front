@@ -31,6 +31,7 @@ const ReviewMainScreen = ({ navigation: { navigate }} ) => (
           <Text style={styles.font}>나의 감정 들여다보기</Text>
         </View>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigate('ReviewStack', {screen: 'ReviewRemember' })}>
         <View style={styles.imageTextContainer}>
           <Image source={require('../../../Assets/icons/review_album.png')} />
           <Text style={styles.imageText}>
@@ -38,6 +39,7 @@ const ReviewMainScreen = ({ navigation: { navigate }} ) => (
           </Text>
           <Text style={styles.font}>건강한 작별 준비하기</Text>
         </View>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => navigate('ReviewStack', {screen: 'ReviewReborn' })}>
         <View style={styles.imageTextContainer}>
           <Image source={require('../../../Assets/icons/review_album.png')} />
@@ -55,6 +57,7 @@ export default ReviewMainScreen;
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+    backgroundColor: colors.palette.White,
   },
 
   touchable: {
