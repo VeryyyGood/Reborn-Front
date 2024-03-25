@@ -1,4 +1,5 @@
 import React from "react";
+import { Text } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import ReviewReconnectScreen from "../Screens/MyPageScreens/ReviewScreens/ReviewReconnectScreen";
@@ -7,15 +8,24 @@ import ReviewRevealScreen from "../Screens/MyPageScreens/ReviewScreens/ReviewRev
 import ReviewRememberScreen from "../Screens/MyPageScreens/ReviewScreens/ReviewRememberScreen";
 import ReviewRebornScreen from "../Screens/MyPageScreens/ReviewScreens/ReviewRebornScreen";
 
+import { colors } from "../theme/colors";
+
 const NativeStack = createNativeStackNavigator();
+
+const CustomHeaderTitle = () => (
+    <Text>
+      <Text style={{ color: colors.palette.Brown, fontWeight: 'bold', fontSize: 20 }}>RE:</Text>
+      <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 20 }}> VIEW</Text>
+    </Text>
+  );
 
 const ReviewStack = () =>
 <NativeStack.Navigator screenOptions={{headerTitleAlign:"center",}}>
-    <NativeStack.Screen name = 'ReviewReconnect' component={ReviewReconnectScreen} options={{title: "리커넥트"}}/>
-    <NativeStack.Screen name = 'ReviewRemind' component={ReviewRemindScreen} options={{title: "리마인드"}}/>
-    <NativeStack.Screen name = 'ReviewReveal' component={ReviewRevealScreen} options={{title: "리빌"}}/>
-    <NativeStack.Screen name = 'ReviewRemember' component={ReviewRememberScreen} options={{title: "리멤버"}}/>
-    <NativeStack.Screen name = 'ReviewReborn' component={ReviewRebornScreen} options={{title: "리본"}}/>
+    <NativeStack.Screen name = 'ReviewReconnect' component={ReviewReconnectScreen} options={{headerTitle: () => <CustomHeaderTitle/>}}/>
+    <NativeStack.Screen name = 'ReviewRemind' component={ReviewRemindScreen} options={{headerTitle: () => <CustomHeaderTitle/>}}/>
+    <NativeStack.Screen name = 'ReviewReveal' component={ReviewRevealScreen} options={{headerTitle: () => <CustomHeaderTitle/>}}/>
+    <NativeStack.Screen name = 'ReviewRemember' component={ReviewRememberScreen} options={{headerTitle: () => <CustomHeaderTitle/>}}/>
+    <NativeStack.Screen name = 'ReviewReborn' component={ReviewRebornScreen} options={{headerTitle: () => <CustomHeaderTitle/>}}/>
 </NativeStack.Navigator>;
 
 export default ReviewStack;

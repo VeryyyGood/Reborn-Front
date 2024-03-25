@@ -1,9 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { ScrollView, View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { colors } from '../../../theme/colors';
 
 const ReviewMainScreen = ({ navigation: { navigate }} ) => (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <TouchableOpacity onPress={() => navigate('ReviewStack', {screen: 'ReviewReconnect' })} style={styles.touchable}>
         <View style={styles.imageTextContainer}>
           <Image source={require('../../../Assets/icons/review_album.png')} />
@@ -47,31 +47,35 @@ const ReviewMainScreen = ({ navigation: { navigate }} ) => (
           <Text style={styles.font}>나의 반려동물과 작별하기</Text>
         </View>
       </TouchableOpacity> 
-  </View>
+  </ScrollView>
 );
 
 export default ReviewMainScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
   },
+
   touchable: {
     alignItems: 'center', // TouchableOpacity 내부 요소를 가운데 정렬
   },
 
   imageTextContainer: {
     position: 'relative', // 이미지와 텍스트 컨테이너
-    alignItems: 'flex-start', // 이미지와 텍스트를 가운데 정렬
-    marginTop: 20,
+    alignItems: 'center', // 이미지와 텍스트를 가운데 정렬
+    marginTop: 10,
+    marginBottom: 10,
   },
+
 
   imageText: {
     position: 'absolute', // 텍스트를 이미지 위에 절대적 위치로 설정
     fontWeight: 'bold', // 텍스트 굵기
     fontSize: 24,
     padding: 18,
+    textAlign: 'left',
+    left: 0,
   },
 
   font: {
@@ -79,6 +83,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 55,
     marginLeft: 18,
+    textAlign: 'left',
+    left: 0,
   },
 
   reColor: {
