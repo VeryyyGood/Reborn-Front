@@ -4,7 +4,7 @@ import { View, Text,StyleSheet,TouchableOpacity, Button, Image } from "react-nat
 import { CommonActions } from '@react-navigation/native';
 
 import { colors } from "../../theme"
-import { buttonStyles } from "../../theme";
+import { buttonStyles } from "../../components";
 
 const TutorialScreen = ({navigation: {navigate}}) => {
     //버튼을 누른 횟숫

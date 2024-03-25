@@ -1,7 +1,8 @@
 import React from "react";
 import {View, Text,Button,TouchableOpacity, StyleSheet} from "react-native";
 
-import { colors, buttonStyles } from "../../theme";
+import { colors} from "../../theme";
+import { ViewStyles, buttonStyles } from "../../components";
 
 const RediaryMainScreen = ({navigation: { navigate }} ) => (
     <View style={{paddingHorizontal: 20}}>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Button, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { colors, ViewStyles, buttonStyles } from "../../theme";
+import { colors} from "../../theme";
+import { ViewStyles, buttonStyles } from "../../components"
 
 const questions = [
     { question: '질문 1', answers: ['매우 그렇지 않다.', '그렇지 않다.', '그렇다.', '매우 그렇다.'], scores: [10, 8, 6, 4], index: ['1/16'] },
