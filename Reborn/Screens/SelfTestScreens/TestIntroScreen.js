@@ -1,8 +1,9 @@
 import React from "react";
 import {View, Text,TouchableOpacity,StyleSheet,Image} from "react-native";
 
-import { colors, palette,ViewStyles,buttonStyles } from "../../theme"
-//테스트. 다음으로 버튼 테마 가져옴
+import { colors, palette} from "../../theme";
+
+import {ViewStyles,buttonStyles } from "../../components";
 
 
 const TestIntroScreen = ({navigation: {navigate}}) => (
