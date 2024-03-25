@@ -13,7 +13,7 @@ const TutorialScreen = ({navigation: {navigate}}) => {
     const [tutoText, setTutoText] = useState("반갑소. 나는 첫번째요");
     
     navigateToMainStack = () => {
-        navigate('Tabs', { screen: 'Tabs' })
+        navigate('AccountStack', { screen: 'Login' })
         /*
         navigate.dispatch(
           CommonActions.reset({
