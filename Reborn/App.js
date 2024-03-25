@@ -7,9 +7,9 @@ import Tabs from './Navigation/Tabs';
 
 export default function App() {
   return (
-      <NavigationContainer>
-          <Root />
-      </NavigationContainer>
+    <NavigationContainer>
+      <Root />
+    </NavigationContainer>
   );
 }
 
