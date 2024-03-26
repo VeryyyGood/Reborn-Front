@@ -22,6 +22,15 @@ export const buttonStyles = StyleSheet.create({
         borderRadius: 30,
         height: 50,
     },
+    buttonBrownBottom: {
+        backgroundColor: colors.palette.Brown,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: -50,
+        borderRadius: 30,
+        height: 50,
+        marginHorizontal: 100,
+    },
     buttonLogin: {
         backgroundColor: colors.palette.NaverGreen,
         justifyContent: 'center',
