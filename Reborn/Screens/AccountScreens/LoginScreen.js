@@ -12,7 +12,13 @@ const LoginScreen = ({navigation: { navigate }} ) => (
             <Image style={{width: 470, height: 470, bottom: '10%'}} source={require('../../Assets/icons/app_icon.png')}/>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={buttonStyles.buttonLogin} onPress={()=>navigate('Tabs', { screen: 'main' })}>
-                    <Text style={styles.buttonText}>네이버 아이디로 로그인 </Text>
+                    <View style={styles.buttonContent}>
+                        <Image
+                            source={require('../../Assets/icons/naver_logo.png')}
+                            style={styles.naverLogo} 
+                        />
+                        <Text style={styles.buttonText}>네이버 아이디로 로그인 </Text>
+                    </View>
                 </TouchableOpacity>
             </View>
         </View>
@@ -42,6 +48,15 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: '85%',
         bottom: '20%',
+    },
+    buttonContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    naverLogo: {
+        width: 24,
+        height: 24,
+        marginRight: 8,
     },
     buttonText: {
         textAlign: 'center', // 버튼 텍스트 가운데 정렬

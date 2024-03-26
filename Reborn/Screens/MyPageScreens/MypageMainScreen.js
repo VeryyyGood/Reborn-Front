@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     paddingLeft: 25,
+    backgroundColor: colors.palette.White,
   },
 
   row: {

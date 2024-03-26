@@ -1,5 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { buttonStyles } from '../../../components';
+import { colors } from '../../../theme';
 
 const AccountManagementScreen = ({ navigation: { navigate }} ) => (
   <View style={styles.container}>
@@ -8,9 +10,11 @@ const AccountManagementScreen = ({ navigation: { navigate }} ) => (
       <Image source={require('../../../Assets/icons/profile.png')} style={styles.profileImage}></Image>
     </View>
     <Text style={styles.fontBold}>김보경</Text>
-    <TouchableOpacity onPress={() => navigate('AccountModify')} style={styles.touchableStyle}>
-      <Text>계정 정보 수정</Text>
-    </TouchableOpacity>
+    <View>
+      <TouchableOpacity onPress={() => navigate('AccountModify')} style={styles.touchableStyle}>
+        <Text>계정 정보 수정</Text>
+      </TouchableOpacity>
+    </View>
     <Text style={styles.fontNormal}>
       <Text>Email: </Text>
       <Text>animalLove@gmail.com</Text>
@@ -19,11 +23,13 @@ const AccountManagementScreen = ({ navigation: { navigate }} ) => (
       <Text>Since: </Text>
       <Text>2024.01.24</Text>
     </Text>
+    <View>
+      <TouchableOpacity style={buttonStyles.buttonWhiteBrown}>
+        <Text style={{color: colors.palette.Brown, fontWeight: 'bold'}}>로그아웃</Text>
+      </TouchableOpacity>
+    </View>
     <TouchableOpacity>
-      <Text>로그아웃</Text>
-    </TouchableOpacity>
-    <TouchableOpacity>
-      <Text>계정 삭제하기</Text>
+      <Text style={{color: colors.palette.Red}}>계정 삭제하기</Text>
     </TouchableOpacity>
   </View>
 );
@@ -34,7 +40,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: colors.palette.White,
   },
   imageWrapper: {
     position: 'relative', // 이 부모 View에 대해 자식 요소들을 상대적 위치로 설정

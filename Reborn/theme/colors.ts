@@ -7,7 +7,7 @@ export const palette = {
     YellowLight: "#F5E6D3",
 
     Green: "#85CD6C",
-    NaverGreen: "#2DB400",
+    NaverGreen: "#07BD34",
 
     Blue: "#91A8D2",
 
