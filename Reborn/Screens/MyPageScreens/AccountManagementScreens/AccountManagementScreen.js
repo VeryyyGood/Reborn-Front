@@ -11,26 +11,31 @@ const AccountManagementScreen = ({ navigation: { navigate }} ) => (
     </View>
     <Text style={styles.fontBold}>김보경</Text>
     <View>
-      <TouchableOpacity onPress={() => navigate('AccountModify')} style={styles.touchableStyle}>
-        <Text>계정 정보 수정</Text>
+      <TouchableOpacity style={buttonStyles.buttonWhiteBrown} onPress={() => navigate('AccountModify')}>
+        <Text style={styles.buttonFont}>계정 정보 수정</Text>
       </TouchableOpacity>
     </View>
-    <Text style={styles.fontNormal}>
-      <Text>Email: </Text>
-      <Text>animalLove@gmail.com</Text>
-    </Text>
-    <Text style={styles.fontNormal}>
-      <Text>Since: </Text>
-      <Text>2024.01.24</Text>
-    </Text>
+    <View style={styles.infoContainer}>
+      <View style={styles.line} />
+      <View style={styles.infoRow}>
+        <Image source={require('../../../Assets/icons/mail.png')} style={styles.icon} />
+        <Text style={styles.fontNormal}>Email: animalLove@gmail.com</Text>
+      </View>
+      <View style={styles.line} />
+      <View style={styles.infoRow}>
+        <Image source={require('../../../Assets/icons/date.png')} style={styles.icon} />
+        <Text style={styles.fontNormal}>Since: 2024.01.24</Text>
+      </View>
+      <View style={styles.line} />
+    </View>
     <View>
-      <TouchableOpacity style={buttonStyles.buttonWhiteBrown}>
-        <Text style={{color: colors.palette.Brown, fontWeight: 'bold'}}>로그아웃</Text>
+      <TouchableOpacity style={buttonStyles.buttonWhiteBrown} onPress={() => navigate('Login')}>
+        <Text style={styles.buttonFont}>로그아웃</Text>
       </TouchableOpacity>
     </View>
-    <TouchableOpacity>
-      <Text style={{color: colors.palette.Red}}>계정 삭제하기</Text>
-    </TouchableOpacity>
+      <TouchableOpacity>
+        <Text style={{color: colors.palette.Red, fontSize: 14}}>계정 삭제하기</Text>
+      </TouchableOpacity>
   </View>
 );
 
@@ -57,10 +62,6 @@ const styles = StyleSheet.create({
     position: 'absolute', // 절대 위치를 사용하여 다른 요소와 겹치도록 설정
     top: 50,
   },
-  touchableStyle: {
-    marginTop: 30, // 이미지와 버튼 사이의 간격 조정
-    marginBottom: 30,
-  },
   fontBold: {
     marginTop: 65,
     fontSize: 18,
@@ -68,5 +69,30 @@ const styles = StyleSheet.create({
   },
   fontNormal: {
     fontSize: 16,
+    marginLeft: 10,
   },
+  buttonFont: {
+    color: colors.palette.Brown, 
+    fontSize: 16, 
+    fontWeight: 'bold'
+  },
+  infoContainer: {
+    alignSelf: 'stretch',
+    alignItems: 'flex-start',
+    marginHorizontal: 20,
+  },
+  infoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    width: 42,
+    height: 42,
+  },
+  line: {
+    borderBottomColor: colors.palette.Gray250,
+    borderBottomWidth: 1,
+    alignSelf: 'stretch',
+    marginVertical: 8,
+  }
 });
