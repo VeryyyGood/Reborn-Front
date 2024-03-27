@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         fontSize: 45,
         textAlign: 'left',
         paddingLeft: '5%',
-        fontFamily: 'NanumSquareB'
+        fontFamily: 'Poppins-Bold'
     },
     buttonContainer: {
         position: 'absolute',
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     buttonText: {
         textAlign: 'center', 
         color: colors.palette.White,
-        fontFamily: 'NanumSquareB',
+        fontFamily: 'Poppins-Bold',
         fontSize: 14,
     },
 });

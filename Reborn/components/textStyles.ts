@@ -11,7 +11,7 @@ export const textStyles = StyleSheet.create({
         textAlign: 'center',
         marginHorizontal: "10%",
         marginTop: "8%",
-        fontFamily:'NanumSquareB',
+        fontFamily:'Poppins-Bold',
         fontWeight: 'bold',
         ...Platform.select({ // different from platform
             ios: {
