@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     normalFont: {
         fontSize: 16,
         marginTop: 5,
+        fontFamily: 'NanumSquareB',
     },
 
     reColor: {
