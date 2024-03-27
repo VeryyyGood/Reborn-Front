@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
         fontWeight: "bold",
         paddingVertical: 20,
+        fontFamily:'Poppins-Bold',
     },
     introText: {
         color: "lightgrey",
