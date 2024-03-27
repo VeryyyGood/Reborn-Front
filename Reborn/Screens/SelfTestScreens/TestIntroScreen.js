@@ -10,10 +10,10 @@ const TestIntroScreen = ({navigation: {navigate}}) => (
     <View style={ViewStyles.container}>
             <View style={ViewStyles.greyBox}>
                 <View>
-                    <Image style={{width: 200, height: 200, marginBottom:10,}} source={require('../../Assets/Images/Intro/Intro_Image.png')}/> 
+                    <Image style={{width: 200, height: 200, marginBottom:'5%',}} source={require('../../Assets/Images/Intro/Intro_Image.png')}/> 
                 </View>
-                <View style={{paddingHorizontal: 20}}>
-                    <Text style={{textAlign:"center",fontWeight: "bold",}}>
+                <View style={{paddingHorizontal: 20,}}>
+                    <Text style={{textAlign:"center", fontFamily:"Poppins-Bold",marginBottom:'5%',}}>
                         <Text style={{color:palette.Brown}}>반려동물애도 설문지 검사(PDQ)</Text>는{"\n"}
                     펜실베니아 심리학과에서 개발된{"\n"} <Text style={{color:palette.Brown}}>펫로스 증후군</Text> 상태를 알아보는 데,{"\n"}
                     도움을 줄 수 있는 설문지 검사입니다. {"\n"}{"\n"}
