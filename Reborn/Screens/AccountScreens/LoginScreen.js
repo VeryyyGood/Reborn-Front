@@ -9,7 +9,7 @@ const LoginScreen = ({navigation: { navigate }} ) => (
             <Text style={styles.introTitle}>PET <Text style={{color: colors.palette.Yellow}}>RE</Text>BORN,{'\n'}로그인 하기</Text>
         </View>
         <View style={styles.contentContainer}>
-            <Image style={{width: '83%', height: '83%', bottom: '5%'}} source={require('../../Assets/icons/app_icon.png')}/>
+            <Image style={{width: '83%', height: '83%', bottom: '8%'}} source={require('../../Assets/icons/app_icon.png')}/>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={buttonStyles.buttonLogin} onPress={()=>navigate('Tabs', { screen: 'main' })}>
                     <View style={styles.buttonContent}>
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         fontSize: 45,
         textAlign: 'left',
         paddingLeft: '5%',
-        fontFamily: 'Poppins-Bold'
+        fontFamily: 'Poppins-SemiBold'
     },
     buttonContainer: {
         position: 'absolute',
@@ -55,13 +55,13 @@ const styles = StyleSheet.create({
     },
     naverLogo: {
         width: '10%',
-        height: '150%',
+        height: '100%',
         marginRight: '5%',
     },
     buttonText: {
         textAlign: 'center', 
         color: colors.palette.White,
-        fontFamily: 'Poppins-Bold',
+        fontFamily: 'Poppins-Medium',
         fontSize: 14,
     },
 });

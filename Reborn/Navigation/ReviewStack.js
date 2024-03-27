@@ -14,8 +14,8 @@ const NativeStack = createNativeStackNavigator();
 
 const CustomHeaderTitle = () => (
     <Text>
-      <Text style={{ color: colors.palette.Brown, fontWeight: 'bold', fontSize: 20 }}>RE:</Text>
-      <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 20 }}> VIEW</Text>
+      <Text style={{ color: colors.palette.Brown, fontFamily: 'Poppins-Bold', fontSize: 18 }}>RE:</Text>
+      <Text style={{ color: 'black', fontFamily: 'Poppins-Bold', fontSize: 18 }}> VIEW</Text>
     </Text>
   );
 

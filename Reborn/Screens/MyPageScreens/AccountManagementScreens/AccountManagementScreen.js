@@ -13,12 +13,12 @@ const AccountManagementScreen = ({ navigation: { navigate }} ) => (
     <View style={styles.infoContainer}>
       <View style={styles.line} />
       <View style={styles.infoRow}>
-        <Image source={require('../../../Assets/icons/mail.png')} style={styles.icon} />
+        <Image source={require('../../../Assets/icons/mail.png')} />
         <Text style={styles.fontNormal}>Email: animalLove@gmail.com</Text>
       </View>
       <View style={styles.line} />
       <View style={styles.infoRow}>
-        <Image source={require('../../../Assets/icons/date.png')} style={styles.icon} />
+        <Image source={require('../../../Assets/icons/date.png')} />
         <Text style={styles.fontNormal}>Since: 2024.01.24</Text>
       </View>
       <View style={styles.line} />
@@ -29,7 +29,7 @@ const AccountManagementScreen = ({ navigation: { navigate }} ) => (
       </TouchableOpacity>
     </View>
       <TouchableOpacity>
-        <Text style={{color: colors.palette.Red, fontSize: 14}}>계정 삭제하기</Text>
+        <Text style={{color: colors.palette.Red, fontFamily: 'Poppins-Regular', fontSize: 14}}>계정 삭제하기</Text>
       </TouchableOpacity>
   </View>
 );
@@ -44,33 +44,34 @@ const styles = StyleSheet.create({
     backgroundColor: colors.palette.White,
   },
   imageWrapper: {
-    position: 'relative', // 이 부모 View에 대해 자식 요소들을 상대적 위치로 설정
-    height: 100, // 또는 실제 이미지 크기에 맞게 조정
-    width: 100, // 또는 실제 이미지 크기에 맞게 조정
+    position: 'relative',
+    height: '15%', 
+    width: '15%', 
     justifyContent: 'center',
     alignItems: 'center',
   },
   backgroundImage: {
-    position: 'absolute', // 절대 위치를 사용하여 다른 요소와 겹치도록 설정
+    position: 'absolute',
   },
   profileImage: {
-    position: 'absolute', // 절대 위치를 사용하여 다른 요소와 겹치도록 설정
-    top: 50,
+    position: 'absolute', 
+    top: '55%',
   },
   fontBold: {
-    marginTop: 65,
+    marginTop: '19%',
     fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 20,
+    fontFamily: 'Poppins-Bold',
+    marginBottom: '6%',
   },
   fontNormal: {
     fontSize: 16,
-    marginLeft: 10,
+    fontFamily: 'Poppins-Regular',
+    marginLeft: '3%',
   },
   buttonFont: {
     color: colors.palette.Brown, 
     fontSize: 16, 
-    fontWeight: 'bold'
+    fontFamily: 'Poppins-Bold'
   },
   infoContainer: {
     alignSelf: 'stretch',
@@ -81,14 +82,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  icon: {
-    width: 42,
-    height: 42,
-  },
   line: {
     borderBottomColor: colors.palette.Gray250,
     borderBottomWidth: 1,
     alignSelf: 'stretch',
     marginVertical: 8,
-  }
+  },
 });

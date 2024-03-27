@@ -24,20 +24,20 @@ const styles = StyleSheet.create({
     },
 
     textContainer: {
-        height: 100,
+        height: '15%',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        paddingLeft: 20,
+        paddingLeft: '5%',
     },
     
     boldFont: {
        fontSize: 24,
-       fontWeight: 'bold',
+       fontFamily: 'Poppins-Bold',
     },
 
     normalFont: {
         fontSize: 16,
-        marginTop: 5,
+        fontFamily: 'Poppins-Bold',
     },
 
     reColor: {
