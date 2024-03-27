@@ -9,7 +9,7 @@ const questions = [
     // { question: '3. 반려동물이 없는 나의 삶은 비어있는 것 같다.', answers: ['매우 그렇지 않다.', '그렇지 않다.', '그렇다.', '매우 그렇다.'], scores: [0, 1, 2, 3], index: ['3/16'] },
     // { question: '4. 나는 반려동물의 죽음에 대한 악몽을 꾸고 있다.', answers: ['매우 그렇지 않다.', '그렇지 않다.', '그렇다.', '매우 그렇다.'], scores: [0, 1, 2, 3], index: ['4/16'] },
     // { question: '5. 나는 반려동물이 없는데 대해 외로움을 느낀다.', answers: ['매우 그렇지 않다.', '그렇지 않다.', '그렇다.', '매우 그렇다.'], scores: [0, 1, 2, 3], index: ['5/16'] },
-    // { question: '6. 나는 반려동물에게 뭔가 나쁜 일이 일어나고 있다는 사실을 알았어야만 했다.', answers: ['매우 그렇지 않다.', '그렇지 않다.', '그렇다.', '매우 그렇다.'], scores: [0, 1, 2, 3], index: ['6/16'] },
+    { question: '6. 나는 반려동물에게 뭔가 나쁜 일이 일어나고 있다는 사실을 알았어야만 했다.', answers: ['매우 그렇지 않다.', '그렇지 않다.', '그렇다.', '매우 그렇다.'], scores: [0, 1, 2, 3], index: ['6/16'] },
     // { question: '7. 나는 반려동물이 너무나도 그립다.', answers: ['매우 그렇지 않다.', '그렇지 않다.', '그렇다.', '매우 그렇다.'], scores: [0, 1, 2, 3], index: ['7/16'] },
     // { question: '8. 나는 반려동물을 좀 더 잘 돌보지 못한데 대한 죄책감을 느낀다.', answers: ['매우 그렇지 않다.', '그렇지 않다.', '그렇다.', '매우 그렇다.'], scores: [0, 1, 2, 3], index: ['8/16'] },
     // { question: '9. 나는 반려동물을 살리고자 더 많은 행동을 하지 않았던 것에 낙담하였다.', answers: ['매우 그렇지 않다.', '그렇지 않다.', '그렇다.', '매우 그렇다.'], scores: [0, 1, 2, 3], index: ['9/16'] },
@@ -56,7 +56,7 @@ export default function TestScreen({ navigation }) {
 
     return (
       <View style={ViewStyles.container}>
-          <View style={ViewStyles.greyBox}>
+          <View style={[ViewStyles.greyBox, {marginTop: '15%',}]}>
             <View>
               <Text style={styles.questionText}>
                 {questions[currentQuestionIndex].question}
@@ -116,10 +116,11 @@ const styles = StyleSheet.create({
       backgroundColor: colors.palette.Brown,
     },
     radioButtonLabel: {
-      fontSize: 17,
+      fontSize: 16,
     },
     questionText: {
-      fontSize: 20,
-      marginBottom: 80,
+      fontSize: 16,
+      marginBottom: '15%',
+      paddingHorizontal: 35,
     },
 });

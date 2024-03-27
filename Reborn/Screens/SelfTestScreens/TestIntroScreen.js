@@ -38,16 +38,16 @@ export default TestIntroScreen;
 
 
 const styles = StyleSheet.create({
-    testBox: {
-        width: "85%",
-        height: 500,
-        backgroundColor: colors.palette.Gray200,
-        marginTop: 10,
-        marginBottom: 20,
-        borderRadius: 20,
-        justifyContent: "center",
-        alignItems:"center",
-    },
+    // testBox: {
+    //     width: "85%",
+    //     height: 500,
+    //     backgroundColor: colors.palette.Gray200,
+    //     marginTop: 10,
+    //     marginBottom: 20,
+    //     borderRadius: 20,
+    //     justifyContent: "center",
+    //     alignItems:"center",
+    // },
     testTitle: {
         fontSize: 20,
         textAlign: "center",
