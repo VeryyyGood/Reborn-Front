@@ -22,7 +22,7 @@ const MypageMainScreen = ({ navigation: {navigate} }) => (
         <Image source={require('../../Assets/icons/review.png')} style={styles.icon} />
         <Text>
           <Text style={styles.reColor}>RE:</Text>
-          <Text style={styles.font}> VIEW</Text>
+          <Text style={styles.font}>VIEW</Text>
         </Text>
         <Image source={require('../../Assets/icons/right_arrow.png')} style={styles.arrow_icon3} />
       </View>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'flex-start',
-    paddingLeft: 25,
+    paddingLeft: '8%',
     backgroundColor: colors.palette.White,
   },
 
@@ -53,46 +53,38 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    marginVertical: 35,
+    marginVertical: '8%',
   },
 
   font: {
     fontSize: 16,
+    fontFamily: 'NanumSquareB',
   },
 
   reColor: {
     color: colors.palette.Brown,
     fontSize: 16,
+    fontFamily: 'NanumSquareB',
   },
 
   icon: {
-    width: 42,
-    height: 42,
-    marginRight: 20,
+    marginRight: '5%',
   },
 
   arrow_icon1: {
-    width: 24, // 이미지의 너비
-    height: 24, // 이미지의 높이
-    marginLeft: 198,
+    marginLeft: '55%',
   },
 
   arrow_icon2: {
-    width: 24, // 이미지의 너비
-    height: 24, // 이미지의 높이
-    marginLeft: 120,
+    marginLeft: '34%',
   },
 
   arrow_icon3: {
-    width: 24, // 이미지의 너비
-    height: 24, // 이미지의 높이
-    marginLeft: 196,
+    marginLeft: '54%',
   },
 
   arrow_icon4: {
-    width: 24, // 이미지의 너비
-    height: 24, // 이미지의 높이
-    marginLeft: 180,
+    marginLeft: '50.5%',
   },
 
 });

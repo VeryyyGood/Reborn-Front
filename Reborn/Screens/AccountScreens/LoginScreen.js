@@ -9,7 +9,7 @@ const LoginScreen = ({navigation: { navigate }} ) => (
             <Text style={styles.introTitle}>PET <Text style={{color: colors.palette.Yellow}}>RE</Text>BORN,{'\n'}로그인 하기</Text>
         </View>
         <View style={styles.contentContainer}>
-            <Image style={{width: 470, height: 470, bottom: '10%'}} source={require('../../Assets/icons/app_icon.png')}/>
+            <Image style={{width: '83%', height: '83%', bottom: '5%'}} source={require('../../Assets/icons/app_icon.png')}/>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={buttonStyles.buttonLogin} onPress={()=>navigate('Tabs', { screen: 'main' })}>
                     <View style={styles.buttonContent}>
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.palette.White,
     },
     introContainer: {
-        marginTop: 30,
+        marginTop: '10%',
     },
     contentContainer: {
         alignItems: 'center',
@@ -41,12 +41,12 @@ const styles = StyleSheet.create({
     introTitle: {
         fontSize: 45,
         textAlign: 'left',
-        paddingLeft: 20,
-        fontWeight: 'bold',
+        paddingLeft: '5%',
+        fontFamily: 'NanumSquareB'
     },
     buttonContainer: {
         position: 'absolute',
-        top: '85%',
+        top: '70%',
         bottom: '20%',
     },
     buttonContent: {
@@ -54,12 +54,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     naverLogo: {
-        width: 24,
-        height: 24,
-        marginRight: 8,
+        width: '10%',
+        height: '150%',
+        marginRight: '5%',
     },
     buttonText: {
-        textAlign: 'center', // 버튼 텍스트 가운데 정렬
+        textAlign: 'center', 
         color: colors.palette.White,
+        fontFamily: 'NanumSquareB',
+        fontSize: 14,
     },
 });

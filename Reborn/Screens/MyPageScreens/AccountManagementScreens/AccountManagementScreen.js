@@ -10,11 +10,6 @@ const AccountManagementScreen = ({ navigation: { navigate }} ) => (
       <Image source={require('../../../Assets/icons/profile.png')} style={styles.profileImage}></Image>
     </View>
     <Text style={styles.fontBold}>김보경</Text>
-    <View>
-      <TouchableOpacity style={buttonStyles.buttonWhiteBrown} onPress={() => navigate('AccountModify')}>
-        <Text style={styles.buttonFont}>계정 정보 수정</Text>
-      </TouchableOpacity>
-    </View>
     <View style={styles.infoContainer}>
       <View style={styles.line} />
       <View style={styles.infoRow}>
@@ -66,6 +61,7 @@ const styles = StyleSheet.create({
     marginTop: 65,
     fontSize: 18,
     fontWeight: 'bold',
+    marginBottom: 20,
   },
   fontNormal: {
     fontSize: 16,
