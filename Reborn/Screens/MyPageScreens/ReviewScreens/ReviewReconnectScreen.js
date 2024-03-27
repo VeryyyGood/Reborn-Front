@@ -5,12 +5,12 @@ import { colors } from '../../../theme';
 
 const ReviewReconnectScreen = ({navigation: { navigate }} ) => (
     <View style={styles.container}>
-            <View style={styles.textContainer}>
-                <Text style={styles.boldFont}>
-                    <Text style={styles.reColor}>RE</Text>CONNECT:
-                </Text>
-                <Text style={styles.normalFont}>나의 반려동물과 만나기</Text>
-            </View>
+        <View style={styles.textContainer}>
+            <Text style={styles.boldFont}>
+                <Text style={styles.reColor}>RE</Text>CONNECT:
+            </Text>
+            <Text style={styles.normalFont}>나의 반려동물과 만나기</Text>
+        </View>
         <ImageBackground
             source={require('../../../Assets/Images/bg/bg_blossom.png')}
             style={styles.backgroundImage}
@@ -19,7 +19,7 @@ const ReviewReconnectScreen = ({navigation: { navigate }} ) => (
             <Image
                 source={require('../../../Assets/Images/dog/dog_idle.png')}
                 style={styles.overlayImage}
-                resizeMode="contain"
+                resizeMode='center'
             />
         </ImageBackground>
     </View>
@@ -40,26 +40,23 @@ const styles = StyleSheet.create({
     },
 
     overlayImage: {
-        width: '50%',
-        height: '50%',
-        marginTop: 280,
+        marginTop: '60%'
     },
 
     textContainer: {
-        height: 100,
+        height: '15%',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        paddingLeft: 20,
+        paddingLeft: '5%',
     },
     
     boldFont: {
        fontSize: 24,
-       fontWeight: 'bold',
+       fontFamily: 'Poppins-Bold',
     },
 
     normalFont: {
         fontSize: 16,
-        marginTop: 5,
         fontFamily: 'Poppins-Bold',
     },
 

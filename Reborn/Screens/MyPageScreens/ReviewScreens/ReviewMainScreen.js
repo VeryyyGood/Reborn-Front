@@ -4,7 +4,7 @@ import { colors } from '../../../theme/colors';
 
 const ReviewMainScreen = ({ navigation: { navigate }} ) => (
     <ScrollView contentContainerStyle={styles.container}>
-      <TouchableOpacity onPress={() => navigate('ReviewStack', {screen: 'ReviewReconnect' })} style={styles.touchable}>
+      <TouchableOpacity onPress={() => navigate('ReviewStack', {screen: 'ReviewReconnect' })}>
         <View style={styles.imageTextContainer}>
           <Image source={require('../../../Assets/icons/review_album.png')} />
           <Text style={styles.imageText}>
@@ -60,23 +60,19 @@ const styles = StyleSheet.create({
     backgroundColor: colors.palette.White,
   },
 
-  touchable: {
-    alignItems: 'center', // TouchableOpacity 내부 요소를 가운데 정렬
-  },
-
   imageTextContainer: {
-    position: 'relative', // 이미지와 텍스트 컨테이너
-    alignItems: 'center', // 이미지와 텍스트를 가운데 정렬
-    marginTop: 10,
-    marginBottom: 10,
+    position: 'relative', 
+    alignItems: 'center', 
+    marginTop: '3%',
+    marginBottom: '3%',
   },
-
 
   imageText: {
-    position: 'absolute', // 텍스트를 이미지 위에 절대적 위치로 설정
-    fontWeight: 'bold', // 텍스트 굵기
+    position: 'absolute', 
+    fontFamily: 'Poppins-Bold',
     fontSize: 24,
-    padding: 18,
+    marginTop: '6%',
+    marginLeft: '6%',
     textAlign: 'left',
     left: 0,
   },
@@ -84,8 +80,9 @@ const styles = StyleSheet.create({
   font: {
     position: 'absolute',
     fontSize: 16,
-    marginTop: 55,
-    marginLeft: 18,
+    fontFamily: 'Poppins-Bold',
+    marginTop: '17%',
+    marginLeft: '6%',
     textAlign: 'left',
     left: 0,
   },

@@ -58,13 +58,15 @@ const styles = StyleSheet.create({
 
   font: {
     fontSize: 16,
-    fontFamily: 'NanumSquareB',
+    fontFamily: 'Poppins-Regular',
+    top: '0.2%',
   },
 
   reColor: {
     color: colors.palette.Brown,
     fontSize: 16,
-    fontFamily: 'NanumSquareB',
+    fontFamily: 'Poppins-Regular',
+    top: '0.2%',
   },
 
   icon: {
@@ -72,11 +74,11 @@ const styles = StyleSheet.create({
   },
 
   arrow_icon1: {
-    marginLeft: '55%',
+    marginLeft: '53%',
   },
 
   arrow_icon2: {
-    marginLeft: '34%',
+    marginLeft: '31%',
   },
 
   arrow_icon3: {
@@ -84,7 +86,7 @@ const styles = StyleSheet.create({
   },
 
   arrow_icon4: {
-    marginLeft: '50.5%',
+    marginLeft: '49%',
   },
 
 });
