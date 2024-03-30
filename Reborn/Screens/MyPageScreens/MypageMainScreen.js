@@ -20,9 +20,9 @@ const MypageMainScreen = ({ navigation: {navigate} }) => (
     <TouchableOpacity style={styles.button} onPress={() => navigate('MypageStack', {screen: 'ReviewMain' })}>
       <View style={styles.row}>
         <Image source={require('../../Assets/icons/review.png')} style={styles.icon} />
-        <Text>
+        <Text style={styles.font}>
           <Text style={styles.reColor}>RE:</Text>
-          <Text style={styles.font}> VIEW</Text>
+          <Text> VIEW</Text>
         </Text>
         <Image source={require('../../Assets/icons/right_arrow.png')} style={styles.arrow_icon3} />
       </View>
@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
     color: colors.palette.Brown,
     fontSize: 16,
     fontFamily: 'Poppins-Regular',
-    top: '0.2%',
   },
 
   icon: {
