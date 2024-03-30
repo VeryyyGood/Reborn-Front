@@ -33,11 +33,13 @@ const styles = StyleSheet.create({
     boldFont: {
        fontSize: 24,
        fontFamily: 'Poppins-Bold',
+       color: colors.palette.BrownDark,
     },
 
     normalFont: {
         fontSize: 16,
         fontFamily: 'Poppins-Bold',
+        color: colors.palette.BrownDark,
     },
 
     reColor: {

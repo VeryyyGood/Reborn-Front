@@ -7,7 +7,13 @@ const AccountManagementScreen = ({ navigation: { navigate }} ) => (
   <View style={styles.container}>
     <View style={styles.imageWrapper}>
       <Image source={require('../../../Assets/icons/profile_bg.png')} style={styles.backgroundImage}></Image>
+      <TouchableOpacity>
+        <Image source={require('../../../Assets/icons/pencil.png')} style={styles.backgroundPencil}></Image>
+      </TouchableOpacity>
       <Image source={require('../../../Assets/icons/profile.png')} style={styles.profileImage}></Image>
+      <TouchableOpacity>
+        <Image source={require('../../../Assets/icons/pencil.png')} style={styles.profilePencil}></Image>
+      </TouchableOpacity>
     </View>
     <Text style={styles.fontBold}>김보경</Text>
     <View style={styles.infoContainer}>
@@ -53,20 +59,30 @@ const styles = StyleSheet.create({
   backgroundImage: {
     position: 'absolute',
   },
+  backgroundPencil: {
+    marginLeft: '500%',
+    marginTop: '230%',
+  },
   profileImage: {
     position: 'absolute', 
     top: '55%',
   },
+  profilePencil: {
+    marginLeft: '125%',
+  },
+
   fontBold: {
     marginTop: '19%',
     fontSize: 18,
     fontFamily: 'Poppins-Bold',
     marginBottom: '6%',
+    color: colors.palette.BrownDark,
   },
   fontNormal: {
     fontSize: 16,
     fontFamily: 'Poppins-Regular',
     marginLeft: '3%',
+    color: colors.palette.BrownDark,
   },
   buttonFont: {
     color: colors.palette.Brown, 
