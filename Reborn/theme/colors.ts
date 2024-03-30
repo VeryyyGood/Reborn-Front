@@ -5,6 +5,7 @@ export const palette = {
 
     Yellow: "#FFCF88",
     YellowLight: "#F5E6D3",
+    YellowDark: "#D28B00",
 
     Green: "#85CD6C",
     NaverGreen: "#07BD34",
@@ -12,6 +13,7 @@ export const palette = {
     Blue: "#91A8D2",
 
     Brown: "#8A7B6F",
+    BrownChoco: "#614337",
     BrownDark: "#403230",
 
     // Whitish Color -------------------
