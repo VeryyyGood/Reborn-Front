@@ -22,7 +22,7 @@ const MypageMainScreen = ({ navigation: {navigate} }) => (
         <Image source={require('../../Assets/icons/review.png')} style={styles.icon} />
         <Text>
           <Text style={styles.reColor}>RE:</Text>
-          <Text style={styles.font}>VIEW</Text>
+          <Text style={styles.font}> VIEW</Text>
         </Text>
         <Image source={require('../../Assets/icons/right_arrow.png')} style={styles.arrow_icon3} />
       </View>
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Poppins-Regular',
     top: '0.2%',
+    color: colors.palette.BrownDark,
   },
 
   reColor: {
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
   },
 
   arrow_icon3: {
-    marginLeft: '54%',
+    marginLeft: '53%',
   },
 
   arrow_icon4: {

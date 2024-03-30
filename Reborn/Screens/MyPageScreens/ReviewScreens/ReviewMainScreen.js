@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     marginLeft: '6%',
     textAlign: 'left',
     left: 0,
+    color: colors.palette.BrownDark,
   },
 
   font: {
@@ -84,6 +85,7 @@ const styles = StyleSheet.create({
     marginTop: '17%',
     marginLeft: '6%',
     textAlign: 'left',
+    color: colors.palette.BrownDark,
     left: 0,
   },
 

@@ -42,7 +42,8 @@ const styles = StyleSheet.create({
         fontSize: 45,
         textAlign: 'left',
         paddingLeft: '5%',
-        fontFamily: 'Poppins-SemiBold'
+        fontFamily: 'Poppins-SemiBold',
+        color: colors.palette.BrownDark,
     },
     buttonContainer: {
         position: 'absolute',

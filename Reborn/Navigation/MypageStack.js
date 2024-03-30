@@ -11,19 +11,31 @@ import { colors } from "../theme/colors";
 
 const NativeStack = createNativeStackNavigator();
 
-const CustomHeaderTitle = () => (
-    <Text>
-      <Text style={{ color: colors.palette.Brown, fontSize: 20 }}>RE:</Text>
-      <Text style={{ color: 'black', fontSize: 20 }}> VIEW</Text>
-    </Text>
+const ReviewTitle = () => (
+  <Text>
+    <Text style={{ color: colors.palette.Brown, fontFamily: 'Poppins-Bold', fontSize: 18 }}>RE:</Text>
+    <Text style={{ fontFamily: 'Poppins-Bold', fontSize: 18 }}> VIEW</Text>
+  </Text>
+);
+
+const AccountTitle = () => (
+  <Text style={{fontFamily: 'Poppins-Bold', fontSize: 18 }}>계정 관리</Text>
+);
+
+const PetTitle = () => (
+  <Text style={{fontFamily: 'Poppins-Bold', fontSize: 18 }}>반려동물 프로필 관리</Text>
+);
+
+const ExpertTitle = () => (
+    <Text style={{fontFamily: 'Poppins-Bold', fontSize: 18 }}>전문가 상담</Text>
   );
 
 const MypageStack = () =>
 <NativeStack.Navigator screenOptions={{headerTitleAlign:"center",}}>
-    <NativeStack.Screen name = 'AccountManagement' component={AccountManagementScreen} options={{title: "계정 관리"}}/>
-    <NativeStack.Screen name = 'PetProfileManagement' component={PetProfileManagementScreen} options={{title: "반려동물 프로필 관리"}}/>
-    <NativeStack.Screen name = 'ReviewMain' component={ReviewMainScreen} options={{headerTitle: () => <CustomHeaderTitle/>}}/>
-    <NativeStack.Screen name = 'Expert' component={ExpertScreen} options={{title: "전문가 상담"}}/>
+    <NativeStack.Screen name = 'AccountManagement' component={AccountManagementScreen} options={{headerTitle: () => <AccountTitle/>}}/>
+    <NativeStack.Screen name = 'PetProfileManagement' component={PetProfileManagementScreen} options={{headerTitle: () => <PetTitle/>}}/>
+    <NativeStack.Screen name = 'ReviewMain' component={ReviewMainScreen} options={{headerTitle: () => <ReviewTitle/>}}/>
+    <NativeStack.Screen name = 'Expert' component={ExpertScreen} options={{headerTitle: () => <ExpertTitle/>}}/>
 </NativeStack.Navigator>;
 
 export default MypageStack;
