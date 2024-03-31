@@ -21,7 +21,7 @@ const Tabs = () => (
             headerTitleAlign: 'left',
             headerTitleStyle: { fontWeight: 'bold', },
             title: "REBORN 시작하기"}}/>
-        <Tab.Screen name='Shared' component={ShareDrawers} options={{ tabBarStyle: { display: 'none'}, title: "나눔 게시판"}} />
+        <Tab.Screen name='Shared' component={ShareDrawers} options={{ headerShown: false ,tabBarStyle: { display: 'none'},}} />
         <Tab.Screen name='RediaryMain' component={RediaryMain} options={{ tabBarStyle: { display: 'none'}, title: "RE: Diary"}} />
         <Tab.Screen name='MypageMain' component={MypageMainScreen} options={{ tabBarStyle: { display: 'none'}, title: "마이페이지"}} />
     </Tab.Navigator>
