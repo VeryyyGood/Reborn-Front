@@ -1,5 +1,11 @@
 import { StyleSheet, Platform } from "react-native";
 import { colors } from "../theme";
+import styled from "styled-components/native";
+
+export const popTextBox = styled.View`
+  background-color: ${colors.palette.White};
+  align-items: center;
+`;
 
 export const textStyles = StyleSheet.create({
     contentsTextBox: {
