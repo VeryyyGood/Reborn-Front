@@ -102,8 +102,9 @@ const PetProfileManagementScreen = () => {
       </View>
       <Text style={styles.font}>색상</Text>
       <View style={styles.colorContainer}>
-        <FlatList
+        <View
           horizontal
+          showsHorizontalScrollIndicator={false}
           data={colorsChoice}
           renderItem={({ item }) => (
             <Pressable
