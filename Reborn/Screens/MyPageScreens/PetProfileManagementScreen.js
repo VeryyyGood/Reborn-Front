@@ -104,6 +104,7 @@ const PetProfileManagementScreen = () => {
       <View style={styles.colorContainer}>
         <FlatList
           horizontal
+          showsHorizontalScrollIndicator={false}
           data={colorsChoice}
           renderItem={({ item }) => (
             <Pressable
