@@ -8,10 +8,10 @@ import ReDiaryItem from '../../components/ReDiaryItem';
 
 const RediaryMainScreen = ({navigation: { navigate }} ) => {
     const [rediaryData, setrediaryData] = useState([
-        { id: '1', date: '2024-03-29.FRI', day: '첫번째', type: 'sun' },
-        { id: '2', date: '2024-03-30.SAT', day: '두번째', type: 'cloud' },
-        { id: '3', date: '2024-03-31.SUN', day: '세번째', type: 'rain' },
-        { id: '4', date: '2024-03-32.MON', day: '네번째', type: 'cloud' },
+        { id: '1', date: '2024-03-29.FRI', title: '첫번째', type: 'sun', Box: 1, },
+        { id: '2', date: '2024-03-30.SAT', title: '두번째', type: 'cloud', Box: 40, },
+        { id: '3', date: '2024-03-31.SUN', title: '세번째', type: 'rain', Box: 30, },
+        { id: '4', date: '2024-03-32.MON', title: '네번째', type: 'cloud', Box: 80, },
       ]);
 
     return(
@@ -25,7 +25,7 @@ const RediaryMainScreen = ({navigation: { navigate }} ) => {
             </View>
             <View style={styles.container}>
                 <FlatList data={rediaryData}
-                renderItem={({item})=> <ReDiaryItem date={item.date} day={item.day} type={item.type} /> }
+                renderItem={({item})=> <ReDiaryItem date={item.date} title={item.title} type={item.type} Box={item.Box} /> }
                 keyExtractor={item => item.id}
                 />
             </View>

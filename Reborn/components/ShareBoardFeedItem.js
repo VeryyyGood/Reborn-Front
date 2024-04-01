@@ -1,20 +1,29 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, ImageBackground } from 'react-native';
+import {View, Text, Image, StyleSheet, ImageBackground, Touchable, TouchableOpacity } from 'react-native';
 import styled from "styled-components/native";
 const ShareBoardFeedItem = ({ title, content, date }) => {
 	return (
-        <View style={styles.shareItem}>
-            <View style={styles.titlecontainer}>
-                <Image style={styles.profile} source={require('../Assets/icons/profile.png')} />
-                <Text style={styles.title}>{title}{'\n'}<Text style={styles.date}>{date}</Text> </Text>
-                
+        <TouchableOpacity>
+            <View style={styles.shareItem}>
+                <View style={styles.titlecontainer}>
+                    <Image style={styles.profile} source={require('../Assets/icons/profile.png')} />
+                    <Text style={styles.title}>{title}{'\n'}<Text style={styles.date}>{date}</Text> </Text>
+                    
+                </View>
+                <View>
+                    <Text style={styles.content}>{content}</Text>
+                </View>
+                <View style={{flexDirection:'row', paddingVertical: 20, paddingHorizontal: 20, justifyContent: 'space-between'}}>
+                    <Image style={{marginLeft: 10,}} source={require('../Assets/icons/ShareBoard/commentIcon.png')}/>
+                    <View style={{flexDirection:'row'}}>
+                        <Image style={{marginRight:'5%',}} source={require('../Assets/icons/ShareBoard/heartIconGrey.png')}/>
+                        <Text>100</Text>
+                        <Image style={{marginLeft: 10,}}source={require('../Assets/icons/ShareBoard/bookmarkIconGrey.png')}/>
+                    </View>  
+                </View>
             </View>
-            <View>
-                <Text style={styles.content}>{content}</Text>
-            </View>
-        </View>
-    	
-    )
+        </TouchableOpacity>
+    );
 };
 
 const styles=StyleSheet.create({
@@ -39,7 +48,7 @@ const styles=StyleSheet.create({
     },  
     content: {
     	fontSize: 16,
-        marginHorizontal: 20,
+        marginHorizontal: '5%',
     },
     profile:{
         width: '20%',
