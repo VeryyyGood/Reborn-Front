@@ -55,9 +55,15 @@ export const buttonStyles = StyleSheet.create({
     }
 });
 
-export const CompleteButton = styled.Pressable`
+export const CompletePreesable = styled.Pressable`
     background-color: ${colors.palette.Green};
-
+    padding: 2%;
+    margin: 5% 10% 5% 65%;
+    border-radius: 8px;
     justify-content: center;
     align-items: center;
+`;
+
+export const CompleteButtonText = styled.Text`
+    color: ${colors.palette.White};
 `;

@@ -80,7 +80,7 @@ const DogImage = styled.Image`
   margin-top: 50%;
 `;
 
-const PopTextBox = styled.Pressable`
+const PopTextBox = styled.View`
   background-color: ${colors.palette.White};
   justify-content: center;
   width: 80%;
@@ -100,5 +100,6 @@ const BlackContainer = styled.View`
 const TextInputContainer = styled.View`
   margin: 6% 10% 0% 10%;
   height: 70%;
-  background-color: black;
+  background-color: ${colors.palette.Gray200};
+  padding: 3% 4% 3% 4%;
 `;
