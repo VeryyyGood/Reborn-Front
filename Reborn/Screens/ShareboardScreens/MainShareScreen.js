@@ -32,9 +32,11 @@ const MainShareScreen = ({navigation: { navigate }} ) => {
                 <FlatList
                     data={ShareBoardFeedData}
                     renderItem={({item}) => {
-                        const { title, date, content } = item;
+                        const { id, title, date, content } = item;
                         return (
-                            <ShareBoardFeedItem title={title} date={date} content={content} />
+                            <TouchableOpacity onPress={() => navigate('ShareContentScreen', { id, title, date, content })}>
+                                <ShareBoardFeedItem title={title} date={date} content={content} />
+                            </TouchableOpacity>
                         );
                     }}
                     keyExtractor={item => item.id}
