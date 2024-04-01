@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet, ImageBackground } from 'react-native';
-
+import styled from "styled-components/native";
 const ShareBoardFeedItem = ({ title, content, date }) => {
 	return (
         <View style={styles.shareItem}>

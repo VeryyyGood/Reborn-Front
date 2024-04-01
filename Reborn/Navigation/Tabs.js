@@ -16,11 +16,7 @@ const Tab = createBottomTabNavigator();
 
 const Tabs = () => (
     <Tab.Navigator screenOptions={{tabBarActiveTintColor: colors.palette.Brown, headerTitleAlign:"center"}}>
-        <Tab.Screen name='Main' component={MainScreen} options={{ 
-            tabBarLabel: "Home",
-            headerTitleAlign: 'left',
-            headerTitleStyle: { fontWeight: 'bold', },
-            title: "REBORN 시작하기"}}/>
+        <Tab.Screen name='Main' component={MainScreen} options={{ tabBarLabel: "Home", headerShown: false ,}}/>
         <Tab.Screen name='Shared' component={ShareDrawers} options={{ headerShown: false ,tabBarStyle: { display: 'none'},}} />
         <Tab.Screen name='RediaryMain' component={RediaryMain} options={{ tabBarStyle: { display: 'none'}, title: "RE: Diary"}} />
         <Tab.Screen name='MypageMain' component={MypageMainScreen} options={{ tabBarStyle: { display: 'none'}, title: "마이페이지"}} />
