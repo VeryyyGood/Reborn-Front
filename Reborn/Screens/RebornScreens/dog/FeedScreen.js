@@ -11,7 +11,7 @@ import { colors } from "../../../theme";
 import { buttonStyles, textStyles } from "../../../components";
 import styled from "styled-components/native";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
-import handimageURL from "../../../Assets/Images/dog/dog_bowl.png";
+import handimageURL from "../../../Assets/Images/dog/dog_bowl_no.png";
 
 const FeedScreen = ({ navigation: { navigate } }) => (
   <Container>
@@ -35,10 +35,9 @@ const FeedScreen = ({ navigation: { navigate } }) => (
       <DraggableImage
         source={handimageURL}
         style={{
-          width: "50%",
-          height: "50%",
+          width: "40%",
+          height: "160%",
           position: "absolute",
-          marginLeft: "50%",
         }}
       />
     </ImageBackground>
