@@ -25,23 +25,16 @@ const RemindIntroScreen = ({ navigation: { navigate } }) => {
 
         <Modal animationType="fade" visible={modalVisible} transparent={true}>
           <BlackContainer>
-            <PopContainer>
-              <PopTextBox>
-                <Text style={{ textAlign: "center" }}>
-                  오늘부터 5일 동안 00이와{"\n"}충분한 대화를 나누어보세요.{" "}
-                  {"\n"}
-                  대화한 내용은 모두 ‘RE: DIARY’에{"\n"}저장됩니다.
-                </Text>
-              </PopTextBox>
-              <Pressable
-                style={buttonStyles.buttonBrown}
-                onPress={() => {
-                  navigate("Pet"), setModalVisible(!modalVisible);
-                }}
-              >
-                <Text style={{ color: colors.palette.White }}>확인</Text>
-              </Pressable>
-            </PopContainer>
+            <PopTextBox
+              onPress={() => {
+                navigate("Pet"), setModalVisible(!modalVisible);
+              }}
+            >
+              <Text style={{ textAlign: "center" }}>
+                오늘부터 5일 동안 00이와{"\n"}충분한 대화를 나누어보세요. {"\n"}
+                대화한 내용은 모두 ‘RE: DIARY’에{"\n"}저장됩니다.
+              </Text>
+            </PopTextBox>
           </BlackContainer>
         </Modal>
       </ImageBackground>
@@ -63,21 +56,19 @@ const DogImage = styled.Image`
   margin-top: 55%;
 `;
 
-const PopTextBox = styled.View`
+const PopTextBox = styled.Pressable`
   background-color: ${colors.palette.White};
-  align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 50%;
+  width: 70%;
+  height: 20%;
   border-radius: 20px;
-`;
-
-const PopContainer = styled.View`
-  margin: 50% 10% 0% 10%;
+  margin: 0% 20% 0% 20%;
 `;
 
 const BlackContainer = styled.View`
   background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
   height: 100%;
+  justify-content: center;
+  align-items: center;
 `;

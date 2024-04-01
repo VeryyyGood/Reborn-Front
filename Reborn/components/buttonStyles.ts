@@ -1,5 +1,7 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet} from "react-native";
 import { colors } from "../theme";
+import styled from "styled-components/native";
+import React from "react";
 
 export const buttonStyles = StyleSheet.create({
     buttonYellow: {
@@ -52,3 +54,10 @@ export const buttonStyles = StyleSheet.create({
         borderWidth: 1,
     }
 });
+
+export const CompleteButton = styled.Pressable`
+    background-color: ${colors.palette.Green};
+
+    justify-content: center;
+    align-items: center;
+`;
