@@ -12,7 +12,8 @@ import { colors } from "../../../theme";
 import { buttonStyles, textStyles } from "../../../components";
 import styled from "styled-components/native";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
-import feedimageURL from "../../../Assets/Images/dog/dog_bowl.png";
+import bowlNoimageURL from "../../../Assets/Images/dog/dog_bowl.png";
+import feedimageURL from "../../../Assets/stuffs/feed.png";
 import bowlimageURL from "../../../Assets/Images/dog/dog_bowl_no.png";
 
 const FeedScreen = ({ navigation: { navigate } }) => {
@@ -36,7 +37,7 @@ const FeedScreen = ({ navigation: { navigate } }) => {
             <Text style={{ color: colors.palette.White }}>산책하러 가기</Text>
           </TouchableOpacity>
         </View>
-        <BowlImage source={isFeed ? bowlimageURL : feedimageURL}></BowlImage>
+        <BowlImage source={isFeed ? bowlimageURL : bowlNoimageURL}></BowlImage>
         <DraggableImage
           source={feedimageURL}
           style={{
@@ -91,14 +92,14 @@ const DraggableImage = ({ source, style, isFeed, setisFeed }) => {
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (_, { dx, dy }) => {
-        console.log(dy);
+        console.log({ dx, dy });
         position.setValue({ x: dx, y: dy });
       },
       onPanResponderGrant: () => {
         onPressIn.start();
       },
       onPanResponderRelease: (_, { dx, dy }) => {
-        if (dx < -190 && dy > 250) {
+        if (dx > -240 && dy > 270 && dx < -175 && dy < 350) {
           setisFeed(!isFeed);
           Animated.sequence([
             Animated.parallel([onDropScale, onDropOpacity]),
