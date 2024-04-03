@@ -18,7 +18,6 @@ const LoginScreen = ({navigation: { navigate }} ) => {
     const [getProfileRes, setGetProfileRes] = useState();
 
     const login = async () => {
-        console.log(successResponse);
         const {failureResponse, successResponse} = await NaverLogin.login({
           appName,
           consumerKey,
@@ -27,12 +26,10 @@ const LoginScreen = ({navigation: { navigate }} ) => {
         });
         setSuccessResponse(successResponse);
         setFailureResponse(failureResponse);
-        console.log(successResponse);
-
+        
         if(success) {
             navigate('Tabs', { screen: 'main' })
         }
-
     };
 
     return (
