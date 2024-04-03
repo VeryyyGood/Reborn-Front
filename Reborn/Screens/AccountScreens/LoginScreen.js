@@ -1,9 +1,41 @@
-import React from "react";
+import React, {useState} from "react";
 import {View, Text, StyleSheet, Image, TouchableOpacity} from "react-native";
 import { buttonStyles } from '../../components';
 import { colors } from '../../theme';
+import NaverLogin, {
+    NaverLoginResponse,
+    GetProfileResponse,
+  } from '@react-native-seoul/naver-login';
 
-const LoginScreen = ({navigation: { navigate }} ) => (
+const consumerKey = 'fIaIMi7lrukY7sXnD0_l';
+const consumerSecret = 'nvDc5R3Arw';
+const appName = 'Hello';
+const serviceUrlScheme = 'navertest';
+
+const LoginScreen = ({navigation: { navigate }} ) => {
+    const [success, setSuccessResponse] = useState();
+    const [failure, setFailureResponse] = useState();
+    const [getProfileRes, setGetProfileRes] = useState();
+
+    const login = async () => {
+        console.log(successResponse);
+        const {failureResponse, successResponse} = await NaverLogin.login({
+          appName,
+          consumerKey,
+          consumerSecret,
+          serviceUrlScheme,
+        });
+        setSuccessResponse(successResponse);
+        setFailureResponse(failureResponse);
+        console.log(successResponse);
+
+        if(success) {
+            navigate('Tabs', { screen: 'main' })
+        }
+
+    };
+
+    return (
     <View style={styles.container}>
         <View style={styles.introContainer}>
             <Text style={styles.introTitle}>PET <Text style={{color: colors.palette.Yellow}}>RE</Text>BORN,{'\n'}로그인 하기</Text>
@@ -11,7 +43,7 @@ const LoginScreen = ({navigation: { navigate }} ) => (
         <View style={styles.contentContainer}>
             <Image style={{width: '83%', height: '83%', bottom: '8%'}} source={require('../../Assets/icons/app_icon.png')}/>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={buttonStyles.buttonLogin} onPress={()=>navigate('Tabs', { screen: 'main' })}>
+                <TouchableOpacity style={buttonStyles.buttonLogin} onPress={login}>
                     <View style={styles.buttonContent}>
                         <Image
                             source={require('../../Assets/icons/naver_logo.png')}
@@ -23,8 +55,8 @@ const LoginScreen = ({navigation: { navigate }} ) => (
             </View>
         </View>
     </View>
-);
-
+    );
+};
 export default LoginScreen;
 
 const styles = StyleSheet.create({

@@ -1,9 +1,42 @@
-import React from "react";
+import React, {useState} from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { buttonStyles } from '../../../components';
 import { colors } from '../../../theme';
+import NaverLogin, {
+  NaverLoginResponse,
+  GetProfileResponse,
+} from '@react-native-seoul/naver-login';
 
-const AccountManagementScreen = ({ navigation: { navigate }} ) => (
+const AccountManagementScreen = ({ navigation: { navigate }} ) => {
+  const [success, setSuccessResponse] = useState();
+  const [failure, setFailureResponse] = useState();
+  const [getProfileRes, setGetProfileRes] = useState();
+
+  const logout = async () => {
+    try {
+      await NaverLogin.logout();
+      //setSuccessResponse(undefined);
+      //setFailureResponse(undefined);
+      //setGetProfileRes(undefined);
+      navigate('Login');
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const deleteToken = async () => {
+    try {
+      await NaverLogin.deleteToken();
+      //setSuccessResponse(undefined);
+      //setFailureResponse(undefined);
+      //setGetProfileRes(undefined);
+      navigate('Login');
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  return(
   <View style={styles.container}>
     <View style={styles.imageWrapper}>
       <Image source={require('../../../Assets/icons/profile_bg.png')} style={styles.backgroundImage}></Image>
@@ -30,16 +63,16 @@ const AccountManagementScreen = ({ navigation: { navigate }} ) => (
       <View style={styles.line} />
     </View>
     <View>
-      <TouchableOpacity style={buttonStyles.buttonWhiteBrown} onPress={() => navigate('Login')}>
+      <TouchableOpacity style={buttonStyles.buttonWhiteBrown} onPress={logout}>
         <Text style={styles.buttonFont}>로그아웃</Text>
       </TouchableOpacity>
     </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={deleteToken}>
         <Text style={{color: colors.palette.Red, fontFamily: 'Poppins-Regular', fontSize: 14}}>계정 삭제하기</Text>
       </TouchableOpacity>
   </View>
-);
-
+  );
+};
 export default AccountManagementScreen;
 
 const styles = StyleSheet.create({
