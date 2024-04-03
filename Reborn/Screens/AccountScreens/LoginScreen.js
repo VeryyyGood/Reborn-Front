@@ -40,7 +40,7 @@ const LoginScreen = ({navigation: { navigate }} ) => {
         <View style={styles.contentContainer}>
             <Image style={{width: '83%', height: '83%', bottom: '8%'}} source={require('../../Assets/icons/app_icon.png')}/>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={buttonStyles.buttonLogin} onPress={login}>
+                <TouchableOpacity style={buttonStyles.buttonLogin} onPress={() => navigate('Tabs', { screen: 'main' })}>
                     <View style={styles.buttonContent}>
                         <Image
                             source={require('../../Assets/icons/naver_logo.png')}
