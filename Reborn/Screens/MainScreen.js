@@ -21,8 +21,8 @@ const MainScreen = ({ navigation: { navigate } }) => (
       <Text style={styles.boxtext}>
         <Text style={{color: colors.palette.Brown,}}>마음에 담아두지 마세요. {"\n"}</Text>AI 챗봇, REMOVER와 대화하며 마음의 짐을 덯어 낼 수 있는 공간을 마련해드립니다.
       </Text>
-      <TouchableOpacity>
-          <Text style={{marginLeft: '30%',}}>REMOVER와 대화하러 가기  <Image style={{position: 'absolute', bottom: "20%", left: '20%'}} source={require('../Assets/icons/mainimages/arrow.png')} /></Text>
+      <TouchableOpacity onPress={() => navigate("ReturnStack", { screen: "Return" })}>
+          <Text style={{marginLeft: '30%',}}>RETURN과 대화하러 가기  <Image style={{position: 'absolute', bottom: "20%", left: '20%'}} source={require('../Assets/icons/mainimages/arrow.png')} /></Text>
       </TouchableOpacity>
     </View>
     <View style={{ flexDirection: "row", marginTop: -10,}}>
