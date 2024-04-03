@@ -1,30 +1,19 @@
 import React from "react";
 import {View, Text, Button, TouchableOpacity, StyleSheet} from "react-native";
 
-const ShareContentScreen = ({navigation: { navigate }} ) => {
+const ShareContentScreen = ({ route }) => {
+    const {id, title, date, content } = route.params;
     return (
-        <View style={styles.shareItem}>
-            <View style={styles.titlecontainer}>
-                <Image style={styles.profile} source={require('../Assets/icons/profile.png')} />
-                <Text style={styles.title}>{title}{'\n'}<Text style={styles.date}>{date}</Text> </Text>
-                
-            </View>
-            <View>
-                <Text style={styles.content}>{content}</Text>
-            </View>
-            <View style={{flexDirection:'row', paddingVertical: 20, paddingHorizontal: 20, justifyContent: 'space-between'}}>
-                <Image style={{marginLeft: 10,}} source={require('../Assets/icons/ShareBoard/commentIcon.png')}/>
-                <View style={{flexDirection:'row'}}>
-                    <Image style={{marginRight:'5%',}} source={require('../Assets/icons/ShareBoard/heartIconGrey.png')}/>
-                    <Text>100</Text>
-                    <Image style={{marginLeft: 10,}}source={require('../Assets/icons/ShareBoard/bookmarkIconGrey.png')}/>
-                </View>  
-            </View>
-        </View>	
+      <View>
+        <Text>{title}</Text>
+        <Text>{date}</Text>
+        <Text>{content}</Text>
+        <Text>응애</Text>
+      </View>
     );
-};
+  };
 
-export default ShareContentScreen;
+export default ShareContentScreen;1
 
 const styles=StyleSheet.create({
 	shareItem: {
