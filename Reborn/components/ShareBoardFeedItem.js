@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet, ImageBackground, Touchable, TouchableOpacity } from 'react-native';
 import styled from "styled-components/native";
-const ShareBoardFeedItem = ({ navigation, id, title, content, date }) => {
+const ShareBoardFeedItem = ({ title, content, date }) => {
 	return (
-        <TouchableOpacity onPress={() => navigation.navigate("ShareContent",{ id, title, date, content })}>
+        <TouchableOpacity>
             <View style={styles.shareItem}>
                 <View style={styles.titlecontainer}>
                     <Image style={styles.profile} source={require('../Assets/icons/profile.png')} />
