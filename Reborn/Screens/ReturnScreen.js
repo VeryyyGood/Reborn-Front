@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Button, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
 import styled from "styled-components/native";
 
 const ReturnScreen = () => {
@@ -7,11 +7,44 @@ const ReturnScreen = () => {
   const [userInput, setUserInput] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const apiKey = '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';
+  const apiKey = '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';
   const apiEndpoint = 'https://api.openai.com/v1/chat/completions';
 
+  useEffect(() => {
+    addMessage('bot', '안녕하세요! 저는 당신의 챗봇 RETURN 입니다. 무엇을 도와드릴까요?');
+    setTimeout(() => { // 메시지 순차적으로 추가
+      addMessage('bot', '애플리케이션 기능 안내');
+      addMessage('bot', '상담센터 안내');
+      addMessage('bot', '문의하기');
+    }, 500);
+  }, []);
+  
   const addMessage = (sender, message) => {
-    setMessages(prevMessages => [...prevMessages, { sender, message }]);
+    const newMessage = {
+      sender,
+      message,
+      id: Date.now() + Math.random().toString(), // 고유한 ID 생성
+    };
+    setMessages(prevMessages => [...prevMessages, newMessage]);
+  };
+
+  const handleOptionSelect = (message) => {
+    switch (message) {
+      case '애플리케이션 기능 안내':
+        addMessage('user', message);
+        addMessage('bot', '애플리케이션의 기능에 대해서는...');
+        break;
+      case '상담센터 안내':
+        addMessage('user', message);
+        addMessage('bot', '상담센터의 운영 시간은...');
+        break;
+      case '문의하기':
+        addMessage('user', message);
+        addMessage('bot', '문의하실 내용을 입력해주세요...');
+        break;
+      default:
+        addMessage('bot', '죄송합니다. 이해하지 못했습니다. 다시 선택해주세요.');
+    }
   };
 
   const handleSendMessage = async () => {
@@ -56,10 +89,12 @@ const ReturnScreen = () => {
     <View style={styles.chatbotScreen}>
       <ScrollView style={styles.chatDiv}>
         {loading && <ActivityIndicator size="small" color="#0000ff" />}
-        {messages.map((msg, index) => (
-          <View key={index} style={styles.message(msg.sender)}>
-            <Text>{`${msg.message}`}</Text>
-          </View>
+        {messages.map((msg) => (
+          <TouchableOpacity key={msg.id} onPress={() => handleOptionSelect(msg.message)} disabled={msg.sender !== 'bot'}>
+            <View style={styles.message(msg.sender)}>
+              <Text>{`${msg.message}`}</Text>
+            </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
       <View style={styles.inputDiv}>
@@ -75,10 +110,6 @@ const ReturnScreen = () => {
     </View>
   );
 };
-
-const SendButton = styled.Pressable`
-    background-color: black;
-`;
 
 const styles = StyleSheet.create({
   chatbotScreen: {
