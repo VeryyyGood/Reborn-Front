@@ -9,6 +9,9 @@ import VolunteerShareScreen from '../Screens/ShareboardScreens/VolunteerShareScr
 
 import { NavigationContainer } from '@react-navigation/native';
 
+import ShareContentScreen from '../Screens/ShareboardScreens/ShareContentScreen';
+import ShareWriteScreen from '../Screens/ShareboardScreens/ShareWriteScreen';
+
 const Drawer = createDrawerNavigator();
 
 const ShareDrawers = () => (
@@ -19,6 +22,8 @@ const ShareDrawers = () => (
             <Drawer.Screen name='Chat' component={ChatShareScreen} />
             <Drawer.Screen name='Item' component={ItemShareScreen} />
             <Drawer.Screen name='Volunteer' component={VolunteerShareScreen} />
+            <Drawer.Screen name='ShareContent' component={ShareContentScreen}/>
+            <Drawer.Screen name='ShareWrite' component={ShareWriteScreen} options={{headerShown: false}}/>
         </Drawer.Navigator>
     </NavigationContainer>
 );
