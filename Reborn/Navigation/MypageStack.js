@@ -3,6 +3,7 @@ import { Text } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import AccountManagementScreen from "../Screens/MyPageScreens/AccountManagementScreens/AccountManagementScreen";
+import PetProfileListScreen from "../Screens/MyPageScreens/PetProfileListScreen";
 import PetProfileManagementScreen from "../Screens/MyPageScreens/PetProfileManagementScreen";
 import ReviewMainScreen from "../Screens/MyPageScreens/ReviewScreens/ReviewMainScreen";
 import ExpertScreen from "../Screens/MyPageScreens/ExpertScreen";
@@ -33,6 +34,7 @@ const ExpertTitle = () => (
 const MypageStack = () =>
 <NativeStack.Navigator screenOptions={{headerTitleAlign:"center",}}>
     <NativeStack.Screen name = 'AccountManagement' component={AccountManagementScreen} options={{headerTitle: () => <AccountTitle/>}}/>
+    <NativeStack.Screen name = 'PetProfileList' component={PetProfileListScreen} options={{headerTitle: () => <PetTitle/>}}/>
     <NativeStack.Screen name = 'PetProfileManagement' component={PetProfileManagementScreen} options={{headerTitle: () => <PetTitle/>}}/>
     <NativeStack.Screen name = 'ReviewMain' component={ReviewMainScreen} options={{headerTitle: () => <ReviewTitle/>}}/>
     <NativeStack.Screen name = 'Expert' component={ExpertScreen} options={{headerTitle: () => <ExpertTitle/>}}/>

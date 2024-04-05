@@ -10,7 +10,7 @@ const MypageMainScreen = ({ navigation: {navigate} }) => (
         <Image source={require('../../Assets/icons/right_arrow.png')} style={styles.arrow_icon1} />
       </View>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.button} onPress={() => navigate('MypageStack', {screen: 'PetProfileManagement' })}>
+    <TouchableOpacity style={styles.button} onPress={() => navigate('MypageStack', {screen: 'PetProfileList' })}>
       <View style={styles.row}>
         <Image source={require('../../Assets/icons/pet_profile.png')} style={styles.icon} />
         <Text style={styles.font}>반려동물 프로필 관리</Text>
