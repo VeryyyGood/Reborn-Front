@@ -7,6 +7,7 @@ import ReviewRemindScreen from "../Screens/MyPageScreens/ReviewScreens/ReviewRem
 import ReviewRevealScreen from "../Screens/MyPageScreens/ReviewScreens/ReviewRevealScreen";
 import ReviewRememberScreen from "../Screens/MyPageScreens/ReviewScreens/ReviewRememberScreen";
 import ReviewRebornScreen from "../Screens/MyPageScreens/ReviewScreens/ReviewRebornScreen";
+import ReviewMainScreen from "../Screens/MyPageScreens/ReviewScreens/ReviewMainScreen"
 
 import { colors } from "../theme/colors";
 
@@ -21,6 +22,7 @@ const CustomHeaderTitle = () => (
 
 const ReviewStack = () =>
 <NativeStack.Navigator screenOptions={{headerTitleAlign:"center",}}>
+    <NativeStack.Screen name = 'ReviewMain' component={ReviewMainScreen} options={{headerTitle: () => <CustomHeaderTitle/>}}/>
     <NativeStack.Screen name = 'ReviewReconnect' component={ReviewReconnectScreen} options={{headerTitle: () => <CustomHeaderTitle/>}}/>
     <NativeStack.Screen name = 'ReviewRemind' component={ReviewRemindScreen} options={{headerTitle: () => <CustomHeaderTitle/>}}/>
     <NativeStack.Screen name = 'ReviewReveal' component={ReviewRevealScreen} options={{headerTitle: () => <CustomHeaderTitle/>}}/>

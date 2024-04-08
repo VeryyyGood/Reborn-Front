@@ -5,14 +5,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AccountManagementScreen from "../Screens/MyPageScreens/AccountManagementScreens/AccountManagementScreen";
 import PetProfileListScreen from "../Screens/MyPageScreens/PetProfileListScreen";
 import PetProfileManagementScreen from "../Screens/MyPageScreens/PetProfileManagementScreen";
-import ReviewMainScreen from "../Screens/MyPageScreens/ReviewScreens/ReviewMainScreen";
 import ExpertScreen from "../Screens/MyPageScreens/ExpertScreen";
+import ReviewPetListScreen from "../Screens/MyPageScreens/ReviewScreens/ReviewPetListScreen";
 
 import { colors } from "../theme/colors";
 
 const NativeStack = createNativeStackNavigator();
 
-const ReviewTitle = () => (
+const ReviewPetListTitle = () => (
   <Text>
     <Text style={{ color: colors.palette.Brown, fontFamily: 'Poppins-Bold', fontSize: 18 }}>RE:</Text>
     <Text style={{ fontFamily: 'Poppins-Bold', fontSize: 18 }}> VIEW</Text>
@@ -36,7 +36,7 @@ const MypageStack = () =>
     <NativeStack.Screen name = 'AccountManagement' component={AccountManagementScreen} options={{headerTitle: () => <AccountTitle/>}}/>
     <NativeStack.Screen name = 'PetProfileList' component={PetProfileListScreen} options={{headerTitle: () => <PetTitle/>}}/>
     <NativeStack.Screen name = 'PetProfileManagement' component={PetProfileManagementScreen} options={{headerTitle: () => <PetTitle/>}}/>
-    <NativeStack.Screen name = 'ReviewMain' component={ReviewMainScreen} options={{headerTitle: () => <ReviewTitle/>}}/>
+    <NativeStack.Screen name = 'ReviewPetList' component={ReviewPetListScreen} options={{headerTitle: () => <ReviewPetListTitle/>}}/>
     <NativeStack.Screen name = 'Expert' component={ExpertScreen} options={{headerTitle: () => <ExpertTitle/>}}/>
 </NativeStack.Navigator>;
 

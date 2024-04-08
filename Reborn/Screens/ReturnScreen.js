@@ -7,7 +7,7 @@ const ReturnScreen = () => {
   const [userInput, setUserInput] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const apiKey = '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';
+  const apiKey = '';
   const apiEndpoint = 'https://api.openai.com/v1/chat/completions';
 
   useEffect(() => {
