@@ -38,7 +38,7 @@ const Tabs = () => (
     <Tab.Screen
       name="Shared"
       component={ShareDrawers}
-      options={{ headerShown: false,  tabBarLabel: "나눔게시판", tabBarStyle: { display: "none" }, tabBarIcon: ({color}) => (
+      options={{ headerShown: false,  tabBarLabel: "나눔게시판", tabBarIcon: ({color}) => (
         <Image
           source={ require('../Assets/icons/tabIcons/shardboardicon.png') }
           style={{
@@ -52,22 +52,14 @@ const Tabs = () => (
       name="RediaryMain"
       component={RediaryMain}
       options={({navigation}) => ({
-        tabBarStyle: { display: "none" }, title: "RE: DIARY",
+        title: "RE: DIARY",
         headerShown: true,
-        headerLeft: () => (
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image
-                source={require('../Assets/icons/tabIcons/homeicon.png')}
-                style={{marginLeft: "5%",width: 25, height: 25, tintColor: colors.palette.Brown}}
-              />
-          </TouchableOpacity>
-        ),
         tabBarIcon: ({color}) => (
           <Image
             source={ require('../Assets/icons/tabIcons/rediaryicon.png') }
             style={{
               width: 18,
-              height: 20,
+              height: 22,
               tintColor: color,
             }}
           /> )
@@ -77,16 +69,8 @@ const Tabs = () => (
       name="MypageMain"
       component={MypageMainScreen}
       options={({navigation}) => ({
-        tabBarStyle: { display: "none" }, title: "마이페이지",
+        title: "마이페이지",
         headerShown: true,
-        headerLeft: () => (
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image
-                source={require('../Assets/icons/tabIcons/homeicon.png')}
-                style={{marginLeft: "5%",width: 25, height: 25, tintColor: colors.palette.Brown}}
-              />
-          </TouchableOpacity>
-        ),
         tabBarIcon: ({color}) => (
           <Image
             source={ require('../Assets/icons/tabIcons/mypageicon.png') }
@@ -102,3 +86,14 @@ const Tabs = () => (
 );
 
 export default Tabs;
+
+// tabBarStyle: { display: "none" }
+
+// headerLeft: () => (
+//   <TouchableOpacity onPress={() => navigation.goBack()}>
+//     <Image
+//         source={require('../Assets/icons/tabIcons/homeicon.png')}
+//         style={{marginLeft: "5%",width: 25, height: 25, tintColor: colors.palette.Brown}}
+//       />
+//   </TouchableOpacity>
+// ),

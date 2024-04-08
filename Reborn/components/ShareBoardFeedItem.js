@@ -1,24 +1,27 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet, ImageBackground, Touchable, TouchableOpacity } from 'react-native';
 import styled from "styled-components/native";
-const ShareBoardFeedItem = ({ navigation, id, title, content, date }) => {
+import { colors } from '../theme';
+const ShareBoardFeedItem = ({ navigation, id, title, content, date, heartNum, commentNum }) => {
 	return (
-        <TouchableOpacity onPress={() => navigation.navigate("ShareContent",{ id, title, date, content })}>
+        <TouchableOpacity onPress={() => navigation.navigate("ShareContent",{ id, title, date, content, heartNum, commentNum})}>
             <View style={styles.shareItem}>
                 <View style={styles.titlecontainer}>
                     <Image style={styles.profile} source={require('../Assets/icons/profile.png')} />
-                    <Text style={styles.title}>{title}{'\n'}<Text style={styles.date}>{date}</Text> </Text>
+                    <Text style={[styles.title, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Bold'}]}>{title}{'\n'}<Text style={styles.date}>{date}</Text> </Text>
                     
                 </View>
                 <View>
-                    <Text style={styles.content}>{content}</Text>
+                    <Text style={[styles.content, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Medium'}]}>{content}</Text>
                 </View>
                 <View style={{flexDirection:'row', paddingVertical: 20, paddingHorizontal: 20, justifyContent: 'space-between'}}>
-                    <Image style={{marginLeft: 10,}} source={require('../Assets/icons/ShareBoard/commentIcon.png')}/>
                     <View style={{flexDirection:'row'}}>
-                        <Image style={{marginRight:'5%',}} source={require('../Assets/icons/ShareBoard/heartIconGrey.png')}/>
-                        <Text>100</Text>
-                        <Image style={{marginLeft: 10,}}source={require('../Assets/icons/ShareBoard/bookmarkIconGrey.png')}/>
+                        <Image style={{marginLeft: '5%', tintColor: colors.palette.BrownDark}} source={require('../Assets/icons/ShareBoard/commentIcon.png')}/>
+                        <Text style={{marginLeft: '7%', color: colors.palette.BrownDark, fontFamily: 'Poppins-Bold'}}>{commentNum}</Text>
+                    </View>
+                    <View style={{flexDirection:'row'}}>
+                        <Image style={{marginRight:'5%', tintColor: colors.palette.Yellow}} source={require('../Assets/icons/ShareBoard/heartIconGrey.png')}/>
+                        <Text style={{color: colors.palette.BrownDark, fontFamily: 'Poppins-Bold'}}>{heartNum}</Text>
                     </View>  
                 </View>
             </View>
@@ -38,7 +41,6 @@ const styles=StyleSheet.create({
     },
     title: {
     	fontSize: 20,
-        fontWeight: 'bold',
         paddingLeft: 10,
         marginTop: 20,
     },
