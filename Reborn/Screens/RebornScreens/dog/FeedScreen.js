@@ -1,15 +1,13 @@
 import React, { useRef, useState } from "react";
 import {
-  View,
   Text,
-  TouchableOpacity,
   ImageBackground,
   Animated,
   PanResponder,
   Easing,
 } from "react-native";
 import { colors } from "../../../theme";
-import { buttonStyles, textStyles } from "../../../components";
+import { textStyles, ButtonBrownBottom } from "../../../components";
 import styled from "styled-components/native";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 import bowlNoimageURL from "../../../Assets/Images/dog/dog_bowl.png";
@@ -29,14 +27,10 @@ const FeedScreen = ({ navigation: { navigate } }) => {
           <Text style={{ color: colors.palette.Red }}>밥주기</Text>
         </Text>
         <DogImage source={dogimageURL} resizeMode="center" />
-        <View>
-          <TouchableOpacity
-            style={buttonStyles.buttonBrownBottom}
-            onPress={() => navigate("Walk")}
-          >
-            <Text style={{ color: colors.palette.White }}>산책하러 가기</Text>
-          </TouchableOpacity>
-        </View>
+        <ButtonBrownBottom
+          text="산책하러 가기"
+          onPress={() => navigate("Walk")}
+        ></ButtonBrownBottom>
         <BowlImage source={isFeed ? bowlimageURL : bowlNoimageURL}></BowlImage>
         <DraggableImage
           source={feedimageURL}

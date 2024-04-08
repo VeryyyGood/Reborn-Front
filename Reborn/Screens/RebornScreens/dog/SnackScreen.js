@@ -11,13 +11,18 @@ import {
   Easing,
 } from "react-native";
 import { colors } from "../../../theme";
-import { buttonStyles, textStyles, CompleteButton } from "../../../components";
+import {
+  buttonStyles,
+  textStyles,
+  CompleteButton,
+  ButtonBrownBottom,
+} from "../../../components";
 import styled from "styled-components/native";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 import snackimageURL from "../../../Assets/Images/dog/dog_snack.png";
 
 const WalkScreen = ({ navigation: { navigate } }) => {
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
   const [answer, onChangeAnswer] = React.useState("");
   const [isFeed, setisFeed] = useState(true);
 
@@ -78,14 +83,12 @@ const WalkScreen = ({ navigation: { navigate } }) => {
           isFeed={isFeed}
           setisFeed={setisFeed}
         />
-        <View>
-          <TouchableOpacity
-            style={buttonStyles.buttonBrownBottom}
-            onPress={() => navigate("Snack")}
-          >
-            <Text style={{ color: colors.palette.White }}>간식주러 가기</Text>
-          </TouchableOpacity>
-        </View>
+        <ButtonBrownBottom
+          text="Q&A 작성하기"
+          onPress={() => {
+            setModalVisible(!modalVisible);
+          }}
+        ></ButtonBrownBottom>
       </ImageBackground>
     </Container>
   );

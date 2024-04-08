@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { Modal, Text, Pressable, ImageBackground } from "react-native";
+import { Text, ImageBackground } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../../../theme";
-import { textStyles, buttonStyles } from "../../../components";
+import { textStyles } from "../../../components";
+import { TutorialModal } from "../../../components/modalStyles";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 
 const RemindIntroScreen = ({ navigation: { navigate } }) => {
+  const ModalText = `오늘부터 5일 동안 00이와\n충분한 대화를 나누어보세요. \n대화한 내용은 모두 ‘RE: VIEW’에\n저장됩니다.`;
+
   const [modalVisible, setModalVisible] = useState(true);
   return (
     <Container>
@@ -22,24 +25,16 @@ const RemindIntroScreen = ({ navigation: { navigate } }) => {
           MIND : 충분한 대화 나누기
         </Text>
         <DogImage source={dogimageURL} resizeMode="center" />
-
-        <Modal animationType="fade" visible={modalVisible} transparent={true}>
-          <BlackContainer>
-            <PopTextBox
-              onPress={() => {
-                navigate("Pet"), setModalVisible(!modalVisible);
-              }}
-            >
-              <Text style={{ textAlign: "center" }}>
-                오늘부터 5일 동안 00이와{"\n"}충분한 대화를 나누어보세요. {"\n"}
-                대화한 내용은 모두 ‘RE: DIARY’에{"\n"}저장됩니다.
-              </Text>
-            </PopTextBox>
-          </BlackContainer>
-        </Modal>
+        <TutorialModal
+          text={ModalText}
+          modalStyles={modalVisible}
+          onPress={() => {
+            () => setModalVisible(false), navigate("Pet");
+          }}
+        ></TutorialModal>
       </ImageBackground>
     </Container>
-  ); //뷰 반환
+  );
 };
 
 export default RemindIntroScreen;
