@@ -8,7 +8,11 @@ import {
   PanResponder,
 } from "react-native";
 import { colors } from "../../../theme";
-import { buttonStyles, textStyles } from "../../../components";
+import {
+  ButtonBrownBottom,
+  buttonStyles,
+  textStyles,
+} from "../../../components";
 import styled from "styled-components/native";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 import handimageURL from "../../../Assets/stuffs/hand.png";
@@ -24,14 +28,7 @@ const PetScreen = ({ navigation: { navigate } }) => (
         <Text style={{ color: colors.palette.Red }}>쓰다듬기</Text>
       </Text>
       <DogImage source={dogimageURL} resizeMode="center" />
-      <View>
-        <TouchableOpacity
-          style={buttonStyles.buttonBrownBottom}
-          onPress={() => navigate("Feed")}
-        >
-          <Text style={{ color: colors.palette.White }}>간식주러 가기</Text>
-        </TouchableOpacity>
-      </View>
+      <ButtonBrownBottom text="밥주러 가기" onPress={() => navigate("Feed")} />
       <DraggableImage
         source={handimageURL}
         style={{

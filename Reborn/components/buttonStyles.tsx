@@ -1,4 +1,4 @@
-import { StyleSheet} from "react-native";
+import { StyleSheet } from "react-native";
 import { colors } from "../theme";
 import styled from "styled-components/native";
 import React from "react";
@@ -24,15 +24,6 @@ export const buttonStyles = StyleSheet.create({
         borderRadius: 30,
         height: 50,
     },
-    buttonBrownBottom: {
-        backgroundColor: colors.palette.Brown,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: -50,
-        borderRadius: 30,
-        height: 50,
-        marginHorizontal: 100,
-    },
     buttonLogin: {
         backgroundColor: colors.palette.NaverGreen,
         justifyContent: 'center',
@@ -55,7 +46,31 @@ export const buttonStyles = StyleSheet.create({
     }
 });
 
-export const CompletePressable = styled.Pressable`
+const PressableBrownBottom = styled.Pressable`
+    background-color: ${colors.palette.Brown};
+    justify-content: center;
+    align-items: center;
+    margin: -12% 30% 0% 30%;
+    border-radius: 30px;
+    height: 45px;
+`;
+
+const ButtonText = styled.Text`
+    color: ${colors.palette.White};
+    justify-content: center;
+    text-align: center;
+`;
+
+export const ButtonBrownBottom = ({text, onPress}) => {
+    return (
+    <PressableBrownBottom onPress={onPress}>
+        <ButtonText>{text}</ButtonText>
+    </PressableBrownBottom>
+    );
+};
+
+
+const CompletePressable = styled.Pressable`
     background-color: ${colors.palette.Green};
     padding: 2%;
     margin: 5% 8% 5% 68%;
@@ -64,15 +79,11 @@ export const CompletePressable = styled.Pressable`
     align-items: center;
 `;
 
-export const CompleteButtonText = styled.Text`
-    color: ${colors.palette.White};
-    justify-content: center;
-`;
 
 export const CompleteButton = ( {text, onPress} ) => {
     return (
         <CompletePressable onPress={onPress}>
-            <CompleteButtonText>{text}</CompleteButtonText>
+            <ButtonText>{text}</ButtonText>
         </CompletePressable>
     );
 };
