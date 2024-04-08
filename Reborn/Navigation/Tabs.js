@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View,TouchableOpacity,Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { colors } from "../theme";
@@ -24,22 +24,79 @@ const Tabs = () => (
     <Tab.Screen
       name="Main"
       component={MainScreen}
-      options={{ tabBarLabel: "Home", headerShown: false }}
+      options={{ tabBarLabel: "메인화면", headerShown: false, tabBarIcon: ({color}) => (
+        <Image
+          source={ require('../Assets/icons/tabIcons/homeicon.png') }
+          style={{
+            width: 20,
+            height: 20,
+            tintColor: color,
+          }}
+        /> )
+      }}
     />
     <Tab.Screen
       name="Shared"
       component={ShareDrawers}
-      options={{ headerShown: false, tabBarStyle: { display: "none" } }}
+      options={{ headerShown: false,  tabBarLabel: "나눔게시판", tabBarStyle: { display: "none" }, tabBarIcon: ({color}) => (
+        <Image
+          source={ require('../Assets/icons/tabIcons/shardboardicon.png') }
+          style={{
+            width: 25,
+            height: 25,
+            tintColor: color,
+          }}
+        /> )}}
     />
     <Tab.Screen
       name="RediaryMain"
       component={RediaryMain}
-      options={{ tabBarStyle: { display: "none" }, title: "RE: Diary" }}
+      options={({navigation}) => ({
+        tabBarStyle: { display: "none" }, title: "RE: DIARY",
+        headerShown: true,
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image
+                source={require('../Assets/icons/tabIcons/homeicon.png')}
+                style={{marginLeft: "5%",width: 25, height: 25, tintColor: colors.palette.Brown}}
+              />
+          </TouchableOpacity>
+        ),
+        tabBarIcon: ({color}) => (
+          <Image
+            source={ require('../Assets/icons/tabIcons/rediaryicon.png') }
+            style={{
+              width: 18,
+              height: 20,
+              tintColor: color,
+            }}
+          /> )
+        })}
     />
     <Tab.Screen
       name="MypageMain"
       component={MypageMainScreen}
-      options={{ tabBarStyle: { display: "none" }, title: "마이페이지" }}
+      options={({navigation}) => ({
+        tabBarStyle: { display: "none" }, title: "마이페이지",
+        headerShown: true,
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image
+                source={require('../Assets/icons/tabIcons/homeicon.png')}
+                style={{marginLeft: "5%",width: 25, height: 25, tintColor: colors.palette.Brown}}
+              />
+          </TouchableOpacity>
+        ),
+        tabBarIcon: ({color}) => (
+          <Image
+            source={ require('../Assets/icons/tabIcons/mypageicon.png') }
+            style={{
+              width: 20,
+              height: 20,
+              tintColor: color,
+            }}
+          /> )
+      })}
     />
   </Tab.Navigator>
 );
