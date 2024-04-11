@@ -6,6 +6,7 @@ import FeedScreen from "../Screens/RebornScreens/dog/FeedScreen";
 import PetScreen from "../Screens/RebornScreens/dog/PetScreen";
 import SnackScreen from "../Screens/RebornScreens/dog/SnackScreen";
 import WalkScreen from "../Screens/RebornScreens/dog/WalkScreen";
+import WalkFinishScreen from "../Screens/RebornScreens/dog/WalkFinishScreen";
 import { Image } from "react-native";
 
 const NativeRebornDogStack = createNativeStackNavigator();
@@ -44,6 +45,11 @@ const RebornDogStack = ({ navigation: { navigate } }) => (
     <NativeRebornDogStack.Screen
       name="Walk"
       component={WalkScreen}
+      options={{ title: "Day 00" }}
+    />
+    <NativeRebornDogStack.Screen
+      name="WalkFinish"
+      component={WalkFinishScreen}
       options={{ title: "Day 00" }}
     />
   </NativeRebornDogStack.Navigator>
