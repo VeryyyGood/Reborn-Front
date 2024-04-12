@@ -2,9 +2,9 @@ import React from 'react';
 import {View, Text, Image, StyleSheet, ImageBackground, Touchable, TouchableOpacity } from 'react-native';
 import styled from "styled-components/native";
 import { colors } from '../theme';
-const ShareBoardFeedItem = ({ navigation, boardid, title, content, date, heartNum, commentNum }) => {
+const CommentItem = ({ navigation, id, title, content, date}) => {
 	return (
-        <TouchableOpacity onPress={() => navigation.navigate("ShareContent",{ boardid, title, date, content, heartNum, commentNum})}>
+        <TouchableOpacity onPress={() => navigation.navigate("ShareContent",{ id, title, date, content})}>
             <View style={styles.shareItem}>
                 <View style={styles.titlecontainer}>
                     <Image style={styles.profile} source={require('../Assets/icons/profile.png')} />
@@ -15,14 +15,6 @@ const ShareBoardFeedItem = ({ navigation, boardid, title, content, date, heartNu
                     <Text style={[styles.content, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Medium'}]}>{content}</Text>
                 </View>
                 <View style={{flexDirection:'row', paddingVertical: 20, paddingHorizontal: 20, justifyContent: 'space-between'}}>
-                    <View style={{flexDirection:'row'}}>
-                        <Image style={{marginLeft: '5%', tintColor: colors.palette.BrownDark}} source={require('../Assets/icons/ShareBoard/commentIcon.png')}/>
-                        <Text style={{marginLeft: '7%', color: colors.palette.BrownDark, fontFamily: 'Poppins-Bold'}}>{commentNum}</Text>
-                    </View>
-                    <View style={{flexDirection:'row'}}>
-                        <Image style={{marginRight:'5%', tintColor: colors.palette.Yellow}} source={require('../Assets/icons/ShareBoard/heartIconGrey.png')}/>
-                        <Text style={{color: colors.palette.BrownDark, fontFamily: 'Poppins-Bold'}}>{heartNum}</Text>
-                    </View>  
                 </View>
             </View>
         </TouchableOpacity>
@@ -58,4 +50,4 @@ const styles=StyleSheet.create({
     },
 });
 
-export default ShareBoardFeedItem;
+export default CommentItem;

@@ -6,22 +6,28 @@ import {
   Button,
   TouchableOpacity,
   StyleSheet,
-  Pressable,
+  FlatList,
 } from "react-native";
 import { colors } from "../../theme";
+
+import ShareBoardCommentItem from "../../components/ShareBoardCommentItem";
+import { ViewStyles } from "../../components/viewStyles";
 
 const ShareContentScreen = ({ route }) => {
   const { id, title, date, content } = route.params;
   const [isHeart, setIsHeart] = useState(false);
   const [isBookmark, setIsBookmark] = useState(false);
 
+  const commentData = [
+    { id: '1', title: '이사장', date: '2222-22.22', content: '맛있겠다.' },
+    { id: '2', title: '배기용', date: '2222-22.23', content: '룰루랄라'},
+    { id: '3', title: '문채영', date: '2222-22.24', content: '세번째 글'},
+    { id: '4', title: '갱민준', date: '2222-22.24', content: '펲시콜라'},
+];
+
   return (
     <View style={{backgroundColor: colors.background}}>
-      {/* <Text>{title}</Text>
-      <Text>{date}</Text>
-      <Text>{content}</Text>
-      <Text>응애</Text> */}
-      <View style={styles.shareItem}>
+      <View>
         <View style={styles.titlecontainer}>
           <Image
             style={styles.profile}
@@ -37,6 +43,9 @@ const ShareContentScreen = ({ route }) => {
             {"\n"}
             <Text style={styles.date}>{date}</Text>{" "}
           </Text>
+          <TouchableOpacity style={{justifyContent: 'center', position: 'absolute', right: '5%', top: '15%'}}>
+            <Image style={{tintColor: colors.palette.Gray300}} source={require('../../Assets/icons/ShareBoard/xicon.png')} />
+          </TouchableOpacity>
         </View>
         <View>
           <Text
@@ -100,7 +109,15 @@ const ShareContentScreen = ({ route }) => {
           </View>
         </View>
       </View>
+      <View style={ViewStyles.greyLine}/>
+      <View>
+        <FlatList data={commentData}
+          renderItem={({item}) => (
+            <ShareBoardCommentItem id={item.id} title={item.title} date={item.date} content={item.content} />
+          )} keyExtractor={item => item.id} contentContainerStyle={{ paddingBottom: 400 }} />
+      </View>
     </View>
+    
   );
 };
 

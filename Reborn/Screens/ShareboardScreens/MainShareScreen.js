@@ -10,10 +10,10 @@ const MainShareScreen = ({navigation}) => {
     const [allContent, setAllContent] = useState(true); // 전체 글 보기 상태
 
     const ShareBoardFeedData = [
-        { id: '1', title: '김보경', date: '2222-22.22', content: '첫번째 글', isBookmarked: false , heartNum: 100, commentNum: 23, },
-        { id: '2', title: '문채영', date: '2222-22.23', content: '두번째 글', isBookmarked: true, heartNum: 20, commentNum: 1, },
-        { id: '3', title: '문채영', date: '2222-22.24', content: '세번째 글', isBookmarked: false , heartNum: 50, commentNum: 53, },
-        { id: '4', title: '문채영', date: '2222-22.25', content: '네번째 글', isBookmarked: true , heartNum: 9, commentNum: 87, },
+        { boardid: '1', title: '김보경', date: '2222-22.22', content: '첫번째 글', isBookmarked: false , heartNum: 100, commentNum: 23, },
+        { boardid: '2', title: '문채영', date: '2222-22.23', content: '두번째 글', isBookmarked: true, heartNum: 20, commentNum: 1, },
+        { boardid: '3', title: '문채영', date: '2222-22.24', content: '세번째 글', isBookmarked: false , heartNum: 50, commentNum: 53, },
+        { boardid: '4', title: '문채영', date: '2222-22.25', content: '네번째 글', isBookmarked: true , heartNum: 9, commentNum: 87, },
     ];
 
     // allContent 상태에 따라 데이터 필터링
@@ -34,9 +34,9 @@ const MainShareScreen = ({navigation}) => {
                 <FlatList
                     data={filteredData}
                     renderItem={({item}) => (
-                        <ShareBoardFeedItem id={item.id} title={item.title} date={item.date} content={item.content} navigation={navigation} heartNum={item.heartNum} commentNum={item.commentNum}/>
+                        <ShareBoardFeedItem boardid={item.boardid} title={item.title} date={item.date} content={item.content} navigation={navigation} heartNum={item.heartNum} commentNum={item.commentNum}/>
                     )}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item.boardid}
                     contentContainerStyle={{ paddingBottom: 150 }}
                 />
             </View>
