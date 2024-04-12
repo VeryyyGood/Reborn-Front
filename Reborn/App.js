@@ -1,23 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import Root from './Navigation/Root';
-import Tabs from './Navigation/Tabs';
+import React, { useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import Root from "./Navigation/Root";
+
+import AppContext from "./Screens/RebornScreens/dog/AppContext";
 
 export default function App() {
+  const [contentsDay, setContentsDay] = useState(1);
+
+  const setDay = () => {
+    setContentsDay(contentsDay + 1);
+  };
+
+  const days = {
+    contentsDay: contentsDay,
+    setDay,
+  };
+
   return (
-    <NavigationContainer>
-      <Root />
-    </NavigationContainer>
+    <AppContext.Provider value={days}>
+      <NavigationContainer>
+        <Root />
+      </NavigationContainer>
+    </AppContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

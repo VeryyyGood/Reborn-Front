@@ -19,16 +19,23 @@ const WalkScreen = ({ navigation: { navigate } }) => {
   const [isPedometerAvailable, setIsPedometerAvailable] = useState("checking");
   const [currentStepCount, setCurrentStepCount] = useState(0);
 
-  const translateX = useRef(new Animated.Value(-267)).current;
+  const [countTouch, setCountTouch] = useState(0);
+
+  const translateX = useRef(new Animated.Value(-300)).current; // initialize position, for amulator set -300 / for phone set -267
 
   const AnimetedBGImage = Animated.createAnimatedComponent(ImageBackground);
 
   const moveBackground = () => {
     const nextPosition = translateX._value - moveDistance;
 
-    // end of image
+    // go to next page on amulator without pedometer
+    if (countTouch === 3) {
+      navigate("WalkFinish");
+    }
+
     if (Math.abs(nextPosition) >= 1417) {
-      translateX.setValue(-267); // initialize position
+      // end of image
+      translateX.setValue(-300); // initialize position
       Animated.timing(translateX, {
         toValue: -379.2,
         duration: 800,
@@ -105,7 +112,9 @@ const WalkScreen = ({ navigation: { navigate } }) => {
       <DogImage source={dogimageURL} resizeMode="center" />
       <ButtonBrownBottom
         text={currentStepCount}
-        onPress={() => moveBackground()}
+        onPress={() => {
+          moveBackground(), setCountTouch(countTouch + 1);
+        }}
       />
     </Container>
   );
