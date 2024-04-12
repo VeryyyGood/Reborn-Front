@@ -4,44 +4,86 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { colors } from "../theme";
 import styled from "styled-components/native";
 
-
 const MainScreen = ({ navigation: { navigate } }) => (
   <Container>
-    <Text style={styles.title}><Text style={{color: colors.palette.Yellow}}>RE:</Text> BORN</Text>
-    <View style={{ flexDirection: "row",}}>
-        <Image style={{ width: "25%", resizeMode: "contain"}} source={require('../Assets/icons/profile.png')}/>
-        <Text style={styles.helloText}>안녕하세요,{"\n"}<Text style={{color: colors.palette.Brown}}>김보경</Text>님</Text>
+    <Text style={styles.title}>
+      <Text style={{ color: colors.palette.Yellow }}>RE:</Text> BORN
+    </Text>
+    <View style={{ flexDirection: "row" }}>
+      <Image
+        style={{ width: "25%", resizeMode: "contain" }}
+        source={require("../Assets/icons/profile.png")}
+      />
+      <Text style={styles.helloText}>
+        안녕하세요,{"\n"}
+        <Text style={{ color: colors.palette.Brown }}>김보경</Text>님
+      </Text>
     </View>
-    <View style={{paddingHorizontal:20, marginBottom: -20,}}>
+    <View style={{ paddingHorizontal: 20, marginBottom: -20 }}>
       <Text style={styles.boxtext}>
-          <Text style={{color: colors.palette.Brown,}}>펫로스 증후군, {"\n"}</Text>사랑하는 가족이었던 반려동물이 내 곁을 영영 떠나가게 되면서 느끼게 되는 자연스러운 우울감, 상실감입니다.
+        <Text style={{ color: colors.palette.Brown }}>
+          펫로스 증후군, {"\n"}
+        </Text>
+        사랑하는 가족이었던 반려동물이 내 곁을 영영 떠나가게 되면서 느끼게 되는
+        자연스러운 우울감, 상실감입니다.
       </Text>
     </View>
     <View style={styles.removerButton}>
       <Text style={styles.boxtext}>
-        <Text style={{color: colors.palette.Brown,}}>마음에 담아두지 마세요. {"\n"}</Text>AI 챗봇, REMOVER와 대화하며 마음의 짐을 덯어 낼 수 있는 공간을 마련해드립니다.
+        <Text style={{ color: colors.palette.Brown }}>
+          마음에 담아두지 마세요. {"\n"}
+        </Text>
+        AI 챗봇, REMOVER와 대화하며 마음의 짐을 덯어 낼 수 있는 공간을
+        마련해드립니다.
       </Text>
-      <TouchableOpacity onPress={() => navigate("ReturnStack", { screen: "Return" })}>
-          <Text style={{marginLeft: '30%',}}>RETURN과 대화하러 가기  <Image style={{position: 'absolute', bottom: "20%", left: '20%'}} source={require('../Assets/icons/mainimages/arrow.png')} /></Text>
+      <TouchableOpacity
+        onPress={() => navigate("ReturnStack", { screen: "Return" })}
+      >
+        <Text style={{ marginLeft: "30%" }}>
+          RETURN과 대화하러 가기{" "}
+          <Image
+            style={{ position: "absolute", bottom: "20%", left: "20%" }}
+            source={require("../Assets/icons/mainimages/arrow.png")}
+          />
+        </Text>
       </TouchableOpacity>
     </View>
-    <View style={{ flexDirection: "row", marginTop: -10,}}>
+    <View style={{ flexDirection: "row", marginTop: -10 }}>
       <TouchableOpacity
         style={styles.TestButton}
-        onPress={() => navigate("SelfTestStack", { screen: "TestIntro" })}>
+        onPress={() => navigate("SelfTestStack", { screen: "TestIntro" })}
+      >
         <Text style={styles.boxtext}>
-          <Text style={{color: colors.palette.Brown,}}>펫로스 증후군 {"\n"}</Text>자가진단 하러 가기
+          <Text style={{ color: colors.palette.Brown }}>
+            펫로스 증후군 {"\n"}
+          </Text>
+          자가진단 하러 가기
         </Text>
-        <Image style={{position: 'absolute', bottom: "20%", left: '20%'}} source={require('../Assets/icons/mainimages/arrow.png')} />
-        <Image style={{position: 'absolute', bottom: -10, right: -10}} source={require('../Assets/icons/mainimages/dog.png')} />
+        <Image
+          style={{ position: "absolute", bottom: "20%", left: "20%" }}
+          source={require("../Assets/icons/mainimages/arrow.png")}
+        />
+        <Image
+          style={{ position: "absolute", bottom: -10, right: -10 }}
+          source={require("../Assets/icons/mainimages/dog.png")}
+        />
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.rebornButton}
-        onPress={() => navigate("RebornDogStack", { screen: "Intro" })}>
-        <Text style={styles.boxtext}><Text style={{color: colors.palette.Brown,}}>RE: {"\n"}</Text>작별하러 가기
+        onPress={() => navigate("RebornDogStack", { screen: "Emotion" })}
+      >
+        <Text style={styles.boxtext}>
+          <Text style={{ color: colors.palette.Brown }}>RE: {"\n"}</Text>
+          작별하러 가기
         </Text>
-        <Image style={{position: 'absolute', bottom: "20%", left: '20%'}} source={require('../Assets/icons/mainimages/arrow.png')} />
-        <Image style={{position: 'absolute', bottom: -10, right: -10}} source={require('../Assets/icons/mainimages/rainbow.png')} />
+        <Image
+          style={{ position: "absolute", bottom: "20%", left: "20%" }}
+          source={require("../Assets/icons/mainimages/arrow.png")}
+        />
+        <Image
+          style={{ position: "absolute", bottom: -10, right: -10 }}
+          source={require("../Assets/icons/mainimages/rainbow.png")}
+        />
       </TouchableOpacity>
     </View>
   </Container>
@@ -54,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontFamily: "Poppins-Bold",
   },
-  helloText:{
+  helloText: {
     fontSize: 20,
     fontFamily: "Poppins-ExtraBold",
     color: colors.palette.BrownDark,

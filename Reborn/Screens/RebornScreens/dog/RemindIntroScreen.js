@@ -8,7 +8,7 @@ import { TutorialModal } from "../../../components/modalStyles";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 
 const RemindIntroScreen = ({ navigation: { navigate } }) => {
-  const ModalText = `오늘부터 5일 동안 00이와\n충분한 대화를 나누어보세요. \n대화한 내용은 모두 ‘RE: VIEW’에\n저장됩니다.`;
+  const ModalText = `오늘부터 5일 동안 반려동물과\n충분한 대화를 나누어보세요. \n대화한 내용은 모두 ‘RE: VIEW’에\n저장됩니다.`;
 
   const [modalVisible, setModalVisible] = useState(true);
   return (
@@ -49,21 +49,4 @@ const DogImage = styled.Image`
   height: 50%;
   margin-left: 30%;
   margin-top: 55%;
-`;
-
-const PopTextBox = styled.Pressable`
-  background-color: ${colors.palette.White};
-  justify-content: center;
-  width: 70%;
-  height: 20%;
-  border-radius: 20px;
-  margin: 0% 20% 0% 20%;
-`;
-
-const BlackContainer = styled.View`
-  background-color: rgba(0, 0, 0, 0.4);
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
 `;

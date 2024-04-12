@@ -8,6 +8,9 @@ import SnackScreen from "../Screens/RebornScreens/dog/SnackScreen";
 import WalkScreen from "../Screens/RebornScreens/dog/WalkScreen";
 import WalkFinishScreen from "../Screens/RebornScreens/dog/WalkFinishScreen";
 import DiaryScreen from "../Screens/RebornScreens/dog/DiaryScreen";
+import RevealIntroScreen from "../Screens/RebornScreens/dog/RevealIntroScreen";
+import EmotionScreen from "../Screens/RebornScreens/dog/EmotionScreen";
+
 import { Image } from "react-native";
 
 import AppContext from "../Screens/RebornScreens/dog/AppContext";
@@ -27,7 +30,7 @@ const RebornDogStack = ({ navigation: { navigate } }) => {
       })}
     >
       <NativeRebornDogStack.Screen
-        name="Intro"
+        name="RemindIntro"
         component={RemindIntroScreen}
         options={{ title: `Day ${myContext.contentsDay}` }}
       />
@@ -59,6 +62,16 @@ const RebornDogStack = ({ navigation: { navigate } }) => {
       <NativeRebornDogStack.Screen
         name="Diary"
         component={DiaryScreen}
+        options={{ title: `Day ${myContext.contentsDay}` }}
+      />
+      <NativeRebornDogStack.Screen
+        name="RevealIntro"
+        component={RevealIntroScreen}
+        options={{ title: `Day ${myContext.contentsDay}` }}
+      />
+      <NativeRebornDogStack.Screen
+        name="Emotion"
+        component={EmotionScreen}
         options={{ title: `Day ${myContext.contentsDay}` }}
       />
     </NativeRebornDogStack.Navigator>

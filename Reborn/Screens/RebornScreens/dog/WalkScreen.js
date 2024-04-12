@@ -31,9 +31,7 @@ const WalkScreen = ({ navigation: { navigate } }) => {
     // go to next page on amulator without pedometer
     if (countTouch === 3) {
       navigate("WalkFinish");
-    }
-
-    if (Math.abs(nextPosition) >= 1417) {
+    } else if (Math.abs(nextPosition) >= 1417) {
       // end of image
       translateX.setValue(-300); // initialize position
       Animated.timing(translateX, {
