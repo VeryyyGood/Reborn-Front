@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, Image, TouchableOpacity, FlatList, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  Pressable,
+} from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { buttonStyles } from "../../components/buttonStyles";
 import { colors } from "../../theme";
@@ -15,8 +24,8 @@ const RadioButton = ({ isSelected, onPress, label }) => {
   );
 };
 
-const checkWhite = require('../../Assets/icons/check_white.png'); // 흰색 체크 마크 이미지 경로
-const checkBlack = require('../../Assets/icons/check_black.png');
+const checkWhite = require("../../Assets/icons/check_white.png"); // 흰색 체크 마크 이미지 경로
+const checkBlack = require("../../Assets/icons/check_black.png");
 
 const PetProfileManagementScreen = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -28,11 +37,12 @@ const PetProfileManagementScreen = () => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const colorsChoice = [
-    colors.palette.Black, 
-    colors.palette.BrownChoco, 
-    colors.palette.YellowDark, 
+    colors.palette.Black,
+    colors.palette.BrownChoco,
+    colors.palette.YellowDark,
     colors.palette.Gray500,
-    colors.palette.White];
+    colors.palette.White,
+  ];
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -43,8 +53,8 @@ const PetProfileManagementScreen = () => {
   };
 
   const handleConfirm = (date) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    setDate(date.toLocaleDateString('ko-KR', options));
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    setDate(date.toLocaleDateString("ko-KR", options));
     hideDatePicker();
   };
 
@@ -80,14 +90,14 @@ const PetProfileManagementScreen = () => {
       </View>
       <View>
         <Text style={styles.font}>동물 종류</Text>
-        <RadioButton 
-          label="강아지" 
-          isSelected={animalType === "강아지"} 
+        <RadioButton
+          label="강아지"
+          isSelected={animalType === "강아지"}
           onPress={() => isEditing && setAnimalType("강아지")}
         />
-        <RadioButton 
-          label="고양이" 
-          isSelected={animalType === "고양이"} 
+        <RadioButton
+          label="고양이"
+          isSelected={animalType === "고양이"}
           onPress={() => isEditing && setAnimalType("고양이")}
         />
       </View>
@@ -110,23 +120,31 @@ const PetProfileManagementScreen = () => {
             <Pressable
               style={[
                 styles.colorCircle,
-                { backgroundColor: item }, 
-                color === item && styles.selected
+                { backgroundColor: item },
+                color === item && styles.selected,
               ]}
-              onPress={() => isEditing && setColor(item)} 
+              onPress={() => isEditing && setColor(item)}
             >
               {color === item && (
                 <Image
-                  style={styles.checkmark} 
-                  source={item === colors.palette.White ? checkBlack : checkWhite} />
+                  style={styles.checkmark}
+                  source={
+                    item === colors.palette.White ? checkBlack : checkWhite
+                  }
+                />
               )}
             </Pressable>
           )}
           keyExtractor={(item) => item}
         />
       </View>
-      <TouchableOpacity style={[buttonStyles.buttonBrownBottom, {top: '14.5%'}]} onPress={() => setIsEditing(!isEditing)}>
-        <Text style={styles.buttonFont}>{isEditing ? "저장하기" : "수정하기"}</Text>
+      <TouchableOpacity
+        style={[buttonStyles.buttonBrownBottom, { top: "14.5%" }]}
+        onPress={() => setIsEditing(!isEditing)}
+      >
+        <Text style={styles.buttonFont}>
+          {isEditing ? "저장하기" : "수정하기"}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -144,7 +162,7 @@ const styles = StyleSheet.create({
     borderColor: colors.palette.Gray300,
     borderRadius: 16,
     padding: 15,
-    marginBottom: '3%',
+    marginBottom: "3%",
     height: 60,
   },
 
@@ -168,18 +186,18 @@ const styles = StyleSheet.create({
   },
 
   font: {
-    fontFamily: 'Poppins-Regular',
+    fontFamily: "Poppins-Regular",
     fontSize: 14,
-    marginBottom: '3%',
+    marginBottom: "3%",
   },
   buttonFont: {
-    fontFamily: 'Poppins-Bold',
+    fontFamily: "Poppins-Bold",
     fontSize: 16,
     color: colors.palette.White,
   },
   radioButtonContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 10,
   },
   radioButton: {
@@ -187,9 +205,9 @@ const styles = StyleSheet.create({
     width: 20,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: '#000',
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderColor: "#000",
+    alignItems: "center",
+    justifyContent: "center",
     marginRight: 10,
   },
   radioButtonInner: {
@@ -199,9 +217,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.palette.Brown,
   },
   checkmark: {
-    position: 'absolute',
-    alignSelf: 'center',
-    top: '10%',
+    position: "absolute",
+    alignSelf: "center",
+    top: "10%",
   },
 });
 
