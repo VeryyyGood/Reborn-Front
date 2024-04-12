@@ -48,7 +48,7 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
                   marginBottom: "5%",
                 }}
               >
-                {questionArray[4]}
+                {questionArray[myContext.contentsDay - 1]}
               </Text>
               <TextInputContainer>
                 <TextInput
@@ -70,7 +70,7 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
         <ButtonBrownBottom
           text="다음날로 넘어가기"
           onPress={() => {
-            myContext.setDay();
+            myContext.setDay(), navigate("RemindIntro");
           }}
         ></ButtonBrownBottom>
       </ImageBackground>

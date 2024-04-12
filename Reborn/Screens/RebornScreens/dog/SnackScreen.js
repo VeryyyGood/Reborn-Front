@@ -32,7 +32,7 @@ const SnackScreen = ({ navigation: { navigate } }) => {
             width: "50%",
             height: "50%",
             position: "absolute",
-            marginTop: "50%",
+            marginLeft: "50%",
           }}
           isFeed={isFeed}
           setisFeed={setisFeed}
@@ -86,14 +86,14 @@ const DraggableImage = ({ source, style, isFeed, setisFeed }) => {
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (_, { dx, dy }) => {
-        //console.log({ dx, dy });
+        console.log({ dx, dy });
         position.setValue({ x: dx, y: dy });
       },
       onPanResponderGrant: () => {
         onPressIn.start();
       },
       onPanResponderRelease: (_, { dx, dy }) => {
-        if (dx > 130 && dy > 15 && dx < 180 && dy < 40) {
+        if (dx > -80 && dy > 270 && dx < -40 && dy < 300) {
           setisFeed(!isFeed);
           Animated.sequence([
             Animated.parallel([onDropScale, onDropOpacity]),
