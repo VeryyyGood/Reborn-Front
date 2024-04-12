@@ -7,7 +7,11 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
+  TextInput,
+  KeyboardAvoidingView,
+  Pressable,
 } from "react-native";
+import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import { colors } from "../../theme";
 
 import ShareBoardCommentItem from "../../components/ShareBoardCommentItem";
@@ -17,6 +21,7 @@ const ShareContentScreen = ({ route }) => {
   const { id, title, date, content } = route.params;
   const [isHeart, setIsHeart] = useState(false);
   const [isBookmark, setIsBookmark] = useState(false);
+  
 
   const commentData = [
     { id: '1', title: '이사장', date: '2222-22.22', content: '맛있겠다.' },
@@ -26,7 +31,7 @@ const ShareContentScreen = ({ route }) => {
 ];
 
   return (
-    <View style={{backgroundColor: colors.background}}>
+    <SafeAreaProvider style={{backgroundColor: colors.background}}>
       <View>
         <View style={styles.titlecontainer}>
           <Image
@@ -116,7 +121,16 @@ const ShareContentScreen = ({ route }) => {
             <ShareBoardCommentItem id={item.id} title={item.title} date={item.date} content={item.content} />
           )} keyExtractor={item => item.id} contentContainerStyle={{ paddingBottom: 400 }} />
       </View>
-    </View>
+      <KeyboardAvoidingView style={styles.commentView}>
+        <TextInput
+          placeholder="댓글입력해라"
+          style={styles.commetInput}
+        />
+        <Pressable onPress={()=> console.log("보내기")}>
+          <Image style={{marginVertical: 10, resizeMode: 'contain', width: 20} }source={require('../../Assets/icons/ShareBoard/xicon.png')} />
+        </Pressable>
+      </KeyboardAvoidingView>
+    </SafeAreaProvider>
     
   );
 };
@@ -150,5 +164,23 @@ const styles = StyleSheet.create({
   profile: {
     width: "20%",
     resizeMode: "contain",
+  },
+  commentView:{
+    width: '90%',
+    height: 50,
+    backgroundColor: colors.palette.White,
+    borderRadius: 20,
+    borderColor: colors.palette.Brown,
+    borderWidth: 1,
+    marginHorizontal: '5%',
+    position: 'absolute',
+    bottom: '3%',
+    paddingHorizontal: 10,
+    justifyContent: 'space-between',
+    flexDirection: 'row'
+  },
+  commetInput: {
+    fontSize: 14,
+    fontFamily: 'Popins-Medium'
   },
 });

@@ -1,27 +1,29 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, ImageBackground, Touchable, TouchableOpacity } from 'react-native';
+import {View, Text, Image, StyleSheet, ImageBackground, Touchable, TouchableOpacity, TextInput } from 'react-native';
 import styled from "styled-components/native";
 import { colors } from '../theme';
+import { ViewStyles } from './viewStyles';
 
 const ShareBoardCommentItem = ({boardid, commentid, title, content, date}) => {
 	return (
-            <View style={styles.shareItem}>
-                <View style={styles.titlecontainer}>
-                    <Image style={styles.profile} source={require('../Assets/icons/profile.png')} />
-                    <Text style={[styles.title, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Bold'}]}>{title}{'\n'}
-                        <Text style={[styles.content, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Medium'}]}>{content}{'\n'}</Text>
-                        <Text style={styles.date}>{date}</Text>
-                    </Text>
-                    <TouchableOpacity style={{justifyContent: 'flex-end'}}>
-                        <Text style={{color: colors.palette.Gray300, marginLeft: 10, fontFamily: 'Poppins-Bold'}}>답글쓰기</Text>
-                    </TouchableOpacity>
-                </View>
-                <View>
-                    
-                </View>
-                <View style={{flexDirection:'row', paddingVertical: 20, paddingHorizontal: 20, justifyContent: 'space-between'}}>
-                </View>
+        <View style={styles.shareItem}>
+            <View style={{position: 'absolute', right: '5%', top: '20%'}}>
+                <Image style={{width: 20, height: 20}}source={require('../Assets/icons/ShareBoard/xicon.png')}/>
             </View>
+            <View style={styles.titlecontainer}>
+                <Image style={styles.profile} source={require('../Assets/icons/profile.png')} />
+                <Text style={[styles.title, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Bold'}]}>{title}{'\n'}
+                    <Text style={[styles.content, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Medium'}]}>{content}{'\n'}</Text>
+                    <Text style={[styles.date,{fontFamily: 'Poppins-Medium'}]}>{date}</Text>
+                </Text>
+                <TouchableOpacity style={{justifyContent: 'flex-end'}}>
+                    <Text style={{color: colors.palette.Gray300, marginLeft: 10, marginBottom: '5%', fontFamily: 'Poppins-Bold'}}>답글 쓰기</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={{flexDirection:'row', paddingVertical: 20, paddingHorizontal: 20, justifyContent: 'space-between'}}>
+            </View>
+            <View style={ViewStyles.greyLine}></View>
+        </View>
     );
 };
 
@@ -36,16 +38,16 @@ const styles=StyleSheet.create({
         paddingLeft: 20,
     },
     title: {
-    	fontSize: 20,
+    	fontSize: 18,
         paddingLeft: 10,
         marginTop: 20,
     },
     date: {
-        fontSize: 14,
+        fontSize: 12,
         color: "grey",
     },  
     content: {
-    	fontSize: 16,
+    	fontSize: 18,
         marginHorizontal: '5%',
     },
     profile:{
