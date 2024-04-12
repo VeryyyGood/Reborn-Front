@@ -13,7 +13,7 @@ const IntroScreen = ({navigation: {navigate}}) => (
             </View>
             <View style={{flex:0.8}}>
                 <Text style={styles.introText}>
-                    이 앱을 사용하는 사람들은 일단 펫로스 증후군이 있다는 소리니까 반갑습니다는 좀아닌 것 같고 행복하세요 할 수 도없고
+                    안녕하세요. 저희는 반려동물 추모 앱 REBORN입니다. {"\n"}
                 </Text>
             </View>
         </TouchableOpacity>
@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
         textAlign: "left",
         paddingLeft: 20,
         marginTop: 30,
-        fontWeight: "bold",
         paddingVertical: 20,
         fontFamily:'Poppins-Bold',
     },
@@ -43,7 +42,8 @@ const styles = StyleSheet.create({
         color: "lightgrey",
         fontSize: 20,
         textAlign: "center",
-        paddingHorizontal: 30,
+        paddingHorizontal: '10%',
         marginTop: 10,
+        fontFamily:'Poppins-Medium',
     },
 });
