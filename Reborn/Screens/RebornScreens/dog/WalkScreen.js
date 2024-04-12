@@ -1,23 +1,50 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, ImageBackground } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { Text, ImageBackground, Animated, Easing } from "react-native";
 import { colors } from "../../../theme";
 import {
-  buttonStyles,
   textStyles,
   TutorialModal,
   ButtonBrownBottom,
 } from "../../../components";
 import styled from "styled-components/native";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
+import bgimageURL from "./../../../Assets/Images/bg/bg_park.png";
 import { Pedometer } from "expo-sensors";
 
 const WalkScreen = ({ navigation: { navigate } }) => {
   const ModalText = `휴대전화를 들고 걸어보세요.\n반려동물과 같이 산책했던 곳을 걸어보아도 좋고,\n여건이 안 된다면 집 안에서 움직여도 좋습니다.\n\n만보기의 숫자가 3000이 되면 다음 단계로 넘어갑니다.`;
+  const moveDistance = 112.2; // how many to move
 
   const [modalVisible, setModalVisible] = useState(true);
-  const [walkFinished, setWalkFinished] = useState(false);
   const [isPedometerAvailable, setIsPedometerAvailable] = useState("checking");
   const [currentStepCount, setCurrentStepCount] = useState(0);
+
+  const translateX = useRef(new Animated.Value(-267)).current;
+
+  const AnimetedBGImage = Animated.createAnimatedComponent(ImageBackground);
+
+  const moveBackground = () => {
+    const nextPosition = translateX._value - moveDistance;
+
+    // end of image
+    if (Math.abs(nextPosition) >= 1417) {
+      translateX.setValue(-267); // initialize position
+      Animated.timing(translateX, {
+        toValue: -379.2,
+        duration: 800,
+        useNativeDriver: true,
+        easing: Easing.ease,
+      }).start();
+    } else {
+      // move
+      Animated.timing(translateX, {
+        toValue: nextPosition,
+        duration: 800,
+        useNativeDriver: true,
+        easing: Easing.ease,
+      }).start();
+    }
+  };
 
   useEffect(() => {
     let subscription;
@@ -29,6 +56,13 @@ const WalkScreen = ({ navigation: { navigate } }) => {
         // count steps
         subscription = Pedometer.watchStepCount((result) => {
           setCurrentStepCount(result.steps);
+          console.log(result.steps);
+          if (result.steps % 10 === 0) {
+            moveBackground();
+          }
+          if (result.steps > 45) {
+            navigate("WalkFinish");
+          }
         });
       }
     };
@@ -45,27 +79,34 @@ const WalkScreen = ({ navigation: { navigate } }) => {
 
   return (
     <Container>
-      <ImageBackground
-        source={require("./../../../Assets/Images/bg/bg_park.png")}
-        style={{ width: "100%", height: "100%" }}
-      >
-        <Text style={textStyles.contentsTextBox}>
-          충분한 대화 나누기 :{" "}
-          <Text style={{ color: colors.palette.Red }}>산책하기</Text>
-        </Text>
-        <TutorialModal
-          text={ModalText}
-          modalVisible={modalVisible}
-          onPress={() => {
-            setModalVisible(!modalVisible);
-          }}
-        ></TutorialModal>
-        <DogImage source={dogimageURL} resizeMode="center" />
-        <ButtonBrownBottom
-          text={currentStepCount}
-          onPress={() => navigate("Snack")}
-        />
-      </ImageBackground>
+      <AnimetedBGImage
+        style={{
+          width: 2012,
+          height: "100%",
+          position: "absolute",
+          transform: [{ translateX }],
+        }}
+        resizeMode="contain"
+        source={bgimageURL}
+      />
+      <Text style={textStyles.contentsTextBox}>
+        충분한 대화 나누기 :{" "}
+        <Text style={{ color: colors.palette.Red }}>산책하기</Text>
+      </Text>
+      <TutorialModal
+        text={ModalText}
+        modalVisible={modalVisible}
+        onPress={() => {
+          {
+            setModalVisible(!modalVisible), moveBackground();
+          }
+        }}
+      ></TutorialModal>
+      <DogImage source={dogimageURL} resizeMode="center" />
+      <ButtonBrownBottom
+        text={currentStepCount}
+        onPress={() => moveBackground()}
+      />
     </Container>
   );
 };

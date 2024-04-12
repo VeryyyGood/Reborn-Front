@@ -1,9 +1,7 @@
 import React, { useRef, useState } from "react";
 import {
   Modal,
-  View,
   Text,
-  TouchableOpacity,
   ImageBackground,
   Animated,
   PanResponder,
@@ -12,7 +10,6 @@ import {
 } from "react-native";
 import { colors } from "../../../theme";
 import {
-  buttonStyles,
   textStyles,
   CompleteButton,
   ButtonBrownBottom,
@@ -21,7 +18,7 @@ import styled from "styled-components/native";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 import snackimageURL from "../../../Assets/Images/dog/dog_snack.png";
 
-const WalkScreen = ({ navigation: { navigate } }) => {
+const SnackScreen = ({ navigation: { navigate } }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [answer, onChangeAnswer] = React.useState("");
   const [isFeed, setisFeed] = useState(true);
@@ -93,7 +90,7 @@ const WalkScreen = ({ navigation: { navigate } }) => {
     </Container>
   );
 };
-export default WalkScreen;
+export default SnackScreen;
 
 const DraggableImage = ({ source, style, isFeed, setisFeed }) => {
   // Values

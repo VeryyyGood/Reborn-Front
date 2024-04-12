@@ -1,18 +1,7 @@
 import React, { useRef } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ImageBackground,
-  Animated,
-  PanResponder,
-} from "react-native";
+import { Text, ImageBackground, Animated, PanResponder } from "react-native";
 import { colors } from "../../../theme";
-import {
-  ButtonBrownBottom,
-  buttonStyles,
-  textStyles,
-} from "../../../components";
+import { ButtonBrownBottom, textStyles } from "../../../components";
 import styled from "styled-components/native";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 import handimageURL from "../../../Assets/stuffs/hand.png";
