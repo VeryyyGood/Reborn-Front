@@ -12,7 +12,6 @@ import VolunteerShareScreen from '../Screens/ShareboardScreens/VolunteerShareScr
 import ShareContentScreen from '../Screens/ShareboardScreens/ShareContentScreen';
 import ShareWriteScreen from '../Screens/ShareboardScreens/ShareWriteScreen';
 import { colors } from '../theme';
-import Tabs from './Tabs';
 
 const Drawer = createDrawerNavigator();
 
@@ -41,8 +40,8 @@ const CustomHeaderRight = () => {
     );
 };
 
-const ShareDrawers = () => (
 
+const ShareDrawers = () => (
         <Drawer.Navigator initialRouteName='ShareMain' screenOptions={{
             drawerPosition: 'left',
             headerLeft: () => <CustomHeaderRight />,
@@ -55,7 +54,6 @@ const ShareDrawers = () => (
             <Drawer.Screen name='Volunteer' component={VolunteerShareScreen} options={{drawerLabel: '봉사 나눔', title: '봉사 게시판'}}/>
             <Drawer.Screen name='ShareContent' component={ShareContentScreen} options={{title: '나눔 게시판', drawerItemStyle: { height: 0 }}}/>
             <Drawer.Screen name='ShareWrite' component={ShareWriteScreen} options={{headerShown: false, drawerItemStyle: { height: 0 }}}/>
-            <Drawer.Screen name='Tabs' component={Tabs} options={{headerShown: false, drawerItemStyle: { height: 0 }}}/>
         </Drawer.Navigator>
 );
 

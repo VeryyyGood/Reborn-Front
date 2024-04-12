@@ -17,4 +17,10 @@ export const ViewStyles = StyleSheet.create({
         justifyContent: "center",
         alignItems:"center",
     },
+    greyLine: {
+        marginTop: -10,
+        borderBottomWidth: 2, 
+        borderBottomColor: colors.palette.Gray300,
+        paddingBottom: 3, marginHorizontal: 20,
+    },
 });
