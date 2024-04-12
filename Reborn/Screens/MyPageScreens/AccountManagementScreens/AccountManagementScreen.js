@@ -1,13 +1,13 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { buttonStyles } from '../../../components';
-import { colors } from '../../../theme';
+import { buttonStyles } from "../../../components";
+import { colors } from "../../../theme";
 import NaverLogin, {
   NaverLoginResponse,
   GetProfileResponse,
-} from '@react-native-seoul/naver-login';
+} from "@react-native-seoul/naver-login";
 
-const AccountManagementScreen = ({ navigation: { navigate }} ) => {
+const AccountManagementScreen = ({ navigation: { navigate } }) => {
   const [success, setSuccessResponse] = useState();
   const [failure, setFailureResponse] = useState();
   const [getProfileRes, setGetProfileRes] = useState();
@@ -18,7 +18,7 @@ const AccountManagementScreen = ({ navigation: { navigate }} ) => {
       //setSuccessResponse(undefined);
       //setFailureResponse(undefined);
       //setGetProfileRes(undefined);
-      navigate('Login');
+      navigate("Login");
     } catch (e) {
       console.error(e);
     }
@@ -30,47 +30,70 @@ const AccountManagementScreen = ({ navigation: { navigate }} ) => {
       //setSuccessResponse(undefined);
       //setFailureResponse(undefined);
       //setGetProfileRes(undefined);
-      navigate('Login');
+      navigate("Login");
     } catch (e) {
       console.error(e);
     }
   };
 
-  return(
-  <View style={styles.container}>
-    <View style={styles.imageWrapper}>
-      <Image source={require('../../../Assets/icons/profile_bg.png')} style={styles.backgroundImage}></Image>
-      <TouchableOpacity>
-        <Image source={require('../../../Assets/icons/pencil.png')} style={styles.backgroundPencil}></Image>
-      </TouchableOpacity>
-      <Image source={require('../../../Assets/icons/profile.png')} style={styles.profileImage}></Image>
-      <TouchableOpacity>
-        <Image source={require('../../../Assets/icons/pencil.png')} style={styles.profilePencil}></Image>
-      </TouchableOpacity>
-    </View>
-    <Text style={styles.fontBold}>김보경</Text>
-    <View style={styles.infoContainer}>
-      <View style={styles.line} />
-      <View style={styles.infoRow}>
-        <Image source={require('../../../Assets/icons/mail.png')} />
-        <Text style={styles.fontNormal}>Email: animalLove@gmail.com</Text>
+  return (
+    <View style={styles.container}>
+      <View style={styles.imageWrapper}>
+        <Image
+          source={require("../../../Assets/icons/profile_bg.png")}
+          style={styles.backgroundImage}
+        ></Image>
+        <TouchableOpacity>
+          <Image
+            source={require("../../../Assets/icons/pencil.png")}
+            style={styles.backgroundPencil}
+          ></Image>
+        </TouchableOpacity>
+        <Image
+          source={require("../../../Assets/icons/profile.png")}
+          style={styles.profileImage}
+        ></Image>
+        <TouchableOpacity>
+          <Image
+            source={require("../../../Assets/icons/pencil.png")}
+            style={styles.profilePencil}
+          ></Image>
+        </TouchableOpacity>
       </View>
-      <View style={styles.line} />
-      <View style={styles.infoRow}>
-        <Image source={require('../../../Assets/icons/date.png')} />
-        <Text style={styles.fontNormal}>Since: 2024.01.24</Text>
+      <Text style={styles.fontBold}>김보경</Text>
+      <View style={styles.infoContainer}>
+        <View style={styles.line} />
+        <View style={styles.infoRow}>
+          <Image source={require("../../../Assets/icons/mail.png")} />
+          <Text style={styles.fontNormal}>Email: animalLove@gmail.com</Text>
+        </View>
+        <View style={styles.line} />
+        <View style={styles.infoRow}>
+          <Image source={require("../../../Assets/icons/date.png")} />
+          <Text style={styles.fontNormal}>Since: 2024.01.24</Text>
+        </View>
+        <View style={styles.line} />
       </View>
-      <View style={styles.line} />
-    </View>
-    <View>
-      <TouchableOpacity style={buttonStyles.buttonWhiteBrown} onPress={logout}>
-        <Text style={styles.buttonFont}>로그아웃</Text>
-      </TouchableOpacity>
-    </View>
+      <View>
+        <TouchableOpacity
+          style={buttonStyles.buttonWhiteBrown}
+          onPress={logout}
+        >
+          <Text style={styles.buttonFont}>로그아웃</Text>
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity onPress={deleteToken}>
-        <Text style={{color: colors.palette.Red, fontFamily: 'Poppins-Regular', fontSize: 14}}>계정 삭제하기</Text>
+        <Text
+          style={{
+            color: colors.palette.Red,
+            fontFamily: "Poppins-Regular",
+            fontSize: 14,
+          }}
+        >
+          계정 삭제하기
+        </Text>
       </TouchableOpacity>
-  </View>
+    </View>
   );
 };
 export default AccountManagementScreen;
@@ -78,63 +101,63 @@ export default AccountManagementScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: colors.palette.White,
   },
   imageWrapper: {
-    position: 'relative',
-    height: '15%', 
-    width: '15%', 
-    justifyContent: 'center',
-    alignItems: 'center',
+    position: "relative",
+    height: "15%",
+    width: "15%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   backgroundImage: {
-    position: 'absolute',
+    position: "absolute",
   },
   backgroundPencil: {
-    marginLeft: '500%',
-    marginTop: '230%',
+    marginLeft: "500%",
+    marginTop: "230%",
   },
   profileImage: {
-    position: 'absolute', 
-    top: '55%',
+    position: "absolute",
+    top: "55%",
   },
   profilePencil: {
-    marginLeft: '125%',
+    marginLeft: "125%",
   },
 
   fontBold: {
-    marginTop: '19%',
+    marginTop: "19%",
     fontSize: 18,
-    fontFamily: 'Poppins-Bold',
-    marginBottom: '6%',
+    fontFamily: "Poppins-Bold",
+    marginBottom: "6%",
     color: colors.palette.BrownDark,
   },
   fontNormal: {
     fontSize: 16,
-    fontFamily: 'Poppins-Regular',
-    marginLeft: '3%',
+    fontFamily: "Poppins-Regular",
+    marginLeft: "3%",
     color: colors.palette.BrownDark,
   },
   buttonFont: {
-    color: colors.palette.Brown, 
-    fontSize: 16, 
-    fontFamily: 'Poppins-Bold'
+    color: colors.palette.Brown,
+    fontSize: 16,
+    fontFamily: "Poppins-Bold",
   },
   infoContainer: {
-    alignSelf: 'stretch',
-    alignItems: 'flex-start',
+    alignSelf: "stretch",
+    alignItems: "flex-start",
     marginHorizontal: 20,
   },
   infoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   line: {
     borderBottomColor: colors.palette.Gray250,
     borderBottomWidth: 1,
-    alignSelf: 'stretch',
+    alignSelf: "stretch",
     marginVertical: 8,
   },
 });
