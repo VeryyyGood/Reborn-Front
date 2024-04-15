@@ -1,20 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Text, ImageBackground } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../../../theme";
 import { textStyles } from "../../../components";
 import { TutorialModal } from "../../../components/modalStyles";
-
+import AppContext from "./AppContext";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 
 const RevealIntroScreen = ({ navigation: { navigate } }) => {
+  const myContext = useContext(AppContext);
+
   const ModalText = `오늘부터 5일 동안 
   감정 일기를 통해 나 자신과
   충분한 대화를 나누어보세요.
   작성한 감정 일기는 모두 
   RE: VIEW에 저장됩니다.`;
 
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    if (myContext.contentsDay === 7) {
+      setModalVisible(true);
+      console.log(modalVisible, myContext.contentsDay);
+    }
+  }, [myContext.contentsDay]);
 
   return (
     <Container>
@@ -34,7 +43,10 @@ const RevealIntroScreen = ({ navigation: { navigate } }) => {
           text={ModalText}
           modalStyles={modalVisible}
           onPress={() => {
-            () => setModalVisible(false), navigate("Pet");
+            {
+              setModalVisible(false);
+              navigate("Pet");
+            }
           }}
         ></TutorialModal>
       </ImageBackground>
