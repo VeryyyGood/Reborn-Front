@@ -15,7 +15,7 @@ import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import { colors } from "../../theme";
 
 import ShareBoardCommentItem from "../../components/ShareBoardCommentItem";
-import { ViewStyles } from "../../components/viewStyles";
+import { GrayLine, ViewStyles } from "../../components/viewStyles";
 
 const ShareContentScreen = ({ route }) => {
   const { id, title, date, content } = route.params;
@@ -114,7 +114,7 @@ const ShareContentScreen = ({ route }) => {
           </View>
         </View>
       </View>
-      <View style={ViewStyles.greyLine}/>
+      <GrayLine></GrayLine>
       <View>
         <FlatList data={commentData}
           renderItem={({item}) => (

@@ -12,7 +12,16 @@ import MypageMainScreen from "../Screens/MyPageScreens/MypageMainScreen";
 
 import ShareDrawers from "./ShareDrawer";
 
+
 const Tab = createBottomTabNavigator();
+
+const ReDiaryTitle = () => (
+  <Text>
+    <Text style={{ color: colors.palette.Brown, fontFamily: 'Poppins-Bold', fontSize: 18 }}>RE: </Text>
+    <Text style={{ fontFamily: 'Poppins-Bold', fontSize: 18 }}> Diary</Text>
+  </Text>
+);
+//headerTitle: () => <ReDiaryTitle/>}
 
 const Tabs = () => (
   <Tab.Navigator
@@ -54,6 +63,7 @@ const Tabs = () => (
       options={({navigation}) => ({
         title: "RE: DIARY",
         headerShown: true,
+        headerTitle: () => <ReDiaryTitle/>,
         tabBarIcon: ({color}) => (
           <Image
             source={ require('../Assets/icons/tabIcons/rediaryicon.png') }

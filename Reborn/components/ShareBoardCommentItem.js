@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, Image, StyleSheet, ImageBackground, Touchable, TouchableOpacity, TextInput } from 'react-native';
 import styled from "styled-components/native";
 import { colors } from '../theme';
-import { ViewStyles } from './viewStyles';
+import { GrayLine, ViewStyles } from './viewStyles';
 
 const ShareBoardCommentItem = ({boardid, commentid, title, content, date}) => {
 	return (
@@ -22,7 +22,7 @@ const ShareBoardCommentItem = ({boardid, commentid, title, content, date}) => {
             </View>
             <View style={{flexDirection:'row', paddingVertical: 20, paddingHorizontal: 20, justifyContent: 'space-between'}}>
             </View>
-            <View style={ViewStyles.greyLine}></View>
+            <GrayLine></GrayLine>
         </View>
     );
 };
