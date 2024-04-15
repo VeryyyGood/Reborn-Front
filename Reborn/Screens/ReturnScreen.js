@@ -1,168 +1,165 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
-  Text,
   TextInput,
   TouchableOpacity,
-  Button,
-  ScrollView,
+  Text,
   StyleSheet,
-  ActivityIndicator,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
-import styled from "styled-components/native";
+import axios from "axios";
 
 const ReturnScreen = () => {
+  const [inputText, setInputText] = useState("");
   const [messages, setMessages] = useState([]);
-  const [userInput, setUserInput] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  const apiKey = "";
-  const apiEndpoint = "https://api.openai.com/v1/chat/completions";
+  const fetchGPTResponse = async () => {
+    if (!inputText.trim()) return;
 
-  useEffect(() => {
-    addMessage(
-      "bot",
-      "안녕하세요! 저는 당신의 챗봇 RETURN 입니다. 무엇을 도와드릴까요?"
-    );
-    setTimeout(() => {
-      // 메시지 순차적으로 추가
-      addMessage("bot", "애플리케이션 기능 안내");
-      addMessage("bot", "상담센터 안내");
-      addMessage("bot", "문의하기");
-    }, 500);
-  }, []);
+    const systemMessages = [
+      {
+        role: "system",
+        content:
+          "당신은 Reborn 애플리케이션 기능과 상담센터를 안내하는 활기찬 봇입니다.",
+      },
+      {
+        role: "system",
+        content:
+          "안녕하세요! 저는 Reborn 애플리케이션 기능과 펫로스 증후군 상담센터를 안내하는 챗봇 Return 이에요!\n무엇을 도와드릴까요?",
+      },
+    ];
 
-  const addMessage = (sender, message) => {
-    const newMessage = {
-      sender,
-      message,
-      id: Date.now() + Math.random().toString(), // 고유한 ID 생성
+    const userMessage = {
+      role: "user",
+      content: inputText,
     };
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
-  };
 
-  const handleOptionSelect = (message) => {
-    switch (message) {
-      case "애플리케이션 기능 안내":
-        addMessage("user", message);
-        addMessage("bot", "애플리케이션의 기능에 대해서는...");
-        break;
-      case "상담센터 안내":
-        addMessage("user", message);
-        addMessage("bot", "상담센터의 운영 시간은...");
-        break;
-      case "문의하기":
-        addMessage("user", message);
-        addMessage("bot", "문의하실 내용을 입력해주세요...");
-        break;
-      default:
-        addMessage(
-          "bot",
-          "죄송합니다. 이해하지 못했습니다. 다시 선택해주세요."
-        );
-    }
-  };
-
-  const handleSendMessage = async () => {
-    const message = userInput.trim();
-    if (message.length === 0) return;
-
-    addMessage("user", message);
-    setUserInput("");
-    setLoading(true);
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
 
     try {
-      const response = await fetch(apiEndpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
+      const response = await axios.post(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          model: "ft:gpt-3.5-turbo-0125:personal::9EGjLqo7",
+          messages: [...systemMessages, { role: "user", content: inputText }],
+          max_tokens: 250,
         },
-        body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          messages: [{ role: "user", content: message }],
-          max_tokens: 1024,
-          top_p: 1,
-          temperature: 1,
-          frequency_penalty: 0.5,
-          presence_penalty: 0.5,
-          stop: ["\n"],
-        }),
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer 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",
+          },
+        }
+      );
 
-      const data = await response.json();
-      const aiResponse = data.choices?.[0]?.message?.content || "No response";
-      addMessage("bot", aiResponse);
+      const botMessage = {
+        role: "bot",
+        content: response.data.choices[0].message.content.trim(),
+      };
+
+      setMessages((prevMessages) => [...prevMessages, botMessage]);
     } catch (error) {
-      console.error("Error occurred!", error);
-      addMessage("bot", "오류 발생!");
-    } finally {
-      setLoading(false);
+      console.error("OpenAI API 호출 중 오류 발생:", error);
     }
+
+    setInputText("");
   };
 
   return (
-    <View style={styles.chatbotScreen}>
-      <ScrollView style={styles.chatDiv}>
-        {loading && <ActivityIndicator size="small" color="#0000ff" />}
-        {messages.map((msg) => (
-          <TouchableOpacity
-            key={msg.id}
-            onPress={() => handleOptionSelect(msg.message)}
-            disabled={msg.sender !== "bot"}
+    <View
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView style={styles.messagesContainer}>
+        {messages.map((msg, index) => (
+          <View
+            key={index}
+            style={msg.role === "user" ? styles.userMessage : styles.botMessage}
           >
-            <View style={styles.message(msg.sender)}>
-              <Text>{`${msg.message}`}</Text>
-            </View>
-          </TouchableOpacity>
+            <Text style={styles.messageText}>{msg.content}</Text>
+          </View>
         ))}
       </ScrollView>
-      <View style={styles.inputDiv}>
-        <TextInput
-          style={styles.input}
-          placeholder="메시지를 입력하세요"
-          value={userInput}
-          onChangeText={setUserInput}
-          onSubmitEditing={handleSendMessage}
-        />
-        <Button title="전송" onPress={handleSendMessage} />
-      </View>
+      <KeyboardAvoidingView>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="여기에 입력하세요..."
+            value={inputText}
+            onChangeText={setInputText}
+            onSubmitEditing={fetchGPTResponse}
+          />
+          <TouchableOpacity
+            style={styles.sendButton}
+            onPress={fetchGPTResponse}
+          >
+            <Text style={styles.sendButtonText}>전송</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  chatbotScreen: {
+  container: {
     flex: 1,
-    padding: 20,
   },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  chatDiv: {
-    flex: 1,
-    marginBottom: 20,
-  },
-  message: (sender) => ({
-    alignSelf: sender === "user" ? "flex-end" : "flex-start",
-    backgroundColor: sender === "user" ? "#E0EDCE" : "white",
-    marginBottom: 10,
-    padding: 10,
-    borderRadius: 10,
-  }),
-  inputDiv: {
+  inputContainer: {
     flexDirection: "row",
-    alignItems: "center",
+    padding: 10,
+    justifyContent: "space-between",
   },
   input: {
-    flex: 1,
+    height: 50,
+    width: "80%",
     borderColor: "gray",
     borderWidth: 1,
-    marginRight: 10,
+    borderRadius: 10,
     paddingHorizontal: 10,
-    height: 40,
-    borderRadius: 5,
+    marginRight: 10,
+    marginBottom: 10,
+  },
+  messagesContainer: {
+    flex: 1,
+    padding: 10,
+  },
+  userMessage: {
+    alignSelf: "flex-end",
+    backgroundColor: "#E0EDC2",
+    marginBottom: 10,
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    maxWidth: "80%",
+  },
+  botMessage: {
+    alignSelf: "flex-start",
+    backgroundColor: "white",
+    marginBottom: 10,
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    maxWidth: "80%",
+  },
+  messageText: {
+    fontSize: 16,
+  },
+  sendButton: {
+    backgroundColor: "#FFCF88",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    height: 50,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  sendButtonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
   },
 });
 
