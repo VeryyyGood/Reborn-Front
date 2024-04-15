@@ -25,7 +25,7 @@ const LoginScreen = ({ navigation: { navigate } }) => {
       const profileResult = await NaverLogin.getProfile(success?.accessToken);
       if (profileResult) {
         const { nickname, email } = profileResult.response;
-        const username = email.split("@")[0];
+        const username = "{naver}" + email.split("@")[0];
         const provider = "naver";
 
         console.log(nickname);
