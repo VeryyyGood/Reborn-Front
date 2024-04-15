@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import axios from "axios";
 import { buttonStyles } from "../../components";
 import { colors } from "../../theme";
 import NaverLogin, {
@@ -16,19 +17,67 @@ const LoginScreen = ({ navigation: { navigate } }) => {
   const [success, setSuccessResponse] = useState();
   const [failure, setFailureResponse] = useState();
   const [getProfileRes, setGetProfileRes] = useState();
+  const [nickname, setNickname] = useState("");
+  const [email, setEmail] = useState("");
+
+  const getProfile = async () => {
+    try {
+      const profileResult = await NaverLogin.getProfile(success?.accessToken);
+      if (profileResult) {
+        const { nickname, email } = profileResult.response;
+        const username = email.split("@")[0];
+        const provider = "naver";
+
+        console.log(nickname);
+        console.log(email);
+        console.log(username);
+        console.log(provider);
+
+        setNickname(nickname);
+        setEmail(email);
+        setGetProfileRes(profileResult);
+
+        const userData = {
+          nickname,
+          email,
+          username,
+          provider,
+        };
+
+        axios
+          .post("backend_endpoint", userData)
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error("ERROR", error);
+          });
+      }
+    } catch (e) {
+      setGetProfileRes(undefined);
+      setNickname("");
+      setEmail("");
+    }
+  };
 
   const login = async () => {
-    const { failureResponse, successResponse } = await NaverLogin.login({
-      appName,
-      consumerKey,
-      consumerSecret,
-      serviceUrlScheme,
-    });
-    setSuccessResponse(successResponse);
-    setFailureResponse(failureResponse);
+    try {
+      const { failureResponse, successResponse } = await NaverLogin.login({
+        appName,
+        consumerKey,
+        consumerSecret,
+        serviceUrlScheme,
+      });
 
-    if (success) {
-      navigate("Tabs", { screen: "main" });
+      setSuccessResponse(successResponse);
+      setFailureResponse(failureResponse);
+
+      if (successResponse) {
+        getProfile();
+        navigate("Tabs", { screen: "main" });
+      }
+    } catch (error) {
+      console.error("로그인 에러:", error);
     }
   };
 
