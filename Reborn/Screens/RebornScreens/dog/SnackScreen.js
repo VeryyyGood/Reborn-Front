@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import {
   Text,
   ImageBackground,
@@ -10,10 +10,30 @@ import { colors } from "../../../theme";
 import { textStyles, ButtonBrownBottom } from "../../../components";
 import styled from "styled-components/native";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
+import AppContext from "./AppContext";
 import snackimageURL from "../../../Assets/Images/dog/dog_snack.png";
 
 const SnackScreen = ({ navigation: { navigate } }) => {
+  const myContext = useContext(AppContext);
+
   const [isFeed, setisFeed] = useState(true);
+
+  const destinationMap = {
+    2: "Diary",
+    3: "Diary",
+    4: "Diary",
+    5: "Diary",
+    6: "Diary",
+    7: "Emotion",
+    8: "Emotion",
+    9: "Emotion",
+    10: "Emotion",
+    11: "Emotion",
+  };
+
+  const getDestination = (day) => {
+    return destinationMap[day];
+  };
 
   return (
     <Container>
@@ -40,7 +60,8 @@ const SnackScreen = ({ navigation: { navigate } }) => {
         <ButtonBrownBottom
           text="거실로 돌아가기"
           onPress={() => {
-            navigate("Diary");
+            const screen = getDestination(myContext.contentsDay);
+            navigate(screen);
           }}
         ></ButtonBrownBottom>
       </ImageBackground>

@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Text, ImageBackground } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../../../theme";
-import { textStyles } from "../../../components";
+import { textStyles, ButtonBrownBottom } from "../../../components";
 import { TutorialModal } from "../../../components/modalStyles";
 import AppContext from "./AppContext";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
@@ -17,18 +17,19 @@ const RevealIntroScreen = ({ navigation: { navigate } }) => {
   RE: VIEW에 저장됩니다.`;
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [daymodalVisible, setDayModalVisible] = useState(true);
 
   useEffect(() => {
-    if (myContext.contentsDay === 7) {
+    if (myContext.contentsDay <= 7) {
       setModalVisible(true);
-      console.log(modalVisible, myContext.contentsDay);
     }
+    setDayModalVisible(true);
   }, [myContext.contentsDay]);
 
   return (
     <Container>
       <ImageBackground
-        source={require("./../../../Assets/Images/bg/bg_living(2).png")}
+        source={require("./../../../Assets/Images/bg/bg_living(1).png")}
         style={{
           width: "100%",
           height: "100%",
@@ -39,16 +40,41 @@ const RevealIntroScreen = ({ navigation: { navigate } }) => {
           MVEAL : 나의 감정 들여다보기
         </Text>
         <DogImage source={dogimageURL} resizeMode="center" />
-        <TutorialModal
-          text={ModalText}
-          modalStyles={modalVisible}
-          onPress={() => {
-            {
+        {modalVisible ? (
+          <TutorialModal
+            text={ModalText}
+            modalStyles={modalVisible}
+            onPress={() => {
               setModalVisible(false);
               navigate("Pet");
-            }
-          }}
-        ></TutorialModal>
+            }}
+          />
+        ) : (
+          ""
+        )}
+        {daymodalVisible ? (
+          <TutorialModal
+            text={"Day" + myContext.contentsDay}
+            modalStyles={daymodalVisible}
+            onPress={() => {
+              setDayModalVisible(false);
+            }}
+          />
+        ) : (
+          ""
+        )}
+        {modalVisible ? (
+          <TutorialModal
+            text={ModalText}
+            modalStyles={modalVisible}
+            onPress={() => {
+              setModalVisible(false);
+              navigate("Pet");
+            }}
+          />
+        ) : (
+          ""
+        )}
       </ImageBackground>
     </Container>
   );

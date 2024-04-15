@@ -42,7 +42,6 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
             key={emotion.id}
             isSelected={selectedEmotion === emotion.id}
             onPress={() => setSelectedEmotion(emotion.id)}
-            label={emotion.label}
             image={emotion.image}
           />
         ))}
@@ -61,7 +60,7 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
       <CompleteButton
         text="작성완료"
         onPress={() => {
-          navigate("RevealIntro");
+          navigate("EmotionResult", { selectedEmotion });
         }}
       ></CompleteButton>
     </Container>
