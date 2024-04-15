@@ -43,7 +43,16 @@ export const buttonStyles = StyleSheet.create({
         height: 55,
         borderColor: colors.palette.Brown,
         borderWidth: 1,
-    }
+    },
+    buttonBrownBottom: {
+        backgroundColor: colors.palette.Brown,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: -50,
+        borderRadius: 30,
+        height: 50,
+        marginHorizontal: 100,
+    },
 });
 
 const PressableBrownBottom = styled.Pressable`
