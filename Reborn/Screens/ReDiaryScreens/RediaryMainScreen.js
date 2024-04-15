@@ -21,7 +21,7 @@ const RediaryMainScreen = ({navigation} ) => {
         // result가 true일 경우에만 RediaryWrite로 이동
         navigation.navigate("RediaryStack", { screen: "RediaryWrite" });
     } else {
-        // result가 false일 경우, 추가적인 액션이나 알림을 구현할 수 있음
+        // result가 false일 경우
         console.log("result가 false이므로 RediaryWrite로 이동할 수 없습니다.");
         }
     };
