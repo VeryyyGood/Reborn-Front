@@ -78,6 +78,24 @@ export const ButtonBrownBottom = ({text, onPress}) => {
     );
 };
 
+const PressableBrown = styled.Pressable`
+    background-color: ${colors.palette.Brown};
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    border-radius: 30px;
+    height: 50px;
+`;
+
+
+export const ButtonBrown = ({text, onPress}) => {
+    return (
+    <PressableBrown onPress={onPress}>
+        <ButtonText>{text}</ButtonText>
+    </PressableBrown>
+    );
+};
+
 
 const CompletePressable = styled.Pressable`
     background-color: ${colors.palette.Green};

@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Button,
+} from "react-native";
 
 import { colors } from "../theme";
 import styled from "styled-components/native";
@@ -68,7 +75,11 @@ const MainScreen = ({ navigation: { navigate } }) => (
           source={require("../Assets/icons/mainimages/dog.png")}
         />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigate("ReconnectStack", { screen: "ReconnectProfile" })}>
+      <TouchableOpacity
+        onPress={() =>
+          navigate("ReconnectStack", { screen: "ReconnectProfile" })
+        }
+      >
         <Text>버튼</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -90,7 +101,7 @@ const MainScreen = ({ navigation: { navigate } }) => (
       </TouchableOpacity>
     </View>
   </Container>
-); //뷰 반환
+);
 
 export default MainScreen;
 
@@ -149,4 +160,3 @@ const Container = styled.View`
   background-color: ${colors.palette.White};
   padding: 5% 5% 0% 5%;
 `;
-//  padding: 0% 5% 0% 5%;
