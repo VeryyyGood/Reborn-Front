@@ -20,9 +20,9 @@ const LoginScreen = ({ navigation: { navigate } }) => {
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
 
-  const getProfile = async () => {
+  const getProfile = async (accessToken) => {
     try {
-      const profileResult = await NaverLogin.getProfile(success?.accessToken);
+      const profileResult = await NaverLogin.getProfile(accessToken);
       if (profileResult) {
         const { nickname, email } = profileResult.response;
         const username = "{naver}" + email.split("@")[0];
@@ -38,19 +38,32 @@ const LoginScreen = ({ navigation: { navigate } }) => {
         setGetProfileRes(profileResult);
 
         const userData = {
-          nickname,
           email,
           username,
+          nickname,
           provider,
         };
-
+        console.log("함수 호출됨");
         axios
-          .post("backend_endpoint", userData)
+          .post("http://reborn.persi0815.site/token/generate", userData)
           .then((response) => {
+            console.log(response.status);
             console.log(response.data);
           })
           .catch((error) => {
             console.error("ERROR", error);
+            if (error.response) {
+              // 요청이 이루어졌으나 서버가 2xx 이외의 상태 코드로 응답
+              console.error("Error Response:", error.response.data);
+              console.error("Status:", error.response.status);
+              console.error("Headers:", error.response.headers);
+            } else if (error.request) {
+              // 요청이 이루어졌으나 응답을 받지 못함
+              console.error("Error Request:", error.request);
+            } else {
+              // 요청을 만들 때 문제가 발생함
+              console.error("Error Message:", error.message);
+            }
           });
       }
     } catch (e) {
@@ -62,6 +75,7 @@ const LoginScreen = ({ navigation: { navigate } }) => {
 
   const login = async () => {
     try {
+      console.log("로그인 힘수는 돌아가나봄");
       const { failureResponse, successResponse } = await NaverLogin.login({
         appName,
         consumerKey,
@@ -73,8 +87,11 @@ const LoginScreen = ({ navigation: { navigate } }) => {
       setFailureResponse(failureResponse);
 
       if (successResponse) {
-        getProfile();
+        console.log("로그인 성공함");
+        getProfile(successResponse.accessToken);
+        console.log("getProfile했어야함");
         navigate("Tabs", { screen: "main" });
+        console.log("메인으로 넘어감");
       }
     } catch (error) {
       console.error("로그인 에러:", error);
