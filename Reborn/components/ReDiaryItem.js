@@ -12,7 +12,7 @@ const backgroundImages = {
   redbox: require('../Assets/icons/rediaryimage/redBox.png'),
 };
 
-const ReDiaryItem = ({date, title, type, Box}) => {
+const ReDiaryItem = ({ date, title, type, Box, navigation} ) => {
     let backgroundImage;
       if (Box <= 30) {
           backgroundImage = backgroundImages.bluebox;
@@ -25,7 +25,7 @@ const ReDiaryItem = ({date, title, type, Box}) => {
           backgroundImage = require('../Assets/icons/rediaryimage/redBox.png');
       }
     return (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('RediaryStack', {screen: "RediaryModify", params: {date, title, type, Box}})}>
         <View style={styles.item}>
             <ImageBackground style={styles.backgroundImage} source={backgroundImage}>
               <View style={styles.container}>
