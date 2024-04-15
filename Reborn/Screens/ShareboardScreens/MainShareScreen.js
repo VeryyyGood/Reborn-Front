@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import {Image, View, Text, Button, TouchableOpacity, FlatList, StyleSheet, SafeAreaView, Pressable} from "react-native";
 
 import { colors } from "../../theme";
+import { GrayLine, ViewStyles } from "../../components/viewStyles";
 
 import ShareBoardFeedItem from "../../components/ShareBoardFeedItem";
 
@@ -29,7 +30,7 @@ const MainShareScreen = ({navigation}) => {
                     <Text style={{ ...styles.btnText, color: !allContent ? colors.palette.BrownDark : colors.palette.Gray400 }}>북마크</Text>
                 </TouchableOpacity>
             </View>
-            <Text style={styles.greyLine}></Text>
+            <GrayLine></GrayLine>
             <View>
                 <FlatList
                     data={filteredData}

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import {View, Text, Button,TouchableOpacity, StyleSheet, FlatList} from "react-native";
+import {View, Text, Button,TouchableOpacity, StyleSheet, FlatList, Image} from "react-native";
 
 import { colors } from "../../theme";
-import { ViewStyles, buttonStyles } from "../../components";
+import { GrayLine, ViewStyles, buttonStyles } from "../../components";
 
 import ReDiaryItem from '../../components/ReDiaryItem';
 
@@ -15,14 +15,18 @@ const RediaryMainScreen = ({navigation: { navigate }} ) => {
       ]);
 
     return(
-        <View style={{paddingHorizontal: 20, flex: 1,}}>
+        <View style={{paddingHorizontal: 20, backgroundColor: colors.background, flex: 1,}}>
             <View>
                 <Text style={styles.DiaryTitle}><Text style={{color: colors.palette.Brown}}>RE</Text>DIARY:</Text>
-                <Text>(아이콘) 오늘 하루 반려동물과 무슨 일이 있었나요?</Text>
-                <TouchableOpacity style={[buttonStyles.buttonYellow, {marginBottom: 20,}]}>
-                    <Text style={{color: "white"}}>오늘의 감정일기 쓰러 가기</Text>
+                <View style={{flexDirection: 'row'}}>
+                    <Image source={require('../../Assets/icons/rediaryimage/Writeicon.png')}/>
+                    <Text style={{fontFamily: 'Poppins-Bold', marginLeft: '5%'}}>오늘 하루 반려동물과 무슨 일이 있었나요?</Text>
+                </View>
+                <TouchableOpacity style={[buttonStyles.buttonYellow, {marginBottom: 20,}]} onPress={() => navigate("RediaryStack", { screen: "RediaryWrite" })}>
+                    <Text style={{color: "white",fontFamily: 'Poppins-Bold'}}>오늘의 감정일기 쓰러 가기</Text>
                 </TouchableOpacity>
             </View>
+            <GrayLine></GrayLine>
             <View style={styles.container}>
                 <FlatList data={rediaryData}
                 renderItem={({item})=> <ReDiaryItem date={item.date} title={item.title} type={item.type} Box={item.Box} /> }
@@ -39,8 +43,8 @@ export default RediaryMainScreen;
 const styles = StyleSheet.create({
     DiaryTitle: {
         fontSize: 30,
-        fontWeight: "bold",
         marginVertical: 20,
+        fontFamily: 'Poppins-Bold',
     },
     container: {
         flex: 1,

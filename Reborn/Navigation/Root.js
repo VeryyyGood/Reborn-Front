@@ -11,6 +11,8 @@ import ReviewStack from "./ReviewStack";
 import AccountStack from "./AccountStack";
 import RebornDogStack from "./RebornDogStack";
 import ReturnStack from "./ReturnStack";
+import ReconnectStack from "./ReconnectStack";
+import RediaryStack from "./RediaryStack";
 
 const Nav = createNativeStackNavigator();
 
@@ -25,6 +27,8 @@ const Root = () => (
     <Nav.Screen name="AccountStack" component={AccountStack} />
     <Nav.Screen name="RebornDogStack" component={RebornDogStack} />
     <Nav.Screen name="ReturnStack" component={ReturnStack} />
+    <Nav.Screen name="ReconnectStack" component={ReconnectStack} />
+    <Nav.Screen name="RediaryStack" component={RediaryStack} />
   </Nav.Navigator>
 );
 export default Root;

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image, Button } from "react-native";
 
 import { colors } from "../theme";
 import styled from "styled-components/native";
@@ -67,6 +67,9 @@ const MainScreen = ({ navigation: { navigate } }) => (
           style={{ position: "absolute", bottom: -10, right: -10 }}
           source={require("../Assets/icons/mainimages/dog.png")}
         />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigate("ReconnectStack", { screen: "ReconnectProfile" })}>
+        <Text>버튼</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.rebornButton}
