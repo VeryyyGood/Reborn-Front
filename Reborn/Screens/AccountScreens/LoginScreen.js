@@ -7,6 +7,7 @@ import NaverLogin, {
   NaverLoginResponse,
   GetProfileResponse,
 } from "@react-native-seoul/naver-login";
+import { useAccessToken } from "../../context/AccessTokenContext";
 
 const consumerKey = "fIaIMi7lrukY7sXnD0_l";
 const consumerSecret = "nvDc5R3Arw";
@@ -19,19 +20,15 @@ const LoginScreen = ({ navigation: { navigate } }) => {
   const [getProfileRes, setGetProfileRes] = useState();
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
+  const { setAccessToken } = useAccessToken();
 
-  const getProfile = async (accessToken) => {
+  const sendUserProfileToServer = async (accessToken) => {
     try {
       const profileResult = await NaverLogin.getProfile(accessToken);
       if (profileResult) {
         const { nickname, email } = profileResult.response;
         const username = "{naver}" + email.split("@")[0];
         const provider = "naver";
-
-        console.log(nickname);
-        console.log(email);
-        console.log(username);
-        console.log(provider);
 
         setNickname(nickname);
         setEmail(email);
@@ -43,12 +40,14 @@ const LoginScreen = ({ navigation: { navigate } }) => {
           nickname,
           provider,
         };
-        console.log("함수 호출됨");
+
         axios
           .post("http://reborn.persi0815.site/token/generate", userData)
           .then((response) => {
-            console.log(response.status);
             console.log(response.data);
+            const { accessToken } = response.data.result;
+            console.log(accessToken);
+            setAccessToken(accessToken);
           })
           .catch((error) => {
             console.error("ERROR", error);
@@ -75,7 +74,6 @@ const LoginScreen = ({ navigation: { navigate } }) => {
 
   const login = async () => {
     try {
-      console.log("로그인 힘수는 돌아가나봄");
       const { failureResponse, successResponse } = await NaverLogin.login({
         appName,
         consumerKey,
@@ -87,11 +85,9 @@ const LoginScreen = ({ navigation: { navigate } }) => {
       setFailureResponse(failureResponse);
 
       if (successResponse) {
-        console.log("로그인 성공함");
-        getProfile(successResponse.accessToken);
-        console.log("getProfile했어야함");
+        setAccessToken(successResponse.accessToken);
+        sendUserProfileToServer(successResponse.accessToken);
         navigate("Tabs", { screen: "main" });
-        console.log("메인으로 넘어감");
       }
     } catch (error) {
       console.error("로그인 에러:", error);

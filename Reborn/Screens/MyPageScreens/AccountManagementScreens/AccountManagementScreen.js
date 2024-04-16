@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { buttonStyles } from "../../../components";
 import { colors } from "../../../theme";
+import axios from "axios";
 import NaverLogin, {
   NaverLoginResponse,
   GetProfileResponse,
