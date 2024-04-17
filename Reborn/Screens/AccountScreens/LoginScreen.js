@@ -46,7 +46,6 @@ const LoginScreen = ({ navigation: { navigate } }) => {
           .then((response) => {
             console.log(response.data);
             const { accessToken } = response.data.result;
-            console.log(accessToken);
             setAccessToken(accessToken);
           })
           .catch((error) => {
