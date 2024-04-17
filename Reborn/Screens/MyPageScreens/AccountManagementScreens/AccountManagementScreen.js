@@ -31,13 +31,10 @@ const AccountManagementScreen = ({ navigation: { navigate } }) => {
           },
         }
       );
-      console.log(response.status);
       if (response.data) {
-        setEmail(response.data.email); // 이메일 상태 업데이트
-        setSince(response.data.since); // 가입 날짜 상태 업데이트
+        setEmail(response.data.result.email);
+        setSince(response.data.result.since);
       }
-      console.log(accessToken);
-      console.log(email, since);
     } catch (e) {
       console.error(e);
     }
