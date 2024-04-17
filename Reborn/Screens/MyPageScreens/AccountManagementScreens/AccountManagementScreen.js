@@ -50,6 +50,7 @@ const AccountManagementScreen = ({ navigation: { navigate } }) => {
           },
         }
       );
+      await NaverLogin.logout();
       console.log(logoutResponse.status);
       console.log(logoutResponse.data);
 
@@ -69,8 +70,10 @@ const AccountManagementScreen = ({ navigation: { navigate } }) => {
           },
         }
       );
+      await NaverLogin.deleteToken();
       console.log(deleteResponse.status);
       console.log(deleteResponse.data);
+
       navigate("Login");
     } catch (e) {
       console.error(e);
