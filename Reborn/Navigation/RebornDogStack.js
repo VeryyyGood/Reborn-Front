@@ -11,6 +11,7 @@ import DiaryScreen from "../Screens/RebornScreens/dog/DiaryScreen";
 import RevealIntroScreen from "../Screens/RebornScreens/dog/RevealIntroScreen";
 import EmotionScreen from "../Screens/RebornScreens/dog/EmotionScreen";
 import EmotionResultScreen from "../Screens/RebornScreens/dog/EmotionResultScreen";
+import ImageScreen from "../Screens/RebornScreens/dog/ImageScreen";
 
 import { Image } from "react-native";
 
@@ -79,6 +80,11 @@ const RebornDogStack = ({ navigation: { navigate } }) => {
         name="EmotionResult"
         component={EmotionResultScreen}
         options={{ title: `감정 일기 분석 결과` }}
+      />
+      <NativeRebornDogStack.Screen
+        name="ImageDiary"
+        component={ImageScreen}
+        options={{ title: `Day ${myContext.contentsDay}` }}
       />
     </NativeRebornDogStack.Navigator>
   );

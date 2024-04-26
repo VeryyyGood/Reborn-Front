@@ -1,7 +1,12 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components/native";
 import { colors } from "../../../theme";
-import { GrayLine, CompleteButton, RadioButton } from "../../../components";
+import {
+  GrayLine,
+  CompleteButton,
+  RadioButton,
+  Toast,
+} from "../../../components";
 import { View, TextInput } from "react-native";
 import AppContext from "./AppContext";
 
@@ -11,6 +16,7 @@ import rainImage from "../../../Assets/icons/rediaryimage/rain.png";
 
 const EmotionScreen = ({ navigation: { navigate } }) => {
   const [selectedEmotion, setSelectedEmotion] = useState(null);
+  const [showToast, setShowToast] = useState(false);
   const [answer, onChangeAnswer] = React.useState("");
   const myContext = useContext(AppContext);
 
@@ -19,6 +25,15 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
     { id: "cloud", image: cloudImage },
     { id: "rain", image: rainImage },
   ];
+
+  const goToNextPage = () => {
+    if (!selectedEmotion) {
+      setShowToast(true);
+    } else {
+      setShowToast(false);
+      navigate("EmotionResult", { selectedEmotion });
+    }
+  };
 
   return (
     <Container>
@@ -41,7 +56,10 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
           <RadioButton
             key={emotion.id}
             isSelected={selectedEmotion === emotion.id}
-            onPress={() => setSelectedEmotion(emotion.id)}
+            onPress={() => {
+              setSelectedEmotion(emotion.id);
+              setShowToast(false);
+            }}
             image={emotion.image}
           />
         ))}
@@ -57,12 +75,14 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
           placeholder="첫만남을 기록해보세요"
         ></TextInput>
       </TextInputContainer>
-      <CompleteButton
-        text="작성완료"
-        onPress={() => {
-          navigate("EmotionResult", { selectedEmotion });
-        }}
-      ></CompleteButton>
+      <ToastContainer>
+        {showToast ? (
+          <Toast showToast={showToast} message="감정을 선택해주세요" />
+        ) : (
+          ""
+        )}
+      </ToastContainer>
+      <CompleteButton text="작성완료" onPress={goToNextPage}></CompleteButton>
     </Container>
   );
 };
@@ -72,6 +92,14 @@ export default EmotionScreen;
 const Container = styled.ScrollView`
   flex: 1;
   background-color: ${colors.palette.White};
+`;
+
+const ToastContainer = styled.View`
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  align-items: flex-end;
 `;
 
 const TitleText = styled.Text`
