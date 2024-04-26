@@ -16,6 +16,7 @@ const AccountManagementScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
   const [email, setEmail] = useState("");
   const [since, setSince] = useState("");
+  const [nickname, setNickname] = useState("");
 
   useEffect(() => {
     fetchUserProfile();
@@ -34,6 +35,7 @@ const AccountManagementScreen = ({ navigation: { navigate } }) => {
       if (response.data) {
         setEmail(response.data.result.email);
         setSince(response.data.result.since);
+        setNickname(response.data.result.nickname);
       }
     } catch (e) {
       console.error(e);
@@ -104,7 +106,7 @@ const AccountManagementScreen = ({ navigation: { navigate } }) => {
           ></Image>
         </TouchableOpacity>
       </View>
-      <Text style={styles.fontBold}>김보경</Text>
+      <Text style={styles.fontBold}>{nickname}</Text>
       <View style={styles.infoContainer}>
         <View style={styles.line} />
         <View style={styles.infoRow}>
