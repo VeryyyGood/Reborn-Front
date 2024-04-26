@@ -17,14 +17,14 @@ import RediaryStack from "./RediaryStack";
 const Nav = createNativeStackNavigator();
 
 const Root = () => (
-  <Nav.Navigator screenOptions={{ headerShown: false }}>
+  <Nav.Navigator initialRouteName='AccoutStack' screenOptions={{ headerShown: false }}>
+    <Nav.Screen name="AccountStack" component={AccountStack} />
     <Nav.Screen name="IntroStack" component={IntroStack} />
     <Nav.Screen name="Tabs" component={Tabs} />
     <Nav.Screen name="SelfTestStack" component={SelfTestStack} />
     <Nav.Screen name="ShareDrawers" component={ShareDrawers} />
     <Nav.Screen name="MypageStack" component={MypageStack} />
     <Nav.Screen name="ReviewStack" component={ReviewStack} />
-    <Nav.Screen name="AccountStack" component={AccountStack} />
     <Nav.Screen name="RebornDogStack" component={RebornDogStack} />
     <Nav.Screen name="ReturnStack" component={ReturnStack} />
     <Nav.Screen name="ReconnectStack" component={ReconnectStack} />

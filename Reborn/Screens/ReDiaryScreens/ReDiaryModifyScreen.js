@@ -9,9 +9,9 @@ import cloudImage from "../../Assets/icons/rediaryimage/cloud.png";
 import rainImage from "../../Assets/icons/rediaryimage/rain.png";
 
 const ReDiaryModifyScreen = ({route}) => {
-    const { date, title, type, Box } = route.params;
+    const { rediaryId, rediaryTitle, rediaryCreatedAt, rediaryContent, pickEmotion, resultEmotion } = route.params;
 
-    const [selectedEmotion, setSelectedEmotion] = useState(null);
+    const [selectedEmotion, setSelectedEmotion] = useState(pickEmotion);
     const [isEditing, setIsEditing] = useState(false); // 수정 모드 여부
     const [text, setText] = useState(""); // 입력된 텍스트
 
@@ -22,7 +22,7 @@ const ReDiaryModifyScreen = ({route}) => {
     // 수정 모드 토글 함수 수정 . !!
     const toggleEdit = () => {
         // 오늘 날짜와 date가 같을 때만 수정 모드 토글
-        if(date === todayStr) {
+        if(rediaryCreatedAt === todayStr) {
             setIsEditing(!isEditing);
         } else {
             alert('오늘 작성된 일기만 수정할 수 있습니다.');
@@ -39,9 +39,9 @@ const ReDiaryModifyScreen = ({route}) => {
     };
 
     const emotions = [
-      { id: "sun", image: sunImage },
-      { id: "cloud", image: cloudImage },
-      { id: "rain", image: rainImage },
+      { id: "SUNNY", image: sunImage },
+      { id: "CLOUDY", image: cloudImage },
+      { id: "RAINY", image: rainImage },
     ];
     
     
@@ -53,9 +53,9 @@ const ReDiaryModifyScreen = ({route}) => {
     return (
       <Container>
         <TouchableOpacity 
-            style={[styles.ReModifyButtun, date === todayStr ? {} : styles.buttonDisabled]} 
+            style={[styles.ReModifyButtun, rediaryCreatedAt === todayStr ? {} : styles.buttonDisabled]} 
             onPress={toggleEdit} 
-            disabled={date !== todayStr}
+            disabled={rediaryCreatedAt !== todayStr}
         >
             <Text style={styles.buttonText}>수정 하기</Text>
         </TouchableOpacity>
@@ -77,7 +77,7 @@ const ReDiaryModifyScreen = ({route}) => {
             style={styles.titleInput}
             />
             ) : (
-            <Text style={styles.dataText}>{title}</Text>
+            <Text style={styles.dataText}>{rediaryTitle}</Text>
             )}
         </View>
         <TextInputContainer>
@@ -85,11 +85,11 @@ const ReDiaryModifyScreen = ({route}) => {
             <TextInput
                 style={styles.textInput}
                 onChangeText={setText}
-                value={text}
+                // value={rediaryContent}
                 placeholder="오늘의 감정일기를 작성해보세요"
             />
             ) : (
-            <Text style={styles.dataText}>{date}</Text>
+            <Text style={styles.dataText}>{rediaryContent}</Text>
             )}
         </TextInputContainer>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>

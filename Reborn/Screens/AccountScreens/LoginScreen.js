@@ -86,7 +86,7 @@ const LoginScreen = ({ navigation: { navigate } }) => {
       if (successResponse) {
         setAccessToken(successResponse.accessToken);
         sendUserProfileToServer(successResponse.accessToken);
-        navigate("Tabs", { screen: "main" });
+        navigate("IntroStack", { screen: "Intro" });
       }
     } catch (error) {
       console.error("로그인 에러:", error);
