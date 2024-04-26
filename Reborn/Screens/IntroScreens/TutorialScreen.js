@@ -13,7 +13,8 @@ const TutorialScreen = ({navigation: {navigate}}) => {
     const [tutoText, setTutoText] = useState("반갑소. 나는 첫번째요");
     
     navigateToMainStack = () => {
-        navigate('AccountStack', { screen: 'Login' })
+        navigate("IntroStack", { screen: "NickName" })
+        //navigate("Tabs", { screen: "main" })
         /*
         navigate.dispatch(
           CommonActions.reset({
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
         textAlign: "left",
         paddingLeft: 20,
         marginTop: 30,
-        fontWeight: "bold",
+        fontFamily: 'Poppins-Bold',
         paddingVertical: 20,
         //backgroundColor: "red",
         marginRight: 200,

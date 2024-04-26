@@ -1,20 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import {View, Text, Button,TouchableOpacity, StyleSheet, FlatList, Image} from "react-native";
+import axios from "axios";
 
 import { colors } from "../../theme";
 import { GrayLine, ViewStyles, buttonStyles } from "../../components";
+import { useAccessToken } from '../../context/AccessTokenContext';
 
 import ReDiaryItem from '../../components/ReDiaryItem';
 
 const RediaryMainScreen = ({navigation} ) => {
-    const [rediaryData, setrediaryData] = useState([
-        { id: '1', date: '2024-04-15', title: '감정일기 첫번째', type: 'sun', Box: 1, },
-        { id: '2', date: '2024-04-16', title: '두번째', type: 'cloud', Box: 40, },
-        { id: '3', date: '2024-04-17', title: '세번째', type: 'rain', Box: 30, },
-        { id: '4', date: '2024-04-18', title: '네번째', type: 'cloud', Box: 80, },
-      ]);
-
+    const { accessToken } = useAccessToken();
+    const [rediaryData, setRediaryData] = useState([]);
     const [result, setResult] = useState(true);
+
+    useEffect(() => {
+        getRediary();
+      }, []);
+
+      const getRediary = async () => {
+        try {
+            const response = await axios.get(
+                "http://reborn.persi0815.site/rediary/list",
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            );
+            if (response.data && response.data.result) {
+                console.log(response.data)
+                const mappedData = response.data.result.map(item => ({
+                    rediaryId: item.rediaryId.toString(),
+                    rediaryCreatedAt: item.rediaryCreatedAt,
+                    rediaryTitle: item.rediaryTitle,
+                    rediaryContent: item.rediaryContent,
+                    pickEmotion: item.pickEmotion,
+                    resultEmotion: item.resultEmotion,
+                }));
+                setRediaryData(mappedData);
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    // const [rediaryData, setrediaryData] = useState([
+    //     { rediaryId: '1', rediaryCreatedAt: '2024-04-26', rediaryContent: '감정일기 첫번째', pickEmotion: 'SUNNY', resultEmotion: 'RED', },
+    //     { rediaryId: '2', rediaryCreatedAt: '2024-04-16', rediaryContent: '두번째', pickEmotion: 'CLOUDY', resultEmotion: 'YELLO', },
+    //     { rediaryId: '3', rediaryCreatedAt: '2024-04-17', rediaryContent: '세번째', pickEmotion: 'RAINY', resultEmotion: 'BLUE', },
+    //     { rediaryId: '4', rediaryCreatedAt: '2024-04-18', rediaryContent: '네번째', pickEmotion: 'CLOUDY', resultEmotion: 'RED', },
+    //   ]);
 
     const navigateToRediaryWrite = () => {
     if (result) {
@@ -40,9 +75,17 @@ const RediaryMainScreen = ({navigation} ) => {
             </View>
             <GrayLine></GrayLine>
             <View style={styles.container}>
-                <FlatList data={rediaryData}
-                renderItem={({item})=> <ReDiaryItem date={item.date} title={item.title} type={item.type} Box={item.Box} navigation={navigation}/> }
-                keyExtractor={item => item.id}
+                <FlatList  data={rediaryData}
+                    renderItem={({item}) => (
+                        <ReDiaryItem 
+                            rediaryCreatedAt={item.rediaryCreatedAt}
+                            rediaryTitle={item.rediaryTitle}
+                            rediaryContent={item.rediaryContent} 
+                            pickEmotion={item.pickEmotion} 
+                            resultEmotion={item.resultEmotion} 
+                            navigation={navigation}
+                        />
+                    )}
                 />
             </View>
         </View>
