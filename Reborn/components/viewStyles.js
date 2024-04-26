@@ -22,8 +22,8 @@ export const ViewStyles = StyleSheet.create({
 
 export const GrayLine = styled.View`
   width: 90%;
-  height: 2px;
-  margin: 2% 2% 2% 2%;
+  height: 1px;
+  margin: 0% 2% 0% 2%;
   align-self: center;
   background-color: ${colors.palette.Gray300};
 `;
