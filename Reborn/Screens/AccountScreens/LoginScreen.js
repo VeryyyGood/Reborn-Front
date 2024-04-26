@@ -45,8 +45,11 @@ const LoginScreen = ({ navigation: { navigate } }) => {
           .post("http://reborn.persi0815.site/token/generate", userData)
           .then((response) => {
             console.log(response.data);
-            const { accessToken } = response.data.result;
+            const { accessToken, signIn } = response.data.result;
             setAccessToken(accessToken);
+            if (signIn === "wasUser") {
+              navigate("Tabs", { screen: "main" });
+            } else navigate("IntroStack", { screen: "Intro" });
           })
           .catch((error) => {
             console.error("ERROR", error);
@@ -86,7 +89,6 @@ const LoginScreen = ({ navigation: { navigate } }) => {
       if (successResponse) {
         setAccessToken(successResponse.accessToken);
         sendUserProfileToServer(successResponse.accessToken);
-        navigate("IntroStack", { screen: "Intro" });
       }
     } catch (error) {
       console.error("로그인 에러:", error);
