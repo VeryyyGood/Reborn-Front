@@ -48,7 +48,8 @@ const LoginScreen = ({ navigation: { navigate } }) => {
             const { accessToken, signIn } = response.data.result;
             setAccessToken(accessToken);
             if (signIn === "wasUser") {
-              navigate("Tabs", { screen: "main" });
+              navigate("Tabs", { screen: "main" })
+              //navigate("IntroStack", { screen: "Intro" });
             } else navigate("IntroStack", { screen: "Intro" });
           })
           .catch((error) => {
