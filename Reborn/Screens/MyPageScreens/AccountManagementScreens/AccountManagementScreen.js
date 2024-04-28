@@ -3,20 +3,21 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { buttonStyles } from "../../../components";
 import { colors } from "../../../theme";
 import axios from "axios";
-import NaverLogin, {
-  NaverLoginResponse,
-  GetProfileResponse,
-} from "@react-native-seoul/naver-login";
+import NaverLogin from "@react-native-seoul/naver-login";
 import { useAccessToken } from "../../../context/AccessTokenContext";
+import { launchImageLibrary } from "react-native-image-picker";
 
 const AccountManagementScreen = ({ navigation: { navigate } }) => {
-  const [success, setSuccessResponse] = useState();
-  const [failure, setFailureResponse] = useState();
-  const [getProfileRes, setGetProfileRes] = useState();
   const { accessToken } = useAccessToken();
   const [email, setEmail] = useState("");
   const [since, setSince] = useState("");
   const [nickname, setNickname] = useState("");
+  const [profileImage, setProfileImage] = useState(
+    require("../../../Assets/icons/profile.png")
+  );
+  const [backgroundImage, setBackgroundImage] = useState(
+    require("../../../Assets/icons/profile_bg.png")
+  );
 
   useEffect(() => {
     fetchUserProfile();
@@ -82,28 +83,53 @@ const AccountManagementScreen = ({ navigation: { navigate } }) => {
     }
   };
 
+  const selectImage = (type) => {
+    launchImageLibrary({ mediaType: "photo" }, async (response) => {
+      if (response.didCancel || response.error) {
+        console.log("User cancelled image picker");
+      } else {
+        const source = { uri: response.assets[0].uri };
+        const formData = new FormData();
+
+        formData.append("profile", {
+          uri: source.uri,
+          name: "profile.jpg",
+          type: "image/jpeg",
+        });
+
+        try {
+          const uploadResponse = await axios.post(
+            "http://reborn.persi0815.site/users/profile-image",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+          console.log("Upload response:", uploadResponse.data);
+
+          if (type === "profile") {
+            setProfileImage(source);
+          } else if (type === "background") {
+            setBackgroundImage(source);
+          }
+        } catch (error) {
+          console.error("Upload error:", error);
+        }
+      }
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.imageWrapper}>
-        <Image
-          source={require("../../../Assets/icons/profile_bg.png")}
-          style={styles.backgroundImage}
-        ></Image>
-        <TouchableOpacity>
-          <Image
-            source={require("../../../Assets/icons/pencil.png")}
-            style={styles.backgroundPencil}
-          ></Image>
+        <TouchableOpacity onPress={() => selectImage("background")}>
+          <Image source={backgroundImage} style={styles.backgroundImage} />
         </TouchableOpacity>
-        <Image
-          source={require("../../../Assets/icons/profile.png")}
-          style={styles.profileImage}
-        ></Image>
-        <TouchableOpacity>
-          <Image
-            source={require("../../../Assets/icons/pencil.png")}
-            style={styles.profilePencil}
-          ></Image>
+        <TouchableOpacity onPress={() => selectImage("profile")}>
+          <Image source={profileImage} style={styles.profileImage} />
         </TouchableOpacity>
       </View>
       <Text style={styles.fontBold}>{nickname}</Text>
@@ -153,28 +179,17 @@ const styles = StyleSheet.create({
   },
   imageWrapper: {
     position: "relative",
-    height: "15%",
-    width: "15%",
+    height: 190,
     justifyContent: "center",
     alignItems: "center",
   },
   backgroundImage: {
-    position: "absolute",
-  },
-  backgroundPencil: {
-    marginLeft: "500%",
-    marginTop: "230%",
+    top: 35,
   },
   profileImage: {
-    position: "absolute",
-    top: "55%",
+    bottom: 25,
   },
-  profilePencil: {
-    marginLeft: "125%",
-  },
-
   fontBold: {
-    marginTop: "19%",
     fontSize: 18,
     fontFamily: "Poppins-Bold",
     marginBottom: "6%",
