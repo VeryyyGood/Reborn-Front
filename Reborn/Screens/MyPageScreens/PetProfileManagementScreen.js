@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -16,7 +16,12 @@ import { colors } from "../../theme";
 const RadioButton = ({ isSelected, onPress, label }) => {
   return (
     <TouchableOpacity style={styles.radioButtonContainer} onPress={onPress}>
-      <View style={[styles.radioButton, isSelected]}>
+      <View
+        style={[
+          styles.radioButton,
+          isSelected ? styles.radioButtonSelected : null,
+        ]}
+      >
         {isSelected && <View style={styles.radioButtonInner} />}
       </View>
       <Text>{label}</Text>
@@ -28,13 +33,11 @@ const checkWhite = require("../../Assets/icons/check_white.png"); // 흰색 체�
 const checkBlack = require("../../Assets/icons/check_black.png");
 
 const PetProfileManagementScreen = () => {
-  const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [breed, setBreed] = useState("");
   const [animalType, setAnimalType] = useState(null);
   const [color, setColor] = useState("");
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const colorsChoice = [
     colors.palette.Black,
@@ -44,71 +47,37 @@ const PetProfileManagementScreen = () => {
     colors.palette.White,
   ];
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-
-  const handleConfirm = (date) => {
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    setDate(date.toLocaleDateString("ko-KR", options));
-    hideDatePicker();
+  const handleDelete = () => {
+    //삭제 로직 추가할 예정
+    alert("프로필이 삭제되었습니다.");
   };
 
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.font}>이름</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={setName}
-          value={name}
-          editable={isEditing}
-        />
+        <Text style={styles.input}>{name}</Text>
       </View>
       <View>
         <Text style={styles.font}>기일</Text>
-        <TouchableOpacity
-          onPress={() => {
-            if (isEditing) {
-              showDatePicker();
-            }
-          }}
-          style={styles.input}
-        >
-          <Text style={styles.font}>{date || "날짜 선택"}</Text>
-        </TouchableOpacity>
-        <DateTimePickerModal
-          isVisible={isDatePickerVisible}
-          mode="date"
-          onConfirm={handleConfirm}
-          onCancel={hideDatePicker}
-        />
+        <Text style={styles.input}>{date}</Text>
       </View>
       <View>
         <Text style={styles.font}>동물 종류</Text>
         <RadioButton
           label="강아지"
           isSelected={animalType === "강아지"}
-          onPress={() => isEditing && setAnimalType("강아지")}
+          onPress={() => {}}
         />
         <RadioButton
           label="고양이"
           isSelected={animalType === "고양이"}
-          onPress={() => isEditing && setAnimalType("고양이")}
+          onPress={() => {}}
         />
       </View>
       <View>
         <Text style={styles.font}>견종</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={setBreed}
-          value={breed}
-          editable={isEditing}
-        />
+        <Text style={styles.input}>{breed}</Text>
       </View>
       <Text style={styles.font}>색상</Text>
       <View style={styles.colorContainer}>
@@ -117,13 +86,12 @@ const PetProfileManagementScreen = () => {
           showsHorizontalScrollIndicator={false}
           data={colorsChoice}
           renderItem={({ item }) => (
-            <Pressable
+            <View
               style={[
                 styles.colorCircle,
                 { backgroundColor: item },
                 color === item && styles.selected,
               ]}
-              onPress={() => isEditing && setColor(item)}
             >
               {color === item && (
                 <Image
@@ -133,18 +101,16 @@ const PetProfileManagementScreen = () => {
                   }
                 />
               )}
-            </Pressable>
+            </View>
           )}
           keyExtractor={(item) => item}
         />
       </View>
       <TouchableOpacity
         style={[buttonStyles.buttonBrownBottom, { top: "14.5%" }]}
-        onPress={() => setIsEditing(!isEditing)}
+        onPress={handleDelete}
       >
-        <Text style={styles.buttonFont}>
-          {isEditing ? "저장하기" : "수정하기"}
-        </Text>
+        <Text style={styles.buttonFont}>삭제하기</Text>
       </TouchableOpacity>
     </View>
   );
