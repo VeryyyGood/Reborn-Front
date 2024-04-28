@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     width: 40, // 리본 이미지 크기 조절
     height: 40, // 리본 이미지 크기 조절
     resizeMode: "contain",
-    marginTop: "10%",
+    marginTop: "9.7%",
     marginLeft: "6%",
   },
 
