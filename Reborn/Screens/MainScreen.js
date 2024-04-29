@@ -10,9 +10,12 @@ import {
 
 import { colors } from "../theme";
 import styled from "styled-components/native";
+import { useAccessToken, useGlobalNickname } from "../context/AccessTokenContext";
 
-const MainScreen = ({ navigation: { navigate } }) => (
-  <Container>
+const MainScreen = ({ navigation: { navigate } }) => {
+  const { globalNickname } = useGlobalNickname();
+  return (
+    <View style={styles.Container}>
     <Text style={styles.title}>
       <Text style={{ color: colors.palette.Yellow }}>RE:</Text> BORN
     </Text>
@@ -23,7 +26,7 @@ const MainScreen = ({ navigation: { navigate } }) => (
       />
       <Text style={styles.helloText}>
         안녕하세요,{"\n"}
-        <Text style={{ color: colors.palette.Brown }}>김보경</Text>님
+        <Text style={{ color: colors.palette.Brown }}>{globalNickname}</Text>님
       </Text>
     </View>
     <View style={{ paddingHorizontal: 20, marginBottom: -20 }}>
@@ -100,15 +103,23 @@ const MainScreen = ({ navigation: { navigate } }) => (
         />
       </TouchableOpacity>
     </View>
-  </Container>
-);
+  </View>
+  );
+}
 
 export default MainScreen;
 
 const styles = StyleSheet.create({
+  Container: {
+    flex: 1,
+    backgroundColor: colors.palette.White,
+    paddingHorizontal: '5%',
+
+  },
   title: {
     fontSize: 25,
     fontFamily: "Poppins-Bold",
+    marginTop: '5%',
   },
   helloText: {
     fontSize: 20,
