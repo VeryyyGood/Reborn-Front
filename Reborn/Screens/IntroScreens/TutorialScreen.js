@@ -10,7 +10,7 @@ const TutorialScreen = ({navigation: {navigate}}) => {
     //버튼을 누른 횟숫
     const [pressCount, setPressCount] = useState(0);
     //text관리
-    const [tutoText, setTutoText] = useState("반갑소. 나는 첫번째요");
+    const [tutoText, setTutoText] = useState("안녕하세요, REBORN은 반려동물 추모앱으로 보호자들이 마음을 정리할 수 있도록 도와주는 애플리케이션입니다.");
     
     navigateToMainStack = () => {
         navigate("IntroStack", { screen: "NickName" })
@@ -34,10 +34,10 @@ const TutorialScreen = ({navigation: {navigate}}) => {
     //pressCount 상태가 변경될때마다 실행됨
     useEffect(()=> {
         if (pressCount === 1){
-            setTutoText("반갑소. 나는 두번째 튜토리얼이요");
+            setTutoText("반려동물과 작별하신 보호자님께서는 15일 동안 '작별하기'를 통해 마음을 정리할 수 있습니다. 반려동물과 함께 계신 보호자님께서도 감정일기 작성과 게시판 활동을 통해 반려동물과의 추억을 저장할 수 있습니다.");
         }
         else if (pressCount === 2){
-            setTutoText("질문에 답하고 감정을 기록하며 스스로를 위로해보는건 어떨까요?");
+            setTutoText("궁금한 내용은 챗봇 RETURN에게 이야기를 해보세요. 애플리케이션의 기능을 100% 사용할 수 있도록 도와드립니다.");
         }
         else if (pressCount === 3) {
             //navigation.navigate('Main');

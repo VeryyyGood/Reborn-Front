@@ -13,9 +13,9 @@ const RediaryWriteScreen = ({navigation: { navigate }} ) => {
     const [answer, onChangeAnswer] = React.useState("");
   
     const emotions = [
-      { id: "sun", image: sunImage },
-      { id: "cloud", image: cloudImage },
-      { id: "rain", image: rainImage },
+      { id: "SUNNY", image: sunImage },
+      { id: "CLOUDY", image: cloudImage },
+      { id: "RAINY", image: rainImage },
     ];
   
     return (

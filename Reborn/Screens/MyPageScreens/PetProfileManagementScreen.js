@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   Image,
   TouchableOpacity,
   FlatList,
-  Pressable,
 } from "react-native";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { buttonStyles } from "../../components/buttonStyles";
 import { colors } from "../../theme";
 

@@ -3,10 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import axios from "axios";
 import { buttonStyles } from "../../components";
 import { colors } from "../../theme";
-import NaverLogin, {
-  NaverLoginResponse,
-  GetProfileResponse,
-} from "@react-native-seoul/naver-login";
+import NaverLogin from "@react-native-seoul/naver-login";
 import { useAccessToken } from "../../context/AccessTokenContext";
 
 const consumerKey = "fIaIMi7lrukY7sXnD0_l";
@@ -49,6 +46,7 @@ const LoginScreen = ({ navigation: { navigate } }) => {
             setAccessToken(accessToken);
             if (signIn === "wasUser") {
               navigate("Tabs", { screen: "main" });
+              //navigate("IntroStack", { screen: "Intro" });
             } else navigate("IntroStack", { screen: "Intro" });
           })
           .catch((error) => {

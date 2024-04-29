@@ -1,12 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, Image, KeyboardAvoidingView, Platform, Keyboard } from "react-native";
 
+import axios from "axios";
 
 import { colors } from "../../theme";
 import { buttonStyles } from "../../components";
 
+import { useAccessToken, useGlobalNickname } from "../../context/AccessTokenContext";
+
 const NicknameInputScreen = ({ navigation: { navigate } }) => {
     const [keyboardShown, setKeyboardShown] = useState(false);
+    const { accessToken } = useAccessToken();
+    const { setGlobalNickname } = useGlobalNickname();
+
+    const requestPostNickname = async () => {
+        const data = {
+            nickname: nickname
+        };
+    
+        try {
+            const response = await axios.post(
+                'http://reborn.persi0815.site/users/nickname', data, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+            console.log(response.data);
+            return response; //함수에서 서버 응답 반환
+        }
+        catch (error) {
+            //console.error("ERROR", error);
+            console.log("Error Response Body:", error.response.data);
+            throw error; //에러를 다시 던져서 외부에서 처리할 수 있게 함
+        }
+    }
 
     useEffect(() => {
         const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
@@ -24,11 +51,27 @@ const NicknameInputScreen = ({ navigation: { navigate } }) => {
 
     const [nickname, setNickname] = useState('');
 
-    const navigateToNextScreen = () => {
+    const navigateToNextScreen = async () => {
         if (nickname.trim().length > 0) {
-            navigate("Tabs", { screen: "main" });
+            try {
+                const response = await requestPostNickname(); //서버 응답
+                
+                // isSuccess 값 확인
+                if(response.data.isSuccess) {
+                    console.log(response.data.isSuccess + "tif안에 있음");
+                    setGlobalNickname(nickname);
+                    navigate("Tabs", { screen: "main" }); // isSuccess가 true일 경우에만 네비게이션 이동
+                } else {
+                    // isSuccess가 false인 경우
+                    Alert.alert("오류", response.data.message);
+                }
+            } catch (error) {
+                // 네트워크 에러나 기타 에러 처리
+                //console.error("Navigation Error", error);
+                Alert.alert("중복", "별명이 중복입니다. 다시 해주세용");
+            }
         } else {
-            Alert.alert("알림", "닉네임을 입력해주세요.");
+            Alert.alert("어허", "사용자 별명을 입력해주세요.");
         }
     };
 

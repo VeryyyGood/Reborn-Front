@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Root from "./Navigation/Root";
 
 import AppContext from "./Screens/RebornScreens/dog/AppContext";
-import { AccessTokenProvider } from "./context/AccessTokenContext";
+import { AccessTokenProvider, GlobalNicknameProvider } from "./context/AccessTokenContext";
 
 export default function App() {
   const [contentsDay, setContentsDay] = useState(2);
@@ -16,14 +16,16 @@ export default function App() {
     contentsDay: contentsDay,
     setDay,
   };
-
+  
   return (
     <AccessTokenProvider>
+      <GlobalNicknameProvider>
       <AppContext.Provider value={days}>
         <NavigationContainer>
           <Root />
         </NavigationContainer>
       </AppContext.Provider>
+      </GlobalNicknameProvider>
     </AccessTokenProvider>
   );
 }
