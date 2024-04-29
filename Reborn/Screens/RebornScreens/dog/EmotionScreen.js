@@ -9,6 +9,7 @@ import {
 } from "../../../components";
 import { View, TextInput } from "react-native";
 import AppContext from "./AppContext";
+import axios from "axios";
 
 import sunImage from "../../../Assets/icons/rediaryimage/sun.png";
 import cloudImage from "../../../Assets/icons/rediaryimage/cloud.png";
@@ -26,12 +27,43 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
     { id: "rain", image: rainImage },
   ];
 
-  const goToNextPage = () => {
+  const goToNextPage = async () => {
     if (!selectedEmotion) {
       setShowToast(true);
     } else {
       setShowToast(false);
-      navigate("EmotionResult", { selectedEmotion });
+      const analysisResult = await analyzeEmotion(answer);
+      if (analysisResult) {
+        console.log(analysisResult);
+        navigate("EmotionResult", { selectedEmotion, analysisResult });
+      } else {
+        alert("감정 분석에 실패했습니다. 다시 시도해주세요.");
+      }
+    }
+  };
+
+  const analyzeEmotion = async (text) => {
+    const API_URL =
+      "https://naveropenapi.apigw.ntruss.com/sentiment-analysis/v1/analyze";
+    const CLIENT_ID = "xna5tjgemy";
+    const CLIENT_SECRET = "9CsLrshiwbgpF5SwC2kj7pJz7jOZXEHkRbNT4AuN";
+
+    try {
+      const response = await axios.post(
+        API_URL,
+        { content: text },
+        {
+          headers: {
+            "X-NCP-APIGW-API-KEY-ID": CLIENT_ID,
+            "X-NCP-APIGW-API-KEY": CLIENT_SECRET,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("감정 분석 중 에러 발생: ", error);
+      return null;
     }
   };
 
