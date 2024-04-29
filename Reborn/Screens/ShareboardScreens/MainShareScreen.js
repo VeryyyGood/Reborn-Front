@@ -11,10 +11,10 @@ const MainShareScreen = ({navigation}) => {
     const [allContent, setAllContent] = useState(true); // 전체 글 보기 상태
 
     const ShareBoardFeedData = [
-        { boardid: '1', title: '김보경', date: '2222-22.22', content: '첫번째 글', isBookmarked: false , heartNum: 100, commentNum: 23, },
-        { boardid: '2', title: '문채영', date: '2222-22.23', content: '두번째 글', isBookmarked: true, heartNum: 20, commentNum: 1, },
-        { boardid: '3', title: '문채영', date: '2222-22.24', content: '세번째 글', isBookmarked: false , heartNum: 50, commentNum: 53, },
-        { boardid: '4', title: '문채영', date: '2222-22.25', content: '네번째 글', isBookmarked: true , heartNum: 9, commentNum: 87, },
+        // { boardid: '1', title: '김보경', date: '2222-22.22', content: '첫번째 글', isBookmarked: false , heartNum: 100, commentNum: 23, },
+        // { boardid: '2', title: '문채영', date: '2222-22.23', content: '두번째 글', isBookmarked: true, heartNum: 20, commentNum: 1, },
+        // { boardid: '3', title: '문채영', date: '2222-22.24', content: '세번째 글', isBookmarked: false , heartNum: 50, commentNum: 53, },
+        // { boardid: '4', title: '문채영', date: '2222-22.25', content: '네번째 글', isBookmarked: true , heartNum: 9, commentNum: 87, },
     ];
 
     // allContent 상태에 따라 데이터 필터링
@@ -72,10 +72,3 @@ const styles = StyleSheet.create({
         paddingBottom: 3, marginHorizontal: 20,
     },
 });
-
-{/* <TouchableOpacity onPress={() => navigation.navigate("Tabs", { screen: "Main" })} style={{marginTop: 10, marginLeft: '25%'}}>
-    <Image
-    source={require('../../Assets/icons/tabIcons/homeicon.png')}
-    style={{width: 25, height: 25, tintColor: colors.palette.Brown}}
-    />
-</TouchableOpacity> */}
