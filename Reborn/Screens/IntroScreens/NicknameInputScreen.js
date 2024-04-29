@@ -6,11 +6,12 @@ import axios from "axios";
 import { colors } from "../../theme";
 import { buttonStyles } from "../../components";
 
-import { useAccessToken } from "../../context/AccessTokenContext";
+import { useAccessToken, useGlobalNickname } from "../../context/AccessTokenContext";
 
 const NicknameInputScreen = ({ navigation: { navigate } }) => {
     const [keyboardShown, setKeyboardShown] = useState(false);
     const { accessToken } = useAccessToken();
+    const { setGlobalNickname } = useGlobalNickname();
 
     const requestPostNickname = async () => {
         const data = {
@@ -54,8 +55,11 @@ const NicknameInputScreen = ({ navigation: { navigate } }) => {
         if (nickname.trim().length > 0) {
             try {
                 const response = await requestPostNickname(); //서버 응답
+                
                 // isSuccess 값 확인
                 if(response.data.isSuccess) {
+                    console.log(response.data.isSuccess + "tif안에 있음");
+                    setGlobalNickname(nickname);
                     navigate("Tabs", { screen: "main" }); // isSuccess가 true일 경우에만 네비게이션 이동
                 } else {
                     // isSuccess가 false인 경우
