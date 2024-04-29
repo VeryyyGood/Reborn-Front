@@ -102,10 +102,7 @@ const ImageScreen = ({ navigation: { navigate } }) => {
             value={contents}
           ></ContentsText>
         </TextContainer>
-        <CompleteButton
-          text="저장하기"
-          onPress={() => navigate("RevealIntro")}
-        />
+        <CompleteButton text="저장하기" onPress={() => navigate("ReIntro")} />
       </ImageBackground>
     </Container>
   );

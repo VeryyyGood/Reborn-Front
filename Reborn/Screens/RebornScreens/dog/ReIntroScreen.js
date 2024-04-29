@@ -7,20 +7,45 @@ import { TutorialModal } from "../../../components/modalStyles";
 import AppContext from "./AppContext";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 
-const RevealIntroScreen = ({ navigation: { navigate } }) => {
-  const myContext = useContext(AppContext);
-
-  const ModalText = `오늘부터 5일 동안 
+const ReIntroScreen = ({ navigation: { navigate } }) => {
+  const ModalTextArray = [
+    `오늘부터 5일 동안 반려동물과\n충분한 대화를 나누어보세요. \n대화한 내용은 모두 ‘RE:VIEW’에\n저장됩니다.`,
+    `오늘부터 5일 동안 
   감정 일기를 통해 나 자신과
   충분한 대화를 나누어보세요.
   작성한 감정 일기는 모두 
-  RE: VIEW에 저장됩니다.`;
-
+  RE:VIEW에 저장됩니다.`,
+    `오늘부터 3일 동안 
+  갤러리를 살펴보며 
+  꼭 기억하고 싶은 순간이 담긴 
+  사진이나 영상을 업로드하고 
+  그 날 있었던 일에 대해 기록해보세요.
+  작성한 감정 일기는 모두 
+  RE:VIEW에 저장됩니다.`,
+  ];
+  const myContext = useContext(AppContext);
   const [modalVisible, setModalVisible] = useState(false);
   const [daymodalVisible, setDayModalVisible] = useState(true);
 
+  // RE:MIND & RE:VEAL & RE:MEMBER what day? => modal text
+  const getDayValue = (day) => {
+    if (day >= 2 && day <= 6) {
+      return 0;
+    } else if (day >= 7 && day <= 11) {
+      return 1;
+    } else if (day >= 12 && day <= 15) {
+      return 2;
+    }
+    return null;
+  };
+
   useEffect(() => {
-    if (myContext.contentsDay <= 7) {
+    // set Tutorial Modal Visible true
+    if (
+      myContext.contentsDay == 2 ||
+      myContext.contentsDay == 7 ||
+      myContext.contentsDay == 12
+    ) {
       setModalVisible(true);
     }
     setDayModalVisible(true);
@@ -37,21 +62,15 @@ const RevealIntroScreen = ({ navigation: { navigate } }) => {
       >
         <Text style={textStyles.contentsTextBox}>
           <Text style={{ color: colors.palette.Brown }}>RE</Text>
-          MVEAL : 나의 감정 들여다보기
+          MIND : 충분한 대화 나누기
         </Text>
         <DogImage source={dogimageURL} resizeMode="center" />
-        {modalVisible ? (
-          <TutorialModal
-            text={ModalText}
-            modalStyles={modalVisible}
-            onPress={() => {
-              setModalVisible(false);
-              navigate("Pet");
-            }}
-          />
-        ) : (
-          ""
-        )}
+        <ButtonBrownBottom
+          text={"쓰다듬으러 가기"}
+          onPress={() => {
+            navigate("Pet");
+          }}
+        />
         {daymodalVisible ? (
           <TutorialModal
             text={"Day" + myContext.contentsDay}
@@ -65,11 +84,12 @@ const RevealIntroScreen = ({ navigation: { navigate } }) => {
         )}
         {modalVisible ? (
           <TutorialModal
-            text={ModalText}
+            text={ModalTextArray[getDayValue(myContext.contentsDay)]}
             modalStyles={modalVisible}
             onPress={() => {
-              setModalVisible(false);
-              navigate("Pet");
+              {
+                setModalVisible(false);
+              }
             }}
           />
         ) : (
@@ -80,7 +100,7 @@ const RevealIntroScreen = ({ navigation: { navigate } }) => {
   );
 };
 
-export default RevealIntroScreen;
+export default ReIntroScreen;
 
 const Container = styled.View`
   flex: 1;
