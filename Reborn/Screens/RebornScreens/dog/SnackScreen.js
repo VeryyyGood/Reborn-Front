@@ -29,6 +29,9 @@ const SnackScreen = ({ navigation: { navigate } }) => {
     9: "Emotion",
     10: "Emotion",
     11: "Emotion",
+    12: "ImageDiary",
+    13: "ImageDiary",
+    14: "ImageDiary",
   };
 
   const getDestination = (day) => {
