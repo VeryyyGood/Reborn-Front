@@ -45,8 +45,8 @@ const ShareContentScreen = ({ route }) => {
               },
             }
           );
-          // console.log(response.data);
           // console.log(likeCount);
+          console.log(response.data);
           if (response.data && response.data.result) {
             setIsHeart(true); // 예시로, 하트를 누른 상태를 true로 설정합니다. 실제 로직에 맞게 조정해주세요.
             // 다른 필요한 상태 업데이트도 여기에서 수행할 수 있습니다.
@@ -58,17 +58,37 @@ const ShareContentScreen = ({ route }) => {
         }
       };
 
+      const getCheckBookmark = async () => {
+        try {
+          const response = await axios.get(
+            `http://reborn.persi0815.site/board/${id}/check-bookmark`,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+          console.log(response.data);
+          if (response.data && response.data.result) {
+            setIsBookmark(true);
+            // 다른 필요한 상태 업데이트도 여기에서 수행
+          } else {
+            setIsBookmark(false);
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      };
+
       getCheckLike();
+      getCheckBookmark();
       setLikeCount(initialLikeCount);
-    }, [accessToken, id, initialLikeCount]) // 의존성 배열에 accessToken과 id를 추가합니다.
+    }, [accessToken, id, initialLikeCount, isBookmark])
   );
   
   
-  // 기존의 setIsHeart를 호출하는 대신 handleHeartPress 함수를 정의하고 사용합니다.
   const handleHeartPress = async () => {
-    // setIsHeart의 값을 토글하기 전 상태를 기반으로 API 호출을 결정합니다.
     if (!isHeart) {
-      // 하트가 현재 눌리지 않은 상태라면, POST 요청을 보냅니다.
       try {
         const response = await axios.post(
           `http://reborn.persi0815.site/board/${id}/like/create`, {},
@@ -78,18 +98,17 @@ const ShareContentScreen = ({ route }) => {
             },
           }
         );
-        
+        console.log(response.data);
         if (response.data.isSuccess) {
-          console.log('하트 누르고 if 문 안에 들어감');
           console.log(response.data.result);
           setLikeCount(response.data.result); // 서버 응답의 result로 likeCount 업데이트
-          setIsHeart(true); // 하트 상태를 눌린 상태로 업데이트합니다.
+          setIsHeart(true); // 하트 상태를 눌린 상태로 업데이트
         }
       } catch (error) {
         console.log("Error Response Body:", error.response?.data);
       }
     } else {
-      // 하트가 현재 눌린 상태라면, DELETE 요청을 보냅니다.
+      // 하트가 현재 눌린 상태라면, DELETE 요청
       try {
         const response = await axios.delete(
           `http://reborn.persi0815.site/board/${id}/like/delete`,
@@ -99,9 +118,50 @@ const ShareContentScreen = ({ route }) => {
             },
           }
         );
+        console.log(response.data);
         if (response.data.isSuccess) {
-          setLikeCount(response.data.result); // likeCount를 감소시킵니다.
-          setIsHeart(false); // 하트 상태를 눌리지 않은 상태로 업데이트합니다.
+          setLikeCount(response.data.result); // likeCount를 감소
+          setIsHeart(false); // 하트 상태를 눌리지 않은 상태로 업데이트
+        }
+      } catch (error) {
+        console.log("Error Response Body:", error.response?.data);
+      }
+    }
+  };
+
+  const handleBookmarkPress = async () => {
+    if (!isBookmark) {
+      try {
+        const response = await axios.post(
+          `http://reborn.persi0815.site/board/${id}/bookmark/create`, {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        console.log(response.data);
+        if (response.data.isSuccess) {
+          console.log(response.data);
+          setIsBookmark(true); // 북마크 상태를 눌린 상태로 업데이트
+        }
+      } catch (error) {
+        console.log("Error Response Body:", error.response?.data);
+      }
+    } else {
+      // 북마크가 현재 눌린 상태라면, DELETE 요청
+      try {
+        const response = await axios.delete(
+          `http://reborn.persi0815.site/board/${id}/bookmark/delete`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        console.log(response.data);
+        if (response.data.isSuccess) {
+          setIsBookmark(false); // 하트 상태를 눌리지 않은 상태로 업데이트
         }
       } catch (error) {
         console.log("Error Response Body:", error.response?.data);
@@ -183,7 +243,7 @@ const ShareContentScreen = ({ route }) => {
             <Text
               style={{
                 color: colors.palette.BrownDark,fontFamily: "Poppins-Bold",}}>{likeCount}</Text>
-            <TouchableOpacity onPress={()=> setIsBookmark(!isBookmark)}>
+            <TouchableOpacity onPress={handleBookmarkPress}>
                 <Image
                 style={{ marginLeft: 10,
                 tintColor: isBookmark ? colors.palette.Blue : colors.palette.Gray400 }}
