@@ -10,8 +10,8 @@ import {
   Pressable,
 } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { buttonStyles } from "../../../components/buttonStyles";
 import { colors } from "../../../theme";
+import { useAccessToken } from "../../../context/AccessTokenContext";
 
 const RadioButton = ({ isSelected, onPress, label }) => {
   return (
@@ -24,11 +24,11 @@ const RadioButton = ({ isSelected, onPress, label }) => {
   );
 };
 
-const checkWhite = require("../../../Assets/icons/check_white.png"); // 흰색 체크 마크 이미지 경로
+const checkWhite = require("../../../Assets/icons/check_white.png");
 const checkBlack = require("../../../Assets/icons/check_black.png");
 
 const ReconnectScreen = () => {
-  const [isEditing, setIsEditing] = useState(false);
+  const { accessToken } = useAccessToken();
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [breed, setBreed] = useState("");
@@ -44,6 +44,14 @@ const ReconnectScreen = () => {
     colors.palette.White,
   ];
 
+  const colorNameMap = {
+    [colors.palette.Black]: "BLACK",
+    [colors.palette.BrownChoco]: "BROWN",
+    [colors.palette.YellowDark]: "LIGHTBROWN",
+    [colors.palette.Gray500]: "GREY",
+    [colors.palette.White]: "WHITE",
+  };
+
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -53,32 +61,54 @@ const ReconnectScreen = () => {
   };
 
   const handleConfirm = (date) => {
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    setDate(date.toLocaleDateString("ko-KR", options));
+    setDate(date.toISOString().split("T")[0]);
     hideDatePicker();
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const petType = animalType === "강아지" ? "DOG" : "CAT";
+      let colorName = colorNameMap[color] || "";
+
+      const response = await fetch(
+        "http://reborn.persi0815.site:8080/reborn/reconnect/create",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            petName: name,
+            anniversary: date,
+            petType: petType,
+            detailPetType: breed,
+            petColor: colorName,
+            petImage: "",
+          }),
+        }
+      );
+      const data = await response.json();
+      if (!data) {
+        throw new Error("Something went wrong");
+      }
+      console.log(data);
+      alert("저장되었습니다!");
+    } catch (error) {
+      console.error(error);
+      alert("저장 실패:" + error);
+    }
   };
 
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.font}>이름</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={setName}
-          value={name}
-          editable={isEditing}
-        />
+        <TextInput style={styles.input} onChangeText={setName} value={name} />
       </View>
       <View>
         <Text style={styles.font}>기일</Text>
-        <TouchableOpacity
-          onPress={() => {
-            if (isEditing) {
-              showDatePicker();
-            }
-          }}
-          style={styles.input}
-        >
+        <TouchableOpacity onPress={showDatePicker} style={styles.input}>
           <Text style={styles.font}>{date || "날짜 선택"}</Text>
         </TouchableOpacity>
         <DateTimePickerModal
@@ -93,22 +123,17 @@ const ReconnectScreen = () => {
         <RadioButton
           label="강아지"
           isSelected={animalType === "강아지"}
-          onPress={() => isEditing && setAnimalType("강아지")}
+          onPress={() => setAnimalType("강아지")}
         />
         <RadioButton
           label="고양이"
           isSelected={animalType === "고양이"}
-          onPress={() => isEditing && setAnimalType("고양이")}
+          onPress={() => setAnimalType("고양이")}
         />
       </View>
       <View>
         <Text style={styles.font}>견종</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={setBreed}
-          value={breed}
-          editable={isEditing}
-        />
+        <TextInput style={styles.input} onChangeText={setBreed} value={breed} />
       </View>
       <Text style={styles.font}>색상</Text>
       <View style={styles.colorContainer}>
@@ -123,7 +148,7 @@ const ReconnectScreen = () => {
                 { backgroundColor: item },
                 color === item && styles.selected,
               ]}
-              onPress={() => isEditing && setColor(item)}
+              onPress={() => setColor(item)}
             >
               {color === item && (
                 <Image
@@ -140,11 +165,9 @@ const ReconnectScreen = () => {
       </View>
       <TouchableOpacity
         style={[styles.buttonBrownBottom, { top: "14.5%" }]}
-        onPress={() => setIsEditing(!isEditing)}
+        onPress={handleSubmit}
       >
-        <Text style={styles.buttonFont}>
-          {isEditing ? "저장하기" : "수정하기"}
-        </Text>
+        <Text style={styles.buttonFont}>저장하기</Text>
       </TouchableOpacity>
     </View>
   );
@@ -229,7 +252,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     height: 50,
     marginHorizontal: 100,
-},
+  },
 });
 
 export default ReconnectScreen;
