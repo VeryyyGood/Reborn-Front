@@ -17,19 +17,30 @@ const MainShareScreen = ({navigation}) => {
     const { accessToken } = useAccessToken();
     const [FeedItemData, setFeedItemData] = useState([]);
     const [result, setResult] = useState(true);
+     // 화면 선택 상태 (all, bookmarked, mine 중 하나)
+     const [selectedScreen, setSelectedScreen] = useState('all');
 
     useFocusEffect(
         React.useCallback(() => {
           const getFeedItem = async () => {
             try {
-                const response = await axios.get(
-                    "http://reborn.persi0815.site/board/list?type=ALL&way=time",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${accessToken}`,
-                        },
-                    }
-                );
+                let url = "http://reborn.persi0815.site/board/list?type=ALL&way=time"; // 기본 URL
+                if (selectedScreen === 'bookmarked') {
+                    url = "http://reborn.persi0815.site/board/list/bookmark?type=ALL&way=time";
+                }
+                else if (selectedScreen === 'mine') {
+                    url = 'http://reborn.persi0815.site/board/list/my?type=ALL&way=time&scrollPosition=0&fetchSize=10';
+                }
+                else if (selectedScreen === 'like') {
+                    url = 'http://reborn.persi0815.site/board/list?type=ALL&way=like&scrollPosition=0&fetchSize=10';
+                }
+                
+
+                const response = await axios.get(url, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
                 if (response.data && response.data.result) {
                     console.log(response.data.result.boardList)
                     const mappedData = response.data.result.boardList.map(item => ({
@@ -48,22 +59,11 @@ const MainShareScreen = ({navigation}) => {
           };
     
           getFeedItem();
-        }, [accessToken]) // 의존성 배열에 accessToken과 id를 추가합니다.
+        }, [selectedScreen,accessToken])
       );
 
-    // 화면 선택 상태 (all, bookmarked, mine 중 하나)
-    const [selectedScreen, setSelectedScreen] = useState('all');
-
-    const ShareBoardFeedData = [ // .!!
-        // { boardid: '1', title: '김보경', date: '2222-22.22', content: '첫번째 글', isBookmarked: false , heartNum: 100, commentNum: 23, },
-        // { boardid: '2', title: '문채영', date: '2222-22.23', content: '두번째 글', isBookmarked: true, heartNum: 20, commentNum: 1, },
-        // { boardid: '3', title: '문채영', date: '2222-22.24', content: '세번째 글', isBookmarked: false , heartNum: 50, commentNum: 53, },
-        // { boardid: '4', title: '문채영', date: '2222-22.25', content: '네번째 글', isBookmarked: true , heartNum: 9, commentNum: 87, },
-    ];
-
-
     return (
-        <View style={{backgroundColor: colors.background}}>
+        <View style={{backgroundColor: colors.palette.White}}>
             <View style={styles.header}>
                 <TouchableOpacity activeOpacity={0.5} onPress={() => setSelectedScreen('all')}>
                     <Text style={{ ...styles.btnText, color: selectedScreen === 'all' ? colors.palette.BrownDark : colors.palette.Gray400 }}>전체글</Text>
@@ -72,7 +72,10 @@ const MainShareScreen = ({navigation}) => {
                     <Text style={{ ...styles.btnText, color: selectedScreen === 'bookmarked' ? colors.palette.BrownDark : colors.palette.Gray400 }}>북마크</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => setSelectedScreen('mine')}>
-                    <Text style={{ ...styles.btnText, color: selectedScreen === 'mine' ? colors.palette.BrownDark : colors.palette.Gray400 }}>마이글</Text>
+                    <Text style={{ ...styles.btnText, color: selectedScreen === 'mine' ? colors.palette.BrownDark : colors.palette.Gray400 }}>MY글</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setSelectedScreen('like')}>
+                    <Text style={{ ...styles.btnText, color: selectedScreen === 'like' ? colors.palette.BrownDark : colors.palette.Gray400 }}>인기글</Text>
                 </TouchableOpacity>
             </View>
             <GrayLine></GrayLine>
@@ -110,12 +113,14 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-start',
       flexDirection: "row",
       marginTop: 20,
-      marginHorizontal: 20,
+      //marginHorizontal: '5%',
+      paddingHorizontal: '8%',
     },
     btnText: {
-      fontSize: 27,
+      fontSize: 22,
       color: "white",
-      paddingHorizontal: 10,
+      paddingHorizontal: '2%',
+      marginBottom: '5%',
     },
     greyLine: {
         marginTop: -10,

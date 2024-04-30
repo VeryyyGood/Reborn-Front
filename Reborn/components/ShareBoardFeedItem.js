@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, Image, StyleSheet, ImageBackground, Touchable, TouchableOpacity } from 'react-native';
 import styled from "styled-components/native";
 import { colors } from '../theme';
+import { GrayLine } from './viewStyles';
 const ShareBoardFeedItem = ({ navigation, id, boardWriter, boardContent, boardCreatedAt, likeCount, commentCount }) => {
 	return (
         <TouchableOpacity onPress={() => navigation.navigate("ShareContent",{ id, boardWriter, boardCreatedAt, boardContent, likeCount, commentCount})}>
@@ -25,7 +26,9 @@ const ShareBoardFeedItem = ({ navigation, id, boardWriter, boardContent, boardCr
                     </View>  
                 </View>
             </View>
+            <GrayLine></GrayLine>
         </TouchableOpacity>
+        
     );
 };
 
