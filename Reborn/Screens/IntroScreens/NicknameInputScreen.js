@@ -58,7 +58,7 @@ const NicknameInputScreen = ({ navigation: { navigate } }) => {
                 
                 // isSuccess 값 확인
                 if(response.data.isSuccess) {
-                    console.log(response.data.isSuccess + "tif안에 있음");
+                    //console.log(response.data.isSuccess + "if안에 있음");
                     setGlobalNickname(nickname);
                     navigate("Tabs", { screen: "main" }); // isSuccess가 true일 경우에만 네비게이션 이동
                 } else {
@@ -80,7 +80,7 @@ const NicknameInputScreen = ({ navigation: { navigate } }) => {
             <View style={{}}>
                 <Text style={styles.tutoTitle}>PET <Text style={{color: colors.palette.Yellow}}>RE</Text>BORN{"\n"}시작하기.</Text>
             </View>
-            <View style={{flex:1, alignItems: 'center',marginBottom:30,}}>
+            <View style={{flex:1, alignItems: 'center',}}>
             {!keyboardShown && (
                     <Image style={{width: 300, height: 300,}} source={require('../../Assets/Images/Intro/Intro_Image.png')}/>  
                     )}
@@ -129,13 +129,15 @@ const styles = StyleSheet.create({
         textAlign: "left",
         paddingLeft: 20,
         marginTop: 30,
+        marginBottom: -10,
         fontFamily: 'Poppins-Bold',
         paddingVertical: 20,
         marginRight: 200,
     },
     nickNameText: {
-        color: "lightgrey",
+        color: colors.palette.Gray400,
         fontSize: 20,
+        fontFamily: "Poppins-Reguler",
         textAlign: "center",
         paddingHorizontal: 20,
         backgroundColor: 'white',
