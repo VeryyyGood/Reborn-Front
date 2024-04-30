@@ -37,7 +37,15 @@ const AccountManagementScreen = ({ navigation: { navigate } }) => {
       );
       if (response.data) {
         setEmail(response.data.result.email);
-        setSince(response.data.result.since);
+
+        const apiDate = new Date(response.data.result.since);
+        const formattedDate = new Intl.DateTimeFormat("ko-KR", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }).format(apiDate);
+
+        setSince(formattedDate);
         setNickname(response.data.result.nickname);
       }
     } catch (e) {
@@ -66,7 +74,7 @@ const AccountManagementScreen = ({ navigation: { navigate } }) => {
 
   const fetchBackgroundImage = async () => {
     try {
-      const timestamp = new Date().getTime(); // 현재 시간의 타임스탬프
+      const timestamp = new Date().getTime();
       const backgroundImageResponse = await axios.get(
         `http://reborn.persi0815.site/users/show-background-image?timestamp=${timestamp}`,
         {
@@ -134,7 +142,6 @@ const AccountManagementScreen = ({ navigation: { navigate } }) => {
         const source = { uri: response.assets[0].uri };
         const formData = new FormData();
 
-        // type에 따라 formData의 필드 이름을 결정합니다.
         const fieldName = type === "profile" ? "profile" : "background";
         formData.append(fieldName, {
           uri: source.uri,
