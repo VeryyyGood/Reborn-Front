@@ -8,28 +8,17 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Image,
 } from "react-native";
 import axios from "axios";
+import { colors } from "../theme";
 
 const ReturnScreen = () => {
   const [inputText, setInputText] = useState("");
   const [messages, setMessages] = useState([]);
 
-  const fetchGPTResponse = async () => {
+  const fetchAIResponse = async () => {
     if (!inputText.trim()) return;
-
-    const systemMessages = [
-      {
-        role: "system",
-        content:
-          "당신은 Reborn 애플리케이션 기능과 상담센터를 안내하는 활기찬 봇입니다.",
-      },
-      {
-        role: "system",
-        content:
-          "안녕하세요! 저는 Reborn 애플리케이션 기능과 펫로스 증후군 상담센터를 안내하는 챗봇 Return 이에요!\n무엇을 도와드릴까요?",
-      },
-    ];
 
     const userMessage = {
       role: "user",
@@ -39,32 +28,24 @@ const ReturnScreen = () => {
     setMessages((prevMessages) => [...prevMessages, userMessage]);
 
     try {
-      const response = await axios.post(
-        "https://api.openai.com/v1/chat/completions",
-        {
-          model: "ft:gpt-3.5-turbo-0125:personal::9EGjLqo7",
-          messages: [...systemMessages, { role: "user", content: inputText }],
-          max_tokens: 250,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization:
-              "Bearer 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",
-          },
-        }
-      );
+      const response = await axios.post("http://52.79.189.136:5000", {
+        message: inputText,
+      });
 
-      const botMessage = {
+      const botResponse = {
         role: "bot",
-        content: response.data.choices[0].message.content.trim(),
+        content: response.data,
       };
 
-      setMessages((prevMessages) => [...prevMessages, botMessage]);
+      setMessages((prevMessages) => [...prevMessages, botResponse]);
     } catch (error) {
-      console.error("OpenAI API 호출 중 오류 발생:", error);
+      console.error("챗봇 응답 가져오기 실패: ", error.message);
+      const errorMessage = {
+        role: "system",
+        content: "죄송티비 오류티비",
+      };
+      setMessages((prevMessages) => [...prevMessages, errorMessage]);
     }
-
     setInputText("");
   };
 
@@ -79,6 +60,14 @@ const ReturnScreen = () => {
             key={index}
             style={msg.role === "user" ? styles.userMessage : styles.botMessage}
           >
+            {msg.role === "bot" && (
+              <View style={styles.botProfilePicContainer}>
+                <Image
+                  source={require("../Assets/icons/remover.png")}
+                  style={styles.botProfilePic}
+                />
+              </View>
+            )}
             <Text style={styles.messageText}>{msg.content}</Text>
           </View>
         ))}
@@ -90,12 +79,9 @@ const ReturnScreen = () => {
             placeholder="여기에 입력하세요..."
             value={inputText}
             onChangeText={setInputText}
-            onSubmitEditing={fetchGPTResponse}
+            onSubmitEditing={fetchAIResponse}
           />
-          <TouchableOpacity
-            style={styles.sendButton}
-            onPress={fetchGPTResponse}
-          >
+          <TouchableOpacity style={styles.sendButton} onPress={fetchAIResponse}>
             <Text style={styles.sendButtonText}>전송</Text>
           </TouchableOpacity>
         </View>
@@ -149,7 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   sendButton: {
-    backgroundColor: "#FFCF88",
+    backgroundColor: colors.palette.Yellow,
     paddingHorizontal: 20,
     paddingVertical: 10,
     height: 50,
@@ -160,6 +146,21 @@ const styles = StyleSheet.create({
   sendButtonText: {
     color: "#FFFFFF",
     fontSize: 16,
+  },
+  botProfilePicContainer: {
+    position: "absolute",
+    top: -30,
+    left: 0,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderColor: "white",
+    borderWidth: 2,
+    overflow: "hidden",
+  },
+  botProfilePic: {
+    width: "100%",
+    height: "100%",
   },
 });
 

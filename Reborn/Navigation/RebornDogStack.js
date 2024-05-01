@@ -1,17 +1,17 @@
 import React, { useContext } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import styled from "styled-components/native";
-import RemindIntroScreen from "../Screens/RebornScreens/dog/RemindIntroScreen";
+import ReIntroScreen from "../Screens/RebornScreens/dog/ReIntroScreen";
 import FeedScreen from "../Screens/RebornScreens/dog/FeedScreen";
 import PetScreen from "../Screens/RebornScreens/dog/PetScreen";
 import SnackScreen from "../Screens/RebornScreens/dog/SnackScreen";
 import WalkScreen from "../Screens/RebornScreens/dog/WalkScreen";
 import WalkFinishScreen from "../Screens/RebornScreens/dog/WalkFinishScreen";
 import DiaryScreen from "../Screens/RebornScreens/dog/DiaryScreen";
-import RevealIntroScreen from "../Screens/RebornScreens/dog/RevealIntroScreen";
 import EmotionScreen from "../Screens/RebornScreens/dog/EmotionScreen";
 import EmotionResultScreen from "../Screens/RebornScreens/dog/EmotionResultScreen";
 import ImageScreen from "../Screens/RebornScreens/dog/ImageScreen";
+import CleanScreen from "../Screens/RebornScreens/dog/CleanScreen";
 
 import { Image } from "react-native";
 
@@ -32,8 +32,8 @@ const RebornDogStack = ({ navigation: { navigate } }) => {
       })}
     >
       <NativeRebornDogStack.Screen
-        name="RemindIntro"
-        component={RemindIntroScreen}
+        name="ReIntro"
+        component={ReIntroScreen}
         options={{ title: `Day ${myContext.contentsDay}` }}
       />
       <NativeRebornDogStack.Screen
@@ -67,11 +67,6 @@ const RebornDogStack = ({ navigation: { navigate } }) => {
         options={{ title: `Day ${myContext.contentsDay}` }}
       />
       <NativeRebornDogStack.Screen
-        name="RevealIntro"
-        component={RevealIntroScreen}
-        options={{ title: `Day ${myContext.contentsDay}` }}
-      />
-      <NativeRebornDogStack.Screen
         name="Emotion"
         component={EmotionScreen}
         options={{ title: `Day ${myContext.contentsDay}` }}
@@ -84,6 +79,11 @@ const RebornDogStack = ({ navigation: { navigate } }) => {
       <NativeRebornDogStack.Screen
         name="ImageDiary"
         component={ImageScreen}
+        options={{ title: `Day ${myContext.contentsDay}` }}
+      />
+      <NativeRebornDogStack.Screen
+        name="Clean"
+        component={CleanScreen}
         options={{ title: `Day ${myContext.contentsDay}` }}
       />
     </NativeRebornDogStack.Navigator>

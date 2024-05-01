@@ -56,10 +56,7 @@ const EmotionResultScreen = ({ route, navigation: { navigate } }) => {
         </YellowBox>
       )}
 
-      <ButtonBrown
-        text={"일기 저장하기"}
-        onPress={() => navigate("RevealIntro")}
-      />
+      <ButtonBrown text={"일기 저장하기"} onPress={() => navigate("ReIntro")} />
     </Container>
   );
 };

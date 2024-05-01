@@ -21,6 +21,8 @@ const AccountManagementScreen = ({ navigation: { navigate } }) => {
 
   useEffect(() => {
     fetchUserProfile();
+    fetchProfileImage();
+    fetchBackgroundImage();
   }, []);
 
   const fetchUserProfile = async () => {
@@ -35,11 +37,60 @@ const AccountManagementScreen = ({ navigation: { navigate } }) => {
       );
       if (response.data) {
         setEmail(response.data.result.email);
-        setSince(response.data.result.since);
+
+        const apiDate = new Date(response.data.result.since);
+        const formattedDate = new Intl.DateTimeFormat("ko-KR", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }).format(apiDate);
+
+        setSince(formattedDate);
         setNickname(response.data.result.nickname);
       }
     } catch (e) {
       console.error(e);
+    }
+  };
+
+  const fetchProfileImage = async () => {
+    try {
+      const timestamp = new Date().getTime();
+      const profileImageResponse = await axios.get(
+        `http://reborn.persi0815.site/users/show-profile-image?timestamp=${timestamp}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (profileImageResponse.data.result) {
+        setProfileImage({ uri: profileImageResponse.data.result });
+      }
+    } catch (error) {
+      console.error("Profile image fetch error:", error);
+    }
+  };
+
+  const fetchBackgroundImage = async () => {
+    try {
+      const timestamp = new Date().getTime();
+      const backgroundImageResponse = await axios.get(
+        `http://reborn.persi0815.site/users/show-background-image?timestamp=${timestamp}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      console.log(backgroundImageResponse.data);
+
+      if (backgroundImageResponse.data.result) {
+        setBackgroundImage({ uri: backgroundImageResponse.data.result });
+      }
+      console.log(backgroundImageResponse.data.result);
+    } catch (error) {
+      console.error("Profile image fetch error:", error);
     }
   };
 
@@ -91,23 +142,27 @@ const AccountManagementScreen = ({ navigation: { navigate } }) => {
         const source = { uri: response.assets[0].uri };
         const formData = new FormData();
 
-        formData.append("profile", {
+        const fieldName = type === "profile" ? "profile" : "background";
+        formData.append(fieldName, {
           uri: source.uri,
-          name: "profile.jpg",
+          name: type === "profile" ? "profile.jpg" : "background.jpg",
           type: "image/jpeg",
         });
 
+        let apiUrl;
+        if (type === "profile") {
+          apiUrl = "http://reborn.persi0815.site/users/profile-image";
+        } else if (type === "background") {
+          apiUrl = "http://reborn.persi0815.site/users/background-image";
+        }
+
         try {
-          const uploadResponse = await axios.post(
-            "http://reborn.persi0815.site/users/profile-image",
-            formData,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
-          );
+          const uploadResponse = await axios.post(apiUrl, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
           console.log("Upload response:", uploadResponse.data);
 
           if (type === "profile") {
@@ -185,9 +240,15 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     top: 35,
+    width: 320,
+    height: 130,
+    borderRadius: 20,
   },
   profileImage: {
+    width: 100,
+    height: 100,
     bottom: 25,
+    borderRadius: 50,
   },
   fontBold: {
     fontSize: 18,

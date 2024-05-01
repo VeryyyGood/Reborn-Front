@@ -92,7 +92,7 @@ const ReDiaryModifyScreen = ({route}) => {
             <Text style={styles.dataText}>{rediaryContent}</Text>
             )}
         </TextInputContainer>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20,}}>
             <TouchableOpacity style={styles.ReCompleteButtun}>
             <Text style={styles.buttonText}>
                 삭제 하기
@@ -159,22 +159,25 @@ const styles = StyleSheet.create({
         backgroundColor: colors.palette.Gray300,
     },
     titleText:{
-        height: 50,
+        height: 60,
         backgroundColor: colors.palette.Gray200,
         marginHorizontal: '8%',
-        paddingHorizontal: 10,
+        paddingHorizontal: 20,
         justifyContent: 'space-between',
         flexDirection: 'row',
         marginBottom: '5%',
+        borderRadius: 5
       },
       titleInput: {
-        fontSize: 14,
+        fontSize: 18,
         fontFamily: 'Popins-Medium'
       },
       textInput: {
-
+        fontSize: 18,
+        fontFamily: 'Popins-Medium'
       },
       dataText: {
+        fontSize: 18,
         paddingVertical: '5%',
         fontFamily: 'Poppins-Bold'
       },

@@ -70,9 +70,7 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
         <ButtonBrownBottom
           text={"다음날로 넘어가기"}
           onPress={() => {
-            const screen =
-              myContext.contentsDay >= 6 ? "RevealIntro" : "RemindIntro";
-            myContext.setDay(), navigate(screen);
+            myContext.setDay(), navigate("ReIntro");
           }}
         />
       </ImageBackground>
