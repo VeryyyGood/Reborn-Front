@@ -45,13 +45,18 @@ const ShareContentScreen = ({ route }) => {
               },
             }
           );
-          // console.log(likeCount);
           console.log(response.data);
-          if (response.data && response.data.result) {
-            setIsHeart(true); // 예시로, 하트를 누른 상태를 true로 설정합니다. 실제 로직에 맞게 조정해주세요.
-            // 다른 필요한 상태 업데이트도 여기에서 수행할 수 있습니다.
-          } else {
+          console.log('조하요갯수'+initialLikeCount);
+          
+          if (response.data && response.data.result === 'liked') {
+            setIsHeart(true);
+            setLikeCount(initialLikeCount);
+            console.log('조하요가 눌렷어요. 갯수'+initialLikeCount);
+          }
+          else {
             setIsHeart(false);
+            setLikeCount(initialLikeCount);
+            console.log('조하요가 안눌렷어요. 갯수'+initialLikeCount);
           }
         } catch (e) {
           console.error(e);
@@ -69,7 +74,7 @@ const ShareContentScreen = ({ route }) => {
             }
           );
           console.log(response.data);
-          if (response.data && response.data.result) {
+          if (response.data && response.data.result=== 'bookmarked') {
             setIsBookmark(true);
             // 다른 필요한 상태 업데이트도 여기에서 수행
           } else {
@@ -83,7 +88,7 @@ const ShareContentScreen = ({ route }) => {
       getCheckLike();
       getCheckBookmark();
       setLikeCount(initialLikeCount);
-    }, [accessToken, id, initialLikeCount, isBookmark])
+    }, [accessToken, id])
   );
   
   
@@ -100,7 +105,7 @@ const ShareContentScreen = ({ route }) => {
         );
         console.log(response.data);
         if (response.data.isSuccess) {
-          console.log(response.data.result);
+          //console.log(response.data.result);
           setLikeCount(response.data.result); // 서버 응답의 result로 likeCount 업데이트
           setIsHeart(true); // 하트 상태를 눌린 상태로 업데이트
         }
@@ -142,7 +147,7 @@ const ShareContentScreen = ({ route }) => {
         );
         console.log(response.data);
         if (response.data.isSuccess) {
-          console.log(response.data);
+          //console.log(response.data);
           setIsBookmark(true); // 북마크 상태를 눌린 상태로 업데이트
         }
       } catch (error) {
