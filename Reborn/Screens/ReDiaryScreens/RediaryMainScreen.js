@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { colors } from "../../theme";
 import { GrayLine, ViewStyles, buttonStyles } from "../../components";
-import { useAccessToken } from '../../context/AccessTokenContext';
+import { useAccessToken, useGlobalNickname } from '../../context/AccessTokenContext';
 
 import ReDiaryItem from '../../components/ReDiaryItem';
 
@@ -12,6 +12,8 @@ const RediaryMainScreen = ({navigation} ) => {
     const { accessToken } = useAccessToken();
     const [rediaryData, setRediaryData] = useState([]);
     const [result, setResult] = useState(true);
+    const { globalNickname } = useGlobalNickname();
+    //{globalNickname}
 
     useEffect(() => {
         getRediary();
