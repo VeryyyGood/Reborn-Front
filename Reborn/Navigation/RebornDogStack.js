@@ -10,6 +10,7 @@ import WalkFinishScreen from "../Screens/RebornScreens/dog/WalkFinishScreen";
 import DiaryScreen from "../Screens/RebornScreens/dog/DiaryScreen";
 import EmotionScreen from "../Screens/RebornScreens/dog/EmotionScreen";
 import EmotionResultScreen from "../Screens/RebornScreens/dog/EmotionResultScreen";
+import ReFinishScreen from "../Screens/RebornScreens/dog/ReFinishScreen";
 import ImageScreen from "../Screens/RebornScreens/dog/ImageScreen";
 import CleanScreen from "../Screens/RebornScreens/dog/CleanScreen";
 
@@ -75,6 +76,11 @@ const RebornDogStack = ({ navigation: { navigate } }) => {
         name="EmotionResult"
         component={EmotionResultScreen}
         options={{ title: `감정 일기 분석 결과` }}
+      />
+      <NativeRebornDogStack.Screen
+        name="ReFinish"
+        component={ReFinishScreen}
+        options={{ title: `Day ${myContext.contentsDay}` }}
       />
       <NativeRebornDogStack.Screen
         name="ImageDiary"

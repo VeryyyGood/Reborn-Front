@@ -98,6 +98,7 @@ export const ButtonBrown = ({text, onPress}) => {
 
 
 const CompletePressable = styled.Pressable`
+    font-family: 'Poppin-Regular';
     background-color: ${colors.palette.Green};
     padding: 2%;
     margin: 5% 8% 5% 68%;
