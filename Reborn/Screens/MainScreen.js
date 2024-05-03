@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,11 +8,53 @@ import {
   Button,
 } from "react-native";
 
+import axios from "axios";
+
 import { colors } from "../theme";
 import styled from "styled-components/native";
 import { useAccessToken, useGlobalNickname } from "../context/AccessTokenContext";
 
+
 const MainScreen = ({ navigation: { navigate } }) => {
+  const { accessToken } = useAccessToken();
+  const [nickname, setNickname] = useState("");
+  const {setGlobalNickname} = useGlobalNickname();
+
+  const [profileImage, setProfileImage] = useState(
+    require('../Assets/icons/profile.png')
+  );
+
+  useEffect(() => {
+    getNicknameProfileImage();
+  }, []);
+
+  const getNicknameProfileImage = async () => {
+    try {
+      const timestamp = new Date().getTime();
+      const nickNameProfileImageResponse = await axios.get(
+        `http://reborn.persi0815.site/users/main?timestamp=${timestamp}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      console.log(nickNameProfileImageResponse.data);
+      console.log(nickNameProfileImageResponse.data.result.nickname);
+      if(nickNameProfileImageResponse.data.result.nickname){
+        if (nickNameProfileImageResponse.data.result.nickname && nickNameProfileImageResponse.data.result.profileImage) {
+          setNickname(nickNameProfileImageResponse.data.result.nickname);
+          setProfileImage({ uri: nickNameProfileImageResponse.data.result.profileImage });
+          setGlobalNickname(nickNameProfileImageResponse.data.result.nickname);
+        }
+        setNickname(nickNameProfileImageResponse.data.result.nickname);
+        setGlobalNickname(nickNameProfileImageResponse.data.result.nickname);
+      }      
+    } catch (error) {
+      console.error("Profile image fetch error:", error);
+    }
+  };
+
   const { globalNickname } = useGlobalNickname();
   return (
     <View style={styles.Container}>
@@ -22,11 +64,11 @@ const MainScreen = ({ navigation: { navigate } }) => {
     <View style={{ flexDirection: "row" }}>
       <Image
         style={{ width: "25%", resizeMode: "contain" }}
-        source={require("../Assets/icons/profile.png")}
+        source={profileImage}
       />
       <Text style={styles.helloText}>
         안녕하세요,{"\n"}
-        <Text style={{ color: colors.palette.Brown }}>{globalNickname}</Text>님
+        <Text style={{ color: colors.palette.Brown }}>{nickname}</Text>님
       </Text>
     </View>
     <View style={{ paddingHorizontal: 20, marginBottom: -20 }}>
