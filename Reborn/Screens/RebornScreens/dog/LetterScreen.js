@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Text, ImageBackground, Modal, TextInput } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../../../theme";
@@ -9,21 +9,11 @@ import {
 } from "../../../components";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
-import AppContext from "./AppContext";
 
-const DiaryScreen = ({ navigation: { navigate } }) => {
-  const myContext = useContext(AppContext);
-
+const LetterScreen = ({ navigation: { navigate } }) => {
   const [answer, onChangeAnswer] = React.useState("");
   const [qaVisible, setqaVisible] = useState(true); // Q&A Modal
 
-  const questionArray = [
-    `우리가 처음 만났던 날 기억 나?\n우리가 언제 어디서 어떻게 만나게 되었는지,\n그날 있었던 일에 대해 나에게 말해줄래?\n`,
-    `내 이름을 00라고 지은 특별한 이유가 있어?\n내가 가진 독특한 성격이나 습관, 특징이 있었을까?\n나로 인해 웃겼던 에피소드가 있다면 말해줘!\n우리가 언제 어디서 어떻게 만나게 되었는지,\n내 이름은 왜 00라고 짓게 되었는지,\n그날 있었던 일에 대해 나에게 말해줄래?`,
-    `나와 함께한 가장 특별한 순간은 언제였어?\n가장 즐거웠던 순간, 함께했던 여행에 대해서도 좋아!\n그 순간이 어떻게 왜 특별했는지 이야기 해줄래?`,
-    `나와 함께 지내면서 너에게 어떤 변화가 있었을까?\n나에게 위로를 받았거나 나로 인해 한 층\n성장하게 된 일이 있었다면 말해 줘!`,
-    `우리가 함께한 시간 동안\n나는 너에게 어떤 의미였는지 알고 싶어!`,
-  ];
   return (
     <Container>
       <ImageBackground
@@ -34,8 +24,8 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
         }}
       >
         <Text style={textStyles.contentsTextBox}>
-          <Text style={{ color: colors.palette.Brown }}>RE</Text>
-          MIND : 충분한 대화 나누기
+          <Text style={{ color: colors.palette.Brown }}>RE</Text>BORN: 나의
+          반려동물과 작별하기
         </Text>
         <DogImage source={dogimageURL} resizeMode="center" />
         <Modal animationType="fade" visible={qaVisible} transparent={true}>
@@ -48,14 +38,14 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
                   marginBottom: "5%",
                 }}
               >
-                {questionArray[myContext.contentsDay - 2]}
+                {`마지막으로 OO이에게 전해주고\n싶은 말을 작성해주세요.`}
               </Text>
               <TextInputContainer>
                 <TextInput
                   keyboardType="default"
                   onChangeText={onChangeAnswer}
                   value={answer}
-                  placeholder="첫만남을 기록해보세요"
+                  placeholder="편지를 작성해주세요"
                 ></TextInput>
               </TextInputContainer>
               <CompleteButton
@@ -68,9 +58,9 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
           </BlackContainer>
         </Modal>
         <ButtonBrownBottom
-          text={"거실로 돌아가기"}
+          text={"다음으로"}
           onPress={() => {
-            navigate("ReFinish");
+            navigate("SetReborn");
           }}
         />
       </ImageBackground>
@@ -78,7 +68,7 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
   );
 };
 
-export default DiaryScreen;
+export default LetterScreen;
 
 const Container = styled.View`
   flex: 1;
