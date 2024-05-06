@@ -12,7 +12,7 @@ const ReFinishScreen = ({ navigation: { navigate } }) => {
   return (
     <Container>
       <ImageBackground
-        source={require("./../../../Assets/Images/bg/bg_living(1).png")}
+        source={require("./../../../Assets/Images/bg/bg_veranda(3).png")}
         style={{
           width: "100%",
           height: "100%",

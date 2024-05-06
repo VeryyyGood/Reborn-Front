@@ -22,6 +22,8 @@ const ReIntroScreen = ({ navigation: { navigate } }) => {
   그 날 있었던 일에 대해 기록해보세요.
   작성한 감정 일기는 모두 
   RE:VIEW에 저장됩니다.`,
+    `오늘은 작별하는 날입니다.
+  마지막으로 하고 싶은 말을 전하고, 예쁘고 멋진 모습으로 보내주세요.`,
   ];
   const myContext = useContext(AppContext);
   const [modalVisible, setModalVisible] = useState(false);
@@ -36,7 +38,7 @@ const ReIntroScreen = ({ navigation: { navigate } }) => {
     } else if (day >= 12 && day <= 15) {
       return 2;
     }
-    return null;
+    return 3;
   };
 
   useEffect(() => {
@@ -44,7 +46,8 @@ const ReIntroScreen = ({ navigation: { navigate } }) => {
     if (
       myContext.contentsDay == 2 ||
       myContext.contentsDay == 7 ||
-      myContext.contentsDay == 12
+      myContext.contentsDay == 12 ||
+      myContext.contentsDay == 15
     ) {
       setModalVisible(true);
     }
@@ -54,7 +57,7 @@ const ReIntroScreen = ({ navigation: { navigate } }) => {
   return (
     <Container>
       <ImageBackground
-        source={require("./../../../Assets/Images/bg/bg_living(1).png")}
+        source={require("./../../../Assets/Images/bg/bg_veranda(1).png")}
         style={{
           width: "100%",
           height: "100%",

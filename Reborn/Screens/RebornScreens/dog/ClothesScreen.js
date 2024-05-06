@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState } from "react";
 import {
   Text,
   ImageBackground,
@@ -10,48 +10,28 @@ import { colors } from "../../../theme";
 import { textStyles, ButtonBrownBottom } from "../../../components";
 import styled from "styled-components/native";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
-import AppContext from "./AppContext";
+import bowlNoimageURL from "../../../Assets/Images/dog/dog_bowl.png";
+import feedimageURL from "../../../Assets/stuffs/feed.png";
 
-import snackimageURL from "../../../Assets/Images/dog/dog_snack.png";
-
-const SnackScreen = ({ navigation: { navigate } }) => {
-  const myContext = useContext(AppContext);
-
+const ClothesScreen = ({ navigation: { navigate } }) => {
   const [isFeed, setisFeed] = useState(true);
-
-  const destinationMap = {
-    2: "Diary",
-    3: "Diary",
-    4: "Diary",
-    5: "Diary",
-    6: "Diary",
-    7: "Emotion",
-    8: "Emotion",
-    9: "Emotion",
-    10: "Emotion",
-    11: "Emotion",
-    12: "ImageDiary",
-    13: "ImageDiary",
-    14: "ImageDiary",
-  };
-
-  const getDestination = (day) => {
-    return destinationMap[day];
-  };
-
   return (
     <Container>
       <ImageBackground
-        source={require("./../../../Assets/Images/bg/bg_living(3).png")}
+        source={require("./../../../Assets/Images/bg/bg_living(2).png")}
         style={{ width: "100%", height: "100%" }}
       >
         <Text style={textStyles.contentsTextBox}>
-          충분한 대화 나누기 :{" "}
-          <Text style={{ color: colors.palette.Red }}>간식주기</Text>
+          <Text style={{ color: colors.palette.Brown }}>RE</Text>BORN: 나의
+          반려동물과 작별하기
         </Text>
         <DogImage source={dogimageURL} resizeMode="center" />
+        <ButtonBrownBottom
+          text="다음으로"
+          onPress={() => navigate("Letter")}
+        ></ButtonBrownBottom>
         <DraggableImage
-          source={snackimageURL}
+          source={feedimageURL}
           style={{
             width: "50%",
             height: "50%",
@@ -61,19 +41,12 @@ const SnackScreen = ({ navigation: { navigate } }) => {
           isFeed={isFeed}
           setisFeed={setisFeed}
         />
-        <ButtonBrownBottom
-          text="거실로 돌아가기"
-          onPress={() => {
-            const screen = getDestination(myContext.contentsDay);
-            navigate(screen);
-          }}
-        ></ButtonBrownBottom>
       </ImageBackground>
     </Container>
   );
 };
 
-export default SnackScreen;
+export default ClothesScreen;
 
 const DraggableImage = ({ source, style, isFeed, setisFeed }) => {
   // Values
@@ -118,7 +91,7 @@ const DraggableImage = ({ source, style, isFeed, setisFeed }) => {
         onPressIn.start();
       },
       onPanResponderRelease: (_, { dx, dy }) => {
-        if (dx > -80 && dy > 270 && dx < -40 && dy < 300) {
+        if (dx > -85 && dy > 240 && dx < -60 && dy < 370) {
           setisFeed(!isFeed);
           Animated.sequence([
             Animated.parallel([onDropScale, onDropOpacity]),
@@ -160,4 +133,10 @@ const DogImage = styled.Image`
   height: 50%;
   margin-left: 30%;
   margin-top: 55%;
+`;
+
+const BowlImage = styled.Image`
+  width: 100px;
+  height: 100px;
+  margin: -38% 0% 0% 5%;
 `;

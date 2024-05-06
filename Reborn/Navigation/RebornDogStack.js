@@ -13,6 +13,10 @@ import EmotionResultScreen from "../Screens/RebornScreens/dog/EmotionResultScree
 import ReFinishScreen from "../Screens/RebornScreens/dog/ReFinishScreen";
 import ImageScreen from "../Screens/RebornScreens/dog/ImageScreen";
 import CleanScreen from "../Screens/RebornScreens/dog/CleanScreen";
+import WashScreen from "../Screens/RebornScreens/dog/WashScreen";
+import ClothesScreen from "../Screens/RebornScreens/dog/ClothesScreen";
+import LetterScreen from "../Screens/RebornScreens/dog/LetterScreen";
+import SetRebornScreen from "../Screens/RebornScreens/dog/SetRebornScreen";
 
 import { Image } from "react-native";
 
@@ -90,6 +94,26 @@ const RebornDogStack = ({ navigation: { navigate } }) => {
       <NativeRebornDogStack.Screen
         name="Clean"
         component={CleanScreen}
+        options={{ title: `Day ${myContext.contentsDay}` }}
+      />
+      <NativeRebornDogStack.Screen
+        name="Wash"
+        component={WashScreen}
+        options={{ title: `Day ${myContext.contentsDay}` }}
+      />
+      <NativeRebornDogStack.Screen
+        name="Clothes"
+        component={ClothesScreen}
+        options={{ title: `Day ${myContext.contentsDay}` }}
+      />
+      <NativeRebornDogStack.Screen
+        name="Letter"
+        component={LetterScreen}
+        options={{ title: `Day ${myContext.contentsDay}` }}
+      />
+      <NativeRebornDogStack.Screen
+        name="SetReborn"
+        component={SetRebornScreen}
         options={{ title: `Day ${myContext.contentsDay}` }}
       />
     </NativeRebornDogStack.Navigator>
