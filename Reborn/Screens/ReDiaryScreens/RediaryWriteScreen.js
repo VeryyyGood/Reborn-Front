@@ -4,6 +4,7 @@ import { colors } from "../../theme";
 import { GrayLine, CompleteButton, RadioButton } from "../../components";
 import { View, TextInput, StyleSheet } from "react-native";
 import axios from "axios";
+import { API_URL, CLIENT_ID, CLIENT_SECRET } from "@env";
 
 import sunImage from "../../Assets/icons/rediaryimage/sun.png";
 import cloudImage from "../../Assets/icons/rediaryimage/cloud.png";
@@ -20,11 +21,6 @@ const RediaryWriteScreen = ({ navigation: { navigate } }) => {
   ];
 
   const analyzeEmotion = async (text) => {
-    const API_URL =
-      "https://naveropenapi.apigw.ntruss.com/sentiment-analysis/v1/analyze";
-    const CLIENT_ID = "xna5tjgemy";
-    const CLIENT_SECRET = "9CsLrshiwbgpF5SwC2kj7pJz7jOZXEHkRbNT4AuN";
-
     try {
       const response = await axios.post(
         API_URL,
