@@ -12,7 +12,7 @@ import { textStyles, ButtonBrownBottom } from "../../../components";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 
-import snackimageURL from "../../../Assets/Images/dog/dog_snack.png";
+import showergiimageURL from "../../../Assets/stuffs/showergi.png";
 
 const WashScreen = ({ navigation: { navigate } }) => {
   const [isWashed, setIsWashed] = useState(false);
@@ -31,12 +31,12 @@ const WashScreen = ({ navigation: { navigate } }) => {
         </Text>
         <DogImage source={dogimageURL} resizeMode="center" />
         <DraggableImage
-          source={snackimageURL}
+          source={showergiimageURL}
           style={{
             width: "50%",
             height: "50%",
             position: "absolute",
-            marginLeft: "50%",
+            marginTop: "20%",
           }}
           isWashed={isWashed}
           setIsWashed={setIsWashed}

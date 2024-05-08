@@ -8,7 +8,7 @@ import {
   ButtonBrownBottom,
 } from "../../../components";
 
-import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
+import dogimageURL from "../../../Assets/Images/dog/dog_clothes.png";
 
 const LetterScreen = ({ navigation: { navigate } }) => {
   const [answer, onChangeAnswer] = React.useState("");

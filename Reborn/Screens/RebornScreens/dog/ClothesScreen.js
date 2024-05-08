@@ -10,37 +10,40 @@ import { colors } from "../../../theme";
 import { textStyles, ButtonBrownBottom } from "../../../components";
 import styled from "styled-components/native";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
-import bowlNoimageURL from "../../../Assets/Images/dog/dog_bowl.png";
-import feedimageURL from "../../../Assets/stuffs/feed.png";
+import clothesimageURL from "../../../Assets/stuffs/clothes.png";
+import dogClothesimageURL from "../../../Assets/Images/dog/dog_clothes.png";
 
 const ClothesScreen = ({ navigation: { navigate } }) => {
-  const [isFeed, setisFeed] = useState(true);
+  const [isClothes, setisClothes] = useState(false);
   return (
     <Container>
       <ImageBackground
-        source={require("./../../../Assets/Images/bg/bg_living(2).png")}
+        source={require("./../../../Assets/Images/bg/bg_living(1).png")}
         style={{ width: "100%", height: "100%" }}
       >
         <Text style={textStyles.contentsTextBox}>
           <Text style={{ color: colors.palette.Brown }}>RE</Text>BORN: 나의
           반려동물과 작별하기
         </Text>
-        <DogImage source={dogimageURL} resizeMode="center" />
-        <ButtonBrownBottom
-          text="다음으로"
-          onPress={() => navigate("Letter")}
-        ></ButtonBrownBottom>
+        <DogImage
+          source={isClothes ? dogClothesimageURL : dogimageURL}
+          resizeMode="center"
+        />
         <DraggableImage
-          source={feedimageURL}
+          source={clothesimageURL}
           style={{
             width: "50%",
             height: "50%",
             position: "absolute",
             marginLeft: "50%",
           }}
-          isFeed={isFeed}
-          setisFeed={setisFeed}
+          isClothes={isClothes}
+          setisClothes={setisClothes}
         />
+        <ButtonBrownBottom
+          text="다음으로"
+          onPress={() => navigate("Letter")}
+        ></ButtonBrownBottom>
       </ImageBackground>
     </Container>
   );
@@ -48,7 +51,7 @@ const ClothesScreen = ({ navigation: { navigate } }) => {
 
 export default ClothesScreen;
 
-const DraggableImage = ({ source, style, isFeed, setisFeed }) => {
+const DraggableImage = ({ source, style, isClothes, setisClothes }) => {
   // Values
   const opacity = useRef(new Animated.Value(1)).current;
   const scale = useRef(new Animated.Value(1)).current;
@@ -91,8 +94,8 @@ const DraggableImage = ({ source, style, isFeed, setisFeed }) => {
         onPressIn.start();
       },
       onPanResponderRelease: (_, { dx, dy }) => {
-        if (dx > -85 && dy > 240 && dx < -60 && dy < 370) {
-          setisFeed(!isFeed);
+        if (dx > -90 && dy > 240 && dx < -60 && dy < 370) {
+          setisClothes(!isClothes);
           Animated.sequence([
             Animated.parallel([onDropScale, onDropOpacity]),
             Animated.timing(position, {
@@ -133,10 +136,4 @@ const DogImage = styled.Image`
   height: 50%;
   margin-left: 30%;
   margin-top: 55%;
-`;
-
-const BowlImage = styled.Image`
-  width: 100px;
-  height: 100px;
-  margin: -38% 0% 0% 5%;
 `;
