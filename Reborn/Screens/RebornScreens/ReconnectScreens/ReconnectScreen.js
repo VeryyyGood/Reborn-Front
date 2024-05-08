@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -35,6 +36,7 @@ const ReconnectScreen = () => {
   const [animalType, setAnimalType] = useState(null);
   const [color, setColor] = useState("");
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const navigation = useNavigation();
 
   const colorsChoice = [
     colors.palette.Black,
@@ -47,8 +49,8 @@ const ReconnectScreen = () => {
   const colorNameMap = {
     [colors.palette.Black]: "BLACK",
     [colors.palette.BrownChoco]: "BROWN",
-    [colors.palette.YellowDark]: "LIGHTBROWN",
-    [colors.palette.Gray500]: "GREY",
+    [colors.palette.YellowDark]: "YELLOWDARK",
+    [colors.palette.Gray500]: "GRAY",
     [colors.palette.White]: "WHITE",
   };
 
@@ -84,7 +86,6 @@ const ReconnectScreen = () => {
             petType: petType,
             detailPetType: breed,
             petColor: colorName,
-            petImage: "",
           }),
         }
       );
@@ -94,6 +95,7 @@ const ReconnectScreen = () => {
       }
       console.log(data);
       alert("저장되었습니다!");
+      //navigation.navigate("day1으로 가야해");
     } catch (error) {
       console.error(error);
       alert("저장 실패:" + error);
