@@ -65,6 +65,8 @@ const PressableBrownBottom = styled.Pressable`
 `;
 
 const ButtonText = styled.Text`
+    font-family: 'Poppins-Regular';
+    font-size: 16px;
     color: ${colors.palette.White};
     justify-content: center;
     text-align: center;
@@ -87,6 +89,16 @@ const PressableBrown = styled.Pressable`
     height: 50px;
 `;
 
+const PressableYellow = styled.Pressable`
+    background-color: ${colors.palette.Yellow};
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    border-radius: 30px;
+    height: 50px;
+    margin: 0% 0% 5% 0%;
+`;
+
 
 export const ButtonBrown = ({text, onPress}) => {
     return (
@@ -95,6 +107,15 @@ export const ButtonBrown = ({text, onPress}) => {
     </PressableBrown>
     );
 };
+
+export const ButtonYellow = ({text, onPress}) => {
+    return (
+    <PressableYellow onPress={onPress}>
+        <ButtonText>{text}</ButtonText>
+    </PressableYellow>
+    );
+};
+
 
 
 const CompletePressable = styled.Pressable`

@@ -29,13 +29,20 @@ const ReIntroScreen = ({ navigation: { navigate } }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [daymodalVisible, setDayModalVisible] = useState(true);
 
+  const titleArray = [
+    `MIND : 충분한 대화 나누기`,
+    `VEAL: 나의 감정 들여다보기`,
+    `MEMBER: 건강한 작별 준비하기`,
+    `BORN: 나의 반려동물과 작별하기`,
+  ];
+
   // RE:MIND & RE:VEAL & RE:MEMBER what day? => modal text
   const getDayValue = (day) => {
     if (day >= 2 && day <= 6) {
       return 0;
     } else if (day >= 7 && day <= 11) {
       return 1;
-    } else if (day >= 12 && day <= 15) {
+    } else if (day >= 12 && day <= 14) {
       return 2;
     }
     return 3;
@@ -65,7 +72,7 @@ const ReIntroScreen = ({ navigation: { navigate } }) => {
       >
         <Text style={textStyles.contentsTextBox}>
           <Text style={{ color: colors.palette.Brown }}>RE</Text>
-          MIND : 충분한 대화 나누기
+          {titleArray[getDayValue(myContext.contentsDay)]}
         </Text>
         <DogImage source={dogimageURL} resizeMode="center" />
         <ButtonBrownBottom

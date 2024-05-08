@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import {
   Text,
   ImageBackground,
@@ -13,9 +13,20 @@ import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 import bowlNoimageURL from "../../../Assets/Images/dog/dog_bowl.png";
 import feedimageURL from "../../../Assets/stuffs/feed.png";
 import bowlimageURL from "../../../Assets/Images/dog/dog_bowl_no.png";
+import AppContext from "./AppContext";
 
 const FeedScreen = ({ navigation: { navigate } }) => {
+  const myContext = useContext(AppContext);
   const [isFeed, setisFeed] = useState(true);
+  const [isEnd, setIsEnd] = useState("Walk");
+
+  useEffect(() => {
+    // set Tutorial Modal Visible true
+    if (myContext.contentsDay == 15) {
+      setIsEnd("Wash");
+    }
+  }, [myContext.contentsDay]);
+
   return (
     <Container>
       <ImageBackground
@@ -27,11 +38,6 @@ const FeedScreen = ({ navigation: { navigate } }) => {
           <Text style={{ color: colors.palette.Red }}>밥주기</Text>
         </Text>
         <DogImage source={dogimageURL} resizeMode="center" />
-        <ButtonBrownBottom
-          text="산책하러 가기"
-          onPress={() => navigate("Walk")}
-        ></ButtonBrownBottom>
-        <BowlImage source={isFeed ? bowlimageURL : bowlNoimageURL}></BowlImage>
         <DraggableImage
           source={feedimageURL}
           style={{
@@ -43,6 +49,11 @@ const FeedScreen = ({ navigation: { navigate } }) => {
           isFeed={isFeed}
           setisFeed={setisFeed}
         />
+        <ButtonBrownBottom
+          text="산책하러 가기"
+          onPress={() => navigate(isEnd)}
+        ></ButtonBrownBottom>
+        <BowlImage source={isFeed ? bowlimageURL : bowlNoimageURL}></BowlImage>
       </ImageBackground>
     </Container>
   );

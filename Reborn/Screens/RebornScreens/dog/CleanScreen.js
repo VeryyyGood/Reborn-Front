@@ -21,7 +21,6 @@ import dog_bowlURL from "../../../Assets/Images/dog/dog_bowl.png";
 import dog_cushionURL from "../../../Assets/Images/dog/dog_cushion.png";
 import dog_snackURL from "../../../Assets/Images/dog/dog_snack.png";
 import dog_toyURL from "../../../Assets/Images/dog/dog_toy.png";
-import { isClassDeclaration } from "typescript";
 
 const CleanScreen = ({ navigation: { navigate } }) => {
   const myContext = useContext(AppContext);
