@@ -3,9 +3,9 @@ import {View, Text, Image, StyleSheet, ImageBackground, Touchable, TouchableOpac
 import styled from "styled-components/native";
 import { colors } from '../theme';
 import { GrayLine } from './viewStyles';
-const ShareBoardFeedItem = ({ navigation, id, boardWriter, boardContent, boardCreatedAt, likeCount, commentCount }) => {
+const ShareBoardFeedItem = ({ navigation, id, boardWriter, boardContent, boardCreatedAt, likeCount, commentCount, boardImage }) => {
 	return (
-        <TouchableOpacity onPress={() => navigation.navigate("ShareContent",{ id, boardWriter, boardCreatedAt, boardContent, likeCount, commentCount})}>
+        <TouchableOpacity onPress={() => navigation.navigate("ShareContent",{ id, boardWriter, boardCreatedAt, boardContent, likeCount, commentCount, boardImage })}>
             <View style={styles.shareItem}>
                 <View style={styles.titlecontainer}>
                     <Image style={styles.profile} source={require('../Assets/icons/profile.png')} />
@@ -15,6 +15,12 @@ const ShareBoardFeedItem = ({ navigation, id, boardWriter, boardContent, boardCr
                 <View>
                     <Text style={[styles.content, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Medium'}]}>{boardContent}</Text>
                 </View>
+                {boardImage && (
+                    <Image
+                    style={styles.boardImage}
+                    source={{ uri: boardImage }}
+                    />
+                )}
                 <View style={{flexDirection:'row', paddingVertical: 20, paddingHorizontal: 20, justifyContent: 'space-between'}}>
                     <View style={{flexDirection:'row'}}>
                         <Image style={{marginLeft: '5%', tintColor: colors.palette.BrownDark}} source={require('../Assets/icons/ShareBoard/commentIcon.png')}/>
@@ -23,7 +29,7 @@ const ShareBoardFeedItem = ({ navigation, id, boardWriter, boardContent, boardCr
                     <View style={{flexDirection:'row'}}>
                         <Image style={{marginRight:'5%', tintColor: colors.palette.Yellow}} source={require('../Assets/icons/ShareBoard/heartIconGrey.png')}/>
                         <Text style={{color: colors.palette.BrownDark, fontFamily: 'Poppins-Bold'}}>{likeCount}</Text>
-                    </View>  
+                    </View>
                 </View>
             </View>
             <GrayLine></GrayLine>
@@ -59,6 +65,13 @@ const styles=StyleSheet.create({
         width: '20%',
         resizeMode: 'contain',
     },
+    boardImage: {
+        width: '100%',
+        height: 200,
+        resizeMode: 'contain',
+        marginTop: 10, 
+        marginBottom: 10,
+      },
 });
 
 export default ShareBoardFeedItem;

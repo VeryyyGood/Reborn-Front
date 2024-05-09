@@ -43,6 +43,7 @@ const MainShareScreen = ({navigation}) => {
                 });
                 if (response.data && response.data.result) {
                     console.log(response.data.result.boardList)
+                    
                     const mappedData = response.data.result.boardList.map(item => ({
                         id: item.id,
                         boardCreatedAt: item.boardCreatedAt,
@@ -50,7 +51,10 @@ const MainShareScreen = ({navigation}) => {
                         boardContent: item.boardContent,
                         likeCount: item.likeCount,
                         commentCount: item.commentCount,
+                        boardImage: item.boardImage,
                     }));
+                    const boardImages = response.data.result.boardList.map(item => item.boardImage).filter(url => url !== null);
+                    console.log(boardImages);
                     setFeedItemData(mappedData);
                 }
             } catch (e) {
@@ -90,7 +94,8 @@ const MainShareScreen = ({navigation}) => {
                         boardContent={item.boardContent}
                         navigation={navigation}
                         likeCount={item.likeCount}
-                        commentCount={item.commentCount}/>
+                        commentCount={item.commentCount}
+                        boardImage={item.boardImage}/>
                     )}
                     keyExtractor={item => item.id}
                     contentContainerStyle={{ paddingBottom: 150 }}

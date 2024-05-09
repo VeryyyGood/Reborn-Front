@@ -26,12 +26,13 @@ import ShareBoardCommentItem from "../../components/ShareBoardCommentItem";
 
 
 const ShareContentScreen = ({ route }) => {
-  const { id, boardWriter, boardCreatedAt, boardContent, likeCount: initialLikeCount, commentCount } = route.params;
+  const { id, boardWriter, boardCreatedAt, boardContent, likeCount: initialLikeCount, commentCount, boardImage } = route.params;
   const { accessToken } = useAccessToken();
  
   const [isHeart, setIsHeart] = useState(false);
   const [likeCount, setLikeCount] = useState(initialLikeCount); // likeCount 상태 추가
   const [isBookmark, setIsBookmark] = useState(false);
+  const [image, setImage] = useState(null);  //보드 이미지
   
   useFocusEffect(
     React.useCallback(() => {
@@ -46,17 +47,17 @@ const ShareContentScreen = ({ route }) => {
             }
           );
           console.log(response.data);
-          console.log('조하요갯수'+initialLikeCount);
+          //console.log('조하요갯수'+initialLikeCount);
           
           if (response.data && response.data.result === 'liked') {
             setIsHeart(true);
             setLikeCount(initialLikeCount);
-            console.log('조하요가 눌렷어요. 갯수'+initialLikeCount);
+           // console.log('조하요가 눌렷어요. 갯수'+initialLikeCount);
           }
           else {
             setIsHeart(false);
             setLikeCount(initialLikeCount);
-            console.log('조하요가 안눌렷어요. 갯수'+initialLikeCount);
+            //console.log('조하요가 안눌렷어요. 갯수'+initialLikeCount);
           }
         } catch (e) {
           console.error(e);
@@ -88,6 +89,7 @@ const ShareContentScreen = ({ route }) => {
       getCheckLike();
       getCheckBookmark();
       setLikeCount(initialLikeCount);
+      console.log(boardImage);
     }, [accessToken, id])
   );
   
@@ -211,6 +213,12 @@ const ShareContentScreen = ({ route }) => {
           >
             {boardContent}
           </Text>
+          {boardImage && (
+            <Image
+              style={styles.boardImage}
+              source={{ uri: boardImage }}
+            />
+          )}
         </View>
         <View
           style={{
@@ -325,5 +333,12 @@ const styles = StyleSheet.create({
   commetInput: {
     fontSize: 14,
     fontFamily: 'Popins-Medium'
+  },
+  boardImage: {
+    width: '100%',
+    height: 200,
+    resizeMode: 'contain',
+    marginTop: 10, 
+    marginBottom: 10,
   },
 });
