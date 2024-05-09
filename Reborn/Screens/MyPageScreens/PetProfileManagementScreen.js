@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -9,6 +10,8 @@ import {
 } from "react-native";
 import { buttonStyles } from "../../components/buttonStyles";
 import { colors } from "../../theme";
+import axios from "axios";
+import { useAccessToken } from "../../context/AccessTokenContext";
 
 const RadioButton = ({ isSelected, onPress, label }) => {
   return (
@@ -26,27 +29,77 @@ const RadioButton = ({ isSelected, onPress, label }) => {
   );
 };
 
-const checkWhite = require("../../Assets/icons/check_white.png"); // 흰색 체크 마크 이미지 경로
+const checkWhite = require("../../Assets/icons/check_white.png");
 const checkBlack = require("../../Assets/icons/check_black.png");
 
-const PetProfileManagementScreen = () => {
+const PetProfileManagementScreen = ({ route }) => {
+  const { petId } = route.params;
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [breed, setBreed] = useState("");
   const [animalType, setAnimalType] = useState(null);
   const [color, setColor] = useState("");
+  const [petInfo, setPetInifo] = useState(null);
+  const { accessToken } = useAccessToken();
+  const navigation = useNavigation();
 
-  const colorsChoice = [
-    colors.palette.Black,
-    colors.palette.BrownChoco,
-    colors.palette.YellowDark,
-    colors.palette.Gray500,
-    colors.palette.White,
-  ];
+  const colorMap = {
+    WHITE: colors.palette.White,
+    BLACK: colors.palette.Black,
+    BROWN: colors.palette.BrownChoco,
+    YELLOWDARK: colors.palette.YellowDark,
+    GRAY: colors.palette.Gray500,
+  };
 
-  const handleDelete = () => {
-    //삭제 로직 추가할 예정
-    alert("프로필이 삭제되었습니다.");
+  useEffect(() => {
+    const fetchPetInfo = async () => {
+      try {
+        const response = await axios.get(
+          `http://reborn.persi0815.site:8080/mypage/list/${petId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        const result = response.data.result;
+        setPetInifo(result);
+        setName(result.petName);
+        setDate(result.anniversary);
+        setAnimalType(result.petType);
+        setBreed(result.detailPetType);
+        setColor(result.petColor);
+      } catch (error) {
+        console.error("오류 발생", error);
+        console.log(`Fetching info for petId: ${petId}`);
+      }
+    };
+
+    fetchPetInfo();
+  }, [petId]);
+
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(
+        `http://reborn.persi0815.site:8080/mypage/delete/${petId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      const { isSuccess, message } = response.data;
+      if (isSuccess) {
+        alert("프로필이 삭제되었습니다.");
+        navigation.navigate("PetProfileList");
+      } else {
+        alert(`삭제 실패: ${message}`);
+      }
+    } catch (error) {
+      console.error("오류", error);
+      alert("삭제 중 오류 발생");
+    }
   };
 
   return (
@@ -63,12 +116,12 @@ const PetProfileManagementScreen = () => {
         <Text style={styles.font}>동물 종류</Text>
         <RadioButton
           label="강아지"
-          isSelected={animalType === "강아지"}
+          isSelected={animalType === "DOG"}
           onPress={() => {}}
         />
         <RadioButton
           label="고양이"
-          isSelected={animalType === "고양이"}
+          isSelected={animalType === "CAT"}
           onPress={() => {}}
         />
       </View>
@@ -81,25 +134,26 @@ const PetProfileManagementScreen = () => {
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={colorsChoice}
-          renderItem={({ item }) => (
-            <View
-              style={[
-                styles.colorCircle,
-                { backgroundColor: item },
-                color === item && styles.selected,
-              ]}
-            >
-              {color === item && (
-                <Image
-                  style={styles.checkmark}
-                  source={
-                    item === colors.palette.White ? checkBlack : checkWhite
-                  }
-                />
-              )}
-            </View>
-          )}
+          data={Object.keys(colorMap)}
+          renderItem={({ item }) => {
+            const backgroundColor = colorMap[item];
+            return (
+              <View
+                style={[
+                  styles.colorCircle,
+                  { backgroundColor: backgroundColor },
+                  color === item && styles.selected,
+                ]}
+              >
+                {color === item && (
+                  <Image
+                    style={styles.checkmark}
+                    source={item === "WHITE" ? checkBlack : checkWhite}
+                  />
+                )}
+              </View>
+            );
+          }}
           keyExtractor={(item) => item}
         />
       </View>

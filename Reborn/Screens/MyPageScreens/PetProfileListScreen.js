@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,31 +7,71 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import axios from "axios";
 import { colors } from "../../theme";
+import { useAccessToken } from "../../context/AccessTokenContext";
+import { useFocusEffect } from "@react-navigation/native";
 
-const PetProfileListScreen = ({ navigation: { navigate } }) => (
-  <ScrollView contentContainerStyle={styles.container}>
-    <TouchableOpacity
-      onPress={() =>
-        navigate("MypageStack", { screen: "PetProfileManagement" })
+const PetProfileListScreen = ({ navigation: { navigate } }) => {
+  const { accessToken } = useAccessToken();
+  const [pets, setPets] = useState([]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchPets();
+    }, [])
+  );
+
+  const fetchPets = async () => {
+    try {
+      const response = await axios.get(
+        "http://reborn.persi0815.site:8080/mypage/list",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (response.data.isSuccess) {
+        setPets(response.data.result);
+      } else {
+        console.error(response.data.message);
       }
-    >
-      <View style={styles.imageTextContainer}>
-        <View style={styles.imageContainer}>
-          <Image source={require("../../Assets/icons/expert_box.png")} />
-          <Image
-            source={require("../../Assets/icons/ribbon.png")}
-            style={styles.ribbonImage}
-          />
-          <View style={styles.textContainer}>
-            <Text style={styles.imageText}>두부</Text>
-            <Text style={styles.font}>2024. 01. 29.</Text>
+    } catch (error) {
+      console.error("API 호출 중 에러 발생:", error);
+    }
+  };
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      {pets.map((pet) => (
+        <TouchableOpacity
+          key={pet.petId}
+          onPress={() =>
+            navigate("MypageStack", {
+              screen: "PetProfileManagement",
+              params: { petId: pet.petId },
+            })
+          }
+        >
+          <View style={styles.imageTextContainer}>
+            <View style={styles.imageContainer}>
+              <Image source={require("../../Assets/icons/expert_box.png")} />
+              <Image
+                source={require("../../Assets/icons/ribbon.png")}
+                style={styles.ribbonImage}
+              />
+              <View style={styles.textContainer}>
+                <Text style={styles.imageText}>{pet.petName}</Text>
+                <Text style={styles.font}>{pet.anniversary}</Text>
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
-    </TouchableOpacity>
-  </ScrollView>
-);
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
+  );
+};
 
 export default PetProfileListScreen;
 
@@ -43,7 +83,7 @@ const styles = StyleSheet.create({
   },
 
   imageTextContainer: {
-    alignItems: "center", // 이미지와 텍스트 컨테이너를 세로 중앙에 정렬
+    alignItems: "center",
     marginTop: "3%",
     marginBottom: "3%",
   },
@@ -53,9 +93,9 @@ const styles = StyleSheet.create({
   },
 
   ribbonImage: {
-    position: "absolute", // 리본 이미지를 박스 이미지 위에 배치
-    width: 40, // 리본 이미지 크기 조절
-    height: 40, // 리본 이미지 크기 조절
+    position: "absolute",
+    width: 40,
+    height: 40,
     resizeMode: "contain",
     marginTop: "9.7%",
     marginLeft: "6%",

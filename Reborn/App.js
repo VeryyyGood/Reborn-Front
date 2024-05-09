@@ -9,7 +9,7 @@ import {
 } from "./context/AccessTokenContext";
 
 export default function App() {
-  const [contentsDay, setContentsDay] = useState(2);
+  const [contentsDay, setContentsDay] = useState(7);
 
   const setDay = () => {
     setContentsDay(contentsDay + 1);

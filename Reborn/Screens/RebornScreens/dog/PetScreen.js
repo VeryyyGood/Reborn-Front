@@ -17,7 +17,6 @@ const PetScreen = ({ navigation: { navigate } }) => (
         <Text style={{ color: colors.palette.Red }}>쓰다듬기</Text>
       </Text>
       <DogImage source={dogimageURL} resizeMode="center" />
-      <ButtonBrownBottom text="밥주러 가기" onPress={() => navigate("Feed")} />
       <DraggableImage
         source={handimageURL}
         style={{
@@ -27,6 +26,7 @@ const PetScreen = ({ navigation: { navigate } }) => (
           marginLeft: "50%",
         }}
       />
+      <ButtonBrownBottom text="밥주러 가기" onPress={() => navigate("Feed")} />
     </ImageBackground>
   </Container>
 );
