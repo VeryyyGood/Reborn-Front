@@ -42,8 +42,8 @@ const MainShareScreen = ({navigation}) => {
                     },
                 });
                 if (response.data && response.data.result) {
-                    console.log(response.data.result.boardList)
-                    
+                    //리스트
+                    //console.log(response.data.result.boardList)
                     const mappedData = response.data.result.boardList.map(item => ({
                         id: item.id,
                         boardCreatedAt: item.boardCreatedAt,
@@ -54,7 +54,7 @@ const MainShareScreen = ({navigation}) => {
                         boardImage: item.boardImage,
                     }));
                     const boardImages = response.data.result.boardList.map(item => item.boardImage).filter(url => url !== null);
-                    console.log(boardImages);
+                    //console.log(boardImages);
                     setFeedItemData(mappedData);
                 }
             } catch (e) {
@@ -69,18 +69,27 @@ const MainShareScreen = ({navigation}) => {
     return (
         <View style={{backgroundColor: colors.palette.White}}>
             <View style={styles.header}>
-                <TouchableOpacity activeOpacity={0.5} onPress={() => setSelectedScreen('all')}>
+            <TouchableOpacity activeOpacity={0.5} onPress={() => setSelectedScreen('all')}>
+                <View style={selectedScreen === 'all' ? styles.selectedItem : {}}>
                     <Text style={{ ...styles.btnText, color: selectedScreen === 'all' ? colors.palette.BrownDark : colors.palette.Gray400 }}>전체글</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => setSelectedScreen('bookmarked')}>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setSelectedScreen('bookmarked')}>
+                <View style={selectedScreen === 'bookmarked' ? styles.selectedItem : {}}>
                     <Text style={{ ...styles.btnText, color: selectedScreen === 'bookmarked' ? colors.palette.BrownDark : colors.palette.Gray400 }}>북마크</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => setSelectedScreen('mine')}>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setSelectedScreen('mine')}>
+                <View style={selectedScreen === 'mine' ? styles.selectedItem : {}}>
                     <Text style={{ ...styles.btnText, color: selectedScreen === 'mine' ? colors.palette.BrownDark : colors.palette.Gray400 }}>MY글</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => setSelectedScreen('like')}>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setSelectedScreen('like')}>
+                <View style={selectedScreen === 'like' ? styles.selectedItem : {}}>
                     <Text style={{ ...styles.btnText, color: selectedScreen === 'like' ? colors.palette.BrownDark : colors.palette.Gray400 }}>인기글</Text>
-                </TouchableOpacity>
+                </View>
+            </TouchableOpacity>
+
             </View>
             <GrayLine></GrayLine>
             <View>
@@ -103,7 +112,7 @@ const MainShareScreen = ({navigation}) => {
             </View>
             <View>
             </View>
-            <TouchableOpacity style={{position:'absolute', right: '5%', bottom: '10%'}} onPress={()=> navigation.navigate("ShareWrite")}>
+            <TouchableOpacity style={{position:'absolute', right: '5%', bottom: '13%'}} onPress={()=> navigation.navigate("ShareWrite")}>
                 <Image source={require('../../Assets/icons/ShareBoard/write.png')}/>
             </TouchableOpacity>
                 
@@ -122,16 +131,24 @@ const styles = StyleSheet.create({
       paddingHorizontal: '8%',
     },
     btnText: {
-      fontSize: 22,
+      fontSize: 23,
       color: "white",
       paddingHorizontal: '2%',
       marginBottom: '5%',
+      fontFamily: 'Poppins-Bold',
+      //marginLeft: 8,
+      marginHorizontal: 5,
     },
     greyLine: {
         marginTop: -10,
         borderBottomWidth: 2, 
         borderBottomColor: colors.palette.Gray300,
         paddingBottom: 3, marginHorizontal: 20,
+    },
+    selectedItem: {
+        borderBottomWidth: 2,
+        borderBottomColor: colors.palette.BrownDark,
+        paddingBottom: 5,
     },
 });
 

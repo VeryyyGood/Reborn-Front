@@ -13,7 +13,7 @@ const ShareBoardFeedItem = ({ navigation, id, boardWriter, boardContent, boardCr
                     
                 </View>
                 <View>
-                    <Text style={[styles.content, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Medium'}]}>{boardContent}</Text>
+                    <Text style={[styles.content, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Regular'}]}>{boardContent}</Text>
                 </View>
                 {boardImage && (
                     <Image
