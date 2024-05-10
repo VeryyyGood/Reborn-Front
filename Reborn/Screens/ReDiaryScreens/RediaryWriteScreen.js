@@ -66,6 +66,7 @@ const RediaryWriteScreen = ({ navigation: { navigate } }) => {
           onChangeText={onChangeAnswer}
           value={answer}
           placeholder="오늘의 감정은 어떤가요?"
+          multiline={true}
         ></TextInput>
       </TextInputContainer>
       <CompleteButton
@@ -73,7 +74,7 @@ const RediaryWriteScreen = ({ navigation: { navigate } }) => {
         onPress={async () => {
           const result = await analyzeEmotion(answer);
           if (result) {
-            console.log(result);
+            console.log(result.document.sentiment);
           }
         }}
       />
