@@ -50,9 +50,9 @@ const ShareWriteScreen = ({ navigation }) => {
 
     launchImageLibrary(options, (response) => {
       if (response.didCancel) {
-        console.log('User cancelled image picker');
+        console.log('이미지 선택 취소함');
       } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
+        console.log('이미지 선택 에러: ', response.error);
       } else {
         const source = { uri: response.assets[0].uri };
         setPostImage(source); // 게시글 업로드 이미지 업데이트
@@ -87,6 +87,11 @@ const ShareWriteScreen = ({ navigation }) => {
       });
       const jsonResponse = await response.json();
       console.log("Post response:", jsonResponse);
+
+      setValue(null); // 드롭다운 선택값 초기화
+      setBoardContent(""); // 게시판 글 내용 초기화
+      setPostImage(null); // 드롭다운 선택값 초기화
+      navigation.goBack();
     } catch (error) {
       console.error("Post content error:", error);
     }
@@ -99,7 +104,7 @@ const ShareWriteScreen = ({ navigation }) => {
                     <TouchableOpacity onPress={()=> navigation.goBack()}>
                         <Image source={require('../../Assets/icons/ShareBoard/xicon.png')}/>
                     </TouchableOpacity>
-                <View style={{marginVertical: '6%'}}>
+                <View style={{marginVertical: '6%', marginRight: -20}}>
                     <CompleteButton text="작성완료" onPress={postContent}> </CompleteButton>
                 </View>
                 </View> 
@@ -119,21 +124,32 @@ const ShareWriteScreen = ({ navigation }) => {
                     modalTitle="선택해주세요."
                     //listItemContainerStyle={{}}
                     />
-                    <Image style={{ width: 100, height:100 }} source={postImage} />
-                    <TouchableOpacity onPress={selectImage} style={{justifyContent: 'center', marginLeft: 10}}>
-                      <Text style={{color: '#000'}}>사진 선택</Text>
-                    </TouchableOpacity>
                 </View>
-                <View style={{ flexDirection: 'row' }}>
-                <Image style={{ width: "15%", resizeMode: 'contain' }} source={profileImage} />
+                <View style={{ flexDirection: 'row' , marginBottom: 80}}>
+                <Image style={{ width: "15%", resizeMode: 'contain', borderRadius:50}} source={profileImage} />
                 <TextInput
-                    style={{ marginLeft: '3%', fontFamily: "Poppins-Bold", fontSize: 18, marginRight: 30, marginTop: '7%' }}
+                    style={{ marginLeft: '3%', fontFamily: "Poppins-Bold", fontSize: 18, marginRight: 70, marginTop: '7%' }}
                     multiline={true}
                     onChangeText={setBoardContent} // 입력 내용 관리
                     value={boardContent} // TextInput의 값
                     placeholder="게시판 글쓰기"
                 />
-            </View>
+                </View>
+                <View style={{flexDirection: 'row', alignItems:'flex-end', justifyContent:'space-between', marginLeft: 70}}>
+                  {postImage && <Image style={{width: 100, height:100 }} source={postImage} />}
+                  <TouchableOpacity
+                    onPress={selectImage}
+                    style={{
+                      backgroundColor: colors.palette.Blue,
+                      borderRadius: 5,
+                      alignItems: 'center',
+                      width: '25%', justifyContent: 'center', marginRight: 10
+                    }}>
+                    <Text style={{fontFamily: 'Poppins-Bold', fontSize: 14, paddingVertical:2, color:'white'}}>사진 선택</Text>
+                  </TouchableOpacity>
+                </View>
+
+                  
             </View>
         </View>
     );
