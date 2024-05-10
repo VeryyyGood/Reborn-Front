@@ -43,6 +43,7 @@ const ReviewPetListScreen = ({ navigation: { navigate } }) => {
     <ScrollView contentContainerStyle={styles.container}>
       {pets.map((pet) => (
         <TouchableOpacity
+          key={pet.petId}
           onPress={() =>
             navigate("ReviewStack", {
               screen: "ReviewMain",

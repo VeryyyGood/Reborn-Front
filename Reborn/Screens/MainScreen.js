@@ -98,16 +98,16 @@ const MainScreen = ({ navigation: { navigate } }) => {
       <View style={styles.removerButton}>
         <Text style={styles.boxtext}>
           <Text style={{ color: colors.palette.Brown }}>
-            마음에 담아두지 마세요. {"\n"}
+            RE:TURN에게 물어보세요! {"\n"}
           </Text>
-          AI 챗봇, REMOVER와 대화하며 마음의 짐을 덯어 낼 수 있는 공간을
-          마련해드립니다.
+          앱 기능 관련 설명이나, 심리 상담소 정보가 필요하면 RE:TURN과
+          대화해보세요!
         </Text>
         <TouchableOpacity
           onPress={() => navigate("ReturnStack", { screen: "Return" })}
         >
-          <Text style={{ marginLeft: "30%" }}>
-            RETURN과 대화하러 가기{" "}
+          <Text style={{ marginLeft: "38%" }}>
+            RE:TURN과 대화하러 가기{" "}
             <Image
               style={{ position: "absolute", bottom: "20%", left: "20%" }}
               source={require("../Assets/icons/mainimages/arrow.png")}
@@ -176,6 +176,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontFamily: "Poppins-Bold",
     marginTop: "5%",
+    color: colors.palette.BrownDark,
   },
   helloText: {
     fontSize: 20,
