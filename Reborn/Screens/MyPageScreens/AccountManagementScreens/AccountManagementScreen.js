@@ -83,12 +83,10 @@ const AccountManagementScreen = ({ navigation: { navigate } }) => {
           },
         }
       );
-      console.log(backgroundImageResponse.data);
 
       if (backgroundImageResponse.data.result) {
         setBackgroundImage({ uri: backgroundImageResponse.data.result });
       }
-      console.log(backgroundImageResponse.data.result);
     } catch (error) {
       console.error("Profile image fetch error:", error);
     }
@@ -137,7 +135,6 @@ const AccountManagementScreen = ({ navigation: { navigate } }) => {
   const selectImage = (type) => {
     launchImageLibrary({ mediaType: "photo" }, async (response) => {
       if (response.didCancel || response.error) {
-        console.log("User cancelled image picker");
       } else {
         const source = { uri: response.assets[0].uri };
         const formData = new FormData();
@@ -157,13 +154,12 @@ const AccountManagementScreen = ({ navigation: { navigate } }) => {
         }
 
         try {
-          const uploadResponse = await axios.post(apiUrl, formData, {
+          await axios.post(apiUrl, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${accessToken}`,
             },
           });
-          console.log("Upload response:", uploadResponse.data);
 
           if (type === "profile") {
             setProfileImage(source);

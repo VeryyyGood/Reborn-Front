@@ -63,7 +63,7 @@ const ReturnScreen = () => {
             {msg.role === "bot" && (
               <View style={styles.botProfilePicContainer}>
                 <Image
-                  source={require("../Assets/icons/remover.png")}
+                  source={require("../Assets/icons/return.png")}
                   style={styles.botProfilePic}
                 />
               </View>
@@ -76,7 +76,7 @@ const ReturnScreen = () => {
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            placeholder="여기에 입력하세요..."
+            placeholder="메시지를 입력하세요!"
             value={inputText}
             onChangeText={setInputText}
             onSubmitEditing={fetchAIResponse}
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   input: {
     height: 50,
     width: "80%",
-    borderColor: "gray",
+    borderColor: colors.palette.BrownDark,
     borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 10,
@@ -133,6 +133,8 @@ const styles = StyleSheet.create({
   },
   messageText: {
     fontSize: 16,
+    fontFamily: "Poppins-Regular",
+    color: colors.palette.BrownDark,
   },
   sendButton: {
     backgroundColor: colors.palette.Yellow,

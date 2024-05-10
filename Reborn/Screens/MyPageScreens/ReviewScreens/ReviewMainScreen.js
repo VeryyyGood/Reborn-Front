@@ -9,65 +9,94 @@ import {
 } from "react-native";
 import { colors } from "../../../theme/colors";
 
-const ReviewMainScreen = ({ navigation: { navigate } }) => (
-  <ScrollView contentContainerStyle={styles.container}>
-    <TouchableOpacity
-      onPress={() => navigate("ReviewStack", { screen: "ReviewReconnect" })}
-    >
-      <View style={styles.imageTextContainer}>
-        <Image source={require("../../../Assets/icons/review_album.png")} />
-        <Text style={styles.imageText}>
-          <Text style={styles.reColor}>RE</Text>CONNECT:
-        </Text>
-        <Text style={styles.font}>나의 반려동물과 만나기</Text>
-      </View>
-    </TouchableOpacity>
-    <TouchableOpacity
-      onPress={() => navigate("ReviewStack", { screen: "ReviewRemind" })}
-    >
-      <View style={styles.imageTextContainer}>
-        <Image source={require("../../../Assets/icons/review_album.png")} />
-        <Text style={styles.imageText}>
-          <Text style={styles.reColor}>RE</Text>MIND:
-        </Text>
-        <Text style={styles.font}>충분한 대화 나누기</Text>
-      </View>
-    </TouchableOpacity>
-    <TouchableOpacity
-      onPress={() => navigate("ReviewStack", { screen: "ReviewReveal" })}
-    >
-      <View style={styles.imageTextContainer}>
-        <Image source={require("../../../Assets/icons/review_album.png")} />
-        <Text style={styles.imageText}>
-          <Text style={styles.reColor}>RE</Text>VEAL:
-        </Text>
-        <Text style={styles.font}>나의 감정 들여다보기</Text>
-      </View>
-    </TouchableOpacity>
-    <TouchableOpacity
-      onPress={() => navigate("ReviewStack", { screen: "ReviewRemember" })}
-    >
-      <View style={styles.imageTextContainer}>
-        <Image source={require("../../../Assets/icons/review_album.png")} />
-        <Text style={styles.imageText}>
-          <Text style={styles.reColor}>RE</Text>MEMBER:
-        </Text>
-        <Text style={styles.font}>건강한 작별 준비하기</Text>
-      </View>
-    </TouchableOpacity>
-    <TouchableOpacity
-      onPress={() => navigate("ReviewStack", { screen: "ReviewReborn" })}
-    >
-      <View style={styles.imageTextContainer}>
-        <Image source={require("../../../Assets/icons/review_album.png")} />
-        <Text style={styles.imageText}>
-          <Text style={styles.reColor}>RE</Text>BORN:
-        </Text>
-        <Text style={styles.font}>나의 반려동물과 작별하기</Text>
-      </View>
-    </TouchableOpacity>
-  </ScrollView>
-);
+const ReviewMainScreen = ({ navigation, route }) => {
+  const { petId } = route.params;
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("ReviewStack", {
+            screen: "ReviewReconnect",
+            params: { petId },
+          })
+        }
+      >
+        <View style={styles.imageTextContainer}>
+          <Image source={require("../../../Assets/icons/review_album.png")} />
+          <Text style={styles.imageText}>
+            <Text style={styles.reColor}>RE</Text>CONNECT:
+          </Text>
+          <Text style={styles.font}>나의 반려동물과 만나기</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("ReviewStack", {
+            screen: "ReviewRemind",
+            params: { petId },
+          })
+        }
+      >
+        <View style={styles.imageTextContainer}>
+          <Image source={require("../../../Assets/icons/review_album.png")} />
+          <Text style={styles.imageText}>
+            <Text style={styles.reColor}>RE</Text>MIND:
+          </Text>
+          <Text style={styles.font}>충분한 대화 나누기</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("ReviewStack", {
+            screen: "ReviewReveal",
+            params: { petId },
+          })
+        }
+      >
+        <View style={styles.imageTextContainer}>
+          <Image source={require("../../../Assets/icons/review_album.png")} />
+          <Text style={styles.imageText}>
+            <Text style={styles.reColor}>RE</Text>VEAL:
+          </Text>
+          <Text style={styles.font}>나의 감정 들여다보기</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("ReviewStack", {
+            screen: "ReviewRemember",
+            params: { petId },
+          })
+        }
+      >
+        <View style={styles.imageTextContainer}>
+          <Image source={require("../../../Assets/icons/review_album.png")} />
+          <Text style={styles.imageText}>
+            <Text style={styles.reColor}>RE</Text>MEMBER:
+          </Text>
+          <Text style={styles.font}>건강한 작별 준비하기</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("ReviewStack", {
+            screen: "ReviewReborn",
+            params: { petId },
+          })
+        }
+      >
+        <View style={styles.imageTextContainer}>
+          <Image source={require("../../../Assets/icons/review_album.png")} />
+          <Text style={styles.imageText}>
+            <Text style={styles.reColor}>RE</Text>BORN:
+          </Text>
+          <Text style={styles.font}>나의 반려동물과 작별하기</Text>
+        </View>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+};
 
 export default ReviewMainScreen;
 
