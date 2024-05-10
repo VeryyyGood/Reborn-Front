@@ -88,20 +88,28 @@ const ShareWriteScreen = ({ navigation }) => {
       const jsonResponse = await response.json();
       console.log("Post response:", jsonResponse);
 
-      setValue(null); // 드롭다운 선택값 초기화
-      setBoardContent(""); // 게시판 글 내용 초기화
-      setPostImage(null); // 드롭다운 선택값 초기화
+      setValue(null);
+      setBoardContent("");
+      setPostImage(null);
       navigation.goBack();
     } catch (error) {
       console.error("Post content error:", error);
     }
   };
 
+  const omg = () => {
+
+    setValue(null); 
+    setBoardContent("");
+    setPostImage(null);
+    navigation.goBack()
+  };
+
     return (
         <View style={{flex: 1, paddingHorizontal: 10, backgroundColor: colors.background}}>
             <View>
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={()=> navigation.goBack()}>
+                    <TouchableOpacity onPress={omg}>
                         <Image source={require('../../Assets/icons/ShareBoard/xicon.png')}/>
                     </TouchableOpacity>
                 <View style={{marginVertical: '6%', marginRight: -20}}>
@@ -126,18 +134,18 @@ const ShareWriteScreen = ({ navigation }) => {
                     //listItemContainerStyle={{}}
                     />
                 </View>
-                <View style={{ flexDirection: 'row' , marginBottom: 80}}>
-                <Image style={{ width: "15%", resizeMode: 'contain', borderRadius:50}} source={profileImage} />
+                <View style={{ flexDirection: 'row' , marginBottom: 80, paddingHorizontal:10,}}>
+                <Image style={{ width: "15%", resizeMode: 'contain',borderRadius: 50}} source={profileImage} />
                 <TextInput
                     style={{ marginLeft: '3%', fontFamily: "Poppins-regular", fontSize: 18, marginRight: 70, marginTop: '7%' }}
                     multiline={true}
-                    onChangeText={setBoardContent} // 입력 내용 관리
+                    onChangeText={setBoardContent}
                     value={boardContent} // TextInput의 값
                     placeholder="자유롭게 글을 작성해주세요"
                     placeholderTextColor={colors.palette.Gray500}
                 />
                 </View>
-                <View style={{}}>
+                <View style={{marginTop: 40}}>
                 <View style={{justifyContent: 'center', alignItems: 'center', marginVertical: 20}}>
                   {postImage && <Image style={{width: 120, height:120, resizeMode:'contain'}} source={postImage} />}
                   </View>
