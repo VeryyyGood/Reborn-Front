@@ -29,7 +29,7 @@ const WalkScreen = ({ navigation: { navigate } }) => {
     const nextPosition = translateX._value - moveDistance;
 
     // go to next page on amulator without pedometer
-    if (countTouch === 3) {
+    if (countTouch === 1) {
       navigate("WalkFinish");
     } else if (Math.abs(nextPosition) >= 1417) {
       // end of image

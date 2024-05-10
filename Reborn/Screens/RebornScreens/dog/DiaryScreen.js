@@ -7,11 +7,15 @@ import {
   CompleteButton,
   ButtonBrownBottom,
 } from "../../../components";
+import AppContext from "./AppContext";
+import axios from "axios";
+
+import { useAccessToken } from "../../../context/AccessTokenContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
-import AppContext from "./AppContext";
 
 const DiaryScreen = ({ navigation: { navigate } }) => {
+  const { accessToken } = useAccessToken();
   const myContext = useContext(AppContext);
 
   const [answer, onChangeAnswer] = React.useState("");
@@ -24,6 +28,33 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
     `나와 함께 지내면서 너에게 어떤 변화가 있었을까?\n나에게 위로를 받았거나 나로 인해 한 층\n성장하게 된 일이 있었다면 말해 줘!`,
     `우리가 함께한 시간 동안\n나는 너에게 어떤 의미였는지 알고 싶어!`,
   ];
+  const requestWrite = async () => {
+    try {
+      const response = await fetch(
+        "http://reborn.persi0815.site:8080/reborn/remind/write",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            answer: answer,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (!data) {
+        throw new Error("Something went wrong");
+      }
+      console.log(data);
+      alert("저장되었습니다!");
+    } catch (error) {
+      console.error(error);
+      alert("저장 실패:" + error);
+    }
+  };
+
   return (
     <Container>
       <ImageBackground
@@ -61,7 +92,7 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
               <CompleteButton
                 text="작성완료"
                 onPress={() => {
-                  setqaVisible(false);
+                  requestWrite(), setqaVisible(false);
                 }}
               ></CompleteButton>
             </QAPopTextBox>

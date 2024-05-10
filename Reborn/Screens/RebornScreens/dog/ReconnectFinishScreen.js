@@ -4,11 +4,35 @@ import { colors } from "../../../theme";
 import { ButtonBrownBottom, textStyles } from "../../../components";
 import styled from "styled-components/native";
 import AppContext from "./AppContext";
+import axios from "axios";
+
+import { useAccessToken } from "../../../context/AccessTokenContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 
 const ReconnectFinishScreen = ({ navigation: { navigate } }) => {
+  const { accessToken } = useAccessToken();
   const myContext = useContext(AppContext);
+
+  const requestPostRemindCreate = async () => {
+    try {
+      const response = await axios.post(
+        "http://reborn.persi0815.site/reborn/remind/create",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      console.log(response.data);
+      return response; //함수에서 서버 응답 반환
+    } catch (error) {
+      //console.error("ERROR", error);
+      console.log("Error Response Body:", error.response.data);
+      throw error; //에러를 다시 던져서 외부에서 처리할 수 있게 함
+    }
+  };
 
   return (
     <Container>
@@ -25,7 +49,7 @@ const ReconnectFinishScreen = ({ navigation: { navigate } }) => {
         <ButtonBrownBottom
           text="다음날로 넘어가기"
           onPress={() => {
-            myContext.setDay(), navigate("ReIntro");
+            requestPostRemindCreate(), myContext.setDay(), navigate("ReIntro");
           }}
         />
       </ImageBackground>

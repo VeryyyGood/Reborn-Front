@@ -14,11 +14,54 @@ import bowlNoimageURL from "../../../Assets/Images/dog/dog_bowl.png";
 import feedimageURL from "../../../Assets/stuffs/feed.png";
 import bowlimageURL from "../../../Assets/Images/dog/dog_bowl_no.png";
 import AppContext from "./AppContext";
+import axios from "axios";
+
+import { useAccessToken } from "../../../context/AccessTokenContext";
 
 const FeedScreen = ({ navigation: { navigate } }) => {
+  const { accessToken } = useAccessToken();
   const myContext = useContext(AppContext);
-  const [isFeed, setisFeed] = useState(true);
+  const [isFeed, setisFeed] = useState(false);
   const [isEnd, setIsEnd] = useState("Walk");
+
+  const linkArray = [
+    "http://reborn.persi0815.site/reborn/remind/feed",
+    "http://reborn.persi0815.site/reborn/reveal/feed",
+    "http://reborn.persi0815.site/reborn/remember/feed",
+    "http://reborn.persi0815.site/reborn/reborn/feed",
+  ];
+
+  // RE:MIND & RE:VEAL & RE:MEMBER& RE:BORN what day? => Post Link
+  const handleLink = (day) => {
+    if (day >= 2 && day <= 6) {
+      return linkArray[0];
+    } else if (day >= 7 && day <= 11) {
+      return linkArray[1];
+    } else if (day >= 12 && day <= 14) {
+      return linkArray[2];
+    }
+    return linkArray[3];
+  };
+
+  const requestPostFeed = async () => {
+    try {
+      const response = await axios.post(
+        handleLink(myContext.contentsDay),
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      console.log(response.data);
+      return response; //함수에서 서버 응답 반환
+    } catch (error) {
+      //console.error("ERROR", error);
+      console.log("Error Response Body:", error.response.data);
+      throw error; //에러를 다시 던져서 외부에서 처리할 수 있게 함
+    }
+  };
 
   useEffect(() => {
     // set Tutorial Modal Visible true
@@ -51,7 +94,9 @@ const FeedScreen = ({ navigation: { navigate } }) => {
         />
         <ButtonBrownBottom
           text="산책하러 가기"
-          onPress={() => navigate(isEnd)}
+          onPress={() => {
+            requestPostFeed(), navigate(isEnd);
+          }}
         ></ButtonBrownBottom>
         <BowlImage source={isFeed ? bowlimageURL : bowlNoimageURL}></BowlImage>
       </ImageBackground>

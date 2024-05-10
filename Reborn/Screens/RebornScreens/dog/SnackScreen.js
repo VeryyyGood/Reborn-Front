@@ -9,15 +9,20 @@ import {
 import { colors } from "../../../theme";
 import { textStyles, ButtonBrownBottom } from "../../../components";
 import styled from "styled-components/native";
-import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 import AppContext from "./AppContext";
+import axios from "axios";
+
+import { useAccessToken } from "../../../context/AccessTokenContext";
 
 import snackimageURL from "../../../Assets/Images/dog/dog_snack.png";
+import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
+import dogsnack_oneimageURL from "../../../Assets/Images/dog/dog_eat_snack1.png";
 
 const SnackScreen = ({ navigation: { navigate } }) => {
+  const { accessToken } = useAccessToken();
   const myContext = useContext(AppContext);
 
-  const [isFeed, setisFeed] = useState(true);
+  const [isFeed, setisFeed] = useState(false);
 
   const destinationMap = {
     2: "Diary",
@@ -39,6 +44,42 @@ const SnackScreen = ({ navigation: { navigate } }) => {
     return destinationMap[day];
   };
 
+  const linkArray = [
+    "http://reborn.persi0815.site/reborn/remind/snack",
+    "http://reborn.persi0815.site/reborn/reveal/snack",
+    "http://reborn.persi0815.site/reborn/remember/snack",
+  ];
+
+  // RE:MIND & RE:VEAL & RE:MEMBER& RE:BORN what day? => Post Link
+  const handleLink = (day) => {
+    if (day >= 2 && day <= 6) {
+      return linkArray[0];
+    } else if (day >= 7 && day <= 11) {
+      return linkArray[1];
+    }
+    return linkArray[2];
+  };
+
+  const requestPostSnack = async () => {
+    try {
+      const response = await axios.post(
+        handleLink(myContext.contentsDay),
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      console.log(response.data);
+      return response; //함수에서 서버 응답 반환
+    } catch (error) {
+      //console.error("ERROR", error);
+      console.log("Error Response Body:", error.response.data);
+      throw error; //에러를 다시 던져서 외부에서 처리할 수 있게 함
+    }
+  };
+
   return (
     <Container>
       <ImageBackground
@@ -49,7 +90,12 @@ const SnackScreen = ({ navigation: { navigate } }) => {
           충분한 대화 나누기 :{" "}
           <Text style={{ color: colors.palette.Red }}>간식주기</Text>
         </Text>
-        <DogImage source={dogimageURL} resizeMode="center" />
+        {isFeed ? (
+          <DogImage source={dogsnack_oneimageURL} resizeMode="center" />
+        ) : (
+          <DogImage source={dogimageURL} resizeMode="center" />
+        )}
+
         <DraggableImage
           source={snackimageURL}
           style={{
@@ -65,6 +111,7 @@ const SnackScreen = ({ navigation: { navigate } }) => {
           text="거실로 돌아가기"
           onPress={() => {
             const screen = getDestination(myContext.contentsDay);
+            requestPostSnack();
             navigate(screen);
           }}
         ></ButtonBrownBottom>
@@ -111,14 +158,14 @@ const DraggableImage = ({ source, style, isFeed, setisFeed }) => {
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (_, { dx, dy }) => {
-        console.log({ dx, dy });
+        //console.log({ dx, dy });
         position.setValue({ x: dx, y: dy });
       },
       onPanResponderGrant: () => {
         onPressIn.start();
       },
       onPanResponderRelease: (_, { dx, dy }) => {
-        if (dx > -80 && dy > 270 && dx < -40 && dy < 300) {
+        if (dx > -70 && dy > 260 && dx < -40 && dy < 300) {
           setisFeed(!isFeed);
           Animated.sequence([
             Animated.parallel([onDropScale, onDropOpacity]),
