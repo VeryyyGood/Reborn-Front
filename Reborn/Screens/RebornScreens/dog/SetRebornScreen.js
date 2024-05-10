@@ -99,7 +99,7 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
                   textShadowRadius: 10,
                 }}
               >
-                사랑하는 {globalNickname}에게,
+                To. 내가 사랑하는 {globalNickname}
               </LetterText>
               <LetterText
                 style={{
@@ -117,7 +117,7 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
                   textShadowRadius: 10,
                 }}
               >
-                영원한 너의 가족 {globalNickname}이가
+                From. 영원한 너의 가족 {globalNickname}
               </LetterText>
             </ImageBackground>
             <ButtonYellow
