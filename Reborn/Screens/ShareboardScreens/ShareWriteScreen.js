@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Button, TouchableOpacity, TextInput, Image, StyleSheet } from "react-native";
 import styled from "styled-components/native";
 import DropDownPicker from 'react-native-dropdown-picker';
-import { CompleteButton } from "../../components";
+import { CompleteButton, GrayLine } from "../../components";
 import { colors } from "../../theme";
 import axios from "axios";
 import { useAccessToken } from "../../context/AccessTokenContext";
@@ -107,8 +107,9 @@ const ShareWriteScreen = ({ navigation }) => {
                 <View style={{marginVertical: '6%', marginRight: -20}}>
                     <CompleteButton text="작성완료" onPress={postContent}> </CompleteButton>
                 </View>
-                </View> 
-                <View style={{}}>
+                </View>
+                <GrayLine></GrayLine> 
+                <View style={{marginVertical: 20,}}>
                     <DropDownPicker
                     open={open}
                     value={value}
@@ -128,16 +129,22 @@ const ShareWriteScreen = ({ navigation }) => {
                 <View style={{ flexDirection: 'row' , marginBottom: 80}}>
                 <Image style={{ width: "15%", resizeMode: 'contain', borderRadius:50}} source={profileImage} />
                 <TextInput
-                    style={{ marginLeft: '3%', fontFamily: "Poppins-Bold", fontSize: 18, marginRight: 70, marginTop: '7%' }}
+                    style={{ marginLeft: '3%', fontFamily: "Poppins-regular", fontSize: 18, marginRight: 70, marginTop: '7%' }}
                     multiline={true}
                     onChangeText={setBoardContent} // 입력 내용 관리
                     value={boardContent} // TextInput의 값
-                    placeholder="게시판 글쓰기"
+                    placeholder="자유롭게 글을 작성해주세요"
+                    placeholderTextColor={colors.palette.Gray500}
                 />
                 </View>
-                <View style={{flexDirection: 'row', alignItems:'flex-end', justifyContent:'space-between', marginLeft: 70}}>
-                  {postImage && <Image style={{width: 100, height:100 }} source={postImage} />}
-                  <TouchableOpacity
+                <View style={{}}>
+                <View style={{justifyContent: 'center', alignItems: 'center', marginVertical: 20}}>
+                  {postImage && <Image style={{width: 120, height:120, resizeMode:'contain'}} source={postImage} />}
+                  </View>
+                <GrayLine></GrayLine>
+                <View style={{marginVertical: 20, flexDirection: 'row',  marginLeft: 30}}>
+                  
+                  {/* <TouchableOpacity
                     onPress={selectImage}
                     style={{
                       backgroundColor: colors.palette.Blue,
@@ -146,10 +153,14 @@ const ShareWriteScreen = ({ navigation }) => {
                       width: '25%', justifyContent: 'center', marginRight: 10
                     }}>
                     <Text style={{fontFamily: 'Poppins-Bold', fontSize: 14, paddingVertical:2, color:'white'}}>사진 선택</Text>
+                  </TouchableOpacity> */}
+                  <TouchableOpacity onPress={selectImage}>
+                  <Image style={{ width: 80, height: 80, marginVertical: -30}} source={require('../../Assets/icons/icon_imagePicker.png')} />
                   </TouchableOpacity>
+                  <Text>사진 첨부</Text>
                 </View>
-
-                  
+                <GrayLine></GrayLine>
+                </View>
             </View>
         </View>
     );

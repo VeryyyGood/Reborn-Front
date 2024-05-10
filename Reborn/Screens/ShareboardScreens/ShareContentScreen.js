@@ -25,14 +25,15 @@ import { useAccessToken, useGlobalNickname } from "../../context/AccessTokenCont
 import ShareBoardCommentItem from "../../components/ShareBoardCommentItem";
 
 
-const ShareContentScreen = ({ route }) => {
+const ShareContentScreen = ({ route, navigation }) => {
   const { id, boardWriter, boardCreatedAt, boardContent, likeCount: initialLikeCount, commentCount, boardImage } = route.params;
   const { accessToken } = useAccessToken();
  
   const [isHeart, setIsHeart] = useState(false);
   const [likeCount, setLikeCount] = useState(initialLikeCount); // likeCount 상태 추가
   const [isBookmark, setIsBookmark] = useState(false);
-  const [image, setImage] = useState(null);  //보드 이미지
+
+  //const [commentItemData, setCommentItemData] = useState([]);
   
   useFocusEffect(
     React.useCallback(() => {
@@ -64,6 +65,10 @@ const ShareContentScreen = ({ route }) => {
         }
       };
 
+      // const getCommentItem = async () => {
+        
+      // };
+
       const getCheckBookmark = async () => {
         try {
           const response = await axios.get(
@@ -77,7 +82,6 @@ const ShareContentScreen = ({ route }) => {
           console.log(response.data);
           if (response.data && response.data.result=== 'bookmarked') {
             setIsBookmark(true);
-            // 다른 필요한 상태 업데이트도 여기에서 수행
           } else {
             setIsBookmark(false);
           }
@@ -85,6 +89,8 @@ const ShareContentScreen = ({ route }) => {
           console.error(e);
         }
       };
+
+      
 
       getCheckLike();
       getCheckBookmark();
@@ -176,7 +182,24 @@ const ShareContentScreen = ({ route }) => {
     }
   };
 
-  const commentData = [
+  const handleBoardDeletePress = async () => {
+      try {
+        const response = await axios.delete(
+          `http://reborn.persi0815.site/board/${id}/delete`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        console.log(response.data);
+        navigation.goBack();
+      } catch (error) {
+        console.log("Error Response Body:", error.response?.data);
+      }
+  };
+
+  const commentDatas = [
     { id: '1', title: '이사장', date: '2222-22.22', content: '맛있겠다.' },
     { id: '2', title: '배기용', date: '2222-22.23', content: '룰루랄라'},
     { id: '3', title: '문채영', date: '2222-22.24', content: '세번째 글'},
@@ -201,8 +224,8 @@ const ShareContentScreen = ({ route }) => {
             {"\n"}
             <Text style={styles.date}>{boardCreatedAt}</Text>{" "}
           </Text>
-          <TouchableOpacity style={{justifyContent: 'center', position: 'absolute', right: '5%', top: '15%'}}>
-            <Image style={{tintColor: colors.palette.Gray300}} source={require('../../Assets/icons/ShareBoard/xicon.png')} />
+          <TouchableOpacity onPress={handleBoardDeletePress} style={{justifyContent: 'center', position: 'absolute', right: '5%', top: '15%'}}>
+            <Image style={{tintColor: colors.palette.Gray400}} source={require('../../Assets/icons/ShareBoard/xicon.png')} />
           </TouchableOpacity>
         </View>
         <View>
@@ -267,14 +290,14 @@ const ShareContentScreen = ({ route }) => {
       </View>
       <GrayLine></GrayLine>
       <View>
-        <FlatList data={commentData}
+        <FlatList data={commentDatas}
           renderItem={({item}) => (
             <ShareBoardCommentItem id={item.id} title={item.title} date={item.date} content={item.content} />
           )} keyExtractor={item => item.id} contentContainerStyle={{ paddingBottom: 400 }} />
       </View>
       <KeyboardAvoidingView style={styles.commentView}>
         <TextInput
-          placeholder="댓글입력해라"
+          placeholder="댓글을 입력해주세요."
           style={styles.commetInput}
         />
         <Pressable onPress={()=> console.log("보내기")}>
@@ -297,6 +320,7 @@ const styles = StyleSheet.create({
   titlecontainer: {
     flexDirection: "row",
     paddingLeft: 20,
+    marginTop: 10,
   },
   title: {
     fontSize: 20,
