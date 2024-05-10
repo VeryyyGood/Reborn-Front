@@ -20,7 +20,7 @@ const RadioButton = ({ isSelected, onPress, label }) => {
       <View style={[styles.radioButton, isSelected]}>
         {isSelected && <View style={styles.radioButtonInner} />}
       </View>
-      <Text>{label}</Text>
+      <Text style={{ color: colors.palette.BrownDark }}>{label}</Text>
     </TouchableOpacity>
   );
 };
@@ -214,6 +214,7 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins-Regular",
     fontSize: 14,
     marginBottom: "3%",
+    color: colors.palette.BrownDark,
   },
   buttonFont: {
     fontFamily: "Poppins-Bold",
@@ -230,7 +231,7 @@ const styles = StyleSheet.create({
     width: 20,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: "#000",
+    borderColor: colors.palette.BrownDark,
     alignItems: "center",
     justifyContent: "center",
     marginRight: 10,

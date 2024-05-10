@@ -25,7 +25,16 @@ const ReDiaryTitle = () => (
     >
       RE:
     </Text>
-    <Text style={{ fontFamily: "Poppins-Bold", fontSize: 18 }}> DIARY</Text>
+    <Text
+      style={{
+        fontFamily: "Poppins-Bold",
+        color: colors.palette.BrownDark,
+        fontSize: 18,
+      }}
+    >
+      {" "}
+      DIARY
+    </Text>
   </Text>
 );
 //headerTitle: () => <ReDiaryTitle/>}

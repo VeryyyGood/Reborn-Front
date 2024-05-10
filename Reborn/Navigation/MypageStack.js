@@ -22,16 +22,39 @@ const ReviewPetListTitle = () => (
     >
       RE:
     </Text>
-    <Text style={{ fontFamily: "Poppins-Bold", fontSize: 18 }}> VIEW</Text>
+    <Text
+      style={{
+        fontFamily: "Poppins-Bold",
+        color: colors.palette.BrownDark,
+        fontSize: 18,
+      }}
+    >
+      {" "}
+      VIEW
+    </Text>
   </Text>
 );
 
 const AccountTitle = () => (
-  <Text style={{ fontFamily: "Poppins-Bold", fontSize: 18 }}>계정 관리</Text>
+  <Text
+    style={{
+      fontFamily: "Poppins-Bold",
+      color: colors.palette.BrownDark,
+      fontSize: 18,
+    }}
+  >
+    계정 관리
+  </Text>
 );
 
 const PetTitle = () => (
-  <Text style={{ fontFamily: "Poppins-Bold", fontSize: 18 }}>
+  <Text
+    style={{
+      fontFamily: "Poppins-Bold",
+      color: colors.palette.BrownDark,
+      fontSize: 18,
+    }}
+  >
     반려동물 프로필 관리
   </Text>
 );
