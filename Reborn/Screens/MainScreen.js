@@ -16,6 +16,7 @@ import styled from "styled-components/native";
 import {
   useAccessToken,
   useGlobalNickname,
+  useGlobalPetName,
 } from "../context/AccessTokenContext";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -25,6 +26,7 @@ const MainScreen = ({ navigation: { navigate } }) => {
 
   const [nickname, setNickname] = useState("");
   const { setGlobalNickname } = useGlobalNickname();
+  const { globalPetName, setGlobalPetName } = useGlobalPetName();
 
   const [profileImage, setProfileImage] = useState(
     require("../Assets/icons/profile.png")
@@ -72,6 +74,24 @@ const MainScreen = ({ navigation: { navigate } }) => {
   );
 
   const { globalNickname } = useGlobalNickname();
+
+  const getPetName = async () => {
+    try {
+      const petNameResponse = await axios.get(
+        `http://reborn.persi0815.site/pet/name`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (petNameResponse.data.result.petName) {
+        setGlobalPetName(petNameResponse.data.result.petName);
+      }
+    } catch (error) {
+      console.error("Profile image fetch error:", error);
+    }
+  };
 
   // get RE:BORN progess
   const fetchGoodbye = async () => {
@@ -214,7 +234,9 @@ const MainScreen = ({ navigation: { navigate } }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.rebornButton}
-          onPress={() => fetchGoodbye()}
+          onPress={() => {
+            fetchGoodbye(), getPetName();
+          }}
         >
           <Text style={styles.boxtext}>
             <Text style={{ color: colors.palette.Brown }}>RE: {"\n"}</Text>

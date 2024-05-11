@@ -6,6 +6,7 @@ import AppContext from "./Screens/RebornScreens/dog/AppContext";
 import {
   AccessTokenProvider,
   GlobalNicknameProvider,
+  GlobalPetNameProvider,
 } from "./context/AccessTokenContext";
 
 export default function App() {
@@ -33,11 +34,13 @@ export default function App() {
   return (
     <AccessTokenProvider>
       <GlobalNicknameProvider>
-        <AppContext.Provider value={days}>
-          <NavigationContainer>
-            <Root />
-          </NavigationContainer>
-        </AppContext.Provider>
+        <GlobalPetNameProvider>
+          <AppContext.Provider value={days}>
+            <NavigationContainer>
+              <Root />
+            </NavigationContainer>
+          </AppContext.Provider>
+        </GlobalPetNameProvider>
       </GlobalNicknameProvider>
     </AccessTokenProvider>
   );
