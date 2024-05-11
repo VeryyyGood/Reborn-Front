@@ -5,15 +5,23 @@ import { GrayLine, CompleteButton } from "../../../components";
 import { ImageBackground, KeyboardAvoidingView, Platform } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { launchImageLibrary } from "react-native-image-picker";
+import axios from "axios";
+
+import { useAccessToken } from "../../../context/AccessTokenContext";
 
 import imagePickerImage from "../../../Assets/icons/icon_imagePicker.png";
 
 const ImageScreen = ({ navigation: { navigate } }) => {
+  const { accessToken } = useAccessToken();
+
   const [isImageUploaded, setIsImageUploaded] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [date, setDate] = useState("");
   const [title, onChangeTitle] = React.useState("");
   const [contents, onChangeContents] = React.useState("");
+
+  const [response, setResponse] = useState(""); // contents
+  const [imageFile, setImageFile] = useState(""); // image
 
   // For picking date
   const showDatePicker = () => {
@@ -28,10 +36,7 @@ const ImageScreen = ({ navigation: { navigate } }) => {
     hideDatePicker();
   };
 
-  const [response, setResponse] = useState("");
-  const [imageFile, setImageFile] = useState("");
-
-  // 이미지 가져오기
+  // get Image
   const Gallery = () => {
     launchImageLibrary(
       {
@@ -54,10 +59,49 @@ const ImageScreen = ({ navigation: { navigate } }) => {
     );
   };
 
+  // send Data to Server
+  const requestWrite = async () => {
+    const formData = new FormData();
+    const jsonData = JSON.stringify({
+      boardType: value,
+      boardContent: boardContent,
+    });
+    formData.append("data", jsonData);
+
+    if (imageFile && imageFile.uri) {
+      formData.append("board", {
+        uri: imageFile.uri,
+        type: "image/jpeg",
+        name: "board.jpg",
+      });
+    }
+    try {
+      const response = await fetch(
+        "http://reborn.persi0815.site/board/create",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: formData,
+        }
+      );
+      const jsonResponse = await response.json();
+      console.log("Post response:", jsonResponse);
+
+      setValue(null); // 드롭다운 선택값 초기화
+      setBoardContent(""); // 게시판 글 내용 초기화
+      setPostImage(null); // 드롭다운 선택값 초기화
+      navigation.goBack();
+    } catch (error) {
+      console.error("Post content error:", error);
+    }
+  };
+
   return (
     <Container>
       <ImageBackground
-        source={require("./../../../Assets/Images/bg/bg_imageDiary.png")}
+        source={require("./../../../Assets/Images/bg/paper.png")}
         style={{ width: "100%", height: "100%" }}
       >
         <PickDate
@@ -67,6 +111,7 @@ const ImageScreen = ({ navigation: { navigate } }) => {
         >
           <DateText>{date || "사진 찍은 날짜를 선택하세요"}</DateText>
         </PickDate>
+        <GrayLine />
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
           mode="date"
@@ -92,7 +137,6 @@ const ImageScreen = ({ navigation: { navigate } }) => {
         ></ImagePicker>
         <TextContainer>
           <GrayLine />
-
           <ContentsText
             keyboardType="default"
             placeholder="내용을 입력하세요"
@@ -129,9 +173,7 @@ const ImageIcon = styled.Image`
 `;
 
 const PickDate = styled.Pressable`
-  background-color: ${colors.palette.Yellow};
   opacity: 0.7;
-  border-radius: 20px;
   padding: 2%;
   margin: 2% 20% 2% 20%;
   height: 8%;
@@ -146,12 +188,12 @@ const TextContainer = styled.View`
 
 const DateText = styled.Text`
   font-family: "caligraphy";
-  font-size: 22px;
+  font-size: 30px;
 `;
 
 const TitleText = styled.TextInput`
   font-family: "Poppins-Bold";
-  font-size: 20px;
+  font-size: 26px;
   width: 100%;
   height: 100%;
   margin: 0% 5% 0% 5%;
@@ -160,7 +202,7 @@ const TitleText = styled.TextInput`
 const ContentsText = styled.TextInput`
   flex: 1;
   font-family: "Poppins-Regular";
-  font-size: 16px;
+  font-size: 20px;
   width: 90%;
   margin: 2% 5% 0% 5%;
 `;

@@ -10,9 +10,9 @@ import { colors } from "../../../theme";
 import { textStyles, ButtonBrownBottom } from "../../../components";
 import styled from "styled-components/native";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
-import bowlNoimageURL from "../../../Assets/Images/dog/dog_bowl.png";
+import bowlNoimageURL from "../../../Assets/Images/dog/dog_bowl_no.png";
 import feedimageURL from "../../../Assets/stuffs/feed.png";
-import bowlimageURL from "../../../Assets/Images/dog/dog_bowl_no.png";
+import bowlimageURL from "../../../Assets/Images/dog/dog_bowl.png";
 import AppContext from "./AppContext";
 import axios from "axios";
 
@@ -142,7 +142,7 @@ const DraggableImage = ({ source, style, isFeed, setisFeed }) => {
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (_, { dx, dy }) => {
-        console.log({ dx, dy });
+        // console.log({ dx, dy });
         position.setValue({ x: dx, y: dy });
       },
       onPanResponderGrant: () => {

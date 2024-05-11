@@ -15,9 +15,14 @@ export default function App() {
     setContentsDay(contentsDay + 1);
   };
 
+  const resetDay = () => {
+    setContentsDay(1);
+  };
+
   const days = {
     contentsDay: contentsDay,
     setDay,
+    resetDay,
   };
 
   return (

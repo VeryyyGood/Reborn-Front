@@ -8,7 +8,6 @@ import {
   ButtonBrownBottom,
 } from "../../../components";
 import AppContext from "./AppContext";
-import axios from "axios";
 
 import { useAccessToken } from "../../../context/AccessTokenContext";
 

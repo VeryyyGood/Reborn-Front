@@ -5,6 +5,7 @@ import { colors } from "../../../theme";
 import { textStyles, ButtonBrownBottom } from "../../../components";
 import { TutorialModal } from "../../../components/modalStyles";
 import AppContext from "./AppContext";
+
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 
 const ReIntroScreen = ({ navigation: { navigate } }) => {
@@ -26,6 +27,7 @@ const ReIntroScreen = ({ navigation: { navigate } }) => {
   마지막으로 하고 싶은 말을 전하고, 예쁘고 멋진 모습으로 보내주세요.`,
   ];
   const myContext = useContext(AppContext);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [daymodalVisible, setDayModalVisible] = useState(true);
 

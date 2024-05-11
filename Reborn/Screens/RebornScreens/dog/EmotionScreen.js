@@ -12,20 +12,24 @@ import { View, TextInput } from "react-native";
 import AppContext from "./AppContext";
 import axios from "axios";
 
+import { useAccessToken } from "../../../context/AccessTokenContext";
+
 import sunImage from "../../../Assets/icons/rediaryimage/sun.png";
 import cloudImage from "../../../Assets/icons/rediaryimage/cloud.png";
 import rainImage from "../../../Assets/icons/rediaryimage/rain.png";
 
 const EmotionScreen = ({ navigation: { navigate } }) => {
+  const { accessToken } = useAccessToken();
+  const myContext = useContext(AppContext);
+
   const [selectedEmotion, setSelectedEmotion] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const [answer, onChangeAnswer] = React.useState("");
-  const myContext = useContext(AppContext);
 
   const emotions = [
-    { id: "sun", image: sunImage },
-    { id: "cloud", image: cloudImage },
-    { id: "rain", image: rainImage },
+    { id: "SUNNY", image: sunImage },
+    { id: "CLOUDY", image: cloudImage },
+    { id: "RAINY", image: rainImage },
   ];
 
   const goToNextPage = async () => {
@@ -36,7 +40,11 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
       const analysisResult = await analyzeEmotion(answer);
       if (analysisResult) {
         console.log(analysisResult);
-        navigate("EmotionResult", { selectedEmotion, analysisResult });
+        navigate("EmotionResult", {
+          answer,
+          selectedEmotion,
+          analysisResult,
+        });
       } else {
         alert("감정 분석에 실패했습니다. 다시 시도해주세요.");
       }
@@ -101,6 +109,7 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
           onChangeText={onChangeAnswer}
           value={answer}
           placeholder="첫만남을 기록해보세요"
+          multiline={true}
         ></TextInput>
       </TextInputContainer>
       <ToastContainer>
