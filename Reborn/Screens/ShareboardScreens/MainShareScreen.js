@@ -43,7 +43,7 @@ const MainShareScreen = ({navigation}) => {
                 });
                 if (response.data && response.data.result) {
                     //리스트
-                    //console.log(response.data.result.boardList)
+                    console.log(response.data.result.boardList)
                     const mappedData = response.data.result.boardList.map(item => ({
                         id: item.id,
                         boardCreatedAt: item.boardCreatedAt,
@@ -52,6 +52,7 @@ const MainShareScreen = ({navigation}) => {
                         likeCount: item.likeCount,
                         commentCount: item.commentCount,
                         boardImage: item.boardImage,
+                        writerProfileImage: item.writerProfileImage,
                     }));
                     const boardImages = response.data.result.boardList.map(item => item.boardImage).filter(url => url !== null);
                     //console.log(boardImages);
@@ -104,7 +105,8 @@ const MainShareScreen = ({navigation}) => {
                         navigation={navigation}
                         likeCount={item.likeCount}
                         commentCount={item.commentCount}
-                        boardImage={item.boardImage}/>
+                        boardImage={item.boardImage}
+                        writerProfileImage={item.writerProfileImage}/>
                     )}
                     keyExtractor={item => item.id}
                     contentContainerStyle={{ paddingBottom: 150 }}
