@@ -45,8 +45,8 @@ const MainScreen = ({ navigation: { navigate } }) => {
               },
             }
           );
-          console.log(nickNameProfileImageResponse.data);
-          console.log(nickNameProfileImageResponse.data.result.nickname);
+          //console.log(nickNameProfileImageResponse.data);
+          //console.log(nickNameProfileImageResponse.data.result.nickname);
           if (nickNameProfileImageResponse.data.result.nickname) {
             if (
               nickNameProfileImageResponse.data.result.nickname &&
@@ -70,6 +70,7 @@ const MainScreen = ({ navigation: { navigate } }) => {
         }
       };
       getNicknameProfileImage();
+      getPetName();
     }, [])
   );
 
@@ -86,6 +87,7 @@ const MainScreen = ({ navigation: { navigate } }) => {
         }
       );
       if (petNameResponse.data.result.petName) {
+        //console.log(petNameResponse.data.result.petName);
         setGlobalPetName(petNameResponse.data.result.petName);
       }
     } catch (error) {
@@ -235,7 +237,7 @@ const MainScreen = ({ navigation: { navigate } }) => {
         <TouchableOpacity
           style={styles.rebornButton}
           onPress={() => {
-            fetchGoodbye(), getPetName();
+            fetchGoodbye()
           }}
         >
           <Text style={styles.boxtext}>
