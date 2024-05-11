@@ -27,6 +27,15 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
     `나와 함께 지내면서 너에게 어떤 변화가 있었을까?\n나에게 위로를 받았거나 나로 인해 한 층\n성장하게 된 일이 있었다면 말해 줘!`,
     `우리가 함께한 시간 동안\n나는 너에게 어떤 의미였는지 알고 싶어!`,
   ];
+
+  const hintArray = [
+    `첫만남을 기록해보세요`,
+    `반려동물 이름의 의미를 기록해보세요`,
+    `함께 했던 특별한 순간을 기록해보세요`,
+    `반려동물과 함께 지내며 성장한 순간을 기록해보세요`,
+    `반려동물이 나에게 어떤 의미였는지 기록해보세요`,
+  ];
+
   const requestWrite = async () => {
     try {
       const response = await fetch(
@@ -85,7 +94,7 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
                   keyboardType="default"
                   onChangeText={onChangeAnswer}
                   value={answer}
-                  placeholder="첫만남을 기록해보세요"
+                  placeholder={hintArray[myContext.contentsDay - 2]}
                 ></TextInput>
               </TextInputContainer>
               <CompleteButton

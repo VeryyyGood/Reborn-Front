@@ -101,7 +101,7 @@ const EmotionResultScreen = ({ route, navigation: { navigate } }) => {
           </ContentsText>
           <ContentsText>입니다</ContentsText>
           <GrayText>
-            오늘 사용자의 {percentageOfSentiment.toFixed(1)}%가 함께 느낀
+            오늘 사용자의 {percentageOfSentiment.toFixed(0)}%가 함께 느낀
             감정이에요
           </GrayText>
         </GrayBox>

@@ -9,6 +9,8 @@ import {
   Toast,
 } from "../../../components";
 import { View, TextInput } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+
 import AppContext from "./AppContext";
 import axios from "axios";
 
@@ -32,6 +34,15 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
     { id: "RAINY", image: rainImage },
   ];
 
+  // refresh when Screen is focused
+  useFocusEffect(
+    React.useCallback(() => {
+      setSelectedEmotion(null);
+      onChangeAnswer("");
+    }, [])
+  );
+
+  // go to Result Page
   const goToNextPage = async () => {
     if (!selectedEmotion) {
       setShowToast(true);
@@ -108,7 +119,7 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
           keyboardType="default"
           onChangeText={onChangeAnswer}
           value={answer}
-          placeholder="첫만남을 기록해보세요"
+          placeholder="어떤 일이 있었고, 어떤 감정을 느꼈는지 기록해보세요"
           multiline={true}
         ></TextInput>
       </TextInputContainer>

@@ -11,6 +11,7 @@ import {
   useAccessToken,
   useGlobalNickname,
 } from "../../../context/AccessTokenContext";
+import axios from "axios";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_clothes.png";
 import ribbon_blackimageURL from "../../../Assets/stuffs/ribbon_black.png";
@@ -18,6 +19,7 @@ import ribbon_yellowimageURL from "../../../Assets/stuffs/ribbon_yellow.png";
 import letterPaperimageURL from "../../../Assets/stuffs/letterPaper.png";
 
 const SetRebornScreen = ({ navigation: { navigate } }) => {
+  const { accessToken } = useAccessToken();
   const { globalNickname } = useGlobalNickname();
 
   const [modalVisible, setmodalVisible] = useState(true); // Reborn Modal
@@ -31,6 +33,34 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
   내가 힘들거나 아플 때도 너가 내 곁에 있어주면서 나를 위로해 주어서 정말 고마워. 
   더이상 함께할 수 없어서 미안해. 하지만 나는 너와 있었던 모든 순간들을 기억하고 감사하며, 영원히 너의 마음 속에 남을거야. 그러니 내가 떠난 후에도 너가 꼭 행복했으면 좋겠어. 내가 너를 사랑했던 만큼 너도 행복하길 바라! 사랑해 
 `;
+
+  // send data to Server
+  const requestWrite = async () => {
+    try {
+      const response = await fetch(
+        "http://reborn.persi0815.site:8080/reborn/reborn/set",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            rebornType: isBlack ? "BLACK" : "YELLOW",
+          }),
+        }
+      );
+      const data = await response.json();
+      if (!data) {
+        throw new Error("Something went wrong");
+      }
+      console.log(data);
+      alert("저장되었습니다!");
+    } catch (error) {
+      console.error(error);
+      alert("저장 실패:" + error);
+    }
+  };
 
   return (
     <Container>
@@ -75,7 +105,9 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
               </RebornView>
               <ButtonYellow
                 text={"리본 달아주기"}
-                onPress={() => setmodalVisible(false)}
+                onPress={() => {
+                  requestWrite(), setmodalVisible(false);
+                }}
               />
             </QAPopTextBox>
           </BlackContainer>

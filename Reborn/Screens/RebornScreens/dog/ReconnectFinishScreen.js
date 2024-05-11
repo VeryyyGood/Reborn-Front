@@ -49,7 +49,7 @@ const ReconnectFinishScreen = ({ navigation: { navigate } }) => {
         <ButtonBrownBottom
           text="다음날로 넘어가기"
           onPress={() => {
-            requestPostRemindCreate(), myContext.setDay(), navigate("ReIntro");
+            requestPostRemindCreate(), myContext.plusDay(), navigate("ReIntro");
           }}
         />
       </ImageBackground>

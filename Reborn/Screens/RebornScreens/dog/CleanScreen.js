@@ -49,7 +49,7 @@ const CleanScreen = ({ navigation: { navigate } }) => {
 
   // bath, pad, bowl, snack, cushion, toy
   const goalPositionArray = [
-    [-15, 165],
+    [-25, 165],
     [-235, 165],
     [-235, -95],
     [-15, 55],
