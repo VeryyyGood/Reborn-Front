@@ -26,7 +26,7 @@ import ShareBoardCommentItem from "../../components/ShareBoardCommentItem";
 
 
 const ShareContentScreen = ({ route, navigation }) => {
-  const { id, boardWriter, boardCreatedAt, boardContent, likeCount: initialLikeCount, commentCount, boardImage } = route.params;
+  const { id, boardWriter, boardCreatedAt, boardContent, likeCount: initialLikeCount, commentCount, boardImage, writerProfileImage } = route.params;
   const { accessToken } = useAccessToken();
  
   const [isHeart, setIsHeart] = useState(false);

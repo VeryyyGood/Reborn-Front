@@ -3,12 +3,15 @@ import {View, Text, Image, StyleSheet, ImageBackground, Touchable, TouchableOpac
 import styled from "styled-components/native";
 import { colors } from '../theme';
 import { GrayLine } from './viewStyles';
-const ShareBoardFeedItem = ({ navigation, id, boardWriter, boardContent, boardCreatedAt, likeCount, commentCount, boardImage }) => {
+const ShareBoardFeedItem = ({ navigation, id, boardWriter, boardContent, boardCreatedAt, likeCount, commentCount, boardImage, writerProfileImage }) => {
 	return (
-        <TouchableOpacity onPress={() => navigation.navigate("ShareContent",{ id, boardWriter, boardCreatedAt, boardContent, likeCount, commentCount, boardImage })}>
+        <TouchableOpacity onPress={() => navigation.navigate("ShareContent",{ id, boardWriter, boardCreatedAt, boardContent, likeCount, commentCount, boardImage, writerProfileImage })}>
             <View style={styles.shareItem}>
                 <View style={styles.titlecontainer}>
-                    <Image style={styles.profile} source={require('../Assets/icons/profile.png')} />
+                <Image 
+                style={styles.profile} 
+                source={writerProfileImage ? { uri: writerProfileImage } : require('../Assets/icons/profile.png')} 
+                />
                     <Text style={[styles.title, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Bold'}]}>{boardWriter}{'\n'}<Text style={styles.date}>{boardCreatedAt}</Text> </Text>
                     
                 </View>
@@ -62,8 +65,10 @@ const styles=StyleSheet.create({
         marginHorizontal: '5%',
     },
     profile:{
-        width: '20%',
-        resizeMode: 'contain',
+        width: 70,
+        height: 70,
+        //resizeMode: 'contain',
+        borderRadius: 50,
     },
     boardImage: {
         width: '100%',
