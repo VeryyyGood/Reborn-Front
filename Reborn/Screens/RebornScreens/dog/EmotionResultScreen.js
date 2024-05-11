@@ -1,33 +1,85 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import styled from "styled-components/native";
-import { Text, Pressable } from "react-native";
+import { Pressable } from "react-native";
 import { colors } from "../../../theme";
 import { ButtonBrown } from "../../../components";
+import axios from "axios";
+
+import {
+  useAccessToken,
+  useGlobalNickname,
+} from "../../../context/AccessTokenContext";
 
 import sunImage from "../../../Assets/icons/rediaryimage/sun.png";
 import cloudImage from "../../../Assets/icons/rediaryimage/cloud.png";
 import rainImage from "../../../Assets/icons/rediaryimage/rain.png";
 
 const EmotionResultScreen = ({ route, navigation: { navigate } }) => {
-  const { selectedEmotion } = route.params;
+  const { accessToken } = useAccessToken();
+  const { globalNickname } = useGlobalNickname();
 
-  const [isVisible, setIsVisible] = useState(false);
+  const { answer, selectedEmotion, analysisResult } = route.params;
+
+  const [isVisible, setIsVisible] = useState(false); // AI result visible
+
+  const [percentageOfSentiment, SetPercentageOfSentiment] = useState(0);
 
   const weather = [
-    { id: "sun", text: "'맑음'", image: sunImage },
-    { id: "cloud", text: "'흐림'", image: cloudImage },
-    { id: "rain", text: "'비'", image: rainImage },
+    { id: "SUNNY", text: "'맑음'", image: sunImage },
+    { id: "CLOUDY", text: "'흐림'", image: cloudImage },
+    { id: "RAINY", text: "'비'", image: rainImage },
   ];
 
   const selectedWeather = weather.find(
     (weather) => weather.id === selectedEmotion
   );
 
+  const weatherTocolor = (sentiment) => {
+    if (sentiment === "positive") {
+      return "RED";
+    }
+    if (sentiment === "negative") {
+      return "BLUE";
+    }
+    return "YELLOW"; // defult is YELLOW, neutral also Yellow
+  };
+
+  // send to Server
+  const requestWrite = async (sentiment) => {
+    try {
+      const response = await fetch(
+        "http://reborn.persi0815.site:8080/reborn/reveal/write",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            diaryContent: answer,
+            pickEmotion: selectedEmotion,
+            resultEmotion: weatherTocolor(sentiment),
+          }),
+        }
+      );
+      const data = await response.json();
+      if (!data) {
+        throw new Error("Something went wrong");
+      }
+      console.log(data);
+      SetPercentageOfSentiment(data.result);
+      alert("저장되었습니다!");
+    } catch (error) {
+      console.error(error);
+      alert("저장 실패:" + error);
+    }
+  };
+
   return (
     <Container>
       <Icon source={selectedWeather.image} />
-      <ContentsText style={{ marginTop: "10%" }}>
-        보호자 분이 선택한{"\n"}감정 날씨는
+      <ContentsText style={{ marginTop: "3%" }}>
+        {globalNickname} 님이 선택한{"\n"}감정의 날씨는
         <WeatherText>
           {selectedWeather ? selectedWeather.text : "정보 없음"}
         </WeatherText>
@@ -38,28 +90,33 @@ const EmotionResultScreen = ({ route, navigation: { navigate } }) => {
           <ContentsText style={{ color: colors.palette.Brown }}>
             보호자 님의 감정 분석 결과
           </ContentsText>
-          <ContentsText style={{ color: colors.palette.Blue }}>
-            긍정표현 70%
+          <ContentsText style={{ color: "#F09BB4" }}>
+            긍정표현 {analysisResult.document.confidence.positive.toFixed(1)}%
           </ContentsText>
-          <ContentsText style={{ color: colors.palette.Red }}>
-            부정표현 30%
+          <ContentsText style={{ color: "#F4C681" }}>
+            중립표현 {analysisResult.document.confidence.neutral.toFixed(1)}%
+          </ContentsText>
+          <ContentsText style={{ color: colors.palette.Blue }}>
+            부정표현 {analysisResult.document.confidence.negative.toFixed(1)}%
           </ContentsText>
           <ContentsText>입니다</ContentsText>
+          <GrayText>
+            오늘 사용자의 {percentageOfSentiment.toFixed(1)}%가 함께 느낀
+            감정이에요
+          </GrayText>
         </GrayBox>
       ) : (
         <YellowBox>
           <ShowResult
             onPress={() => {
               setIsVisible(true);
+              requestWrite(analysisResult.document.sentiment);
             }}
           />
         </YellowBox>
       )}
 
-      <ButtonBrown
-        text={"일기 저장하기"}
-        onPress={() => navigate("ReFinish")}
-      />
+      <ButtonBrown text={"다음으로"} onPress={() => navigate("ReFinish")} />
     </Container>
   );
 };
@@ -86,6 +143,13 @@ const WeatherText = styled.Text`
   color: ${colors.palette.Blue};
 `;
 
+const GrayText = styled.Text`
+  font-size: 16px;
+  text-align: center;
+  font-family: "Poppins-Regular";
+  color: ${colors.palette.Gray500};
+`;
+
 const Icon = styled.Image`
   width: 110px;
   height: 110px;
@@ -95,9 +159,9 @@ const Icon = styled.Image`
 
 const GrayBox = styled.View`
   background-color: ${colors.palette.Gray200};
-  width: 70%;
-  height: 26%;
-  margin: 5% 0% 12% 0%;
+  width: 80%;
+  height: 38%;
+  margin: 2% 0% 10% 0%;
   justify-content: center;
   align-items: center;
   border-radius: 10px;

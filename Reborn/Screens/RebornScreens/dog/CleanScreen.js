@@ -12,6 +12,9 @@ import { textStyles, ButtonBrownBottom } from "../../../components";
 import { TutorialModal } from "../../../components";
 import AppContext from "./AppContext";
 import { useFocusEffect } from "@react-navigation/native";
+import axios from "axios";
+
+import { useAccessToken } from "../../../context/AccessTokenContext";
 
 import dog_boxURL from "../../../Assets/Images/dog/dog_box.png";
 
@@ -23,6 +26,7 @@ import dog_snackURL from "../../../Assets/Images/dog/dog_snack.png";
 import dog_toyURL from "../../../Assets/Images/dog/dog_toy.png";
 
 const CleanScreen = ({ navigation: { navigate } }) => {
+  const { accessToken } = useAccessToken();
   const myContext = useContext(AppContext);
   const [isCleaned, setIsCleaned] = useState(0);
   const [isNextDayButtonVisible, setIsNextDayButtonVisible] = useState(false);
@@ -49,12 +53,12 @@ const CleanScreen = ({ navigation: { navigate } }) => {
     [-235, 165],
     [-235, -95],
     [-15, 55],
-    [-205, 15],
+    [-215, 15],
     [-135, 285],
   ];
 
   useEffect(() => {
-    console.log(isCleaned);
+    // console.log(isCleaned);
     if (isCleaned === 2) {
       setIsNextDayButtonVisible(true);
     }
@@ -74,6 +78,27 @@ const CleanScreen = ({ navigation: { navigate } }) => {
       setIsNextDayButtonVisible(false);
     }, [])
   );
+
+  // send data to Server
+  const requestPostClean = async () => {
+    try {
+      const response = await axios.post(
+        "http://reborn.persi0815.site:8080/reborn/remember/clean",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      console.log(response.data);
+      return response; //함수에서 서버 응답 반환
+    } catch (error) {
+      //console.error("ERROR", error);
+      console.log("Error Response Body:", error.response.data);
+      throw error; //에러를 다시 던져서 외부에서 처리할 수 있게 함
+    }
+  };
 
   return (
     <Container>
@@ -109,7 +134,6 @@ const CleanScreen = ({ navigation: { navigate } }) => {
             }}
             goalPositionArray={goalPositionArray[0]}
             isDraggable={isDraggable.bath}
-            isCleaned={isCleaned}
             setIsCleaned={setIsCleaned}
           />
         ) : (
@@ -127,7 +151,6 @@ const CleanScreen = ({ navigation: { navigate } }) => {
             }}
             goalPositionArray={goalPositionArray[1]}
             isDraggable={isDraggable.pad}
-            isCleaned={isCleaned}
             setIsCleaned={setIsCleaned}
           />
         ) : (
@@ -145,7 +168,6 @@ const CleanScreen = ({ navigation: { navigate } }) => {
             }}
             goalPositionArray={goalPositionArray[2]}
             isDraggable={isDraggable.bowl}
-            isCleaned={isCleaned}
             setIsCleaned={setIsCleaned}
           />
         ) : (
@@ -162,7 +184,6 @@ const CleanScreen = ({ navigation: { navigate } }) => {
             }}
             goalPositionArray={goalPositionArray[3]}
             isDraggable={isDraggable.snack}
-            isCleaned={isCleaned}
             setIsCleaned={setIsCleaned}
           />
         ) : (
@@ -180,7 +201,6 @@ const CleanScreen = ({ navigation: { navigate } }) => {
             }}
             goalPositionArray={goalPositionArray[4]}
             isDraggable={isDraggable.cushion}
-            isCleaned={isCleaned}
             setIsCleaned={setIsCleaned}
           />
         ) : (
@@ -199,7 +219,6 @@ const CleanScreen = ({ navigation: { navigate } }) => {
             }}
             goalPositionArray={goalPositionArray[5]}
             isDraggable={isDraggable.toy}
-            isCleaned={isCleaned}
             setIsCleaned={setIsCleaned}
           />
         ) : (
@@ -210,7 +229,7 @@ const CleanScreen = ({ navigation: { navigate } }) => {
             <ButtonBrownBottom
               text={"거실로 돌아가기"}
               onPress={() => {
-                navigate("ReFinish");
+                requestPostClean(), navigate("ReFinish");
               }}
             />
           </ButtonBox>
@@ -241,7 +260,6 @@ const DraggableImage = ({
   style,
   goalPositionArray,
   isDraggable,
-  isCleaned,
   setIsCleaned,
 }) => {
   // Values
@@ -300,7 +318,7 @@ const DraggableImage = ({
           dx < goalPositionArray[0] + 60 &&
           dy < goalPositionArray[1] + 60
         ) {
-          console.log("Cleaned Up!!!");
+          // console.log("Cleaned Up!!!");
           setIsCleaned((isCleaned) => isCleaned + 1);
           Animated.sequence([
             Animated.parallel([onDropScale, onDropOpacity]),

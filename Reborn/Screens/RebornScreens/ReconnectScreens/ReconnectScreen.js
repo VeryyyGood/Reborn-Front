@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -10,6 +10,7 @@ import {
   FlatList,
   Pressable,
 } from "react-native";
+import AppContext from "../../RebornScreens/dog/AppContext";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { colors } from "../../../theme";
 import { useAccessToken } from "../../../context/AccessTokenContext";
@@ -28,7 +29,7 @@ const RadioButton = ({ isSelected, onPress, label }) => {
 const checkWhite = require("../../../Assets/icons/check_white.png");
 const checkBlack = require("../../../Assets/icons/check_black.png");
 
-const ReconnectScreen = () => {
+const ReconnectScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
@@ -37,6 +38,7 @@ const ReconnectScreen = () => {
   const [color, setColor] = useState("");
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const navigation = useNavigation();
+  const myContext = useContext(AppContext);
 
   const colorsChoice = [
     colors.palette.Black,
@@ -95,7 +97,8 @@ const ReconnectScreen = () => {
       }
       console.log(data);
       alert("저장되었습니다!");
-      //navigation.navigate("day1으로 가야해");
+      navigate("RebornDogStack", { screen: "Intro" }); // go to Day1, start RE:BORN
+      myContext.resetDay(); // reset Day, start from 1
     } catch (error) {
       console.error(error);
       alert("저장 실패:" + error);

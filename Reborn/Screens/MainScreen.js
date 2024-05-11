@@ -136,15 +136,10 @@ const MainScreen = ({ navigation: { navigate } }) => {
           />
         </TouchableOpacity>
         <TouchableOpacity
+          style={styles.rebornButton}
           onPress={() =>
             navigate("ReconnectStack", { screen: "ReconnectProfile" })
           }
-        >
-          <Text>버튼</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.rebornButton}
-          onPress={() => navigate("RebornDogStack", { screen: "Intro" })}
         >
           <Text style={styles.boxtext}>
             <Text style={{ color: colors.palette.Brown }}>RE: {"\n"}</Text>
