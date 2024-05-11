@@ -65,7 +65,8 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
   };
 
   const handleConfirm = (date) => {
-    setDate(date.toISOString().split("T")[0]);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    setDate(date.toLocaleDateString("ko-KR", options));
     hideDatePicker();
   };
 
