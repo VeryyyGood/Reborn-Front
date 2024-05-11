@@ -87,8 +87,6 @@ const ReviewRemindScreen = ({ route }) => {
         });
 
         setMessages(updatedMessages);
-
-        console.log(updatedMessages);
       } catch (error) {
         console.error("오류 발생", error);
         console.log(`Fetching info for petId: ${petId}`);
@@ -122,7 +120,6 @@ export default ReviewRemindScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.palette.White,
   },
 
   textContainer: {
@@ -149,29 +146,6 @@ const styles = StyleSheet.create({
     color: colors.palette.Brown,
   },
 
-  overlayImage: {
-    position: "absolute",
-    bottom: "7.5%",
-  },
-
-  ImageText: {
-    position: "absolute",
-    textAlign: "center",
-    fontFamily: "Poppins-Bold",
-    fontSize: 18,
-    color: colors.palette.BrownDark,
-    marginBottom: "210%",
-  },
-
-  imageContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    position: "relative",
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
-  },
   contentContainer: {
     padding: 10,
   },
@@ -181,14 +155,26 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   leftBubble: {
-    backgroundColor: "#d1effd",
+    backgroundColor: "#FFFFFF",
     alignSelf: "flex-start",
+    marginBottom: 10,
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    maxWidth: "80%",
   },
   rightBubble: {
-    backgroundColor: "#bdecb6",
+    backgroundColor: "#E0EDC2",
     alignSelf: "flex-end",
+    marginBottom: 10,
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    maxWidth: "80%",
   },
   bubbleText: {
     fontSize: 16,
+    fontFamily: "Poppins-Regular",
+    color: colors.palette.BrownDark,
   },
 });
