@@ -11,7 +11,11 @@ import {
 export default function App() {
   const [contentsDay, setContentsDay] = useState(1);
 
-  const setDay = () => {
+  const setDay = (day) => {
+    setContentsDay(day);
+  };
+
+  const plusDay = () => {
     setContentsDay(contentsDay + 1);
   };
 
@@ -23,6 +27,7 @@ export default function App() {
     contentsDay: contentsDay,
     setDay,
     resetDay,
+    plusDay,
   };
 
   return (

@@ -7,12 +7,44 @@ import {
   CompleteButton,
   ButtonBrownBottom,
 } from "../../../components";
+import axios from "axios";
+
+import { useAccessToken } from "../../../context/AccessTokenContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_clothes.png";
 
 const LetterScreen = ({ navigation: { navigate } }) => {
+  const { accessToken } = useAccessToken();
   const [answer, onChangeAnswer] = React.useState("");
   const [qaVisible, setqaVisible] = useState(true); // Q&A Modal
+
+  // send data to Server
+  const requestWrite = async () => {
+    try {
+      const response = await fetch(
+        "http://reborn.persi0815.site:8080/reborn/reborn/write",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            answer: answer,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (!data) {
+        throw new Error("Something went wrong");
+      }
+      console.log(data);
+      alert("저장되었습니다!");
+    } catch (error) {
+      console.error(error);
+      alert("저장 실패:" + error);
+    }
+  };
 
   return (
     <Container>
@@ -51,7 +83,7 @@ const LetterScreen = ({ navigation: { navigate } }) => {
               <CompleteButton
                 text="작성완료"
                 onPress={() => {
-                  setqaVisible(false);
+                  requestWrite(), setqaVisible(false);
                 }}
               ></CompleteButton>
             </QAPopTextBox>

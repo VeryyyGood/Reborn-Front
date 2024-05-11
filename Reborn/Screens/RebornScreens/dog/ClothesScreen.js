@@ -9,12 +9,39 @@ import {
 import { colors } from "../../../theme";
 import { textStyles, ButtonBrownBottom } from "../../../components";
 import styled from "styled-components/native";
+import axios from "axios";
+
+import { useAccessToken } from "../../../context/AccessTokenContext";
+
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 import clothesimageURL from "../../../Assets/stuffs/clothes.png";
 import dogClothesimageURL from "../../../Assets/Images/dog/dog_clothes.png";
 
 const ClothesScreen = ({ navigation: { navigate } }) => {
+  const { accessToken } = useAccessToken();
   const [isClothes, setisClothes] = useState(false);
+
+  // send data to Server
+  const requestPostClothes = async () => {
+    try {
+      const response = await axios.post(
+        "http://reborn.persi0815.site:8080/reborn/reborn/clothe",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      console.log(response.data);
+      return response; //함수에서 서버 응답 반환
+    } catch (error) {
+      //console.error("ERROR", error);
+      console.log("Error Response Body:", error.response.data);
+      throw error; //에러를 다시 던져서 외부에서 처리할 수 있게 함
+    }
+  };
+
   return (
     <Container>
       <ImageBackground
@@ -42,7 +69,9 @@ const ClothesScreen = ({ navigation: { navigate } }) => {
         />
         <ButtonBrownBottom
           text="다음으로"
-          onPress={() => navigate("Letter")}
+          onPress={() => {
+            requestPostClothes(), navigate("Letter");
+          }}
         ></ButtonBrownBottom>
       </ImageBackground>
     </Container>

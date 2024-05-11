@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
 } from "react-native";
 
 import axios from "axios";
+import AppContext from "./RebornScreens/dog/AppContext";
 
 import { colors } from "../theme";
 import styled from "styled-components/native";
@@ -19,7 +20,9 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 
 const MainScreen = ({ navigation: { navigate } }) => {
+  const myContext = useContext(AppContext);
   const { accessToken } = useAccessToken();
+
   const [nickname, setNickname] = useState("");
   const { setGlobalNickname } = useGlobalNickname();
 
@@ -69,6 +72,80 @@ const MainScreen = ({ navigation: { navigate } }) => {
   );
 
   const { globalNickname } = useGlobalNickname();
+
+  // get RE:BORN progess
+  const fetchGoodbye = async () => {
+    try {
+      const response = await axios.get(
+        `http://reborn.persi0815.site/reborn/reconnect/goodbye`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      console.log(response.data);
+
+      if (response.data.result) {
+        if (response.data.result.rebornDate === 1) {
+          navigate("RebornDogStack", { screen: "Intro" });
+        }
+        myContext.setDay(response.data.result.rebornDate); // set Day
+
+        // handle navigation according to progress
+        switch (response.data.result.progressState) {
+          case "INTRO":
+            navigate("RebornDogStack", { screen: "ReIntro" });
+            break;
+          case "PAT":
+            navigate("RebornDogStack", { screen: "Pet" });
+            break;
+          case "FEED":
+            navigate("RebornDogStack", { screen: "Feed" });
+            break;
+          case "WALK":
+            navigate("RebornDogStack", { screen: "Walk" });
+            break;
+          case "SNACK":
+            navigate("RebornDogStack", { screen: "Snack" });
+            break;
+          case "FINISH":
+            navigate("RebornDogStack", { screen: "ReFinish" });
+            break;
+          case "DIARY":
+            navigate("RebornDogStack", { screen: "Diary" });
+            break;
+          case "EMOTION":
+            navigate("RebornDogStack", { screen: "Emotion" });
+            break;
+          case "IMAGE":
+            navigate("RebornDogStack", { screen: "Image" });
+            break;
+          case "CLEAN":
+            navigate("RebornDogStack", { screen: "Clean" });
+            break;
+          case "WASH":
+            navigate("RebornDogStack", { screen: "Wash" });
+            break;
+          case "CLOTHES":
+            navigate("RebornDogStack", { screen: "Clothes" });
+            break;
+          case "LETTER":
+            navigate("RebornDogStack", { screen: "Letter" });
+            break;
+          case "SETREBORN":
+            navigate("RebornDogStack", { screen: "SetReborn" });
+            break;
+          default:
+        }
+      } else {
+        navigate("ReconnectStack", { screen: "ReconnectProfile" });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <View style={styles.Container}>
       <Text style={styles.title}>
@@ -137,9 +214,7 @@ const MainScreen = ({ navigation: { navigate } }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.rebornButton}
-          onPress={() =>
-            navigate("ReconnectStack", { screen: "ReconnectProfile" })
-          }
+          onPress={() => fetchGoodbye()}
         >
           <Text style={styles.boxtext}>
             <Text style={{ color: colors.palette.Brown }}>RE: {"\n"}</Text>

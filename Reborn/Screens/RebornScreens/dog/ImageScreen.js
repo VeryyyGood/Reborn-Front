@@ -18,10 +18,10 @@ const ImageScreen = ({ navigation: { navigate } }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [date, setDate] = useState("");
   const [title, onChangeTitle] = React.useState("");
-  const [contents, onChangeContents] = React.useState("");
+  const [contents, onChangeContents] = React.useState(""); // contents
 
-  const [response, setResponse] = useState(""); // contents
   const [imageFile, setImageFile] = useState(""); // image
+  const [uploadedImage, setUploadedImage] = useState("");
 
   // For picking date
   const showDatePicker = () => {
@@ -51,10 +51,10 @@ const ImageScreen = ({ navigation: { navigate } }) => {
         } else if (response.errorCode) {
           console.log("Image Error : " + response.errorCode);
         }
-
-        setResponse(response);
         setIsImageUploaded(true); // image upload success
-        setImageFile(response.assets[0].base64); // store image
+        const source = { uri: response.assets[0].uri };
+        setImageFile(source); // store image
+        setUploadedImage(response.assets[0].base64);
       }
     );
   };
@@ -63,21 +63,23 @@ const ImageScreen = ({ navigation: { navigate } }) => {
   const requestWrite = async () => {
     const formData = new FormData();
     const jsonData = JSON.stringify({
-      boardType: value,
-      boardContent: boardContent,
+      title: title,
+      content: contents,
+      imageDate: date,
     });
     formData.append("data", jsonData);
 
+    console.log(imageFile.uri);
     if (imageFile && imageFile.uri) {
-      formData.append("board", {
+      formData.append("remember", {
         uri: imageFile.uri,
         type: "image/jpeg",
-        name: "board.jpg",
+        name: "remember.jpg",
       });
     }
     try {
       const response = await fetch(
-        "http://reborn.persi0815.site/board/create",
+        "http://reborn.persi0815.site/reborn/remember/write",
         {
           method: "POST",
           headers: {
@@ -88,11 +90,6 @@ const ImageScreen = ({ navigation: { navigate } }) => {
       );
       const jsonResponse = await response.json();
       console.log("Post response:", jsonResponse);
-
-      setValue(null); // 드롭다운 선택값 초기화
-      setBoardContent(""); // 게시판 글 내용 초기화
-      setPostImage(null); // 드롭다운 선택값 초기화
-      navigation.goBack();
     } catch (error) {
       console.error("Post content error:", error);
     }
@@ -132,7 +129,7 @@ const ImageScreen = ({ navigation: { navigate } }) => {
         </KeyboardAvoidingView>
         <ImagePicker
           onPress={Gallery}
-          source={isImageUploaded ? imageFile : imagePickerImage}
+          source={isImageUploaded ? uploadedImage : imagePickerImage}
           isImageUploaded={isImageUploaded}
         ></ImagePicker>
         <TextContainer>
@@ -146,7 +143,12 @@ const ImageScreen = ({ navigation: { navigate } }) => {
             value={contents}
           ></ContentsText>
         </TextContainer>
-        <CompleteButton text="저장하기" onPress={() => navigate("Clean")} />
+        <CompleteButton
+          text="저장하기"
+          onPress={() => {
+            requestWrite(), navigate("Clean");
+          }}
+        />
       </ImageBackground>
     </Container>
   );

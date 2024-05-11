@@ -70,7 +70,7 @@ const ReFinishScreen = ({ navigation: { navigate } }) => {
         <ButtonBrownBottom
           text={"다음날로 넘어가기"}
           onPress={() => {
-            requestPostPat(), myContext.setDay(), navigate("ReIntro");
+            requestPostPat(), myContext.plusDay(), navigate("ReIntro");
           }}
         />
       </ImageBackground>
