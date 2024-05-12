@@ -74,7 +74,7 @@ const ReviewRemindScreen = ({ route }) => {
           }
         );
         const result = response.data.result;
-        console.log(response.data);
+        //console.log(response.data);
 
         const updatedMessages = initialMessages.map((msg) => {
           if (msg.id % 2 === 0) {
