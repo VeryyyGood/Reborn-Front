@@ -1,25 +1,44 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Button,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList,
-} from "react-native";
-
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import { colors } from "../../../theme";
-import { ViewStyles, buttonStyles } from "../../../components";
+import { useAccessToken } from "../../../context/AccessTokenContext";
+import axios from "axios";
+import RevealDiaryItem from "../../../components/RevealDiaryItem";
 
-import ReDiaryItem from "../../../components/ReDiaryItem";
+const ReviewRevealScreen = ({ route, navigation }) => {
+  const { petId } = route.params;
+  const { accessToken } = useAccessToken();
+  const [revealData, setRevealData] = useState([]);
 
-const ReviewRevealScreen = ({ navigation: { navigate } }) => {
-  const [rediaryData, setrediaryData] = useState([
-    { id: "1", date: "2024-03-29.FRI", day: "첫번째", type: "sun" },
-    { id: "2", date: "2024-03-30.SAT", day: "두번째", type: "cloud" },
-    { id: "3", date: "2024-03-31.SUN", day: "세번째", type: "rain" },
-    { id: "4", date: "2024-03-32.MON", day: "네번째", type: "cloud" },
-  ]);
+  useEffect(() => {
+    const fetchReveal = async () => {
+      try {
+        const response = await axios.get(
+          `http://reborn.persi0815.site:8080/mypage/reveal/${petId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        if (response.data && response.data.result) {
+          //console.log(response.data);
+          const mappedData = response.data.result.map((item) => ({
+            date: item.date,
+            diaryContent: item.diaryContent,
+            pickEmotion: item.pickEmotion,
+            resultEmotion: item.resultEmotion,
+          }));
+          setRevealData(mappedData);
+        }
+      } catch (error) {
+        console.error("오류 발생", error);
+        console.log(`Fetching info for petId: ${petId}`);
+      }
+    };
+
+    fetchReveal();
+  }, [petId]);
 
   return (
     <View style={styles.container}>
@@ -31,11 +50,17 @@ const ReviewRevealScreen = ({ navigation: { navigate } }) => {
       </View>
       <View style={{ paddingHorizontal: 20, flex: 1 }}>
         <FlatList
-          data={rediaryData}
+          data={revealData}
           renderItem={({ item }) => (
-            <ReDiaryItem date={item.date} day={item.day} type={item.type} />
+            <RevealDiaryItem
+              date={item.date}
+              diaryContent={item.diaryContent}
+              pickEmotion={item.pickEmotion}
+              resultEmotion={item.resultEmotion}
+              navigation={navigation}
+            />
           )}
-          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     </View>
