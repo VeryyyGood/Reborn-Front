@@ -13,7 +13,10 @@ import {
 import AppContext from "../../RebornScreens/dog/AppContext";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { colors } from "../../../theme";
-import { useAccessToken } from "../../../context/AccessTokenContext";
+import {
+  useAccessToken,
+  useGlobalPetName,
+} from "../../../context/AccessTokenContext";
 
 const RadioButton = ({ isSelected, onPress, label }) => {
   return (
@@ -31,6 +34,8 @@ const checkBlack = require("../../../Assets/icons/check_black.png");
 
 const ReconnectScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
+  const { globalPetName, setGlobalPetName } = useGlobalPetName();
+
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [breed, setBreed] = useState("");
@@ -72,6 +77,7 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
 
   const handleSubmit = async () => {
     try {
+      setGlobalPetName(name);
       const petType = animalType === "강아지" ? "DOG" : "CAT";
       let colorName = colorNameMap[color] || "";
 

@@ -9,12 +9,16 @@ import {
 } from "../../../components";
 import axios from "axios";
 
-import { useAccessToken } from "../../../context/AccessTokenContext";
+import {
+  useAccessToken,
+  useGlobalPetName,
+} from "../../../context/AccessTokenContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_clothes.png";
 
 const LetterScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
+  const { globalPetName } = useGlobalPetName();
   const [answer, onChangeAnswer] = React.useState("");
   const [qaVisible, setqaVisible] = useState(true); // Q&A Modal
 
@@ -70,7 +74,9 @@ const LetterScreen = ({ navigation: { navigate } }) => {
                   marginBottom: "5%",
                 }}
               >
-                {`마지막으로 OO이에게 전해주고\n싶은 말을 작성해주세요.`}
+                {`마지막으로 ` +
+                  globalPetName +
+                  `(이)에게 전해주고\n싶은 말을 작성해주세요.`}
               </Text>
               <TextInputContainer>
                 <TextInput
