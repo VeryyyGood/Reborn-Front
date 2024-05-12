@@ -76,7 +76,7 @@ const FeedScreen = ({ navigation: { navigate } }) => {
           setisFeed={setisFeed}
         />
         <ButtonBrownBottom
-          text="산책하러 가기"
+          text={myContext.contentsDay === 15 ? "다음으로" : "산책하러 가기"}
           onPress={() => {
             requestPostProgress(handleLink(myContext.contentsDay), accessToken),
               navigate(isEnd);

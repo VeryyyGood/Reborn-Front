@@ -10,6 +10,7 @@ import {
 import {
   useAccessToken,
   useGlobalNickname,
+  useGlobalPetName,
 } from "../../../context/AccessTokenContext";
 import { requestPostProgress } from "../../../utiles"; // send data to Server
 import axios from "axios";
@@ -22,6 +23,7 @@ import letterPaperimageURL from "../../../Assets/stuffs/letterPaper.png";
 const SetRebornScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
   const { globalNickname } = useGlobalNickname();
+  const { globalPetName } = useGlobalPetName();
 
   const [modalVisible, setmodalVisible] = useState(true); // Reborn Modal
   const [letterVisible, setletterVisible] = useState(false); // Letter Modal
@@ -132,7 +134,7 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
                   textShadowRadius: 10,
                 }}
               >
-                To. 내가 사랑하는 {globalNickname}
+                To. 내가 사랑하는 {globalPetName}
               </LetterText>
               <LetterText
                 style={{
