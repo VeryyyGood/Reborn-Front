@@ -10,6 +10,7 @@ import styled from "styled-components/native";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 import bgimageURL from "./../../../Assets/Images/bg/bg_park.png";
 import { Pedometer } from "expo-sensors";
+import axios from "axios";
 
 const WalkScreen = ({ navigation: { navigate } }) => {
   const ModalText = `휴대전화를 들고 걸어보세요.\n반려동물과 같이 산책했던 곳을 걸어보아도 좋고,\n여건이 안 된다면 집 안에서 움직여도 좋습니다.\n\n만보기의 숫자가 3000이 되면 다음 단계로 넘어갑니다.`;

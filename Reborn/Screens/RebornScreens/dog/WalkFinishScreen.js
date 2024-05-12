@@ -3,10 +3,10 @@ import styled from "styled-components/native";
 import { Text, ImageBackground } from "react-native";
 import { colors } from "../../../theme";
 import { ButtonBrownBottom, textStyles } from "../../../components";
-import AppContext from "./AppContext";
-import axios from "axios";
-
+import { requestPostProgress } from "../../../utiles"; // send data to Server
 import { useAccessToken } from "../../../context/AccessTokenContext";
+
+import AppContext from "./AppContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 
@@ -14,6 +14,7 @@ const WalkFinishScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
   const myContext = useContext(AppContext);
 
+  // Server Link for sending data
   const linkArray = [
     "http://reborn.persi0815.site/reborn/remind/walk",
     "http://reborn.persi0815.site/reborn/reveal/walk",
@@ -30,26 +31,6 @@ const WalkFinishScreen = ({ navigation: { navigate } }) => {
     return linkArray[2];
   };
 
-  const requestPostWalk = async () => {
-    try {
-      const response = await axios.post(
-        handleLink(myContext.contentsDay),
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log(response.data);
-      return response; //함수에서 서버 응답 반환
-    } catch (error) {
-      //console.error("ERROR", error);
-      console.log("Error Response Body:", error.response.data);
-      throw error; //에러를 다시 던져서 외부에서 처리할 수 있게 함
-    }
-  };
-
   return (
     <Container>
       <ImageBackground
@@ -64,7 +45,8 @@ const WalkFinishScreen = ({ navigation: { navigate } }) => {
         <ButtonBrownBottom
           text="간식주러 가기"
           onPress={() => {
-            requestPostWalk(), navigate("Snack");
+            requestPostProgress(handleLink(myContext.contentsDay), accessToken),
+              navigate("Snack");
           }}
         />
       </ImageBackground>

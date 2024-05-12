@@ -11,6 +11,7 @@ import {
   useAccessToken,
   useGlobalNickname,
 } from "../../../context/AccessTokenContext";
+import { requestPostProgress } from "../../../utiles"; // send data to Server
 import axios from "axios";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_clothes.png";
@@ -160,18 +161,23 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
             />
           </CenteredView>
         </Modal>
-        {modalVisible ? (
-          ""
-        ) : (
-          <RebornImage
-            source={isBlack ? ribbon_blackimageURL : ribbon_yellowimageURL}
-            resizeMode="center"
-          />
-        )}
+
+        <RebornImage
+          source={isBlack ? ribbon_blackimageURL : ribbon_yellowimageURL}
+          resizeMode="center"
+        />
         <ButtonBrownBottom
-          text={isEnd ? "작별하기" : "편지열람하기"}
+          text={isEnd ? "작별하기" : "편지 열람하기"}
           onPress={() => {
-            isEnd ? navigate("Main") : setletterVisible(true);
+            if (isEnd) {
+              requestPostProgress(
+                "http://reborn.persi0815.site/reborn/reborn/finish",
+                accessToken
+              );
+              navigate("Main");
+            } else {
+              setletterVisible(true);
+            }
           }}
         />
       </ImageBackground>
@@ -196,11 +202,11 @@ const RebornImage = styled.Image`
   width: 15%;
   height: 15%;
   position: absolute;
-  margin: 85% 0% 0% 38%;
+  margin: 84% 0% 0% 39%;
 `;
 
 const BlackContainer = styled.View`
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.2);
   width: 100%;
   height: 100%;
   justify-content: center;
@@ -240,7 +246,7 @@ const QAPopTextBox = styled.View`
   width: 80%;
   height: 50%;
   border-radius: 20px;
-  margin: 12% 20% 0% 20%;
+  margin: -50% 20% 0% 20%;
   padding: 10px;
 `;
 

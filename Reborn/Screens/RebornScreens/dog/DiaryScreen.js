@@ -7,7 +7,10 @@ import {
   CompleteButton,
   ButtonBrownBottom,
 } from "../../../components";
+import { useFocusEffect } from "@react-navigation/native";
+
 import AppContext from "./AppContext";
+import axios from "axios";
 
 import { useAccessToken } from "../../../context/AccessTokenContext";
 
@@ -36,6 +39,15 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
     `반려동물이 나에게 어떤 의미였는지 기록해보세요`,
   ];
 
+  // refresh
+  useFocusEffect(
+    React.useCallback(() => {
+      onChangeAnswer("");
+      setqaVisible(true);
+    }, [])
+  );
+
+  // send data to Server
   const requestWrite = async () => {
     try {
       const response = await fetch(
@@ -95,6 +107,7 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
                   onChangeText={onChangeAnswer}
                   value={answer}
                   placeholder={hintArray[myContext.contentsDay - 2]}
+                  multiline={true}
                 ></TextInput>
               </TextInputContainer>
               <CompleteButton
