@@ -26,7 +26,7 @@ const MainScreen = ({ navigation: { navigate } }) => {
 
   const [nickname, setNickname] = useState("");
   const { setGlobalNickname } = useGlobalNickname();
-  const { globalPetName, setGlobalPetName } = useGlobalPetName();
+  const { setGlobalPetName } = useGlobalPetName();
 
   const [profileImage, setProfileImage] = useState(
     require("../Assets/icons/profile.png")
@@ -74,25 +74,7 @@ const MainScreen = ({ navigation: { navigate } }) => {
   );
 
   const { globalNickname } = useGlobalNickname();
-
-  /* const getPetName = async () => {
-    try {
-      const petNameResponse = await axios.get(
-        `http://reborn.persi0815.site/pet/name`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      if (petNameResponse.data.result.petName) {
-        //console.log(petNameResponse.data.result.petName);
-        setGlobalPetName(petNameResponse.data.result.petName);
-      }
-    } catch (error) {
-      console.error("Profile image fetch error:", error);
-    }
-  }; */
+  const { globalPetName } = useGlobalPetName();
 
   // get RE:BORN progess
   const fetchGoodbye = async () => {
@@ -111,7 +93,10 @@ const MainScreen = ({ navigation: { navigate } }) => {
         if (response.data.result.rebornDate === 1) {
           navigate("RebornDogStack", { screen: "Intro" });
         }
+
+        // Contents is already progressed
         myContext.setDay(response.data.result.rebornDate); // set Day
+        setGlobalPetName(response.data.result.petName);
 
         // handle navigation according to progress
         switch (response.data.result.progressState) {
