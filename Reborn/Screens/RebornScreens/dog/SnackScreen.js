@@ -8,11 +8,11 @@ import {
 } from "react-native";
 import { colors } from "../../../theme";
 import { textStyles, ButtonBrownBottom } from "../../../components";
-import styled from "styled-components/native";
-import AppContext from "./AppContext";
-import axios from "axios";
-
+import { requestPostProgress } from "../../../utiles"; // send data to Server
 import { useAccessToken } from "../../../context/AccessTokenContext";
+import styled from "styled-components/native";
+
+import AppContext from "./AppContext";
 
 import snackimageURL from "../../../Assets/Images/dog/dog_snack.png";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
@@ -44,6 +44,7 @@ const SnackScreen = ({ navigation: { navigate } }) => {
     return destinationMap[day];
   };
 
+  // Server Link for sending data
   const linkArray = [
     "http://reborn.persi0815.site/reborn/remind/snack",
     "http://reborn.persi0815.site/reborn/reveal/snack",
@@ -58,26 +59,6 @@ const SnackScreen = ({ navigation: { navigate } }) => {
       return linkArray[1];
     }
     return linkArray[2];
-  };
-
-  const requestPostSnack = async () => {
-    try {
-      const response = await axios.post(
-        handleLink(myContext.contentsDay),
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log(response.data);
-      return response; //함수에서 서버 응답 반환
-    } catch (error) {
-      //console.error("ERROR", error);
-      console.log("Error Response Body:", error.response.data);
-      throw error; //에러를 다시 던져서 외부에서 처리할 수 있게 함
-    }
   };
 
   return (
@@ -111,7 +92,7 @@ const SnackScreen = ({ navigation: { navigate } }) => {
           text="거실로 돌아가기"
           onPress={() => {
             const screen = getDestination(myContext.contentsDay);
-            requestPostSnack();
+            requestPostProgress(handleLink(myContext.contentsDay), accessToken);
             navigate(screen);
           }}
         ></ButtonBrownBottom>
@@ -165,7 +146,7 @@ const DraggableImage = ({ source, style, isFeed, setisFeed }) => {
         onPressIn.start();
       },
       onPanResponderRelease: (_, { dx, dy }) => {
-        if (dx > -70 && dy > 260 && dx < -40 && dy < 300) {
+        if (dx > -80 && dy > 250 && dx < -30 && dy < 310) {
           setisFeed(!isFeed);
           Animated.sequence([
             Animated.parallel([onDropScale, onDropOpacity]),

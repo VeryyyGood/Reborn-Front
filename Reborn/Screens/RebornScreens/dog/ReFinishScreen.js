@@ -3,8 +3,8 @@ import { Text, ImageBackground } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../../../theme";
 import { textStyles, ButtonBrownBottom } from "../../../components";
+import { requestPostProgress } from "../../../utiles"; // send data to Server
 import AppContext from "./AppContext";
-import axios from "axios";
 
 import { useAccessToken } from "../../../context/AccessTokenContext";
 
@@ -33,26 +33,6 @@ const ReFinishScreen = ({ navigation: { navigate } }) => {
     return linkArray[3];
   };
 
-  const requestPostPat = async () => {
-    try {
-      const response = await axios.post(
-        handleLink(myContext.contentsDay),
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log(response.data);
-      return response; //함수에서 서버 응답 반환
-    } catch (error) {
-      //console.error("ERROR", error);
-      console.log("Error Response Body:", error.response.data);
-      throw error; //에러를 다시 던져서 외부에서 처리할 수 있게 함
-    }
-  };
-
   return (
     <Container>
       <ImageBackground
@@ -70,7 +50,9 @@ const ReFinishScreen = ({ navigation: { navigate } }) => {
         <ButtonBrownBottom
           text={"다음날로 넘어가기"}
           onPress={() => {
-            requestPostPat(), myContext.plusDay(), navigate("ReIntro");
+            requestPostProgress(handleLink(myContext.contentsDay), accessToken),
+              myContext.plusDay(),
+              navigate("ReIntro");
           }}
         />
       </ImageBackground>

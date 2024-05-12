@@ -1,24 +1,45 @@
-import React, { useRef, useContext } from "react";
-import { Text, ImageBackground, Animated, PanResponder } from "react-native";
+import React, { useState, useRef, useContext } from "react";
+import {
+  Text,
+  ImageBackground,
+  Animated,
+  PanResponder,
+  Easing,
+} from "react-native";
 import { colors } from "../../../theme";
 import { ButtonBrownBottom, textStyles } from "../../../components";
+import { requestPostProgress } from "../../../utiles"; // send data to Server
 import styled from "styled-components/native";
-import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
-import handimageURL from "../../../Assets/stuffs/hand.png";
+import { useFocusEffect } from "@react-navigation/native";
+
 import AppContext from "./AppContext";
-import axios from "axios";
+
+import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
+import dog_petOneimageURL from "../../../Assets/Images/dog/dog_hand1.png";
+import handimageURL from "../../../Assets/stuffs/hand.png";
 
 import { useAccessToken } from "../../../context/AccessTokenContext";
 
 const PetScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
   const myContext = useContext(AppContext);
+
+  const [isPet, setIsPet] = useState(false);
+
+  // Server Link for sending data
   const linkArray = [
     "http://reborn.persi0815.site/reborn/remind/pat",
     "http://reborn.persi0815.site/reborn/reveal/pat",
     "http://reborn.persi0815.site/reborn/remember/pat",
     "http://reborn.persi0815.site/reborn/reborn/pat",
   ];
+
+  // refresh
+  useFocusEffect(
+    React.useCallback(() => {
+      setIsPet(false);
+    }, [])
+  );
 
   // RE:MIND & RE:VEAL & RE:MEMBER& RE:BORN what day? => Post Link
   const handleLink = (day) => {
@@ -32,26 +53,6 @@ const PetScreen = ({ navigation: { navigate } }) => {
     return linkArray[3];
   };
 
-  const requestPostPat = async () => {
-    try {
-      const response = await axios.post(
-        handleLink(myContext.contentsDay),
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log(response.data);
-      return response; //함수에서 서버 응답 반환
-    } catch (error) {
-      //console.error("ERROR", error);
-      console.log("Error Response Body:", error.response.data);
-      throw error; //에러를 다시 던져서 외부에서 처리할 수 있게 함
-    }
-  };
-
   return (
     <Container>
       <ImageBackground
@@ -62,7 +63,10 @@ const PetScreen = ({ navigation: { navigate } }) => {
           충분한 대화 나누기 :{" "}
           <Text style={{ color: colors.palette.Red }}>쓰다듬기</Text>
         </Text>
-        <DogImage source={dogimageURL} resizeMode="center" />
+        <DogImage
+          source={isPet ? dog_petOneimageURL : dogimageURL}
+          resizeMode="center"
+        />
         <DraggableImage
           source={handimageURL}
           style={{
@@ -71,11 +75,14 @@ const PetScreen = ({ navigation: { navigate } }) => {
             position: "absolute",
             marginLeft: "50%",
           }}
+          isPet={isPet}
+          setIsPet={setIsPet}
         />
         <ButtonBrownBottom
           text="밥주러 가기"
           onPress={() => {
-            requestPostPat(), navigate("Feed");
+            requestPostProgress(handleLink(myContext.contentsDay), accessToken),
+              navigate("Feed");
           }}
         />
       </ImageBackground>
@@ -85,46 +92,60 @@ const PetScreen = ({ navigation: { navigate } }) => {
 
 export default PetScreen;
 
-const DraggableImage = ({ source, style }) => {
-  // Animated Values
+const DraggableImage = ({ source, style, isPet, setIsPet }) => {
+  // Values
+  const opacity = useRef(new Animated.Value(1)).current;
   const scale = useRef(new Animated.Value(1)).current;
-  const position = useRef(new Animated.ValueXY()).current;
+  const position = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
 
   // Animations
-  const onPressInAnimation = Animated.spring(scale, {
+  const onPressIn = Animated.spring(scale, {
     toValue: 0.9,
     useNativeDriver: true,
   });
-
-  const onPressOutAnimation = Animated.spring(scale, {
+  const onPressOut = Animated.spring(scale, {
     toValue: 1,
     useNativeDriver: true,
   });
-
-  const goHomeAnimation = Animated.spring(position, {
-    toValue: { x: 0, y: 0 },
+  const goHome = Animated.spring(position, {
+    toValue: 0,
     useNativeDriver: true,
   });
-
-  // PanResponder
+  const onDropScale = Animated.timing(scale, {
+    toValue: 0,
+    duration: 50,
+    easing: Easing.linear,
+    useNativeDriver: true,
+  });
+  const onDropOpacity = Animated.timing(opacity, {
+    toValue: 0,
+    duration: 50,
+    easing: Easing.linear,
+    useNativeDriver: true,
+  });
+  // Pan Responders
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
-      onPanResponderMove: Animated.event(
-        [
-          null,
-          {
-            dx: position.x,
-            dy: position.y,
-          },
-        ],
-        { useNativeDriver: false }
-      ), // Update position based on movement
+      onPanResponderMove: (_, { dx, dy }) => {
+        if (dx > -120 && dy > 180 && dx < 25 && dy < 400) {
+          setIsPet(true);
+          //Animated.sequence([Animated.parallel([onDropScale])]).start();
+        } else {
+          setIsPet(false);
+          Animated.parallel([onPressOut, goHome]).start();
+        }
+        // console.log({ dx, dy });
+        position.setValue({ x: dx, y: dy });
+      },
       onPanResponderGrant: () => {
-        onPressInAnimation.start();
+        onPressIn.start();
       },
       onPanResponderRelease: () => {
-        Animated.parallel([onPressOutAnimation, goHomeAnimation]).start();
+        onPressOut.start(() => {
+          setIsPet(false);
+          goHome.start();
+        });
       },
     })
   ).current;

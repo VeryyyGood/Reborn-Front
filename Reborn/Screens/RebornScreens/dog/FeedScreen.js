@@ -8,22 +8,25 @@ import {
 } from "react-native";
 import { colors } from "../../../theme";
 import { textStyles, ButtonBrownBottom } from "../../../components";
+import { requestPostProgress } from "../../../utiles"; // send data to Server
+import { useAccessToken } from "../../../context/AccessTokenContext";
 import styled from "styled-components/native";
+
+import AppContext from "./AppContext";
+
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 import bowlNoimageURL from "../../../Assets/Images/dog/dog_bowl_no.png";
 import feedimageURL from "../../../Assets/stuffs/feed.png";
 import bowlimageURL from "../../../Assets/Images/dog/dog_bowl.png";
-import AppContext from "./AppContext";
-import axios from "axios";
-
-import { useAccessToken } from "../../../context/AccessTokenContext";
 
 const FeedScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
   const myContext = useContext(AppContext);
+
   const [isFeed, setisFeed] = useState(false);
   const [isEnd, setIsEnd] = useState("Walk");
 
+  // Server Link for sending data
   const linkArray = [
     "http://reborn.persi0815.site/reborn/remind/feed",
     "http://reborn.persi0815.site/reborn/reveal/feed",
@@ -41,26 +44,6 @@ const FeedScreen = ({ navigation: { navigate } }) => {
       return linkArray[2];
     }
     return linkArray[3];
-  };
-
-  const requestPostFeed = async () => {
-    try {
-      const response = await axios.post(
-        handleLink(myContext.contentsDay),
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log(response.data);
-      return response; //함수에서 서버 응답 반환
-    } catch (error) {
-      //console.error("ERROR", error);
-      console.log("Error Response Body:", error.response.data);
-      throw error; //에러를 다시 던져서 외부에서 처리할 수 있게 함
-    }
   };
 
   useEffect(() => {
@@ -95,7 +78,8 @@ const FeedScreen = ({ navigation: { navigate } }) => {
         <ButtonBrownBottom
           text="산책하러 가기"
           onPress={() => {
-            requestPostFeed(), navigate(isEnd);
+            requestPostProgress(handleLink(myContext.contentsDay), accessToken),
+              navigate(isEnd);
           }}
         ></ButtonBrownBottom>
         <BowlImage source={isFeed ? bowlimageURL : bowlNoimageURL}></BowlImage>
@@ -149,7 +133,7 @@ const DraggableImage = ({ source, style, isFeed, setisFeed }) => {
         onPressIn.start();
       },
       onPanResponderRelease: (_, { dx, dy }) => {
-        if (dx > -240 && dy > 270 && dx < -175 && dy < 350) {
+        if (dx > -250 && dy > 260 && dx < -165 && dy < 360) {
           setisFeed(!isFeed);
           Animated.sequence([
             Animated.parallel([onDropScale, onDropOpacity]),

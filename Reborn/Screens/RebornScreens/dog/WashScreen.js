@@ -9,8 +9,7 @@ import {
 import styled from "styled-components/native";
 import { colors } from "../../../theme";
 import { textStyles, ButtonBrownBottom } from "../../../components";
-import axios from "axios";
-
+import { requestPostProgress } from "../../../utiles"; // send data to Server
 import { useAccessToken } from "../../../context/AccessTokenContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
@@ -21,27 +20,6 @@ const WashScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
 
   const [isWashed, setIsWashed] = useState(false);
-
-  // send data to Server
-  const requestPostWash = async () => {
-    try {
-      const response = await axios.post(
-        "http://reborn.persi0815.site:8080/reborn/reborn/wash",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log(response.data);
-      return response; //함수에서 서버 응답 반환
-    } catch (error) {
-      //console.error("ERROR", error);
-      console.log("Error Response Body:", error.response.data);
-      throw error; //에러를 다시 던져서 외부에서 처리할 수 있게 함
-    }
-  };
 
   return (
     <Container>
@@ -71,7 +49,11 @@ const WashScreen = ({ navigation: { navigate } }) => {
         <ButtonBrownBottom
           text={"다음으로"}
           onPress={() => {
-            requestPostWash(), navigate("Clothes");
+            requestPostProgress(
+              "http://reborn.persi0815.site:8080/reborn/reborn/wash",
+              accessToken
+            ),
+              navigate("Clothes");
           }}
         />
       </ImageBackground>

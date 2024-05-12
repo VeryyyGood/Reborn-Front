@@ -70,13 +70,12 @@ const MainScreen = ({ navigation: { navigate } }) => {
         }
       };
       getNicknameProfileImage();
-      getPetName();
     }, [])
   );
 
   const { globalNickname } = useGlobalNickname();
 
-  const getPetName = async () => {
+  /* const getPetName = async () => {
     try {
       const petNameResponse = await axios.get(
         `http://reborn.persi0815.site/pet/name`,
@@ -93,7 +92,7 @@ const MainScreen = ({ navigation: { navigate } }) => {
     } catch (error) {
       console.error("Profile image fetch error:", error);
     }
-  };
+  }; */
 
   // get RE:BORN progess
   const fetchGoodbye = async () => {
@@ -237,7 +236,7 @@ const MainScreen = ({ navigation: { navigate } }) => {
         <TouchableOpacity
           style={styles.rebornButton}
           onPress={() => {
-            fetchGoodbye()
+            fetchGoodbye();
           }}
         >
           <Text style={styles.boxtext}>

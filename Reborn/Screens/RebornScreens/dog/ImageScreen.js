@@ -5,6 +5,7 @@ import { GrayLine, CompleteButton } from "../../../components";
 import { ImageBackground, KeyboardAvoidingView, Platform } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { launchImageLibrary } from "react-native-image-picker";
+import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
 
 import { useAccessToken } from "../../../context/AccessTokenContext";
@@ -22,6 +23,18 @@ const ImageScreen = ({ navigation: { navigate } }) => {
 
   const [imageFile, setImageFile] = useState(""); // image
   const [uploadedImage, setUploadedImage] = useState("");
+
+  // refresh
+  useFocusEffect(
+    React.useCallback(() => {
+      setIsImageUploaded(false);
+      setDate("");
+      onChangeTitle("");
+      onChangeContents("");
+      setImageFile("");
+      setUploadedImage("");
+    }, [])
+  );
 
   // For picking date
   const showDatePicker = () => {

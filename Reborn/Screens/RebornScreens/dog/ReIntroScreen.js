@@ -4,6 +4,7 @@ import styled from "styled-components/native";
 import { colors } from "../../../theme";
 import { textStyles, ButtonBrownBottom } from "../../../components";
 import { TutorialModal } from "../../../components/modalStyles";
+import { useFocusEffect } from "@react-navigation/native";
 import AppContext from "./AppContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
@@ -37,6 +38,14 @@ const ReIntroScreen = ({ navigation: { navigate } }) => {
     `MEMBER: 건강한 작별 준비하기`,
     `BORN: 나의 반려동물과 작별하기`,
   ];
+
+  // refresh
+  useFocusEffect(
+    React.useCallback(() => {
+      setModalVisible(false);
+      setDayModalVisible(true);
+    }, [])
+  );
 
   // RE:MIND & RE:VEAL & RE:MEMBER what day? => modal text
   const getDayValue = (day) => {
@@ -77,12 +86,6 @@ const ReIntroScreen = ({ navigation: { navigate } }) => {
           {titleArray[getDayValue(myContext.contentsDay)]}
         </Text>
         <DogImage source={dogimageURL} resizeMode="center" />
-        <ButtonBrownBottom
-          text={"쓰다듬으러 가기"}
-          onPress={() => {
-            navigate("Pet");
-          }}
-        />
         {daymodalVisible ? (
           <TutorialModal
             text={"Day" + myContext.contentsDay}
@@ -107,6 +110,12 @@ const ReIntroScreen = ({ navigation: { navigate } }) => {
         ) : (
           ""
         )}
+        <ButtonBrownBottom
+          text={"쓰다듬으러 가기"}
+          onPress={() => {
+            navigate("Pet");
+          }}
+        />
       </ImageBackground>
     </Container>
   );
