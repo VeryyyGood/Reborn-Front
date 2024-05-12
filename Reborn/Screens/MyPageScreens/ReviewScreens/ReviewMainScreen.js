@@ -145,6 +145,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     backgroundColor: colors.palette.White,
+    flex: 1,
   },
 
   imageTextContainer: {
