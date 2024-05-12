@@ -44,11 +44,11 @@ const PetProfileManagementScreen = ({ route }) => {
   const navigation = useNavigation();
 
   const colorMap = {
-    WHITE: colors.palette.White,
     BLACK: colors.palette.Black,
     BROWN: colors.palette.BrownChoco,
     YELLOWDARK: colors.palette.YellowDark,
     GRAY: colors.palette.Gray500,
+    WHITE: colors.palette.White,
   };
 
   useEffect(() => {

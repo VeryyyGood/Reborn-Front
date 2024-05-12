@@ -39,10 +39,10 @@ const ReturnScreen = () => {
 
       setMessages((prevMessages) => [...prevMessages, botResponse]);
     } catch (error) {
-      console.error("챗봇 응답 가져오기 실패: ", error.message);
+      console.error("응답 가져오기 실패: ", error.message);
       const errorMessage = {
         role: "system",
-        content: "죄송티비 오류티비",
+        content: "errpor",
       };
       setMessages((prevMessages) => [...prevMessages, errorMessage]);
     }
