@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 import { colors } from '../theme';
 import { GrayLine, ViewStyles } from './viewStyles';
 
-const ShareBoardCommentItem = ({boardid, commentid, title, content, date}) => {
+const ShareBoardCommentItem = ({id, commentCreatedAt, commentWriter, commentContent, writerProfileImage}) => {
 	return (
         <View style={styles.shareItem}>
             <View style={{position: 'absolute', right: '5%', top: '20%'}}>
@@ -12,9 +12,9 @@ const ShareBoardCommentItem = ({boardid, commentid, title, content, date}) => {
             </View>
             <View style={styles.titlecontainer}>
                 <Image style={styles.profile} source={require('../Assets/icons/profile.png')} />
-                <Text style={[styles.title, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Bold'}]}>{title}{'\n'}
-                    <Text style={[styles.content, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Medium'}]}>{content}{'\n'}</Text>
-                    <Text style={[styles.date,{fontFamily: 'Poppins-Medium'}]}>{date}</Text>
+                <Text style={[styles.title, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Bold'}]}>{commentWriter}{'\n'}
+                    <Text style={[styles.content, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Medium'}]}>{commentContent}{'\n'}</Text>
+                    <Text style={[styles.date,{fontFamily: 'Poppins-Medium'}]}>{commentCreatedAt}</Text>
                 </Text>
                 <TouchableOpacity style={{justifyContent: 'flex-end'}}>
                     <Text style={{color: colors.palette.Gray300, marginLeft: 10, marginBottom: '5%', fontFamily: 'Poppins-Bold'}}>답글 쓰기</Text>
