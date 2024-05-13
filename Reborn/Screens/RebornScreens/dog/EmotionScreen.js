@@ -25,7 +25,8 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
   const myContext = useContext(AppContext);
 
   const [selectedEmotion, setSelectedEmotion] = useState(null);
-  const [showToast, setShowToast] = useState(false);
+  const [showToast, setShowToast] = useState(false); // for Emotion
+  const [showToast_answer, setShowToast_answer] = useState(false); // for answer
   const [answer, onChangeAnswer] = React.useState("");
 
   const emotions = [
@@ -48,16 +49,23 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
       setShowToast(true);
     } else {
       setShowToast(false);
-      const analysisResult = await analyzeEmotion(answer);
-      if (analysisResult) {
-        console.log(analysisResult);
-        navigate("EmotionResult", {
-          answer,
-          selectedEmotion,
-          analysisResult,
-        });
+      if (answer) {
+        setShowToast_answer(false);
+        console.log("dpdpdpdp");
+        const analysisResult = await analyzeEmotion(answer);
+        if (analysisResult) {
+          console.log(analysisResult);
+          navigate("EmotionResult", {
+            answer,
+            selectedEmotion,
+            analysisResult,
+          });
+        } else {
+          alert("감정 분석에 실패했습니다. 다시 시도해주세요.");
+        }
       } else {
-        alert("감정 분석에 실패했습니다. 다시 시도해주세요.");
+        setShowToast_answer(true);
+        console.log(showToast_answer);
       }
     }
   };
@@ -126,6 +134,13 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
       <ToastContainer>
         {showToast ? (
           <Toast showToast={showToast} message="감정을 선택해주세요" />
+        ) : (
+          ""
+        )}
+      </ToastContainer>
+      <ToastContainer>
+        {showToast_answer ? (
+          <Toast showToast={showToast_answer} message="일기를 작성해주세요" />
         ) : (
           ""
         )}

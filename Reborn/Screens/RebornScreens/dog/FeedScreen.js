@@ -75,14 +75,22 @@ const FeedScreen = ({ navigation: { navigate } }) => {
           isFeed={isFeed}
           setisFeed={setisFeed}
         />
-        <ButtonBrownBottom
-          text={myContext.contentsDay === 15 ? "다음으로" : "산책하러 가기"}
-          onPress={() => {
-            requestPostProgress(handleLink(myContext.contentsDay), accessToken),
-              navigate(isEnd);
-          }}
-        ></ButtonBrownBottom>
-        <BowlImage source={isFeed ? bowlimageURL : bowlNoimageURL}></BowlImage>
+
+        {isFeed ? (
+          <ButtonBrownBottom
+            text={myContext.contentsDay === 15 ? "다음으로" : "산책하러 가기"}
+            onPress={() => {
+              requestPostProgress(
+                handleLink(myContext.contentsDay),
+                accessToken
+              ),
+                navigate(isEnd);
+            }}
+          />
+        ) : (
+          ""
+        )}
+        <BowlImage source={isFeed ? bowlimageURL : bowlNoimageURL} />
       </ImageBackground>
     </Container>
   );
