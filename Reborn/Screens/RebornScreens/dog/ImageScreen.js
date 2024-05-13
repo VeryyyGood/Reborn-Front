@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
 import { colors } from "../../../theme";
-import { GrayLine, CompleteButton } from "../../../components";
+import { GrayLine, CompleteButton, Toast } from "../../../components";
 import { ImageBackground, KeyboardAvoidingView, Platform } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { launchImageLibrary } from "react-native-image-picker";

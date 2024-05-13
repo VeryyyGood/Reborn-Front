@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import styled from "styled-components/native";
 import IntroScreen from "../Screens/RebornScreens/dog/IntroScreen";
+import OuttroScreen from "../Screens/RebornScreens/dog/OuttroScreen";
 import ReIntroScreen from "../Screens/RebornScreens/dog/ReIntroScreen";
 import ReconnectFinishScreen from "../Screens/RebornScreens/dog/ReconnectFinishScreen";
 import FeedScreen from "../Screens/RebornScreens/dog/FeedScreen";
@@ -41,6 +42,11 @@ const RebornDogStack = ({ navigation: { navigate } }) => {
       <NativeRebornDogStack.Screen
         name="Intro"
         component={IntroScreen}
+        options={{ title: `Day ${myContext.contentsDay}` }}
+      />
+      <NativeRebornDogStack.Screen
+        name="Outtro"
+        component={OuttroScreen}
         options={{ title: `Day ${myContext.contentsDay}` }}
       />
       <NativeRebornDogStack.Screen

@@ -88,14 +88,21 @@ const SnackScreen = ({ navigation: { navigate } }) => {
           isFeed={isFeed}
           setisFeed={setisFeed}
         />
-        <ButtonBrownBottom
-          text="거실로 돌아가기"
-          onPress={() => {
-            const screen = getDestination(myContext.contentsDay);
-            requestPostProgress(handleLink(myContext.contentsDay), accessToken);
-            navigate(screen);
-          }}
-        ></ButtonBrownBottom>
+        {isFeed ? (
+          <ButtonBrownBottom
+            text="거실로 돌아가기"
+            onPress={() => {
+              const screen = getDestination(myContext.contentsDay);
+              requestPostProgress(
+                handleLink(myContext.contentsDay),
+                accessToken
+              );
+              navigate(screen);
+            }}
+          />
+        ) : (
+          ""
+        )}
       </ImageBackground>
     </Container>
   );

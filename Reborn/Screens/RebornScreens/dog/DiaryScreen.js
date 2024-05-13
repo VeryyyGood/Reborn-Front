@@ -6,6 +6,7 @@ import {
   textStyles,
   CompleteButton,
   ButtonBrownBottom,
+  Toast,
 } from "../../../components";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -26,6 +27,7 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
 
   const [answer, onChangeAnswer] = React.useState("");
   const [qaVisible, setqaVisible] = useState(true); // Q&A Modal
+  const [showToast, setShowToast] = useState(false);
 
   const questionArray = [
     `우리가 처음 만났던 날 기억 나?\n우리가 언제 어디서 어떻게 만나게 되었는지,\n그날 있었던 일에 대해 나에게 말해줄래?\n`,
@@ -83,6 +85,17 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
     }
   };
 
+  // is answer writed -> toast
+  const CheckWrited = async () => {
+    if (!answer) {
+      setShowToast(true);
+    } else {
+      setShowToast(false);
+      requestWrite();
+      setqaVisible(false);
+    }
+  };
+
   return (
     <Container>
       <ImageBackground
@@ -118,10 +131,17 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
                   multiline={true}
                 ></TextInput>
               </TextInputContainer>
+              <ToastContainer>
+                {showToast ? (
+                  <Toast showToast={showToast} message="답변을 작성해주세요" />
+                ) : (
+                  ""
+                )}
+              </ToastContainer>
               <CompleteButton
                 text="작성완료"
                 onPress={() => {
-                  requestWrite(), setqaVisible(false);
+                  CheckWrited();
                 }}
               ></CompleteButton>
             </QAPopTextBox>
@@ -166,6 +186,14 @@ const TextInputContainer = styled.View`
   height: 70%;
   background-color: ${colors.palette.Gray200};
   padding: 3% 4% 3% 4%;
+`;
+
+const ToastContainer = styled.View`
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  align-items: flex-end;
 `;
 
 const QAPopTextBox = styled.View`
