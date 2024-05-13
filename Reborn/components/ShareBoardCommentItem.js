@@ -8,13 +8,16 @@ const ShareBoardCommentItem = ({id, commentCreatedAt, commentWriter, commentCont
 	return (
         <View style={styles.shareItem}>
             <View style={{position: 'absolute', right: '5%', top: '20%'}}>
-                <Image style={{width: 20, height: 20}}source={require('../Assets/icons/ShareBoard/xicon.png')}/>
+                <Image style={{width: 20, height: 20}} source={require('../Assets/icons/ShareBoard/xicon.png')}/>
             </View>
             <View style={styles.titlecontainer}>
-                <Image style={styles.profile} source={require('../Assets/icons/profile.png')} />
+                <Image 
+                    style={styles.profile} 
+                    source={writerProfileImage ? { uri: writerProfileImage } : require('../Assets/icons/profile.png')} 
+                />
                 <Text style={[styles.title, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Bold'}]}>{commentWriter}{'\n'}
                     <Text style={[styles.content, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Medium'}]}>{commentContent}{'\n'}</Text>
-                    <Text style={[styles.date,{fontFamily: 'Poppins-Medium'}]}>{commentCreatedAt}</Text>
+                    <Text style={[styles.date, {fontFamily: 'Poppins-Medium'}]}>{commentCreatedAt}</Text>
                 </Text>
                 <TouchableOpacity style={{justifyContent: 'flex-end'}}>
                     <Text style={{color: colors.palette.Gray300, marginLeft: 10, marginBottom: '5%', fontFamily: 'Poppins-Bold'}}>답글 쓰기</Text>
@@ -31,7 +34,7 @@ const styles=StyleSheet.create({
 	shareItem: {
         paddingVertical: 10,
         paddingHorizontal: 5,
-        marginBottom: 20,
+        marginBottom: 1,
     },
     titlecontainer: {
         flexDirection: 'row',
@@ -51,8 +54,11 @@ const styles=StyleSheet.create({
         marginHorizontal: '5%',
     },
     profile:{
-        width: '15%',
+        width: 60,
+        height: 60,
         resizeMode: 'contain',
+        borderRadius: 50,
+        marginTop: 20,
     },
 });
 
