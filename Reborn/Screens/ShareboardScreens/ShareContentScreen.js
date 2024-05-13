@@ -33,6 +33,9 @@ const ShareContentScreen = ({ route, navigation }) => {
   const [likeCount, setLikeCount] = useState(initialLikeCount); // likeCount 상태 추가
   const [isBookmark, setIsBookmark] = useState(false);
 
+
+  const [commentItemData, setCommentItemData] = useState([]);
+
   //const [commentItemData, setCommentItemData] = useState([]);
   
   useFocusEffect(
@@ -47,7 +50,7 @@ const ShareContentScreen = ({ route, navigation }) => {
               },
             }
           );
-          console.log(response.data);
+          //console.log(response.data);
           //console.log('조하요갯수'+initialLikeCount);
           
           if (response.data && response.data.result === 'liked') {
@@ -65,9 +68,33 @@ const ShareContentScreen = ({ route, navigation }) => {
         }
       };
 
-      // const getCommentItem = async () => {
-        
-      // };
+      const getCommentItem = async () => {
+        try {
+          const response = await axios.get(
+            `http://reborn.persi0815.site/board/${id}/comment/list`,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+          
+          if (response.data && response.data.result) {
+            //리스트
+            console.log(response.data.result.commentList);
+            const mappedData = response.data.result.commentList.map(item => ({
+                id: item.id,
+                commentCreatedAt: item.commentCreatedAt,
+                commentWriter: item.commentWriter,
+                commentContent: item.commentContent,
+                writerProfileImage: item.writerProfileImage,
+            }));
+            setCommentItemData(mappedData);
+        }
+        } catch (e) {
+          console.error(e);
+        }
+      };
 
       const getCheckBookmark = async () => {
         try {
@@ -79,7 +106,7 @@ const ShareContentScreen = ({ route, navigation }) => {
               },
             }
           );
-          console.log(response.data);
+          //console.log(response.data);
           if (response.data && response.data.result=== 'bookmarked') {
             setIsBookmark(true);
           } else {
@@ -90,8 +117,7 @@ const ShareContentScreen = ({ route, navigation }) => {
         }
       };
 
-      
-
+      getCommentItem();
       getCheckLike();
       getCheckBookmark();
       setLikeCount(initialLikeCount);
@@ -290,10 +316,18 @@ const ShareContentScreen = ({ route, navigation }) => {
       </View>
       <GrayLine></GrayLine>
       <View>
-        <FlatList data={commentDatas}
+        <FlatList 
+        data={commentItemData}
           renderItem={({item}) => (
-            <ShareBoardCommentItem id={item.id} title={item.title} date={item.date} content={item.content} />
-          )} keyExtractor={item => item.id} contentContainerStyle={{ paddingBottom: 400 }} />
+            <ShareBoardCommentItem
+              id={item.id}
+              commentCreatedAt={item.commentCreatedAt.split('T')[0]}
+              commentWriter={item.commentWriter}
+              commentContent={item.commentContent}
+              writerProfileImage={item.writerProfileImage}/>
+          )} 
+          keyExtractor={item => item.id}
+          contentContainerStyle={{ paddingBottom: 400 }} />
       </View>
       <KeyboardAvoidingView style={styles.commentView}>
         <TextInput
