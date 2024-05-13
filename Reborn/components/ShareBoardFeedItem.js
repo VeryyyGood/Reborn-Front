@@ -9,8 +9,8 @@ const ShareBoardFeedItem = ({ navigation, id, boardWriter, boardContent, boardCr
             <View style={styles.shareItem}>
                 <View style={styles.titlecontainer}>
                 <Image 
-                style={styles.profile} 
-                source={writerProfileImage ? { uri: writerProfileImage } : require('../Assets/icons/profile.png')} 
+                    style={styles.profile} 
+                    source={writerProfileImage ? { uri: writerProfileImage } : require('../Assets/icons/profile.png')} 
                 />
                     <Text style={[styles.title, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Bold'}]}>{boardWriter}{'\n'}<Text style={styles.date}>{boardCreatedAt}</Text> </Text>
                     
@@ -24,7 +24,7 @@ const ShareBoardFeedItem = ({ navigation, id, boardWriter, boardContent, boardCr
                     source={{ uri: boardImage }}
                     />
                 )}
-                <View style={{flexDirection:'row', paddingVertical: 20, paddingHorizontal: 20, justifyContent: 'space-between'}}>
+                <View style={{flexDirection:'row', paddingVertical: 10, paddingHorizontal: 20, justifyContent: 'space-between'}}>
                     <View style={{flexDirection:'row'}}>
                         <Image style={{marginLeft: '5%', tintColor: colors.palette.BrownDark}} source={require('../Assets/icons/ShareBoard/commentIcon.png')}/>
                         <Text style={{marginLeft: '7%', color: colors.palette.BrownDark, fontFamily: 'Poppins-Bold'}}>{commentCount}</Text>
@@ -45,11 +45,12 @@ const styles=StyleSheet.create({
 	shareItem: {
         paddingVertical: 10,
         paddingHorizontal: 5,
-        marginBottom: 20,
+        marginBottom: 10,
     },
     titlecontainer: {
         flexDirection: 'row',
         paddingLeft: 20,
+        marginTop: 10,
     },
     title: {
     	fontSize: 20,
@@ -63,6 +64,7 @@ const styles=StyleSheet.create({
     content: {
     	fontSize: 16,
         marginHorizontal: '5%',
+        marginTop: 10,
     },
     profile:{
         width: 70,

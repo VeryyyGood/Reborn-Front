@@ -225,21 +225,20 @@ const ShareContentScreen = ({ route, navigation }) => {
       }
   };
 
-  const commentDatas = [
-    { id: '1', title: '이사장', date: '2222-22.22', content: '맛있겠다.' },
-    { id: '2', title: '배기용', date: '2222-22.23', content: '룰루랄라'},
-    { id: '3', title: '문채영', date: '2222-22.24', content: '세번째 글'},
-    { id: '4', title: '갱민준', date: '2222-22.24', content: '펲시콜라'},
-];
+//   const commentDatas = [
+//     { id: '1', title: '이사장', date: '2222-22.22', content: '맛있겠다.' },
+//     { id: '2', title: '배기용', date: '2222-22.23', content: '룰루랄라'},
+//     { id: '3', title: '문채영', date: '2222-22.24', content: '세번째 글'},
+//     { id: '4', title: '갱민준', date: '2222-22.24', content: '펲시콜라'},
+// ];
 
-  return (
-    <SafeAreaProvider style={{backgroundColor: colors.background}}>
+const renderHeaderComponent = () => (
       <View>
         <View style={styles.titlecontainer}>
-          <Image
-            style={styles.profile}
-            source={require("../../Assets/icons/profile.png")}
-          />
+          <Image 
+                style={styles.profile} 
+                source={writerProfileImage ? { uri: writerProfileImage } : require('../../Assets/icons/profile.png')} 
+                />
           <Text
             style={[
               styles.title,
@@ -313,7 +312,12 @@ const ShareContentScreen = ({ route, navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
+        <GrayLine></GrayLine>
       </View>
+    );
+
+  return(
+    <SafeAreaProvider style={{backgroundColor: colors.background}}>
       <GrayLine></GrayLine>
       <View>
         <FlatList 
@@ -327,7 +331,8 @@ const ShareContentScreen = ({ route, navigation }) => {
               writerProfileImage={item.writerProfileImage}/>
           )} 
           keyExtractor={item => item.id}
-          contentContainerStyle={{ paddingBottom: 400 }} />
+          ListHeaderComponent={renderHeaderComponent}
+          contentContainerStyle={{ paddingBottom: 200 }} />
       </View>
       <KeyboardAvoidingView style={styles.commentView}>
         <TextInput
@@ -338,8 +343,7 @@ const ShareContentScreen = ({ route, navigation }) => {
           <Image style={{marginVertical: 10, resizeMode: 'contain', width: 20} }source={require('../../Assets/icons/ShareBoard/xicon.png')} />
         </Pressable>
       </KeyboardAvoidingView>
-    </SafeAreaProvider>
-    
+      </SafeAreaProvider>
   );
 };
 
@@ -369,10 +373,15 @@ const styles = StyleSheet.create({
   content: {
     fontSize: 16,
     marginHorizontal: "5%",
+    marginTop: 10,
+    paddingHorizontal: 10,
   },
   profile: {
-    width: "20%",
-    resizeMode: "contain",
+    width: 65,
+    height: 65,
+    resizeMode: 'cover',
+    borderRadius: 50,
+    marginTop: 10,
   },
   commentView:{
     width: '90%',
