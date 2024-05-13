@@ -35,7 +35,7 @@ const RevealDiaryItem = ({
   } else if (resultEmotion == "YELLOW") {
     backgroundImage = backgroundImages.yellowbox;
   } else {
-    backgroundImage = require("../Assets/icons/rediaryimage/redBox.png");
+    backgroundImage = require("../Assets/icons/rediaryimage/yellowBox.png");
   }
   return (
     <TouchableOpacity

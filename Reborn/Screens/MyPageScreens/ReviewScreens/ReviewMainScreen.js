@@ -46,28 +46,12 @@ const ReviewMainScreen = ({ navigation, route }) => {
   }, [petId]);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("ReviewStack", {
-            screen: "ReviewReconnect",
-            params: { petId },
-          })
-        }
-      >
-        <View style={styles.imageTextContainer}>
-          <Image source={require("../../../Assets/icons/review_album.png")} />
-          <Text style={styles.imageText}>
-            <Text style={styles.reColor}>RE</Text>CONNECT:
-          </Text>
-          <Text style={styles.font}>나의 반려동물과 만나기</Text>
-        </View>
-      </TouchableOpacity>
-      {showRemind && (
+    <View style={{ backgroundColor: colors.palette.White, flex: 1 }}>
+      <ScrollView contentContainerStyle={styles.container}>
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("ReviewStack", {
-              screen: "ReviewRemind",
+              screen: "ReviewReconnect",
               params: { petId },
             })
           }
@@ -75,67 +59,93 @@ const ReviewMainScreen = ({ navigation, route }) => {
           <View style={styles.imageTextContainer}>
             <Image source={require("../../../Assets/icons/review_album.png")} />
             <Text style={styles.imageText}>
-              <Text style={styles.reColor}>RE</Text>MIND:
+              <Text style={styles.reColor}>RE</Text>CONNECT:
             </Text>
-            <Text style={styles.font}>충분한 대화 나누기</Text>
+            <Text style={styles.font}>나의 반려동물과 만나기</Text>
           </View>
         </TouchableOpacity>
-      )}
-      {showReveal && (
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("ReviewStack", {
-              screen: "ReviewReveal",
-              params: { petId },
-            })
-          }
-        >
-          <View style={styles.imageTextContainer}>
-            <Image source={require("../../../Assets/icons/review_album.png")} />
-            <Text style={styles.imageText}>
-              <Text style={styles.reColor}>RE</Text>VEAL:
-            </Text>
-            <Text style={styles.font}>나의 감정 들여다보기</Text>
-          </View>
-        </TouchableOpacity>
-      )}
-      {showRemember && (
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("ReviewStack", {
-              screen: "ReviewRemember",
-              params: { petId },
-            })
-          }
-        >
-          <View style={styles.imageTextContainer}>
-            <Image source={require("../../../Assets/icons/review_album.png")} />
-            <Text style={styles.imageText}>
-              <Text style={styles.reColor}>RE</Text>MEMBER:
-            </Text>
-            <Text style={styles.font}>건강한 작별 준비하기</Text>
-          </View>
-        </TouchableOpacity>
-      )}
-      {showReborn && (
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("ReviewStack", {
-              screen: "ReviewReborn",
-              params: { petId },
-            })
-          }
-        >
-          <View style={styles.imageTextContainer}>
-            <Image source={require("../../../Assets/icons/review_album.png")} />
-            <Text style={styles.imageText}>
-              <Text style={styles.reColor}>RE</Text>BORN:
-            </Text>
-            <Text style={styles.font}>나의 반려동물과 작별하기</Text>
-          </View>
-        </TouchableOpacity>
-      )}
-    </ScrollView>
+        {showRemind && (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("ReviewStack", {
+                screen: "ReviewRemind",
+                params: { petId },
+              })
+            }
+          >
+            <View style={styles.imageTextContainer}>
+              <Image
+                source={require("../../../Assets/icons/review_album.png")}
+              />
+              <Text style={styles.imageText}>
+                <Text style={styles.reColor}>RE</Text>MIND:
+              </Text>
+              <Text style={styles.font}>충분한 대화 나누기</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+        {showReveal && (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("ReviewStack", {
+                screen: "ReviewReveal",
+                params: { petId },
+              })
+            }
+          >
+            <View style={styles.imageTextContainer}>
+              <Image
+                source={require("../../../Assets/icons/review_album.png")}
+              />
+              <Text style={styles.imageText}>
+                <Text style={styles.reColor}>RE</Text>VEAL:
+              </Text>
+              <Text style={styles.font}>나의 감정 들여다보기</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+        {showRemember && (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("ReviewStack", {
+                screen: "ReviewRemember",
+                params: { petId },
+              })
+            }
+          >
+            <View style={styles.imageTextContainer}>
+              <Image
+                source={require("../../../Assets/icons/review_album.png")}
+              />
+              <Text style={styles.imageText}>
+                <Text style={styles.reColor}>RE</Text>MEMBER:
+              </Text>
+              <Text style={styles.font}>건강한 작별 준비하기</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+        {showReborn && (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("ReviewStack", {
+                screen: "ReviewReborn",
+                params: { petId },
+              })
+            }
+          >
+            <View style={styles.imageTextContainer}>
+              <Image
+                source={require("../../../Assets/icons/review_album.png")}
+              />
+              <Text style={styles.imageText}>
+                <Text style={styles.reColor}>RE</Text>BORN:
+              </Text>
+              <Text style={styles.font}>나의 반려동물과 작별하기</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+      </ScrollView>
+    </View>
   );
 };
 
@@ -145,7 +155,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     backgroundColor: colors.palette.White,
-    flex: 1,
   },
 
   imageTextContainer: {
