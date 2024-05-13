@@ -46,12 +46,12 @@ const RediaryMainScreen = ({navigation} ) => {
         }
     };
 
-    const [rediaryDatas, setrediaryDatas] = useState([
-        { rediaryId: '1', rediaryTitle: '발표하는날', rediaryCreatedAt: '2024-05-13', rediaryContent: '오늘은 발표하는날이다.', pickEmotion: 'SUNNY', resultEmotion: 'RED', },
-        { rediaryId: '2', rediaryTitle: '산학하는날', rediaryCreatedAt: '2024-04-01', rediaryContent: '오늘은 산학을 했다.', pickEmotion: 'CLOUDY', resultEmotion: 'YELLOW', },
-        { rediaryId: '3', rediaryTitle: '산책을 했다.', rediaryCreatedAt: '2024-04-17', rediaryContent: '밖에 나가 산책을 했더니 기분이 좋았다.', pickEmotion: 'RAINY', resultEmotion: 'BLUE', },
-        { rediaryId: '4', rediaryTitle: '축제', rediaryCreatedAt: '2024-04-18', rediaryContent: '학교 축제를 했다 시끄러웠다.', pickEmotion: 'CLOUDY', resultEmotion: 'RED', },
-      ]);
+    // const [rediaryDatas, setrediaryDatas] = useState([
+    //     { rediaryId: '1', rediaryTitle: '발표하는날', rediaryCreatedAt: '2024-05-13', rediaryContent: '오늘은 발표하는날이다.', pickEmotion: 'SUNNY', resultEmotion: 'RED', },
+    //     { rediaryId: '2', rediaryTitle: '산학하는날', rediaryCreatedAt: '2024-04-01', rediaryContent: '오늘은 산학을 했다.', pickEmotion: 'CLOUDY', resultEmotion: 'YELLOW', },
+    //     { rediaryId: '3', rediaryTitle: '산책을 했다.', rediaryCreatedAt: '2024-04-17', rediaryContent: '밖에 나가 산책을 했더니 기분이 좋았다.', pickEmotion: 'RAINY', resultEmotion: 'BLUE', },
+    //     { rediaryId: '4', rediaryTitle: '축제', rediaryCreatedAt: '2024-04-18', rediaryContent: '학교 축제를 했다 시끄러웠다.', pickEmotion: 'CLOUDY', resultEmotion: 'RED', },
+    //   ]);
 
     const navigateToRediaryWrite = () => {
     if (result) {
@@ -77,7 +77,7 @@ const RediaryMainScreen = ({navigation} ) => {
             </View>
             <GrayLine></GrayLine>
             <View style={styles.container}>
-                <FlatList  data={rediaryDatas}
+                <FlatList  data={rediaryData}
                     renderItem={({item}) => (
                         <ReDiaryItem 
                             rediaryCreatedAt={item.rediaryCreatedAt}
