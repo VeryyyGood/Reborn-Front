@@ -69,6 +69,7 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            question: questionArray[myContext.contentsDay - 2],
             answer: answer,
           }),
         }
