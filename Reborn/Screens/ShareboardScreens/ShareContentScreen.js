@@ -255,7 +255,7 @@ const ShareContentScreen = ({ route, navigation }) => {
     };
     try {
       const response = await axios.post(
-          `http://reborn.persi0815.site/board/${id}/comment/create`, data, {
+          `http://reborn.persi0815.site/board/comment/${id}/create`, data, {
               headers: {
                   Authorization: `Bearer ${accessToken}`,
               },
