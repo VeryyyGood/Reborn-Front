@@ -1,15 +1,41 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, ImageBackground, Touchable, TouchableOpacity, TextInput } from 'react-native';
+import {View, Text, Image, StyleSheet, ImageBackground, Touchable, TouchableOpacity, TextInput, Button } from 'react-native';
 import styled from "styled-components/native";
 import { colors } from '../theme';
 import { GrayLine, ViewStyles } from './viewStyles';
 
+import axios from "axios";
+import { useAccessToken } from "../context/AccessTokenContext";
+
 const ShareBoardCommentItem = ({id, commentCreatedAt, commentWriter, commentContent, writerProfileImage}) => {
-	return (
+	const { accessToken } = useAccessToken();
+
+    const handlecommentDeletePress  = async () => {
+        console.log(id);
+        try {
+            const response = await axios.delete(
+              `http://reborn.persi0815.site/board/comment/delete/${id}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${accessToken}`,
+                },
+              }
+            );
+            console.log(response.data);
+          } catch (error) {
+            //console.log("Error Response Body:", error.response?.data);
+            console.error(error);
+          }
+        };   
+    
+    return (
         <View style={styles.shareItem}>
-            <View style={{position: 'absolute', right: '5%', top: '20%'}}>
+            <TouchableOpacity onPress={handlecommentDeletePress} style={{position: 'absolute', right: '5%', top: '20%', zIndex: 1}}>
                 <Image style={{width: 20, height: 20}} source={require('../Assets/icons/ShareBoard/xicon.png')}/>
-            </View>
+            </TouchableOpacity>
+            {/* <TouchableOpacity onPress={handlecommentDeletePress} style={{position: 'absolute', right: '5%', top: '20%'}}>
+                <Image style={{width: 20, height: 20}} source={require('../Assets/icons/ShareBoard/xicon.png')}/>
+            </TouchableOpacity> */}
             <View style={styles.titlecontainer}>
                 <Image 
                     style={styles.profile} 

@@ -72,7 +72,7 @@ const ShareContentScreen = ({ route, navigation }) => {
       const getCommentItem = async () => {
         try {
           const response = await axios.get(
-            `http://reborn.persi0815.site/board/${id}/comment/list`,
+            `http://reborn.persi0815.site/board/comment/${id}/list`,
             {
               headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -123,7 +123,7 @@ const ShareContentScreen = ({ route, navigation }) => {
       getCheckBookmark();
       setLikeCount(initialLikeCount);
       //console.log(boardImage);
-    }, [accessToken, id,initialLikeCount,setcommentContent])
+    }, [accessToken, id,initialLikeCount, setcommentContent])
   );
   
   
@@ -389,7 +389,7 @@ const renderHeaderComponent = () => (
           style={styles.commetInput}
         />
         <TouchableOpacity onPress={postComment}>
-          <Image style={{marginVertical: 10, resizeMode: 'contain', width: 20} }source={require('../../Assets/icons/ShareBoard/xicon.png')} />
+          <Image style={{tintColor: colors.palette.BrownChoco, marginVertical: 10, resizeMode: 'contain', width: 20} } source={require('../../Assets/icons/ShareBoard/carbon_send.png')} />
         </TouchableOpacity>
       </KeyboardAvoidingView>
     </SafeAreaProvider>
