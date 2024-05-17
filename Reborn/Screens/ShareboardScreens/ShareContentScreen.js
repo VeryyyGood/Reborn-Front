@@ -123,9 +123,9 @@ const ShareContentScreen = ({ route, navigation }) => {
       getCheckBookmark();
       setLikeCount(initialLikeCount);
       //console.log(boardImage);
-    }, [accessToken, id,initialLikeCount, setcommentContent])
+    }, [accessToken, id, initialLikeCount, commentContent])
   );
-  
+
   
   const handleHeartPress = async () => {
     if (!isHeart) {
@@ -262,6 +262,7 @@ const ShareContentScreen = ({ route, navigation }) => {
           });
       console.log(response.data);
       setcommentContent("");
+      //getCommentItem();
       return response;
   }
   catch (error) {
