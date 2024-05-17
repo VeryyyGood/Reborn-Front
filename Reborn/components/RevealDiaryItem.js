@@ -23,7 +23,7 @@ const backgroundImages = {
 const RevealDiaryItem = ({
   date,
   pickEmotion,
-  diaryContent,
+  id,
   resultEmotion,
   navigation,
 }) => {
@@ -44,7 +44,7 @@ const RevealDiaryItem = ({
           screen: "ReviewRevealDiary",
           params: {
             date,
-            diaryContent,
+            id,
             pickEmotion,
             resultEmotion,
           },

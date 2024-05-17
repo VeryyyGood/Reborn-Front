@@ -22,7 +22,6 @@ const ReviewRememberScreen = ({ route, navigation }) => {
           }
         );
         if (response.data && response.data.result) {
-          console.log(response.data);
           const mappedData = response.data.result.map((item) => ({
             title: item.title,
             content: item.content,
@@ -31,6 +30,7 @@ const ReviewRememberScreen = ({ route, navigation }) => {
             imageDate: item.imageDate,
           }));
           setRememberData(mappedData);
+          console.log(mappedData);
         }
       } catch (error) {
         console.error("오류 발생", error);

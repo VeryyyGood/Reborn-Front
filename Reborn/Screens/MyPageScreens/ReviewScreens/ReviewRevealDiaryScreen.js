@@ -1,33 +1,58 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { colors } from "../../../theme";
-import {
-  GrayLine,
-  ModifyButton,
-  CompleteButton,
-  DelateButton,
-  RadioButton,
-} from "../../../components";
 import {
   View,
   TextInput,
   Text,
   Button,
+  Image,
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
 
-import sunImage from "../../../Assets/icons/rediaryimage/sun.png";
-import cloudImage from "../../../Assets/icons/rediaryimage/cloud.png";
-import rainImage from "../../../Assets/icons/rediaryimage/rain.png";
+import axios from "axios";
+import { useAccessToken } from "../../../context/AccessTokenContext";
 
 const ReviewRevealDiaryScreen = ({ route }) => {
-  const { date, diaryContent, pickEmotion, resultEmotion } = route.params;
+  const { date, id, pickEmotion } = route.params;
+  const { accessToken } = useAccessToken();
+  const [content, setContent] = useState([]);
 
-  const emotions = [
-    { id: "SUNNY", image: sunImage },
-    { id: "CLOUDY", image: cloudImage },
-    { id: "RAINY", image: rainImage },
-  ];
+  const weatherImages = {
+    SUNNY: require("../../../Assets/icons/rediaryimage/sun.png"),
+    CLOUDY: require("../../../Assets/icons/rediaryimage/cloud.png"),
+    RAINY: require("../../../Assets/icons/rediaryimage/rain.png"),
+  };
+
+  useEffect(() => {
+    const fetchRevealContent = async () => {
+      try {
+        const response = await axios.get(
+          `http://reborn.persi0815.site:8080/reborn/reveal/view/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        if (response.data && response.data.result) {
+          console.log(response.data);
+          setContent(response.data.result.diaryContent);
+        }
+      } catch (error) {
+        console.error("오류 발생", error);
+        console.log(`Fetching info for petId: ${id}`);
+      }
+    };
+
+    fetchRevealContent();
+  }, [id, accessToken]);
+
+  const getImageStyle = (emotion) => {
+    return emotion === pickEmotion
+      ? styles.weatherImages
+      : [styles.weatherImages, styles.grayScale];
+  };
 
   return (
     <View style={styles.container}>
@@ -36,6 +61,31 @@ const ReviewRevealDiaryScreen = ({ route }) => {
           <Text style={styles.reColor}>RE</Text>VEAL:
         </Text>
         <Text style={styles.normalFont}>나의 감정 들여다보기</Text>
+      </View>
+      <View style={styles.imageContainer}>
+        <Image source={weatherImages.SUNNY} style={getImageStyle("SUNNY")} />
+        <Image source={weatherImages.CLOUDY} style={getImageStyle("CLOUDY")} />
+        <Image source={weatherImages.RAINY} style={getImageStyle("RAINY")} />
+      </View>
+      <Text style={styles.dateText}>DAY {date}</Text>
+      <View
+        style={{
+          width: "100%",
+          height: "50%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <View
+          style={{
+            flex: 1,
+            width: "82%",
+            borderRadius: 10,
+            backgroundColor: colors.palette.Gray200,
+          }}
+        >
+          <Text style={styles.contentText}>{content}</Text>
+        </View>
       </View>
     </View>
   );
@@ -54,11 +104,38 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     paddingLeft: "5%",
   },
-
+  imageContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginVertical: 20,
+  },
+  weatherImages: {
+    width: 80,
+    height: 80,
+    marginHorizontal: 25,
+  },
+  grayScale: {
+    tintColor: colors.palette.Gray400,
+  },
   boldFont: {
     fontSize: 24,
     fontFamily: "Poppins-Bold",
     color: colors.palette.BrownDark,
+  },
+  dateText: {
+    fontSize: 24,
+    fontFamily: "Poppins-Bold",
+    color: colors.palette.BrownDark,
+    textAlign: "left",
+
+    marginLeft: 40,
+    marginBottom: 10,
+  },
+  contentText: {
+    fontSize: 16,
+    fontFamily: "Poppins-Regular",
+    color: colors.palette.BrownDark,
+    padding: 20,
   },
   normalFont: {
     fontSize: 16,
