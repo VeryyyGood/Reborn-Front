@@ -10,6 +10,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Pressable,
+  Alert,
 } from "react-native";
 
 import axios from "axios";
@@ -122,7 +123,7 @@ const ShareContentScreen = ({ route, navigation }) => {
       getCheckBookmark();
       setLikeCount(initialLikeCount);
       console.log(boardImage);
-    }, [accessToken, id])
+    }, [accessToken, id,initialLikeCount])
   );
   
   
@@ -208,22 +209,46 @@ const ShareContentScreen = ({ route, navigation }) => {
     }
   };
 
-  const handleBoardDeletePress = async () => {
-      try {
-        const response = await axios.delete(
-          `http://reborn.persi0815.site/board/${id}/delete`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        console.log(response.data);
-        navigation.goBack();
-      } catch (error) {
-        console.log("Error Response Body:", error.response?.data);
-      }
+  const handleBoardDeletePress = () => {
+    Alert.alert(
+      "게시글 삭제",
+      "정말로 게시글을 삭제하시겠습니까?",
+      [
+        { 
+          text: "게시글 나가기", 
+          onPress: async () => {
+              navigation.goBack();
+            }
+          },
+        {
+          text: "아니오",
+          onPress: () => console.log("삭제 취소"),
+          style: "cancel",
+        },
+        { 
+          text: "예", 
+          onPress: async () => {
+            try {
+              const response = await axios.delete(
+                `http://reborn.persi0815.site/board/${id}/delete`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                  },
+                }
+              );
+              console.log(response.data);
+              navigation.goBack();
+            } catch (error) {
+              console.log("Error Response Body:", error.response?.data);
+            }
+          },
+        },
+      ],
+      { cancelable: false } //밖을 누르면 취소가 되는데 그거 금지
+    );
   };
+  
 
 //   const commentDatas = [
 //     { id: '1', title: '이사장', date: '2222-22.22', content: '맛있겠다.' },
@@ -276,25 +301,26 @@ const renderHeaderComponent = () => (
             justifyContent: "space-between",
           }}
         >
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row" , marginBottom: -3}}>
             <Image
-              style={{ marginLeft: "5%", tintColor: colors.palette.BrownDark }}
+              style={{  width:22, height:23, marginTop:3, marginLeft: "5%", tintColor: colors.palette.BrownDark }}
               source={require("../../Assets/icons/ShareBoard/commentIcon.png")}
             />
             <Text
               style={{
                 marginLeft: "7%",
+                marginTop:3,
                 color: colors.palette.BrownDark,
                 fontFamily: "Poppins-Bold",
               }}
             >
-              {commentCount}
+            {commentCount}
             </Text>
           </View>
           <View style={{ flexDirection: "row" }}>
           <TouchableOpacity onPress={handleHeartPress}> 
             <Image
-              style={{
+              style={{ height:24, width:25, resizeMode: 'contain',
                 marginRight: "5%",
                 tintColor: isHeart ? colors.palette.Red : colors.palette.Gray400
               }}
@@ -302,12 +328,12 @@ const renderHeaderComponent = () => (
             />
           </TouchableOpacity>
             <Text
-              style={{
+              style={{ width: 10,
                 color: colors.palette.BrownDark,fontFamily: "Poppins-Bold",}}>{likeCount}</Text>
             <TouchableOpacity onPress={handleBookmarkPress}>
                 <Image
                 style={{ marginLeft: 10,
-                tintColor: isBookmark ? colors.palette.Blue : colors.palette.Gray400 }}
+                tintColor: isBookmark ? colors.palette.Green : colors.palette.Gray400 }}
                 source={require("../../Assets/icons/ShareBoard/bookmarkIconGrey.png")}/>
             </TouchableOpacity>
           </View>
@@ -339,11 +365,11 @@ const renderHeaderComponent = () => (
           placeholder="댓글을 입력해주세요."
           style={styles.commetInput}
         />
-        <Pressable onPress={()=> console.log("보내기")}>
+        <TouchableOpacity onPress={()=> console.log("보내기")}>
           <Image style={{marginVertical: 10, resizeMode: 'contain', width: 20} }source={require('../../Assets/icons/ShareBoard/xicon.png')} />
-        </Pressable>
+        </TouchableOpacity>
       </KeyboardAvoidingView>
-      </SafeAreaProvider>
+    </SafeAreaProvider>
   );
 };
 

@@ -105,73 +105,73 @@ const ShareWriteScreen = ({ navigation }) => {
     navigation.goBack()
   };
 
-    return (
-        <View style={{flex: 1, paddingHorizontal: 10, backgroundColor: colors.background}}>
-            <View>
-                <View style={styles.header}>
-                    <TouchableOpacity onPress={omg}>
-                        <Image source={require('../../Assets/icons/ShareBoard/xicon.png')}/>
-                    </TouchableOpacity>
-                <View style={{marginVertical: '6%', marginRight: -20}}>
-                    <CompleteButton text="작성완료" onPress={postContent}> </CompleteButton>
-                </View>
-                </View>
-                <GrayLine></GrayLine> 
-                <View style={{marginVertical: 20,}}>
-                    <DropDownPicker
-                    open={open}
-                    value={value}
-                    items={items}
-                    setOpen={setOpen}
-                    setValue={setValue}
-                    setItems={setItems}
-                    placeholder="게시판을 선택해주세요"
-                    listMode="FLATLIST"
-                    modalProps={{
-                        animationType: 'fade',
-                    }}
-                    modalTitle="선택해주세요."
-                    //listItemContainerStyle={{}}
-                    />
-                </View>
-                <View style={{ flexDirection: 'row' , marginBottom: 80, paddingHorizontal:10,}}>
-                <Image style={{ width: "15%", resizeMode: 'contain',borderRadius: 50}} source={profileImage} />
-                <TextInput
-                    style={{ marginLeft: '3%', fontFamily: "Poppins-regular", fontSize: 18, marginRight: 70, marginTop: '7%' }}
-                    multiline={true}
-                    onChangeText={setBoardContent}
-                    value={boardContent} // TextInput의 값
-                    placeholder="자유롭게 글을 작성해주세요"
-                    placeholderTextColor={colors.palette.Gray500}
-                />
-                </View>
-                <View style={{marginTop: 40}}>
-                <View style={{justifyContent: 'center', alignItems: 'center', marginVertical: 20}}>
-                  {postImage && <Image style={{width: 120, height:120, resizeMode:'contain'}} source={postImage} />}
-                  </View>
-                <GrayLine></GrayLine>
-                <View style={{marginVertical: 20, flexDirection: 'row',  marginLeft: 30}}>
-                  
-                  {/* <TouchableOpacity
-                    onPress={selectImage}
-                    style={{
-                      backgroundColor: colors.palette.Blue,
-                      borderRadius: 5,
-                      alignItems: 'center',
-                      width: '25%', justifyContent: 'center', marginRight: 10
-                    }}>
-                    <Text style={{fontFamily: 'Poppins-Bold', fontSize: 14, paddingVertical:2, color:'white'}}>사진 선택</Text>
-                  </TouchableOpacity> */}
-                  <TouchableOpacity onPress={selectImage}>
-                  <Image style={{ width: 80, height: 80, marginVertical: -30}} source={require('../../Assets/icons/icon_imagePicker.png')} />
-                  </TouchableOpacity>
-                  <Text>사진 첨부</Text>
-                </View>
-                <GrayLine></GrayLine>
-                </View>
-            </View>
+  return (
+    <View style={{flex: 1, paddingHorizontal: 10, backgroundColor: colors.background}}>
+      <View>
+        <View style={styles.header}>
+            <TouchableOpacity onPress={omg}>
+                <Image source={require('../../Assets/icons/ShareBoard/xicon.png')}/>
+            </TouchableOpacity>
+        <View style={{marginVertical: '6%', marginRight: -20}}>
+            <CompleteButton text="작성완료" onPress={postContent}> </CompleteButton>
         </View>
-    );
+        </View>
+        <GrayLine></GrayLine> 
+        <View style={{marginVertical: 20,}}>
+            <DropDownPicker
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+            placeholder="게시판을 선택해주세요"
+            listMode="FLATLIST"
+            modalProps={{
+                animationType: 'fade',
+            }}
+            modalTitle="선택해주세요."
+            //listItemContainerStyle={{}}
+            />
+        </View>
+        <View style={{ flexDirection: 'row' , marginBottom: 80, paddingHorizontal:10,}}>
+          <Image style={{ width: 60, height: 60, borderRadius: 50, marginTop: 20}} source={profileImage} />
+          <TextInput
+              style={{ marginLeft: '3%', fontFamily: "Poppins-regular", fontSize: 18, marginRight: 70, marginTop: '7%' }}
+              multiline={true}
+              onChangeText={setBoardContent}
+              value={boardContent} // TextInput의 값
+              placeholder="자유롭게 글을 작성해주세요"
+              placeholderTextColor={colors.palette.Gray500}
+          />
+        </View>
+        <View style={{marginTop: 40}}>
+        <View style={{justifyContent: 'center', alignItems: 'center', marginVertical: 20}}>
+          {postImage && <Image style={{width: 120, height:120, resizeMode:'contain'}} source={postImage} />}
+          </View>
+        <GrayLine></GrayLine>
+        <View style={{marginVertical: 20, flexDirection: 'row',  marginLeft: 30}}>
+          
+          {/* <TouchableOpacity
+            onPress={selectImage}
+            style={{
+              backgroundColor: colors.palette.Blue,
+              borderRadius: 5,
+              alignItems: 'center',
+              width: '25%', justifyContent: 'center', marginRight: 10
+            }}>
+            <Text style={{fontFamily: 'Poppins-Bold', fontSize: 14, paddingVertical:2, color:'white'}}>사진 선택</Text>
+          </TouchableOpacity> */}
+          <TouchableOpacity onPress={selectImage}>
+          <Image style={{ width: 80, height: 80, marginVertical: -30}} source={require('../../Assets/icons/icon_imagePicker.png')} />
+          </TouchableOpacity>
+          <Text>사진 첨부</Text>
+        </View>
+        <GrayLine></GrayLine>
+        </View>
+      </View>
+    </View>
+  );
 };
 
 export default ShareWriteScreen;
