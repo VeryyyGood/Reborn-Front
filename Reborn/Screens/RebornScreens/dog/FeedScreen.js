@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { colors } from "../../../theme";
 import { textStyles, ButtonBrownBottom } from "../../../components";
+import { useFocusEffect } from "@react-navigation/native";
 import { requestPostProgress } from "../../../utiles"; // send data to Server
 import { useAccessToken } from "../../../context/AccessTokenContext";
 import styled from "styled-components/native";
@@ -45,6 +46,13 @@ const FeedScreen = ({ navigation: { navigate } }) => {
     }
     return linkArray[3];
   };
+
+  // refresh
+  useFocusEffect(
+    React.useCallback(() => {
+      setisFeed(false);
+    }, [])
+  );
 
   useEffect(() => {
     // set Tutorial Modal Visible true
