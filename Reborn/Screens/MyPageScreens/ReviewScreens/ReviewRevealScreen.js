@@ -22,10 +22,9 @@ const ReviewRevealScreen = ({ route, navigation }) => {
           }
         );
         if (response.data && response.data.result) {
-          //console.log(response.data);
           const mappedData = response.data.result.map((item) => ({
             date: item.date,
-            diaryContent: item.diaryContent,
+            id: item.id,
             pickEmotion: item.pickEmotion,
             resultEmotion: item.resultEmotion,
           }));
@@ -54,7 +53,7 @@ const ReviewRevealScreen = ({ route, navigation }) => {
           renderItem={({ item }) => (
             <RevealDiaryItem
               date={item.date}
-              diaryContent={item.diaryContent}
+              id={item.id}
               pickEmotion={item.pickEmotion}
               resultEmotion={item.resultEmotion}
               navigation={navigation}
