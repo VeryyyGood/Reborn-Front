@@ -33,7 +33,7 @@ const ShareContentScreen = ({ route, navigation }) => {
   const [isHeart, setIsHeart] = useState(false);
   const [likeCount, setLikeCount] = useState(initialLikeCount); // likeCount 상태 추가
   const [isBookmark, setIsBookmark] = useState(false);
-
+  const [commentContent, setcommentContent] = useState("");
 
   const [commentItemData, setCommentItemData] = useState([]);
 
@@ -122,8 +122,8 @@ const ShareContentScreen = ({ route, navigation }) => {
       getCheckLike();
       getCheckBookmark();
       setLikeCount(initialLikeCount);
-      console.log(boardImage);
-    }, [accessToken, id,initialLikeCount])
+      //console.log(boardImage);
+    }, [accessToken, id,initialLikeCount,setcommentContent])
   );
   
   
@@ -248,7 +248,28 @@ const ShareContentScreen = ({ route, navigation }) => {
       { cancelable: false } //밖을 누르면 취소가 되는데 그거 금지
     );
   };
-  
+
+  const postComment = async () => {
+    const data = {
+      commentContent: commentContent
+    };
+    try {
+      const response = await axios.post(
+          `http://reborn.persi0815.site/board/${id}/comment/create`, data, {
+              headers: {
+                  Authorization: `Bearer ${accessToken}`,
+              },
+          });
+      console.log(response.data);
+      setcommentContent("");
+      return response;
+  }
+  catch (error) {
+      //console.error("ERROR", error);
+      console.log("Error Response Body:", error.response.data);
+      throw error; 
+    }
+  };
 
 //   const commentDatas = [
 //     { id: '1', title: '이사장', date: '2222-22.22', content: '맛있겠다.' },
@@ -351,7 +372,7 @@ const renderHeaderComponent = () => (
           renderItem={({item}) => (
             <ShareBoardCommentItem
               id={item.id}
-              commentCreatedAt={item.commentCreatedAt.split('T')[0]}
+              commentCreatedAt={`${item.commentCreatedAt.split('T')[0]} ${item.commentCreatedAt.split('T')[1].slice(0, 5)}`}
               commentWriter={item.commentWriter}
               commentContent={item.commentContent}
               writerProfileImage={item.writerProfileImage}/>
@@ -363,9 +384,11 @@ const renderHeaderComponent = () => (
       <KeyboardAvoidingView style={styles.commentView}>
         <TextInput
           placeholder="댓글을 입력해주세요."
+          onChangeText={setcommentContent}
+          value={commentContent}
           style={styles.commetInput}
         />
-        <TouchableOpacity onPress={()=> console.log("보내기")}>
+        <TouchableOpacity onPress={postComment}>
           <Image style={{marginVertical: 10, resizeMode: 'contain', width: 20} }source={require('../../Assets/icons/ShareBoard/xicon.png')} />
         </TouchableOpacity>
       </KeyboardAvoidingView>
