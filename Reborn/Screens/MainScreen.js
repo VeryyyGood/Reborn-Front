@@ -179,20 +179,17 @@ const MainScreen = ({ navigation: { navigate } }) => {
         </Text>
       </View>
       <View style={styles.removerButton}>
-        <Text style={styles.boxtext}>
-          <Text style={{ color: colors.palette.Brown }}>
+        <Text style={styles.boxtext22}>
+          <Text style={{ color: colors.palette.Brown}}>
             RE:TURN에게 물어보세요! {"\n"}
           </Text>
           앱 기능 관련 설명이나, 심리 상담소 정보가 필요하면 RE:TURN과
           대화해보세요!
         </Text>
-        <TouchableOpacity
-          onPress={() => navigate("ReturnStack", { screen: "Return" })}
-        >
+        <TouchableOpacity onPress={() => navigate("ReturnStack", { screen: "Return" })} >
           <Text style={{ marginLeft: "38%" }}>
             RE:TURN과 대화하러 가기{" "}
             <Image
-              style={{ position: "absolute", bottom: "20%", left: "20%" }}
               source={require("../Assets/icons/mainimages/arrow.png")}
             />
           </Text>
@@ -265,7 +262,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   removerButton: {
-    height: "25%",
+    height: "22%",
     width: "90%",
     borderRadius: 10,
     backgroundColor: colors.palette.Gray200,
@@ -293,6 +290,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     margin: 20,
   },
+  boxtext22: {
+    fontSize: 16,
+    fontFamily: "Poppins-SemiBold",
+    color: colors.palette.BrownDark,
+    marginBottom: 5,
+    marginTop: 10,
+  },
   boxtext: {
     fontSize: 16,
     fontFamily: "Poppins-SemiBold",
@@ -305,6 +309,7 @@ const styles = StyleSheet.create({
     height: 90,
     //bottom: 25,
     borderRadius: 50,
+    marginLeft: '2%'
   },
 });
 
