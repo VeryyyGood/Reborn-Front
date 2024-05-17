@@ -100,7 +100,7 @@ const MainShareScreen = ({navigation}) => {
                         <ShareBoardFeedItem 
                         id={item.id}
                         boardWriter={item.boardWriter}
-                        boardCreatedAt={item.boardCreatedAt.split('T')[0]}
+                        boardCreatedAt={`${item.boardCreatedAt.split('T')[0]} ${item.boardCreatedAt.split('T')[1].slice(0, 5)}`}
                         boardContent={item.boardContent}
                         navigation={navigation}
                         likeCount={item.likeCount}
@@ -109,7 +109,7 @@ const MainShareScreen = ({navigation}) => {
                         writerProfileImage={item.writerProfileImage}/>
                     )}
                     keyExtractor={item => item.id}
-                    contentContainerStyle={{ paddingBottom: 150 }}
+                    contentContainerStyle={{ paddingBottom: 200 }}
                 />
             </View>
             <View>
