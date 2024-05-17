@@ -16,14 +16,14 @@ const ShareBoardCommentItem = ({id, commentCreatedAt, commentWriter, commentCont
                     source={writerProfileImage ? { uri: writerProfileImage } : require('../Assets/icons/profile.png')} 
                 />
                 <Text style={[styles.title, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Bold'}]}>{commentWriter}{'\n'}
-                    <Text style={[styles.content, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Medium'}]}>{commentContent}{'\n'}</Text>
+                    <Text style={styles.content}>{commentContent}{'\n'}</Text>
                     <Text style={[styles.date, {fontFamily: 'Poppins-Medium'}]}>{commentCreatedAt}</Text>
                 </Text>
-                <TouchableOpacity style={{justifyContent: 'flex-end'}}>
-                    <Text style={{color: colors.palette.Gray300, marginLeft: 10, marginBottom: '5%', fontFamily: 'Poppins-Bold'}}>답글 쓰기</Text>
-                </TouchableOpacity>
             </View>
-            <View style={{flexDirection:'row', paddingVertical: 20, paddingHorizontal: 20, justifyContent: 'space-between'}}>
+            <TouchableOpacity style={{justifyContent: 'flex-end'}}>
+                <Text style={styles.recomment}>답글 쓰기</Text>
+            </TouchableOpacity>
+            <View style={{paddingVertical: 15,}}>
             </View>
             <GrayLine></GrayLine>
         </View>
@@ -32,7 +32,7 @@ const ShareBoardCommentItem = ({id, commentCreatedAt, commentWriter, commentCont
 
 const styles=StyleSheet.create({
 	shareItem: {
-        paddingVertical: 10,
+        paddingVertical: 5,
         paddingHorizontal: 5,
         marginBottom: 1,
     },
@@ -44,6 +44,7 @@ const styles=StyleSheet.create({
     	fontSize: 18,
         paddingLeft: 10,
         marginTop: 20,
+        paddingHorizontal: 110,
     },
     date: {
         fontSize: 12,
@@ -52,13 +53,23 @@ const styles=StyleSheet.create({
     content: {
     	fontSize: 18,
         marginHorizontal: '5%',
+        paddingHorizontal: 50,
+        color: colors.palette.BrownDark,
+        fontFamily: 'Poppins-Medium'
     },
     profile:{
         width: 60,
         height: 60,
-        resizeMode: 'contain',
         borderRadius: 50,
         marginTop: 20,
+    },
+    recomment:{
+        color: colors.palette.Gray300,
+        marginLeft: 10,
+        marginBottom: '5%',
+        fontFamily: 'Poppins-Bold',
+        //backgroundColor: 'red',
+        position: 'absolute', right: '5%', bottom: -20,
     },
 });
 
