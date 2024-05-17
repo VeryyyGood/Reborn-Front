@@ -13,6 +13,8 @@ import { requestPostProgress } from "../../../utiles"; // send data to Server
 import { useAccessToken } from "../../../context/AccessTokenContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
+import dog_dirtyOneimageURL from "../../../Assets/Images/dog/dog_dirty1.png";
+import dog_dirtyTwoimageURL from "../../../Assets/Images/dog/dog_dirty2.png";
 
 import showergiimageURL from "../../../Assets/stuffs/showergi.png";
 
@@ -20,6 +22,34 @@ const WashScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
 
   const [isWashed, setIsWashed] = useState(false);
+  const [isWashing, setIsWashing] = useState(false);
+
+  const [countWash, setCountWash] = useState(0);
+  const [currentDogImage, setCurrentDogImage] = useState(dogimageURL);
+
+  useEffect(() => {
+    setCountWash(countWash + 1);
+    if (countWash >= 5) {
+      setIsWashed(true);
+    }
+  }, [isWashing]);
+
+  useEffect(() => {
+    let intervalId;
+    if (isWashing) {
+      intervalId = setInterval(() => {
+        setCurrentDogImage((currentImg) =>
+          currentImg === dog_dirtyOneimageURL
+            ? dog_dirtyTwoimageURL
+            : dog_dirtyOneimageURL
+        );
+      }, 300);
+    } else {
+      setCurrentDogImage(dogimageURL);
+    }
+
+    return () => clearInterval(intervalId);
+  }, [isWashing]);
 
   return (
     <Container>
@@ -34,7 +64,7 @@ const WashScreen = ({ navigation: { navigate } }) => {
           <Text style={{ color: colors.palette.Brown }}>RE</Text>BORN: 나의
           반려동물과 작별하기
         </Text>
-        <DogImage source={dogimageURL} resizeMode="center" />
+        <DogImage source={currentDogImage} resizeMode="center" />
         <DraggableImage
           source={showergiimageURL}
           style={{
@@ -43,64 +73,82 @@ const WashScreen = ({ navigation: { navigate } }) => {
             position: "absolute",
             marginTop: "20%",
           }}
-          isWashed={isWashed}
-          setIsWashed={setIsWashed}
+          setIsWashing={setIsWashing}
         />
-        <ButtonBrownBottom
-          text={"다음으로"}
-          onPress={() => {
-            requestPostProgress(
-              "http://reborn.persi0815.site:8080/reborn/reborn/wash",
-              accessToken
-            ),
-              navigate("Clothes");
-          }}
-        />
+        {isWashed ? (
+          <ButtonBrownBottom
+            text={"다음으로"}
+            onPress={() => {
+              requestPostProgress(
+                "http://reborn.persi0815.site:8080/reborn/reborn/wash",
+                accessToken
+              ),
+                navigate("Clothes");
+            }}
+          />
+        ) : (
+          ""
+        )}
       </ImageBackground>
     </Container>
   );
 };
 
-const DraggableImage = ({ source, style }) => {
-  // Animated Values
+const DraggableImage = ({ source, style, setIsWashing }) => {
+  // Values
+  const opacity = useRef(new Animated.Value(1)).current;
   const scale = useRef(new Animated.Value(1)).current;
-  const position = useRef(new Animated.ValueXY()).current;
+  const position = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
 
   // Animations
-  const onPressInAnimation = Animated.spring(scale, {
+  const onPressIn = Animated.spring(scale, {
     toValue: 0.9,
     useNativeDriver: true,
   });
-
-  const onPressOutAnimation = Animated.spring(scale, {
+  const onPressOut = Animated.spring(scale, {
     toValue: 1,
     useNativeDriver: true,
   });
-
-  const goHomeAnimation = Animated.spring(position, {
-    toValue: { x: 0, y: 0 },
+  const goHome = Animated.spring(position, {
+    toValue: 0,
     useNativeDriver: true,
   });
-
-  // PanResponder
+  const onDropScale = Animated.timing(scale, {
+    toValue: 0,
+    duration: 50,
+    easing: Easing.linear,
+    useNativeDriver: true,
+  });
+  const onDropOpacity = Animated.timing(opacity, {
+    toValue: 0,
+    duration: 50,
+    easing: Easing.linear,
+    useNativeDriver: true,
+  });
+  // Pan Responders
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
-      onPanResponderMove: Animated.event(
-        [
-          null,
-          {
-            dx: position.x,
-            dy: position.y,
-          },
-        ],
-        { useNativeDriver: false }
-      ), // Update position based on movement
+      onPanResponderMove: (_, { dx, dy }) => {
+        //console.log({ dx, dy });
+        if (dx > 60 && dy > 35 && dx < 215 && dy < 290) {
+          setIsWashing(true);
+          //Animated.sequence([Animated.parallel([onDropScale])]).start();
+        } else {
+          setIsWashing(false);
+          Animated.parallel([onPressOut, goHome]).start();
+        }
+
+        position.setValue({ x: dx, y: dy });
+      },
       onPanResponderGrant: () => {
-        onPressInAnimation.start();
+        onPressIn.start();
       },
       onPanResponderRelease: () => {
-        Animated.parallel([onPressOutAnimation, goHomeAnimation]).start();
+        onPressOut.start(() => {
+          setIsWashing(false);
+          goHome.start();
+        });
       },
     })
   ).current;

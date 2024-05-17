@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import {
   Text,
   ImageBackground,
@@ -16,6 +16,7 @@ import AppContext from "./AppContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 import dog_petOneimageURL from "../../../Assets/Images/dog/dog_hand1.png";
+import dog_petTwoimageURL from "../../../Assets/Images/dog/dog_hand2.png";
 import handimageURL from "../../../Assets/stuffs/hand.png";
 
 import { useAccessToken } from "../../../context/AccessTokenContext";
@@ -24,7 +25,10 @@ const PetScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
   const myContext = useContext(AppContext);
 
+  const [countPet, setCountPet] = useState(0);
   const [isPet, setIsPet] = useState(false);
+  const [isFinish, setIsFinish] = useState(false);
+  const [petImage, setPetImage] = useState(dog_petOneimageURL);
 
   // Server Link for sending data
   const linkArray = [
@@ -37,9 +41,32 @@ const PetScreen = ({ navigation: { navigate } }) => {
   // refresh
   useFocusEffect(
     React.useCallback(() => {
+      setCountPet(0);
       setIsPet(false);
+      setIsFinish(false);
     }, [])
   );
+
+  useEffect(() => {
+    setCountPet(countPet + 1);
+    if (countPet >= 5) {
+      setIsFinish(true);
+    }
+  }, [isPet]);
+
+  useEffect(() => {
+    if (isPet) {
+      const intervalId = setInterval(() => {
+        setPetImage((prevImage) =>
+          prevImage === dog_petOneimageURL
+            ? dog_petTwoimageURL
+            : dog_petOneimageURL
+        );
+      }, 300);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [isPet]);
 
   // RE:MIND & RE:VEAL & RE:MEMBER& RE:BORN what day? => Post Link
   const handleLink = (day) => {
@@ -63,10 +90,7 @@ const PetScreen = ({ navigation: { navigate } }) => {
           충분한 대화 나누기 :{" "}
           <Text style={{ color: colors.palette.Red }}>쓰다듬기</Text>
         </Text>
-        <DogImage
-          source={isPet ? dog_petOneimageURL : dogimageURL}
-          resizeMode="center"
-        />
+        <DogImage source={isPet ? petImage : dogimageURL} resizeMode="center" />
         <DraggableImage
           source={handimageURL}
           style={{
@@ -78,13 +102,20 @@ const PetScreen = ({ navigation: { navigate } }) => {
           isPet={isPet}
           setIsPet={setIsPet}
         />
-        <ButtonBrownBottom
-          text="밥주러 가기"
-          onPress={() => {
-            requestPostProgress(handleLink(myContext.contentsDay), accessToken),
-              navigate("Feed");
-          }}
-        />
+        {isFinish ? (
+          <ButtonBrownBottom
+            text="밥주러 가기"
+            onPress={() => {
+              requestPostProgress(
+                handleLink(myContext.contentsDay),
+                accessToken
+              ),
+                navigate("Feed");
+            }}
+          />
+        ) : (
+          ""
+        )}
       </ImageBackground>
     </Container>
   );
@@ -123,6 +154,7 @@ const DraggableImage = ({ source, style, isPet, setIsPet }) => {
     easing: Easing.linear,
     useNativeDriver: true,
   });
+
   // Pan Responders
   const panResponder = useRef(
     PanResponder.create({
@@ -149,6 +181,7 @@ const DraggableImage = ({ source, style, isPet, setIsPet }) => {
       },
     })
   ).current;
+
   return (
     <Animated.Image
       {...panResponder.panHandlers}

@@ -1,12 +1,5 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Button,
-} from "react-native";
+import React, { useState, useContext } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
 import axios from "axios";
 import AppContext from "./RebornScreens/dog/AppContext";
@@ -87,7 +80,7 @@ const MainScreen = ({ navigation: { navigate } }) => {
           },
         }
       );
-      console.log(response.data);
+      console.log(response.data.result); // do not remove
 
       if (response.data.result) {
         if (response.data.result.rebornDate === 1) {
@@ -125,7 +118,7 @@ const MainScreen = ({ navigation: { navigate } }) => {
             navigate("RebornDogStack", { screen: "Emotion" });
             break;
           case "IMAGE":
-            navigate("RebornDogStack", { screen: "Image" });
+            navigate("RebornDogStack", { screen: "ImageDiary" });
             break;
           case "CLEAN":
             navigate("RebornDogStack", { screen: "Clean" });
@@ -180,18 +173,18 @@ const MainScreen = ({ navigation: { navigate } }) => {
       </View>
       <View style={styles.removerButton}>
         <Text style={styles.boxtext22}>
-          <Text style={{ color: colors.palette.Brown}}>
+          <Text style={{ color: colors.palette.Brown }}>
             RE:TURN에게 물어보세요! {"\n"}
           </Text>
           앱 기능 관련 설명이나, 심리 상담소 정보가 필요하면 RE:TURN과
           대화해보세요!
         </Text>
-        <TouchableOpacity onPress={() => navigate("ReturnStack", { screen: "Return" })} >
+        <TouchableOpacity
+          onPress={() => navigate("ReturnStack", { screen: "Return" })}
+        >
           <Text style={{ marginLeft: "38%" }}>
             RE:TURN과 대화하러 가기{" "}
-            <Image
-              source={require("../Assets/icons/mainimages/arrow.png")}
-            />
+            <Image source={require("../Assets/icons/mainimages/arrow.png")} />
           </Text>
         </TouchableOpacity>
       </View>
@@ -309,7 +302,7 @@ const styles = StyleSheet.create({
     height: 90,
     //bottom: 25,
     borderRadius: 50,
-    marginLeft: '2%'
+    marginLeft: "2%",
   },
 });
 
