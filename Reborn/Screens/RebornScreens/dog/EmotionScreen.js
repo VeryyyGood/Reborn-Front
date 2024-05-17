@@ -51,7 +51,6 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
       setShowToast(false);
       if (answer) {
         setShowToast_answer(false);
-        console.log("dpdpdpdp");
         const analysisResult = await analyzeEmotion(answer);
         if (analysisResult) {
           console.log(analysisResult);
