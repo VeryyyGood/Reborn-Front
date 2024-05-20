@@ -1,11 +1,5 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
-import {
-  Text,
-  ImageBackground,
-  Animated,
-  PanResponder,
-  Easing,
-} from "react-native";
+import { Text, ImageBackground, Animated, PanResponder } from "react-native";
 import { colors } from "../../../theme";
 import { ButtonBrownBottom, textStyles } from "../../../components";
 import { requestPostProgress } from "../../../utiles"; // send data to Server
@@ -142,19 +136,6 @@ const DraggableImage = ({ source, style, isPet, setIsPet }) => {
     toValue: 0,
     useNativeDriver: true,
   });
-  const onDropScale = Animated.timing(scale, {
-    toValue: 0,
-    duration: 50,
-    easing: Easing.linear,
-    useNativeDriver: true,
-  });
-  const onDropOpacity = Animated.timing(opacity, {
-    toValue: 0,
-    duration: 50,
-    easing: Easing.linear,
-    useNativeDriver: true,
-  });
-
   // Pan Responders
   const panResponder = useRef(
     PanResponder.create({

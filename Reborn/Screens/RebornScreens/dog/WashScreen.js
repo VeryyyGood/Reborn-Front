@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  Text,
-  ImageBackground,
-  Animated,
-  PanResponder,
-  Easing,
-} from "react-native";
+import { Text, ImageBackground, Animated, PanResponder } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../../../theme";
 import { textStyles, ButtonBrownBottom } from "../../../components";
@@ -111,18 +105,6 @@ const DraggableImage = ({ source, style, setIsWashing }) => {
   });
   const goHome = Animated.spring(position, {
     toValue: 0,
-    useNativeDriver: true,
-  });
-  const onDropScale = Animated.timing(scale, {
-    toValue: 0,
-    duration: 50,
-    easing: Easing.linear,
-    useNativeDriver: true,
-  });
-  const onDropOpacity = Animated.timing(opacity, {
-    toValue: 0,
-    duration: 50,
-    easing: Easing.linear,
     useNativeDriver: true,
   });
   // Pan Responders
