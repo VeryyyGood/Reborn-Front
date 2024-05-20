@@ -20,7 +20,7 @@ const RediaryResultScreen = ({ route, navigation}) => {
   const { accessToken } = useAccessToken();
   const { globalNickname } = useGlobalNickname();
 
-  const { answer, selectedEmotion, analysisResult, title } = route.params;
+  const { answer, selectedEmotion, analysisResult, title, mode, rediaryId } = route.params;
 
   const [isVisible, setIsVisible] = useState(false); // AI result visible
 
@@ -48,23 +48,40 @@ const RediaryResultScreen = ({ route, navigation}) => {
 
   // send to Server
   const requestWrite = async (sentiment) => {
+    // URL 및 body 초기화
+    let url = "";
+    let body = {};
+  
+    // mode에 따라 URL과 body 설정
+    if (mode === "Just") {
+      url = "http://reborn.persi0815.site/rediary/create";
+      body = {
+        rediaryTitle: title,
+        rediaryContent: answer,
+        pickEmotion: selectedEmotion,
+        resultEmotion: weatherTocolor(sentiment),
+      };
+    } else if (mode === "Edit") {
+      url = `http://reborn.persi0815.site/rediary/${rediaryId}/update`;
+      body = {
+        rediaryId: rediaryId,
+        rediaryTitle: title,
+        rediaryContent: answer,
+        pickEmotion: selectedEmotion,
+        resultEmotion: weatherTocolor(sentiment),
+        
+      };
+    }
+  
     try {
-      const response = await fetch(
-        "http://reborn.persi0815.site/rediary/create",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            rediaryTitle :title,
-            rediaryContent: answer,
-            pickEmotion: selectedEmotion,
-            resultEmotion: weatherTocolor(sentiment),
-          }),
-        }
-      );
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
       const data = await response.json();
       if (!data) {
         throw new Error("Something went wrong");
@@ -121,15 +138,20 @@ const RediaryResultScreen = ({ route, navigation}) => {
 
     <ButtonBrown
             text={"메인화면으로"}
-            onPress={() =>
-            navigation.dispatch(
-                CommonActions.reset({
-                index: 0,
-                routes: [{ name: "RediaryMain" }],
-                })
-            )
-            }
-        />
+            onPress={() => {
+                navigation.navigate('Tabs', {
+                  screen: 'RediaryMain',
+                });
+              }}
+              // onPress={() =>
+            // navigation.dispatch(
+            //     CommonActions.reset({
+            //     index: 0,
+            //     routes: [{ name: "RediaryMain" }],
+            //     })
+            // )
+            // }
+            />
     </Container>
   );
 };

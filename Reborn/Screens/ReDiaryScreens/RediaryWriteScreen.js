@@ -22,6 +22,8 @@ import rainImage from "../../Assets/icons/rediaryimage/rain.png";
 const EmotionScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
 
+  const mode = "Just";
+
   const [selectedEmotion, setSelectedEmotion] = useState(null);
   const [showToast, setShowToast] = useState(false); // for Emotion
   const [showToast_answer, setShowToast_answer] = useState(false); // for answer
@@ -59,6 +61,7 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
             selectedEmotion,
             analysisResult,
             title,
+            mode,
           });
         } else {
           alert("감정 분석에 실패했습니다. 다시 시도해주세요.");

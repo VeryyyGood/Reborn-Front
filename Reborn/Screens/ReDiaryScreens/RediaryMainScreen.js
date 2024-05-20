@@ -16,8 +16,16 @@ const RediaryMainScreen = ({navigation} ) => {
     //{globalNickname}
 
     useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            getRediary();
+        });
+    
+        // 첫 마운트 시에도 getRediary() 호출
         getRediary();
-      }, []);
+    
+        // 컴포넌트가 언마운트 되거나, 네비게이션 포커스 리스너가 더 이상 필요 없을 때 제거
+        return unsubscribe;
+    }, [navigation]);
 
       const getRediary = async () => {
         try {
@@ -30,9 +38,9 @@ const RediaryMainScreen = ({navigation} ) => {
                 }
             );
             if (response.data && response.data.result) {
-                console.log(response.data)
+                //console.log(response.data)
                 const mappedData = response.data.result.map(item => ({
-                    rediaryId: item.rediaryId.toString(),
+                    rediaryId: item.rediaryId,
                     rediaryCreatedAt: item.rediaryCreatedAt,
                     rediaryTitle: item.rediaryTitle,
                     rediaryContent: item.rediaryContent,
@@ -80,6 +88,7 @@ const RediaryMainScreen = ({navigation} ) => {
                 <FlatList  data={rediaryData}
                     renderItem={({item}) => (
                         <ReDiaryItem 
+                            rediaryId={item.rediaryId}
                             rediaryCreatedAt={item.rediaryCreatedAt}
                             rediaryTitle={item.rediaryTitle}
                             rediaryContent={item.rediaryContent} 
