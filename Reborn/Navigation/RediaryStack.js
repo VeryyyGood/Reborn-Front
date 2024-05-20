@@ -7,6 +7,7 @@ import { colors } from "../theme";
 import RediaryMainScreen from "../Screens/ReDiaryScreens/RediaryMainScreen";
 import RediaryWriteScreen from "../Screens/ReDiaryScreens/RediaryWriteScreen";
 import ReDiaryModifyScreen from "../Screens/ReDiaryScreens/ReDiaryModifyScreen";
+import RediaryResultScreen from "../Screens/ReDiaryScreens/RediaryResultScreen";
 
 const RediaryStacks = createNativeStackNavigator();
 
@@ -40,6 +41,11 @@ const RediaryStack = () => (
     <RediaryStacks.Screen
       name="RediaryModify"
       component={ReDiaryModifyScreen}
+      options={{ headerTitle: () => <RediaryTitle /> }}
+    />
+    <RediaryStacks.Screen
+      name="RediaryResult"
+      component={RediaryResultScreen}
       options={{ headerTitle: () => <RediaryTitle /> }}
     />
   </RediaryStacks.Navigator>
