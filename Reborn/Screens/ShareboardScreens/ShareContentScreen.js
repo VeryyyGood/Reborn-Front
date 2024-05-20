@@ -214,17 +214,12 @@ const ShareContentScreen = ({ route, navigation }) => {
       "게시글 삭제",
       "정말로 게시글을 삭제하시겠습니까?",
       [
-        { 
-          text: "게시글 나가기", 
-          onPress: async () => {
-              navigation.goBack();
-            }
-          },
-        {
-          text: "아니오",
-          onPress: () => console.log("삭제 취소"),
-          style: "cancel",
-        },
+        // { 
+        //   text: "게시글 나가기", 
+        //   onPress: async () => {
+        //       navigation.goBack();
+        //     }
+        //   },
         { 
           text: "예", 
           onPress: async () => {
@@ -243,6 +238,11 @@ const ShareContentScreen = ({ route, navigation }) => {
               console.log("Error Response Body:", error.response?.data);
             }
           },
+        },
+        {
+          text: "아니오",
+          onPress: () => console.log("삭제 취소"),
+          style: "cancel",
         },
       ],
       { cancelable: false } //밖을 누르면 취소가 되는데 그거 금지
