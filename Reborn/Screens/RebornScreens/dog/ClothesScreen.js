@@ -46,16 +46,20 @@ const ClothesScreen = ({ navigation: { navigate } }) => {
           isClothes={isClothes}
           setisClothes={setisClothes}
         />
-        <ButtonBrownBottom
-          text="다음으로"
-          onPress={() => {
-            requestPostProgress(
-              "http://reborn.persi0815.site:8080/reborn/reborn/clothe",
-              accessToken
-            ),
-              navigate("Letter");
-          }}
-        ></ButtonBrownBottom>
+        {isClothes ? (
+          <ButtonBrownBottom
+            text="다음으로"
+            onPress={() => {
+              requestPostProgress(
+                "http://reborn.persi0815.site:8080/reborn/reborn/clothe",
+                accessToken
+              ),
+                navigate("Letter");
+            }}
+          />
+        ) : (
+          ""
+        )}
       </ImageBackground>
     </Container>
   );

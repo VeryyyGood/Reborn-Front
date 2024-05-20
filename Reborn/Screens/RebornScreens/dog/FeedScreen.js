@@ -16,6 +16,8 @@ import styled from "styled-components/native";
 import AppContext from "./AppContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
+import dog_FeedOneimageURL from "../../../Assets/Images/dog/dog_eat_feed1.png";
+import dog_FeedTwoimageURL from "../../../Assets/Images/dog/dog_eat_feed2.png";
 import bowlNoimageURL from "../../../Assets/Images/dog/dog_bowl_no.png";
 import feedimageURL from "../../../Assets/stuffs/feed.png";
 import bowlimageURL from "../../../Assets/Images/dog/dog_bowl.png";
@@ -71,7 +73,7 @@ const FeedScreen = ({ navigation: { navigate } }) => {
           충분한 대화 나누기 :{" "}
           <Text style={{ color: colors.palette.Red }}>밥주기</Text>
         </Text>
-        <DogImage source={dogimageURL} resizeMode="center" />
+        <AnimatedDogImage isFeed={isFeed} />
         <DraggableImage
           source={feedimageURL}
           style={{
@@ -98,13 +100,70 @@ const FeedScreen = ({ navigation: { navigate } }) => {
         ) : (
           ""
         )}
-        <BowlImage source={isFeed ? bowlimageURL : bowlNoimageURL} />
+        <AnimatedBowlImage
+          style={{ width: "100px", height: "100px" }}
+          isFeed={isFeed}
+        />
       </ImageBackground>
     </Container>
   );
 };
 
-export default FeedScreen;
+const AnimatedDogImage = ({ isFeed }) => {
+  const [currentImage, setCurrentImage] = useState(dogimageURL);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const animationRef = useRef(null);
+
+  useEffect(() => {
+    if (isFeed && !isAnimating) {
+      setIsAnimating(true);
+      animationRef.current = setInterval(() => {
+        setCurrentImage((prevImage) =>
+          prevImage === dog_FeedOneimageURL
+            ? dog_FeedTwoimageURL
+            : dog_FeedOneimageURL
+        );
+      }, 200); // Change image every 200ms
+
+      setTimeout(() => {
+        clearInterval(animationRef.current);
+        setCurrentImage(dogimageURL);
+        setIsAnimating(false);
+      }, 2000); // End animation after 2 seconds
+    }
+  }, [isFeed]);
+
+  return <DogImage source={currentImage} resizeMode="center" />;
+};
+
+const AnimatedBowlImage = ({ isFeed }) => {
+  const position = useRef(new Animated.Value(20)).current;
+
+  useEffect(() => {
+    if (isFeed) {
+      Animated.timing(position, {
+        toValue: 120, // Move the bowl to the right
+        duration: 300,
+        easing: Easing.ease,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      position.setValue(20);
+    }
+  }, [isFeed]);
+
+  return (
+    <Animated.Image
+      source={isFeed ? bowlimageURL : bowlNoimageURL}
+      style={{
+        width: 100,
+        height: 100,
+        marginTop: "-34%",
+        transform: [{ translateX: position }],
+      }}
+    />
+  );
+};
 
 const DraggableImage = ({ source, style, isFeed, setisFeed }) => {
   // Values
@@ -193,8 +252,4 @@ const DogImage = styled.Image`
   margin-top: 55%;
 `;
 
-const BowlImage = styled.Image`
-  width: 100px;
-  height: 100px;
-  margin: -38% 0% 0% 5%;
-`;
+export default FeedScreen;

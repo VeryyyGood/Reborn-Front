@@ -7,9 +7,11 @@ import { requestPostProgress } from "../../../utiles"; // send data to Server
 import { useAccessToken } from "../../../context/AccessTokenContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
-import dog_dirtyOneimageURL from "../../../Assets/Images/dog/dog_dirty1.png";
-import dog_dirtyTwoimageURL from "../../../Assets/Images/dog/dog_dirty2.png";
+import dog_dirtyimageURL from "../../../Assets/Images/dog/dog_dirty0.png"; // dirty Idle
+import dog_dirtyOneimageURL from "../../../Assets/Images/dog/dog_dirty1.png"; // dirty Animation with bubble
+import dog_dirtyTwoimageURL from "../../../Assets/Images/dog/dog_dirty2.png"; // dirty Animation with bubble
 
+import rainimageURL from "../../../Assets/stuffs/shower_rain.png";
 import showergiimageURL from "../../../Assets/stuffs/showergi.png";
 
 const WashScreen = ({ navigation: { navigate } }) => {
@@ -17,14 +19,17 @@ const WashScreen = ({ navigation: { navigate } }) => {
 
   const [isWashed, setIsWashed] = useState(false);
   const [isWashing, setIsWashing] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   const [countWash, setCountWash] = useState(0);
   const [currentDogImage, setCurrentDogImage] = useState(dogimageURL);
 
   useEffect(() => {
-    setCountWash(countWash + 1);
-    if (countWash >= 5) {
-      setIsWashed(true);
+    if (isWashing) {
+      setCountWash(countWash + 1);
+      if (countWash >= 5) {
+        setIsWashed(true);
+      }
     }
   }, [isWashing]);
 
@@ -39,7 +44,7 @@ const WashScreen = ({ navigation: { navigate } }) => {
         );
       }, 300);
     } else {
-      setCurrentDogImage(dogimageURL);
+      setCurrentDogImage(dog_dirtyimageURL);
     }
 
     return () => clearInterval(intervalId);
@@ -58,9 +63,14 @@ const WashScreen = ({ navigation: { navigate } }) => {
           <Text style={{ color: colors.palette.Brown }}>RE</Text>BORN: 나의
           반려동물과 작별하기
         </Text>
-        <DogImage source={currentDogImage} resizeMode="center" />
-        <DraggableImage
-          source={showergiimageURL}
+
+        {isWashed ? (
+          <DogImage source={dogimageURL} resizeMode="center" />
+        ) : (
+          <DogImage source={currentDogImage} resizeMode="center" />
+        )}
+
+        <DraggableContainer
           style={{
             width: "50%",
             height: "50%",
@@ -68,8 +78,15 @@ const WashScreen = ({ navigation: { navigate } }) => {
             marginTop: "20%",
           }}
           setIsWashing={setIsWashing}
-        />
-        {isWashed ? (
+          setIsDragging={setIsDragging}
+        >
+          <ShowerImage source={showergiimageURL} resizeMode="center" />
+          {isDragging && (
+            <RainImage source={rainimageURL} resizeMode="center" />
+          )}
+        </DraggableContainer>
+
+        {isWashed && (
           <ButtonBrownBottom
             text={"다음으로"}
             onPress={() => {
@@ -80,17 +97,19 @@ const WashScreen = ({ navigation: { navigate } }) => {
                 navigate("Clothes");
             }}
           />
-        ) : (
-          ""
         )}
       </ImageBackground>
     </Container>
   );
 };
 
-const DraggableImage = ({ source, style, setIsWashing }) => {
+const DraggableContainer = ({
+  children,
+  style,
+  setIsWashing,
+  setIsDragging,
+}) => {
   // Values
-  const opacity = useRef(new Animated.Value(1)).current;
   const scale = useRef(new Animated.Value(1)).current;
   const position = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
 
@@ -107,18 +126,17 @@ const DraggableImage = ({ source, style, setIsWashing }) => {
     toValue: 0,
     useNativeDriver: true,
   });
+
   // Pan Responders
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (_, { dx, dy }) => {
-        //console.log({ dx, dy });
-        if (dx > 60 && dy > 35 && dx < 215 && dy < 290) {
+        setIsDragging(true);
+        if (dx > 50 && dy > 35 && dx < 220 && dy < 400) {
           setIsWashing(true);
-          //Animated.sequence([Animated.parallel([onDropScale])]).start();
         } else {
           setIsWashing(false);
-          Animated.parallel([onPressOut, goHome]).start();
         }
 
         position.setValue({ x: dx, y: dy });
@@ -127,25 +145,27 @@ const DraggableImage = ({ source, style, setIsWashing }) => {
         onPressIn.start();
       },
       onPanResponderRelease: () => {
+        setIsDragging(false);
+        setIsWashing(false);
         onPressOut.start(() => {
-          setIsWashing(false);
           goHome.start();
         });
       },
     })
   ).current;
+
   return (
-    <Animated.Image
+    <Animated.View
       {...panResponder.panHandlers}
-      source={source}
       style={[
         style,
         {
           transform: [...position.getTranslateTransform(), { scale }],
         },
       ]}
-      resizeMode="center"
-    />
+    >
+      {children}
+    </Animated.View>
   );
 };
 
@@ -161,4 +181,15 @@ const DogImage = styled.Image`
   height: 50%;
   margin-left: 30%;
   margin-top: 55%;
+`;
+
+const RainImage = styled.Image`
+  width: 70%;
+  height: 100%;
+  margin: -150% 0% 0% 20%;
+`;
+
+const ShowerImage = styled.Image`
+  width: 100%;
+  height: 100%;
 `;
