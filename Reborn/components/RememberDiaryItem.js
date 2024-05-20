@@ -1,88 +1,71 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  ImageBackground,
-  TouchableOpacity,
-} from "react-native";
+import { TouchableOpacity } from "react-native";
 import { colors } from "../theme";
+import styled from "styled-components/native";
 
-const RememberDiaryItem = ({
-  title,
-  content,
-  rememberImage,
-  date,
-  imageDate,
-  navigation,
-}) => {
+const RememberDiaryItem = ({ date, id, rememberImage, title, navigation }) => {
   return (
     <TouchableOpacity
       onPress={() =>
         navigation.navigate("ReviewStack", {
           screen: "ReviewRememberDiary",
           params: {
-            title,
-            content,
-            rememberImage,
             date,
-            imageDate,
+            id,
+            rememberImage,
+            title,
           },
         })
       }
     >
-      <View style={styles.item}>
-        <ImageBackground
-          style={styles.backgroundImage}
-          source={require("../Assets/icons/rememberBox.png")}
-        >
-          <View style={styles.container}>
-            <Text style={styles.date}>DAY {date}</Text>
-            <Image
-              style={{
-                marginLeft: -20,
-                marginBottom: 3,
-                tintColor: colors.palette.BrownDark,
-              }}
-              source={require("../Assets/icons/rediaryimage/arrow2.png")}
-            />
-            <Image source={rememberImage} style={styles.image} />
-          </View>
-        </ImageBackground>
-      </View>
+      <ItemContainer>
+        <StyledImage source={{ uri: rememberImage }}>
+          <WhiteContainer></WhiteContainer>
+          <DayText>DAY {date}</DayText>
+          <TitleText>{title}</TitleText>
+        </StyledImage>
+      </ItemContainer>
     </TouchableOpacity>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
-  },
-  image: {
-    width: 85,
-    height: 85,
-    marginBottom: 6,
-    resizeMode: "contain",
-  },
-  date: {
-    fontSize: 24,
-    fontFamily: "Poppins-ExtraBold",
-    marginHorizontal: "10%",
-    color: colors.palette.Brown,
-  },
-  item: {
-    height: 290,
-    marginVertical: 10,
-  },
-  backgroundImage: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    resizeMode: "stretch",
-  },
-});
+const StyledImage = styled.ImageBackground`
+  width: 100%;
+  height: 100%;
+  margin-bottom: 6px;
+  border-radius: 10px;
+  justify-content: flex-end;
+  overflow: hidden;
+`;
+
+const ItemContainer = styled.View`
+  width: 100%;
+  height: 250px;
+  margin: 5% 0%;
+`;
+
+const WhiteContainer = styled.View`
+  background-color: ${colors.palette.White};
+  border-radius: 10px;
+  opacity: 0.7;
+  width: 100%;
+  height: 32%;
+  position: absolute;
+  justify-content: flex-end;
+`;
+
+const DayText = styled.Text`
+  font-family: "Poppins-ExtraBold";
+  font-size: 24px;
+  color: ${colors.palette.Brown};
+  margin: 0% 0% -2% 4%;
+`;
+
+const TitleText = styled.Text`
+  font-family: "Poppins-ExtraBold";
+  font-size: 22px;
+  color: ${colors.palette.BrownDark};
+  margin: 0% 0% 0% 4%;
+`;
 
 export default RememberDiaryItem;

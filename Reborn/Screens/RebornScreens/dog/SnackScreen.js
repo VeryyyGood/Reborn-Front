@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import {
   Text,
   ImageBackground,
@@ -16,7 +16,9 @@ import AppContext from "./AppContext";
 
 import snackimageURL from "../../../Assets/Images/dog/dog_snack.png";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
+
 import dogsnack_oneimageURL from "../../../Assets/Images/dog/dog_eat_snack1.png";
+import dogsnack_twoimageURL from "../../../Assets/Images/dog/dog_eat_snack2.png";
 
 const SnackScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
@@ -71,11 +73,7 @@ const SnackScreen = ({ navigation: { navigate } }) => {
           충분한 대화 나누기 :{" "}
           <Text style={{ color: colors.palette.Red }}>간식주기</Text>
         </Text>
-        {isFeed ? (
-          <DogImage source={dogsnack_oneimageURL} resizeMode="center" />
-        ) : (
-          <DogImage source={dogimageURL} resizeMode="center" />
-        )}
+        <AnimatedDogImage isFeed={isFeed} />
 
         <DraggableImage
           source={snackimageURL}
@@ -109,6 +107,33 @@ const SnackScreen = ({ navigation: { navigate } }) => {
 };
 
 export default SnackScreen;
+
+const AnimatedDogImage = ({ isFeed }) => {
+  const [currentImage, setCurrentImage] = useState(dogimageURL);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const animationRef = useRef(null);
+
+  useEffect(() => {
+    if (isFeed && !isAnimating) {
+      setIsAnimating(true);
+      animationRef.current = setInterval(() => {
+        setCurrentImage((prevImage) =>
+          prevImage === dogsnack_oneimageURL
+            ? dogsnack_twoimageURL
+            : dogsnack_oneimageURL
+        );
+      }, 200); // Change image every 200ms
+
+      setTimeout(() => {
+        clearInterval(animationRef.current);
+        setCurrentImage(dogsnack_oneimageURL);
+        setIsAnimating(false);
+      }, 2000); // End animation after 2 seconds
+    }
+  }, [isFeed]);
+
+  return <DogImage source={currentImage} resizeMode="center" />;
+};
 
 const DraggableImage = ({ source, style, isFeed, setisFeed }) => {
   // Values

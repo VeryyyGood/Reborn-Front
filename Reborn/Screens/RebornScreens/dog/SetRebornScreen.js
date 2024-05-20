@@ -6,6 +6,7 @@ import {
   textStyles,
   ButtonBrownBottom,
   ButtonYellow,
+  Toast,
 } from "../../../components";
 import {
   useAccessToken,
@@ -29,6 +30,7 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
   const [letterVisible, setletterVisible] = useState(false); // Letter Modal
   const [isBlack, setIsBlack] = useState(true); // true -> black, false -> yellow
   const [isEnd, setIsEnd] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   const text = `
   안녕? 나의 생애에서 가장 소중하고 특별한존재인 너에게 이 편지를 남기려고 해. 
@@ -106,10 +108,17 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
                   onPress={() => setIsBlack(false)}
                 />
               </RebornView>
+              <ToastContainer>
+                {showToast ? (
+                  <Toast showToast={showToast} message="리본을 선택해주세요" />
+                ) : (
+                  ""
+                )}
+              </ToastContainer>
               <ButtonYellow
                 text={"리본 달아주기"}
                 onPress={() => {
-                  requestWrite(), setmodalVisible(false);
+                  CheckSelected();
                 }}
               />
             </QAPopTextBox>
@@ -257,6 +266,14 @@ const CenteredView = styled.View`
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.4);
+`;
+
+const ToastContainer = styled.View`
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  align-items: flex-end;
 `;
 
 const RebornContainer = styled.Pressable`

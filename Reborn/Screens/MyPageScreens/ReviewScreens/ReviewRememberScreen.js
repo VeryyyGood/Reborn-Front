@@ -21,16 +21,16 @@ const ReviewRememberScreen = ({ route, navigation }) => {
             },
           }
         );
+        //console.log(response.data.result);
         if (response.data && response.data.result) {
           const mappedData = response.data.result.map((item) => ({
-            title: item.title,
-            content: item.content,
-            rememberImage: item.rememberImage,
             date: item.date,
-            imageDate: item.imageDate,
+            id: item.id,
+            rememberImage: item.rememberImage,
+            title: item.title,
           }));
+          //console.log(mappedData[0].rememberImage);
           setRememberData(mappedData);
-          console.log(mappedData);
         }
       } catch (error) {
         console.error("오류 발생", error);
@@ -54,11 +54,10 @@ const ReviewRememberScreen = ({ route, navigation }) => {
           data={rememberData}
           renderItem={({ item }) => (
             <RememberDiaryItem
-              title={item.title}
-              content={item.content}
-              rememberImage={item.rememberImage}
               date={item.date}
-              imageDate={item.imageDate}
+              id={item.id}
+              rememberImage={item.rememberImage}
+              title={item.title}
               navigation={navigation}
             />
           )}

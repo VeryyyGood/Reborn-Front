@@ -20,9 +20,21 @@ const ImageScreen = ({ navigation: { navigate } }) => {
   const [date, setDate] = useState("");
   const [title, onChangeTitle] = React.useState("");
   const [contents, onChangeContents] = React.useState(""); // contents
+  const [showToast, setShowToast] = useState(false);
 
   const [imageFile, setImageFile] = useState(""); // image
   const [uploadedImage, setUploadedImage] = useState("");
+
+  // is answer writed -> toast
+  const CheckWrited = async () => {
+    if (!date || !title || !contents || !isImageUploaded) {
+      setShowToast(true);
+    } else {
+      setShowToast(false);
+      requestWrite();
+      navigate("Clean");
+    }
+  };
 
   // refresh
   useFocusEffect(
@@ -58,7 +70,6 @@ const ImageScreen = ({ navigation: { navigate } }) => {
       },
       (response) => {
         //console.log(response.fileName);
-        //console.log(response.assets[0].base64);
         if (response.didCancel) {
           return;
         } else if (response.errorCode) {
@@ -156,10 +167,17 @@ const ImageScreen = ({ navigation: { navigate } }) => {
             value={contents}
           ></ContentsText>
         </TextContainer>
+        <ToastContainer>
+          {showToast ? (
+            <Toast showToast={showToast} message="일기를 작성해주세요" />
+          ) : (
+            ""
+          )}
+        </ToastContainer>
         <CompleteButton
           text="저장하기"
           onPress={() => {
-            requestWrite(), navigate("Clean");
+            CheckWrited();
           }}
         />
       </ImageBackground>
@@ -199,6 +217,14 @@ const PickDate = styled.Pressable`
 const TextContainer = styled.View`
   flex: 1;
   margin: 2%;
+`;
+
+const ToastContainer = styled.View`
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  align-items: flex-end;
 `;
 
 const DateText = styled.Text`
