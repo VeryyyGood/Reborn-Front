@@ -39,7 +39,18 @@ const ReDiaryModifyScreen = ({route, navigation}) => {
         console.log(rediaryId);
           setIsEditing(!isEditing);
       } else {
-          alert('오늘 작성된 일기만 수정할 수 있습니다.');
+        Alert.alert(
+          "아쉽네요",
+          "감정일기는 작성 당일에만 수정할 수 있습니다.",
+          [
+            {
+              text: "예",
+              onPress: () => console.log("삭제 취소"),
+              style: "cancel",
+            },
+          ],
+          { cancelable: false } //밖을 누르면 취소가 되는데 그거 금지
+        );
       }
   };
 
@@ -146,7 +157,7 @@ const ReDiaryModifyScreen = ({route, navigation}) => {
       <TouchableOpacity 
             style={[styles.ReModifyButtun, rediaryCreatedAt === todayStr ? {} : styles.buttonDisabled]} 
             onPress={toggleEdit} 
-            disabled={rediaryCreatedAt !== todayStr}
+            //disabled={rediaryCreatedAt !== todayStr}
         >
             <Text style={styles.buttonText}>수정 하기</Text>
         </TouchableOpacity>
