@@ -11,6 +11,8 @@
   "dependencies": {
     "@react-native-community/datetimepicker": "7.6.1",
     "@react-native-community/masked-view": "^0.1.11",
+    "@react-native-firebase/app": "^20.0.0",
+    "@react-native-firebase/messaging": "^20.0.0",
     "@react-native-seoul/naver-login": "^3.0.0",
     "@react-navigation/bottom-tabs": "^6.5.19",
     "@react-navigation/drawer": "^6.6.15",
