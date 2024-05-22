@@ -65,8 +65,9 @@ const RediaryMainScreen = ({navigation} ) => {
             );
             if(response.data){
                 //console.log(response.data.result);
-                setResult(response.data.result);
-                navigateToRediaryWrite();
+                const latestResult = response.data.result;
+                //setResult(latestResult);
+                navigateToRediaryWrite(latestResult);
             }
         } catch (e) {
             console.error(e);
@@ -80,9 +81,9 @@ const RediaryMainScreen = ({navigation} ) => {
     //     { rediaryId: '4', rediaryTitle: '축제', rediaryCreatedAt: '2024-04-18', rediaryContent: '학교 축제를 했다 시끄러웠다.', pickEmotion: 'CLOUDY', resultEmotion: 'RED', },
     //   ]);
 
-    const navigateToRediaryWrite = () => {
+    const navigateToRediaryWrite = (latestResult) => {
         //console.log(result);
-    if (result) {
+    if (latestResult) {
         // result가 true일 경우에만 RediaryWrite로 이동
         navigation.navigate("RediaryStack", { screen: "RediaryWrite" });
     } else {
