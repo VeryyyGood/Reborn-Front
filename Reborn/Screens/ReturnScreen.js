@@ -16,6 +16,7 @@ import { colors } from "../theme";
 const ReturnScreen = () => {
   const [inputText, setInputText] = useState("");
   const [messages, setMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchAIResponse = async () => {
     if (!inputText.trim()) return;
@@ -26,6 +27,15 @@ const ReturnScreen = () => {
     };
 
     setMessages((prevMessages) => [...prevMessages, userMessage]);
+    setInputText("");
+    setIsLoading(true);
+
+    const loadingMessage = {
+      role: "bot",
+      content: "요청 내용을 확인했어요! 답변을 준비해볼게요!",
+    };
+
+    setMessages((prevMessages) => [...prevMessages, loadingMessage]);
 
     try {
       const response = await axios.post("http://43.200.199.77:5000", {
@@ -37,16 +47,24 @@ const ReturnScreen = () => {
         content: response.data,
       };
 
-      setMessages((prevMessages) => [...prevMessages, botResponse]);
+      setMessages((prevMessages) =>
+        prevMessages.map((msg, index) =>
+          index === prevMessages.length - 1 ? botResponse : msg
+        )
+      );
     } catch (error) {
       console.error("응답 가져오기 실패: ", error.message);
       const errorMessage = {
         role: "system",
-        content: "errpor",
+        content: "error",
       };
-      setMessages((prevMessages) => [...prevMessages, errorMessage]);
+      setMessages((prevMessages) =>
+        prevMessages.map((msg, index) =>
+          index === prevMessages.length - 1 ? errorMessage : msg
+        )
+      );
     }
-    setInputText("");
+    setIsLoading(false);
   };
 
   return (
@@ -111,12 +129,12 @@ const styles = StyleSheet.create({
   },
   messagesContainer: {
     flex: 1,
-    padding: 10,
+    padding: 15,
   },
   userMessage: {
     alignSelf: "flex-end",
     backgroundColor: "#E0EDC2",
-    marginBottom: 10,
+    marginBottom: 15,
     borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 15,
@@ -125,7 +143,7 @@ const styles = StyleSheet.create({
   botMessage: {
     alignSelf: "flex-start",
     backgroundColor: "white",
-    marginBottom: 10,
+    marginBottom: 15,
     borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 15,
