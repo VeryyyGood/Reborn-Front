@@ -1,23 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { colors } from "../../../theme";
-import {
-  GrayLine,
-  ModifyButton,
-  CompleteButton,
-  DelateButton,
-  RadioButton,
-} from "../../../components";
-import {
-  View,
-  TextInput,
-  Text,
-  Button,
-  TouchableOpacity,
-  StyleSheet,
-  ImageBackground,
-} from "react-native";
+import styled from "styled-components/native";
+import { GrayLine } from "../../../components";
+import { Image, ImageBackground } from "react-native";
 import axios from "axios";
 import { useAccessToken } from "../../../context/AccessTokenContext";
+
+import imagePickerImage from "../../../Assets/icons/icon_imagePicker.png";
 
 const ReviewRememberDiaryScreen = ({ route }) => {
   const { id } = route.params;
@@ -25,7 +14,7 @@ const ReviewRememberDiaryScreen = ({ route }) => {
   const [title, setTitle] = useState([]);
   const [content, setContent] = useState([]);
   const [imageDate, setImageDate] = useState([]);
-  const [rememberImage, setRememberImage] = useState([]);
+  const [rememberImage, setRememberImage] = useState("");
 
   useEffect(() => {
     const fetchRememberDiary = async () => {
@@ -39,7 +28,7 @@ const ReviewRememberDiaryScreen = ({ route }) => {
           }
         );
         if (response.data && response.data.result) {
-          console.log(response.data);
+          console.log(response.data.result);
           setTitle(response.data.result.title);
           setContent(response.data.result.content);
           setImageDate(response.data.result.imageDate);
@@ -55,42 +44,60 @@ const ReviewRememberDiaryScreen = ({ route }) => {
   }, [id, accessToken]);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.textContainer}>
-        <Text style={styles.boldFont}>
-          <Text style={styles.reColor}>RE</Text>MEMBER:
-        </Text>
-        <Text style={styles.normalFont}>건강한 작별 준비하기</Text>
-      </View>
-    </View>
+    <Container>
+      <ImageBackground
+        source={require("./../../../Assets/Images/bg/paper.png")}
+        style={{ width: "100%", height: "100%" }}
+      >
+        <DateText>{imageDate}</DateText>
+
+        <GrayLine />
+
+        <TitleText>{title}</TitleText>
+        <Image
+          source={rememberImage ? { uri: rememberImage } : imagePickerImage}
+          style={{ width: "100%", height: "32%" }}
+        ></Image>
+        <TextContainer>
+          <GrayLine />
+          <ContentsText multiline={true} style={{ textAlignVertical: "top" }}>
+            {content}
+          </ContentsText>
+        </TextContainer>
+      </ImageBackground>
+    </Container>
   );
 };
 
 export default ReviewRememberDiaryScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.palette.White,
-  },
-  textContainer: {
-    height: "15%",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    paddingLeft: "5%",
-  },
+const Container = styled.View`
+  flex: 1;
+  background-color: ${colors.palette.White};
+`;
 
-  boldFont: {
-    fontSize: 24,
-    fontFamily: "Poppins-Bold",
-    color: colors.palette.BrownDark,
-  },
-  normalFont: {
-    fontSize: 16,
-    fontFamily: "Poppins-Bold",
-    color: colors.palette.BrownDark,
-  },
-  reColor: {
-    color: colors.palette.Brown,
-  },
-});
+const TextContainer = styled.View`
+  flex: 1;
+  margin: 2%;
+  width: 100%;
+  background-color: "black";
+`;
+
+const DateText = styled.Text`
+  font-family: "caligraphy";
+  font-size: 30px;
+  text-align: center;
+  margin: 2% 0% 2% 0%;
+`;
+
+const TitleText = styled.Text`
+  font-family: "Poppins-Bold";
+  font-size: 26px;
+  margin: 0% 5% 0% 5%;
+`;
+
+const ContentsText = styled.Text`
+  font-family: "Poppins-Regular";
+  font-size: 20px;
+  margin: 2% 5% 0% 5%;
+`;
