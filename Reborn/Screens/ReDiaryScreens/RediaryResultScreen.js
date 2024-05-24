@@ -15,8 +15,15 @@ import {
 import sunImage from "../../Assets/icons/rediaryimage/sun.png";
 import cloudImage from "../../Assets/icons/rediaryimage/cloud.png";
 import rainImage from "../../Assets/icons/rediaryimage/rain.png";
+import Sound from "react-native-sound";
 
 const RediaryResultScreen = ({ route, navigation}) => {
+  const music = new Sound('holymoly.mp3', Sound.MAIN_BUNDLE, error => {
+    if(error){
+     console.log('Error loading sound: ' + error);
+     return;
+     }
+   });
   const { accessToken } = useAccessToken();
   const { globalNickname } = useGlobalNickname();
 
@@ -129,6 +136,7 @@ const RediaryResultScreen = ({ route, navigation}) => {
         <YellowBox>
           <ShowResult
             onPress={() => {
+              music.play();
               setIsVisible(true);
               requestWrite(analysisResult.document.sentiment);
             }}

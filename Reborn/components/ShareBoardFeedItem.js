@@ -46,6 +46,11 @@ const styles=StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 5,
         marginBottom: 10,
+        backgroundColor: colors.palette.backgroundColor,
+        // borderColor: colors.palette.Yellow,
+        // borderBlockColor: 'yellow',
+        // borderWidth: 2,
+        // borderRadius: 20,
     },
     titlecontainer: {
         flexDirection: 'row',
