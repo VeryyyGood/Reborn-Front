@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Text, ImageBackground, Modal, Image } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../../../theme";
@@ -8,6 +8,7 @@ import {
   ButtonYellow,
   Toast,
 } from "../../../components";
+import AppContext from "./AppContext";
 import {
   useAccessToken,
   useGlobalNickname,
@@ -17,6 +18,8 @@ import { requestPostProgress } from "../../../utiles"; // send data to Server
 import axios from "axios";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_clothes.png";
+import catimageURL from "../../../Assets/Images/cat/cat_clothes.png";
+
 import ribbon_blackimageURL from "../../../Assets/stuffs/ribbon_black.png";
 import ribbon_yellowimageURL from "../../../Assets/stuffs/ribbon_yellow.png";
 import letterPaperimageURL from "../../../Assets/stuffs/letterPaper.png";
@@ -25,6 +28,11 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
   const { globalNickname } = useGlobalNickname();
   const { globalPetName } = useGlobalPetName();
+  const myContext = useContext(AppContext);
+
+  const [petImage] = useState(
+    myContext.petType === "CAT" ? catimageURL : dogimageURL
+  );
 
   const [modalVisible, setmodalVisible] = useState(true); // Reborn Modal
   const [letterVisible, setletterVisible] = useState(false); // Letter Modal
@@ -80,7 +88,7 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
           <Text style={{ color: colors.palette.Brown }}>RE</Text>BORN: 나의
           반려동물과 작별하기
         </Text>
-        <DogImage source={dogimageURL} resizeMode="center" />
+        <DogImage source={petImage} resizeMode="center" />
 
         <Modal animationType="fade" visible={modalVisible} transparent={true}>
           <BlackContainer>
@@ -98,6 +106,7 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
                     isBlack ? colors.palette.Yellow : colors.palette.Gray400
                   }
                   onPress={() => setIsBlack(true)}
+                  petType={myContext.petType}
                 />
                 <SelectReborn
                   source={ribbon_yellowimageURL}
@@ -106,6 +115,7 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
                     !isBlack ? colors.palette.Yellow : colors.palette.Gray400
                   }
                   onPress={() => setIsBlack(false)}
+                  petType={myContext.petType}
                 />
               </RebornView>
               <ToastContainer>
@@ -118,7 +128,7 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
               <ButtonYellow
                 text={"리본 달아주기"}
                 onPress={() => {
-                  CheckSelected();
+                  requestWrite(), setmodalVisible(false);
                 }}
               />
             </QAPopTextBox>
@@ -176,6 +186,7 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
         <RebornImage
           source={isBlack ? ribbon_blackimageURL : ribbon_yellowimageURL}
           resizeMode="center"
+          petType={myContext.petType}
         />
         <ButtonBrownBottom
           text={isEnd ? "작별하기" : "편지 열람하기"}
@@ -213,7 +224,8 @@ const RebornImage = styled.Image`
   width: 15%;
   height: 15%;
   position: absolute;
-  margin: 84% 0% 0% 39%;
+  margin: ${({ petType }) =>
+    petType === "CAT" ? "80% 0% 0% 33%" : "90% 0% 0% 39%"};
 `;
 
 const BlackContainer = styled.View`

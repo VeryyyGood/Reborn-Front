@@ -8,80 +8,79 @@ import { useFocusEffect } from "@react-navigation/native";
 
 import AppContext from "./AppContext";
 
-import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
-import dog_petOneimageURL from "../../../Assets/Images/dog/dog_hand1.png";
-import dog_petTwoimageURL from "../../../Assets/Images/dog/dog_hand2.png";
-
 import catimageURL from "../../../Assets/Images/cat/cat_idle.png";
-import cat_petOneimageURL from "../../../Assets/Images/cat/cat_hand1.png";
-import cat_petTwoimageURL from "../../../Assets/Images/cat/cat_hand2.png";
-
-import handimageURL from "../../../Assets/stuffs/hand.png";
+import cat_PlayOneimageURL from "../../../Assets/Images/cat/cat_play1.png";
+import cat_PlayTwoimageURL from "../../../Assets/Images/cat/cat_play2.png";
+import handimageURL from "../../../Assets/Images/cat/cat_stick.png";
 
 import { useAccessToken } from "../../../context/AccessTokenContext";
 
-const PetScreen = ({ navigation: { navigate } }) => {
+const PlayScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
   const myContext = useContext(AppContext);
 
-  const [countPet, setCountPet] = useState(0);
-  const [isPet, setIsPet] = useState(false);
+  const [countPlay, setCountPlay] = useState(0);
+  const [isPlay, setIsPlay] = useState(false);
   const [isFinish, setIsFinish] = useState(false);
-  const [petImageIdle] = useState(
-    myContext.petType === "CAT" ? catimageURL : dogimageURL
-  );
-  const [animationImage, setAnimationImage] = useState(
-    myContext.petType === "CAT" ? cat_petOneimageURL : dog_petOneimageURL
-  );
-  const [animationToggle, setAnimationToggle] = useState(false);
+  const [PlayImage, setPlayImage] = useState(cat_PlayOneimageURL);
+
+  const translateY = useRef(new Animated.Value(0)).current; // Initialize animated value for translateY
 
   // Server Link for sending data
   const linkArray = [
-    "http://reborn.persi0815.site/reborn/remind/pat",
-    "http://reborn.persi0815.site/reborn/reveal/pat",
-    "http://reborn.persi0815.site/reborn/remember/pat",
-    "http://reborn.persi0815.site/reborn/reborn/pat",
+    "http://reborn.persi0815.site/reborn/remind/play",
+    "http://reborn.persi0815.site/reborn/reveal/play",
+    "http://reborn.persi0815.site/reborn/remember/play",
+    "http://reborn.persi0815.site/reborn/reborn/play",
   ];
 
   // refresh
   useFocusEffect(
     React.useCallback(() => {
-      setCountPet(0);
-      setIsPet(false);
+      setCountPlay(0);
+      setIsPlay(false);
       setIsFinish(false);
-      setAnimationToggle(false);
     }, [])
   );
 
   useEffect(() => {
-    if (isPet) {
+    if (isPlay) {
       const intervalId = setInterval(() => {
-        setAnimationToggle((prev) => !prev);
+        setPlayImage((prevImage) =>
+          prevImage === cat_PlayOneimageURL
+            ? cat_PlayTwoimageURL
+            : cat_PlayOneimageURL
+        );
       }, 300);
 
-      return () => clearInterval(intervalId);
-    }
-  }, [isPet]);
+      // Start jumping animation
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(translateY, {
+            toValue: -70,
+            duration: 250,
+            useNativeDriver: true,
+          }),
+          Animated.timing(translateY, {
+            toValue: 0,
+            duration: 250,
+            useNativeDriver: true,
+          }),
+        ])
+      ).start();
 
-  useEffect(() => {
-    if (isPet) {
-      if (animationToggle) {
-        setAnimationImage(
-          myContext.petType === "CAT" ? cat_petOneimageURL : dog_petOneimageURL
-        );
-      } else {
-        setAnimationImage(
-          myContext.petType === "CAT" ? cat_petTwoimageURL : dog_petTwoimageURL
-        );
-      }
-
-      if (countPet >= 2) {
+      if (countPlay >= 2) {
         setIsFinish(true);
       } else {
-        setCountPet(countPet + 1);
+        setCountPlay(countPlay + 1);
       }
+
+      return () => {
+        clearInterval(intervalId);
+        translateY.setValue(0); // Reset translateY value
+      };
     }
-  }, [animationToggle]);
+  }, [isPlay]);
 
   // RE:MIND & RE:VEAL & RE:MEMBER& RE:BORN what day? => Post Link
   const handleLink = (day) => {
@@ -103,31 +102,34 @@ const PetScreen = ({ navigation: { navigate } }) => {
       >
         <Text style={textStyles.contentsTextBox}>
           충분한 대화 나누기 :{" "}
-          <Text style={{ color: colors.palette.Red }}>쓰다듬기</Text>
+          <Text style={{ color: colors.palette.Red }}>놀아주기</Text>
         </Text>
-        <DogImage
-          source={isPet ? animationImage : petImageIdle}
-          resizeMode="center"
-        />
+        {isPlay ? (
+          <Animated.View style={{ transform: [{ translateY }] }}>
+            <CatPlayImage source={PlayImage} resizeMode="center" />
+          </Animated.View>
+        ) : (
+          <CatImage source={catimageURL} resizeMode="center" />
+        )}
+
         <DraggableImage
           source={handimageURL}
           style={{
             width: "50%",
             height: "50%",
             position: "absolute",
-            marginLeft: "50%",
           }}
-          setIsPet={setIsPet}
+          setIsPlay={setIsPlay}
         />
         {isFinish ? (
           <ButtonBrownBottom
-            text="밥주러 가기"
+            text="간식주러 가기"
             onPress={() => {
               requestPostProgress(
                 handleLink(myContext.contentsDay),
                 accessToken
               ),
-                navigate("Feed");
+                navigate("Snack");
             }}
           />
         ) : (
@@ -138,10 +140,11 @@ const PetScreen = ({ navigation: { navigate } }) => {
   );
 };
 
-export default PetScreen;
+export default PlayScreen;
 
-const DraggableImage = ({ source, style, setIsPet }) => {
+const DraggableImage = ({ source, style, setIsPlay }) => {
   // Values
+  const opacity = useRef(new Animated.Value(1)).current;
   const scale = useRef(new Animated.Value(1)).current;
   const position = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
 
@@ -163,13 +166,13 @@ const DraggableImage = ({ source, style, setIsPet }) => {
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (_, { dx, dy }) => {
-        if (dx > -120 && dy > 180 && dx < 25 && dy < 400) {
-          setIsPet(true);
+        if (dx > 50 && dy > 20 && dx < 160 && dy < 200) {
+          setIsPlay(true);
+          //Animated.sequence([Animated.parallel([onDropScale])]).start();
         } else {
-          setIsPet(false);
+          setIsPlay(false);
           Animated.parallel([onPressOut, goHome]).start();
         }
-        // console.log({ dx, dy });
         position.setValue({ x: dx, y: dy });
       },
       onPanResponderGrant: () => {
@@ -177,7 +180,7 @@ const DraggableImage = ({ source, style, setIsPet }) => {
       },
       onPanResponderRelease: () => {
         onPressOut.start(() => {
-          setIsPet(false);
+          setIsPlay(false);
           goHome.start();
         });
       },
@@ -204,9 +207,16 @@ const Container = styled.View`
   background-color: ${colors.palette.White};
 `;
 
-const DogImage = styled.Image`
+const CatImage = styled.Image`
   width: 50%;
   height: 50%;
   margin-left: 30%;
   margin-top: 55%;
+`;
+
+const CatPlayImage = styled.Image`
+  width: 100%;
+  height: 100%;
+  margin-left: 10%;
+  margin-top: 17%;
 `;

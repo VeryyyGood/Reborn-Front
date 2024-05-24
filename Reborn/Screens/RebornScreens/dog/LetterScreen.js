@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Text, ImageBackground, Modal, TextInput } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../../../theme";
@@ -8,6 +8,7 @@ import {
   ButtonBrownBottom,
   Toast,
 } from "../../../components";
+import AppContext from "./AppContext";
 import axios from "axios";
 
 import {
@@ -16,10 +17,17 @@ import {
 } from "../../../context/AccessTokenContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_clothes.png";
+import catimageURL from "../../../Assets/Images/cat/cat_clothes.png";
 
 const LetterScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
   const { globalPetName } = useGlobalPetName();
+  const myContext = useContext(AppContext);
+
+  const [petImage] = useState(
+    myContext.petType === "CAT" ? catimageURL : dogimageURL
+  );
+
   const [answer, onChangeAnswer] = React.useState("");
   const [qaVisible, setqaVisible] = useState(true); // Q&A Modal
   const [showToast, setShowToast] = useState(false);
@@ -76,7 +84,7 @@ const LetterScreen = ({ navigation: { navigate } }) => {
           <Text style={{ color: colors.palette.Brown }}>RE</Text>BORN: 나의
           반려동물과 작별하기
         </Text>
-        <DogImage source={dogimageURL} resizeMode="center" />
+        <DogImage source={petImage} resizeMode="center" />
         <Modal animationType="fade" visible={qaVisible} transparent={true}>
           <BlackContainer>
             <QAPopTextBox>

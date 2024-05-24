@@ -89,6 +89,7 @@ const MainScreen = ({ navigation: { navigate } }) => {
 
         // Contents is already progressed
         myContext.setDay(response.data.result.rebornDate); // set Day
+        myContext.changePetType(response.data.result.petType); // set PetType
         setGlobalPetName(response.data.result.petName);
 
         // handle navigation according to progress
@@ -104,6 +105,9 @@ const MainScreen = ({ navigation: { navigate } }) => {
             break;
           case "WALK":
             navigate("RebornDogStack", { screen: "Walk" });
+            break;
+          case "PLAY":
+            navigate("RebornDogStack", { screen: "Play" });
             break;
           case "SNACK":
             navigate("RebornDogStack", { screen: "Snack" });

@@ -1,21 +1,29 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Text, ImageBackground, Animated, PanResponder } from "react-native";
 import styled from "styled-components/native";
+import AppContext from "./AppContext";
 import { colors } from "../../../theme";
 import { textStyles, ButtonBrownBottom } from "../../../components";
 import { requestPostProgress } from "../../../utiles"; // send data to Server
 import { useAccessToken } from "../../../context/AccessTokenContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
+import catimageURL from "../../../Assets/Images/cat/cat_idle.png";
+
 import dog_dirtyimageURL from "../../../Assets/Images/dog/dog_dirty0.png"; // dirty Idle
 import dog_dirtyOneimageURL from "../../../Assets/Images/dog/dog_dirty1.png"; // dirty Animation with bubble
 import dog_dirtyTwoimageURL from "../../../Assets/Images/dog/dog_dirty2.png"; // dirty Animation with bubble
+
+//import cat_dirtyimageURL from "../../../Assets/Images/cat/cat_dirty0.png"; // dirty Idle
+import cat_dirtyOneimageURL from "../../../Assets/Images/cat/cat_dirty1.png"; // dirty Animation with bubble
+//import cat_dirtyTwoimageURL from "../../../Assets/Images/cat/cat_dirty2.png"; // dirty Animation with bubble
 
 import rainimageURL from "../../../Assets/stuffs/shower_rain.png";
 import showergiimageURL from "../../../Assets/stuffs/showergi.png";
 
 const WashScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
+  const myContext = useContext(AppContext);
 
   const [isWashed, setIsWashed] = useState(false);
   const [isWashing, setIsWashing] = useState(false);
@@ -24,14 +32,9 @@ const WashScreen = ({ navigation: { navigate } }) => {
   const [countWash, setCountWash] = useState(0);
   const [currentDogImage, setCurrentDogImage] = useState(dogimageURL);
 
-  useEffect(() => {
-    if (isWashing) {
-      setCountWash(countWash + 1);
-      if (countWash >= 5) {
-        setIsWashed(true);
-      }
-    }
-  }, [isWashing]);
+  const [petImage] = useState(
+    myContext.petType === "CAT" ? catimageURL : dogimageURL
+  );
 
   useEffect(() => {
     let intervalId;
@@ -45,6 +48,13 @@ const WashScreen = ({ navigation: { navigate } }) => {
       }, 300);
     } else {
       setCurrentDogImage(dog_dirtyimageURL);
+    }
+
+    if (isWashing) {
+      setCountWash(countWash + 1);
+      if (countWash >= 5) {
+        setIsWashed(true);
+      }
     }
 
     return () => clearInterval(intervalId);
@@ -65,7 +75,7 @@ const WashScreen = ({ navigation: { navigate } }) => {
         </Text>
 
         {isWashed ? (
-          <DogImage source={dogimageURL} resizeMode="center" />
+          <DogImage source={petImage} resizeMode="center" />
         ) : (
           <DogImage source={currentDogImage} resizeMode="center" />
         )}

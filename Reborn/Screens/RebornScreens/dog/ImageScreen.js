@@ -193,7 +193,6 @@ const Container = styled.View`
 `;
 
 const ImagePickerContainer = styled.Pressable`
-  background: ${colors.palette.Gray200};
   height: 32%;
   margin: 0% 2% 0% 2%;
   align-items: center;
@@ -206,6 +205,7 @@ const ImageIcon = styled.Image`
 `;
 
 const PickDate = styled.Pressable`
+  background: ${colors.palette.Gray200};
   opacity: 0.7;
   padding: 2%;
   margin: 2% 20% 2% 20%;

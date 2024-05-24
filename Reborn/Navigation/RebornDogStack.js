@@ -21,6 +21,8 @@ import ClothesScreen from "../Screens/RebornScreens/dog/ClothesScreen";
 import LetterScreen from "../Screens/RebornScreens/dog/LetterScreen";
 import SetRebornScreen from "../Screens/RebornScreens/dog/SetRebornScreen";
 
+import PlayScreen from "../Screens/RebornScreens/dog/PlayScreen";
+
 import { Image } from "react-native";
 
 import AppContext from "../Screens/RebornScreens/dog/AppContext";
@@ -132,6 +134,11 @@ const RebornDogStack = ({ navigation: { navigate } }) => {
       <NativeRebornDogStack.Screen
         name="SetReborn"
         component={SetRebornScreen}
+        options={{ title: `Day ${myContext.contentsDay}` }}
+      />
+      <NativeRebornDogStack.Screen
+        name="Play"
+        component={PlayScreen}
         options={{ title: `Day ${myContext.contentsDay}` }}
       />
     </NativeRebornDogStack.Navigator>
