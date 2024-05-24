@@ -18,12 +18,14 @@ const ShareBoardFeedItem = ({ navigation, id, boardWriter, boardContent, boardCr
                 <View>
                     <Text style={[styles.content, {color: colors.palette.BrownDark, fontFamily: 'Poppins-Regular'}]}>{boardContent}</Text>
                 </View>
+                <View style={{alignItems: 'center',}}>
                 {boardImage && (
                     <Image
                     style={styles.boardImage}
                     source={{ uri: boardImage }}
                     />
                 )}
+                </View>
                 <View style={{flexDirection:'row', paddingVertical: 10, paddingHorizontal: 20, justifyContent: 'space-between'}}>
                     <View style={{flexDirection:'row'}}>
                         <Image style={{marginLeft: '5%', tintColor: colors.palette.BrownDark}} source={require('../Assets/icons/ShareBoard/commentIcon.png')}/>
@@ -78,11 +80,12 @@ const styles=StyleSheet.create({
         borderRadius: 50,
     },
     boardImage: {
-        width: '100%',
+        width: '90%',
         height: 200,
-        resizeMode: 'contain',
+        resizeMode: 'cover',
         marginTop: 10, 
         marginBottom: 10,
+        borderRadius: 20,
       },
 });
 

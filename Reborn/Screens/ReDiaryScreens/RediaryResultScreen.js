@@ -151,14 +151,6 @@ const RediaryResultScreen = ({ route, navigation}) => {
                   screen: 'RediaryMain',
                 });
               }}
-              // onPress={() =>
-            // navigation.dispatch(
-            //     CommonActions.reset({
-            //     index: 0,
-            //     routes: [{ name: "RediaryMain" }],
-            //     })
-            // )
-            // }
             />
     </Container>
   );

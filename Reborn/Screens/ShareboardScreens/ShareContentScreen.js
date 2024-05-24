@@ -52,17 +52,16 @@ const ShareContentScreen = ({ route, navigation }) => {
             }
           );
           //console.log(response.data);
-          //console.log('조하요갯수'+initialLikeCount);
           
           if (response.data && response.data.result === 'liked') {
             setIsHeart(true);
             setLikeCount(initialLikeCount);
-           // console.log('조하요가 눌렷어요. 갯수'+initialLikeCount);
+           // console.log('좋아요 눌림. 갯수'+initialLikeCount);
           }
           else {
             setIsHeart(false);
             setLikeCount(initialLikeCount);
-            //console.log('조하요가 안눌렷어요. 갯수'+initialLikeCount);
+            //console.log('좋아요 안 눌림. 갯수'+initialLikeCount);
           }
         } catch (e) {
           console.error(e);
@@ -272,13 +271,6 @@ const ShareContentScreen = ({ route, navigation }) => {
     }
   };
 
-//   const commentDatas = [
-//     { id: '1', title: '이사장', date: '2222-22.22', content: '맛있겠다.' },
-//     { id: '2', title: '배기용', date: '2222-22.23', content: '룰루랄라'},
-//     { id: '3', title: '문채영', date: '2222-22.24', content: '세번째 글'},
-//     { id: '4', title: '갱민준', date: '2222-22.24', content: '펲시콜라'},
-// ];
-
 const renderHeaderComponent = () => (
       <View>
         <View style={styles.titlecontainer}>
@@ -308,12 +300,14 @@ const renderHeaderComponent = () => (
           >
             {boardContent}
           </Text>
+          <View style={{alignItems: 'center'}}>
           {boardImage && (
             <Image
               style={styles.boardImage}
               source={{ uri: boardImage }}
             />
           )}
+          </View>
         </View>
         <View
           style={{
@@ -452,10 +446,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Popins-Medium'
   },
   boardImage: {
-    width: '100%',
+    width: '90%',
     height: 200,
     resizeMode: 'contain',
     marginTop: 10, 
     marginBottom: 10,
+    borderRadius: 30,
   },
 });
