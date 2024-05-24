@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { colors } from "../../../theme";
 import {
   GrayLine,
@@ -14,10 +14,45 @@ import {
   Button,
   TouchableOpacity,
   StyleSheet,
+  ImageBackground,
 } from "react-native";
+import axios from "axios";
+import { useAccessToken } from "../../../context/AccessTokenContext";
 
 const ReviewRememberDiaryScreen = ({ route }) => {
-  const { title, content, rememberImage, date, imageDate } = route.params;
+  const { id } = route.params;
+  const { accessToken } = useAccessToken();
+  const [title, setTitle] = useState([]);
+  const [content, setContent] = useState([]);
+  const [imageDate, setImageDate] = useState([]);
+  const [rememberImage, setRememberImage] = useState([]);
+
+  useEffect(() => {
+    const fetchRememberDiary = async () => {
+      try {
+        const response = await axios.get(
+          `http://reborn.persi0815.site:8080/reborn/remember/view/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        if (response.data && response.data.result) {
+          console.log(response.data);
+          setTitle(response.data.result.title);
+          setContent(response.data.result.content);
+          setImageDate(response.data.result.imageDate);
+          setRememberImage(response.data.result.rememberImage);
+        }
+      } catch (error) {
+        console.error("오류 발생", error);
+        console.log(`Fetching info for petId: ${id}`);
+      }
+    };
+
+    fetchRememberDiary();
+  }, [id, accessToken]);
 
   return (
     <View style={styles.container}>
