@@ -15,7 +15,7 @@ const OuttroScreen = ({ navigation: { navigate } }) => {
   return (
     <Container>
       <ImageBackground
-        source={require("./../../../Assets/Images/bg/bg_blossom.png")}
+        source={require("./../../../Assets/Images/bg/bg_outtro.png")}
         style={{ width: "100%", height: "100%" }}
       >
         <Text style={textStyles.contentsTextBox}>

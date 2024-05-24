@@ -17,13 +17,21 @@ import axios from "axios";
 import { useAccessToken } from "../../../context/AccessTokenContext";
 
 import dog_boxURL from "../../../Assets/Images/dog/dog_box.png";
+import cat_boxURL from "../../../Assets/Images/cat/cat_box.png";
 
 import dog_bathURL from "../../../Assets/Images/dog/dog_bath.png";
 import dog_padURL from "../../../Assets/Images/dog/dog_pad.png";
-import dog_bowlURL from "../../../Assets/Images/dog/dog_bowl.png";
+import dog_bowlURL from "../../../Assets/Images/dog/dog_bowl_no.png";
 import dog_cushionURL from "../../../Assets/Images/dog/dog_cushion.png";
 import dog_snackURL from "../../../Assets/Images/dog/dog_snack.png";
 import dog_toyURL from "../../../Assets/Images/dog/dog_toy.png";
+
+import cat_bathURL from "../../../Assets/Images/cat/cat_bath.png";
+import cat_shovelURL from "../../../Assets/Images/cat/cat_shovel.png";
+import cat_bowlURL from "../../../Assets/Images/cat/cat_bowl_no.png";
+import cat_towerURL from "../../../Assets/Images/cat/cat_tower.png";
+import cat_snackURL from "../../../Assets/Images/cat/cat_snack.png";
+import cat_stickURL from "../../../Assets/Images/cat/cat_stick.png";
 
 const CleanScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
@@ -32,19 +40,47 @@ const CleanScreen = ({ navigation: { navigate } }) => {
   const [isNextDayButtonVisible, setIsNextDayButtonVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(true);
 
+  const [boxImage] = useState(
+    myContext.petType === "CAT" ? cat_boxURL : dog_boxURL
+  );
+
+  const [bathImage] = useState(
+    myContext.petType === "CAT" ? cat_bathURL : dog_bathURL
+  );
+
+  const [bowlImage] = useState(
+    myContext.petType === "CAT" ? cat_bowlURL : dog_bowlURL
+  );
+
+  const [snackImage] = useState(
+    myContext.petType === "CAT" ? cat_snackURL : dog_snackURL
+  );
+
+  const [toyImage] = useState(
+    myContext.petType === "CAT" ? cat_shovelURL : dog_toyURL
+  );
+
+  const [stuffImage] = useState(
+    myContext.petType === "CAT" ? cat_towerURL : dog_padURL
+  );
+
+  const [stuffTwoImage] = useState(
+    myContext.petType === "CAT" ? cat_stickURL : dog_cushionURL
+  );
+
   const ModalTextArray = [
-    `오늘부터 3일간 반려동물 용품을 정리해보려고 합니다. 무엇을 먼저 정리해야 할지 고민이 되는 분들을 위해 하루에 두 용품씩 가이드를 제공합니다.\n정리가 끝난 항목을 박스쪽으로 드래그 해주세요. 오늘은 목욕용품과 위생용품을 정리해봅시다.`,
-    `오늘은 식기와 식품을 정리해봅시다. 정리가 끝난 항목을 박스쪽으로 드래그 해주세요.`,
-    `오늘은 쿠션 등 생활용품과 장난감을 정리해봅시다. 정리가 끝난 항목을 박스쪽으로 드래그 해주세요.`,
+    `오늘부터 3일간 반려동물 용품을 정리해보려고 합니다. 무엇을 먼저 정리해야 할지 고민이 되는 분들을 위해 하루에 두 용품씩 가이드를 제공합니다.`,
+    `정리가 끝난 항목을 박스쪽으로 드래그 해주세요.`,
+    ` 정리가 끝난 항목을 박스쪽으로 드래그 해주세요.`,
   ];
 
   const [isDraggable, setIsDraggable] = useState({
     bath: false,
-    pad: false,
+    stuffTwo: false,
     bowl: false,
     snack: false,
-    cushion: false,
     toy: false,
+    stuff: false,
   });
 
   // bath, pad, bowl, snack, cushion, toy
@@ -114,7 +150,7 @@ const CleanScreen = ({ navigation: { navigate } }) => {
           <Text style={{ color: colors.palette.Red }}>정리하기</Text>
         </Text>
         <Box
-          source={dog_boxURL}
+          source={boxImage}
           style={{
             width: "50%",
             height: "50%",
@@ -125,7 +161,7 @@ const CleanScreen = ({ navigation: { navigate } }) => {
         />
         {isDraggable.bath ? (
           <DraggableImage
-            source={dog_bathURL}
+            source={bathImage}
             style={{
               width: "50%",
               height: "50%",
@@ -141,7 +177,7 @@ const CleanScreen = ({ navigation: { navigate } }) => {
         )}
         {isDraggable.pad ? (
           <DraggableImage
-            source={dog_padURL}
+            source={stuffImage}
             style={{
               width: "60%",
               height: "56%",
@@ -158,7 +194,7 @@ const CleanScreen = ({ navigation: { navigate } }) => {
         )}
         {isDraggable.bowl ? (
           <DraggableImage
-            source={dog_bowlURL}
+            source={bowlImage}
             style={{
               width: "50%",
               height: "50%",
@@ -175,7 +211,7 @@ const CleanScreen = ({ navigation: { navigate } }) => {
         )}
         {isDraggable.snack ? (
           <DraggableImage
-            source={dog_snackURL}
+            source={snackImage}
             style={{
               width: "50%",
               height: "50%",
@@ -191,7 +227,7 @@ const CleanScreen = ({ navigation: { navigate } }) => {
         )}
         {isDraggable.cushion ? (
           <DraggableImage
-            source={dog_cushionURL}
+            source={stuffTwoImage}
             style={{
               width: "50%",
               height: "50%",
@@ -209,7 +245,7 @@ const CleanScreen = ({ navigation: { navigate } }) => {
 
         {isDraggable.toy ? (
           <DraggableImage
-            source={dog_toyURL}
+            source={toyImage}
             style={{
               width: "50%",
               height: "50%",
@@ -277,7 +313,7 @@ const DraggableImage = ({
     useNativeDriver: true,
   });
   const goHome = Animated.spring(position, {
-    toValue: 0,
+    toValue: { x: 0, y: 0 },
     useNativeDriver: true,
   });
   const onDropScale = Animated.timing(scale, {
@@ -308,9 +344,9 @@ const DraggableImage = ({
           onPressIn.start();
         }
       },
-      onPanResponderRelease: (evt, { dx, dy }) => {
+      onPanResponderRelease: (evt, gestureState) => {
         if (!isDraggable) return;
-        // console.log("Release event", dx, dy);
+        const { dx, dy } = gestureState;
         // is stuff's position near the box?
         if (
           dx > goalPositionArray[0] &&

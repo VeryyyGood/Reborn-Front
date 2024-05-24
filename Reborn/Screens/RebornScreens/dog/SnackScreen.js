@@ -14,16 +14,35 @@ import styled from "styled-components/native";
 
 import AppContext from "./AppContext";
 
-import snackimageURL from "../../../Assets/Images/dog/dog_snack.png";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
+import catimageURL from "../../../Assets/Images/cat/cat_idle.png";
+
+import dogsnackimageURL from "../../../Assets/Images/dog/dog_snack.png";
+import catsnackimageURL from "../../../Assets/Images/cat/cat_snack.png";
 
 import dogsnack_oneimageURL from "../../../Assets/Images/dog/dog_eat_snack1.png";
 import dogsnack_twoimageURL from "../../../Assets/Images/dog/dog_eat_snack2.png";
+
+import catsnack_oneimageURL from "../../../Assets/Images/cat/cat_eat_snack1.png";
+import catsnack_twoimageURL from "../../../Assets/Images/cat/cat_eat_snack2.png";
 
 const SnackScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
   const myContext = useContext(AppContext);
 
+  const [snackImage] = useState(
+    myContext.petType === "CAT" ? catsnackimageURL : dogsnackimageURL
+  );
+
+  const [petImage] = useState(
+    myContext.petType === "CAT" ? catimageURL : dogimageURL
+  );
+  const [animationImageOne] = useState(
+    myContext.petType === "CAT" ? catsnack_oneimageURL : dogsnack_oneimageURL
+  );
+  const [animationImageTwo] = useState(
+    myContext.petType === "CAT" ? catsnack_twoimageURL : dogsnack_twoimageURL
+  );
   const [isFeed, setisFeed] = useState(false);
 
   const destinationMap = {
@@ -73,10 +92,15 @@ const SnackScreen = ({ navigation: { navigate } }) => {
           충분한 대화 나누기 :{" "}
           <Text style={{ color: colors.palette.Red }}>간식주기</Text>
         </Text>
-        <AnimatedDogImage isFeed={isFeed} />
+        <AnimatedDogImage
+          isFeed={isFeed}
+          petImage={petImage}
+          animationImageOne={animationImageOne}
+          animationImageTwo={animationImageTwo}
+        />
 
         <DraggableImage
-          source={snackimageURL}
+          source={snackImage}
           style={{
             width: "50%",
             height: "50%",
@@ -108,8 +132,13 @@ const SnackScreen = ({ navigation: { navigate } }) => {
 
 export default SnackScreen;
 
-const AnimatedDogImage = ({ isFeed }) => {
-  const [currentImage, setCurrentImage] = useState(dogimageURL);
+const AnimatedDogImage = ({
+  isFeed,
+  petImage,
+  animationImageOne,
+  animationImageTwo,
+}) => {
+  const [currentImage, setCurrentImage] = useState(petImage);
   const [isAnimating, setIsAnimating] = useState(false);
   const animationRef = useRef(null);
 
@@ -118,15 +147,15 @@ const AnimatedDogImage = ({ isFeed }) => {
       setIsAnimating(true);
       animationRef.current = setInterval(() => {
         setCurrentImage((prevImage) =>
-          prevImage === dogsnack_oneimageURL
-            ? dogsnack_twoimageURL
-            : dogsnack_oneimageURL
+          prevImage === animationImageOne
+            ? animationImageTwo
+            : animationImageOne
         );
       }, 200); // Change image every 200ms
 
       setTimeout(() => {
         clearInterval(animationRef.current);
-        setCurrentImage(dogsnack_oneimageURL);
+        setCurrentImage(animationImageOne);
         setIsAnimating(false);
       }, 2000); // End animation after 2 seconds
     }
@@ -178,7 +207,7 @@ const DraggableImage = ({ source, style, isFeed, setisFeed }) => {
         onPressIn.start();
       },
       onPanResponderRelease: (_, { dx, dy }) => {
-        if (dx > -80 && dy > 250 && dx < -30 && dy < 310) {
+        if (dx > -100 && dy > 250 && dx < -30 && dy < 310) {
           setisFeed(!isFeed);
           Animated.sequence([
             Animated.parallel([onDropScale, onDropOpacity]),

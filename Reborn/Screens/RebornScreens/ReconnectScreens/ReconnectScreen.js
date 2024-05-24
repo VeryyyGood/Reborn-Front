@@ -79,6 +79,8 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
     try {
       setGlobalPetName(name);
       const petType = animalType === "강아지" ? "DOG" : "CAT";
+      myContext.changePetType(petType);
+      console.log(myContext.petType);
       let colorName = colorNameMap[color] || "";
 
       const response = await fetch(

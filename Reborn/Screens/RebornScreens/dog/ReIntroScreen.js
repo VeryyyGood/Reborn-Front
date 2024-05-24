@@ -8,6 +8,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import AppContext from "./AppContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
+import catimageURL from "../../../Assets/Images/cat/cat_idle.png";
 
 const ReIntroScreen = ({ navigation: { navigate } }) => {
   const ModalTextArray = [
@@ -28,6 +29,10 @@ const ReIntroScreen = ({ navigation: { navigate } }) => {
   마지막으로 하고 싶은 말을 전하고, 예쁘고 멋진 모습으로 보내주세요.`,
   ];
   const myContext = useContext(AppContext);
+
+  const [petImage] = useState(
+    myContext.petType === "CAT" ? catimageURL : dogimageURL
+  );
 
   const [modalVisible, setModalVisible] = useState(false);
   const [daymodalVisible, setDayModalVisible] = useState(true);
@@ -85,7 +90,7 @@ const ReIntroScreen = ({ navigation: { navigate } }) => {
           <Text style={{ color: colors.palette.Brown }}>RE</Text>
           {titleArray[getDayValue(myContext.contentsDay)]}
         </Text>
-        <DogImage source={dogimageURL} resizeMode="center" />
+        <DogImage source={petImage} resizeMode="center" />
         {daymodalVisible ? (
           <TutorialModal
             text={"Day" + myContext.contentsDay}

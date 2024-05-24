@@ -19,6 +19,7 @@ import {
 } from "../../../context/AccessTokenContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
+import catimageURL from "../../../Assets/Images/cat/cat_idle.png";
 
 const DiaryScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
@@ -28,6 +29,10 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
   const [answer, onChangeAnswer] = React.useState("");
   const [qaVisible, setqaVisible] = useState(true); // Q&A Modal
   const [showToast, setShowToast] = useState(false);
+
+  const [petImage] = useState(
+    myContext.petType === "CAT" ? catimageURL : dogimageURL
+  );
 
   const questionArray = [
     `우리가 처음 만났던 날 기억 나?\n우리가 언제 어디서 어떻게 만나게 되었는지, 그날 있었던 일에 대해 나에게 말해줄래?\n`,
@@ -110,7 +115,7 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
           <Text style={{ color: colors.palette.Brown }}>RE</Text>
           MIND : 충분한 대화 나누기
         </Text>
-        <DogImage source={dogimageURL} resizeMode="center" />
+        <DogImage source={petImage} resizeMode="center" />
         <Modal animationType="fade" visible={qaVisible} transparent={true}>
           <BlackContainer>
             <QAPopTextBox>

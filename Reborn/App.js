@@ -11,6 +11,7 @@ import {
 
 export default function App() {
   const [contentsDay, setContentsDay] = useState(1);
+  const [petType, setPetType] = useState("DOG");
 
   const setDay = (day) => {
     setContentsDay(day);
@@ -24,18 +25,26 @@ export default function App() {
     setContentsDay(1);
   };
 
-  const days = {
-    contentsDay: contentsDay,
+  const changePetType = (type) => {
+    setPetType(type);
+  };
+
+  const contextValues = {
+    // ----- RE:BORN Progress ----
+    contentsDay,
     setDay,
     resetDay,
     plusDay,
+    // ----- Pet Type -----
+    petType,
+    changePetType,
   };
 
   return (
     <AccessTokenProvider>
       <GlobalNicknameProvider>
         <GlobalPetNameProvider>
-          <AppContext.Provider value={days}>
+          <AppContext.Provider value={contextValues}>
             <NavigationContainer>
               <Root />
             </NavigationContainer>

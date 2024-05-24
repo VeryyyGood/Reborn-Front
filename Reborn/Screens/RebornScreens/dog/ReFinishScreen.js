@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Text, ImageBackground } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../../../theme";
@@ -9,10 +9,15 @@ import AppContext from "./AppContext";
 import { useAccessToken } from "../../../context/AccessTokenContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
+import catimageURL from "../../../Assets/Images/cat/cat_idle.png";
 
 const ReFinishScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
   const myContext = useContext(AppContext);
+
+  const [petImage] = useState(
+    myContext.petType === "CAT" ? catimageURL : dogimageURL
+  );
 
   const linkArray = [
     "http://reborn.persi0815.site/reborn/remind/create",
@@ -43,10 +48,10 @@ const ReFinishScreen = ({ navigation: { navigate } }) => {
         }}
       >
         <Text style={textStyles.contentsTextBox}>
-          <Text style={{ color: colors.palette.Brown }}>하루 일과 완료! </Text>:
+          <Text style={{ color: colors.palette.Brown }}>하루 일과 완료 </Text>:
           내일 다시 만나요~
         </Text>
-        <DogImage source={dogimageURL} resizeMode="center" />
+        <DogImage source={petImage} resizeMode="center" />
         <ButtonBrownBottom
           text={"다음날로 넘어가기"}
           onPress={() => {

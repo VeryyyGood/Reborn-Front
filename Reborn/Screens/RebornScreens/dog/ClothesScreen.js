@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import {
   Text,
   ImageBackground,
@@ -7,6 +7,7 @@ import {
   Easing,
 } from "react-native";
 import { colors } from "../../../theme";
+import AppContext from "./AppContext";
 import { textStyles, ButtonBrownBottom } from "../../../components";
 import { requestPostProgress } from "../../../utiles"; // send data to Server
 import styled from "styled-components/native";
@@ -14,12 +15,25 @@ import styled from "styled-components/native";
 import { useAccessToken } from "../../../context/AccessTokenContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
+import catimageURL from "../../../Assets/Images/cat/cat_idle.png";
+
 import clothesimageURL from "../../../Assets/stuffs/clothes.png";
+
 import dogClothesimageURL from "../../../Assets/Images/dog/dog_clothes.png";
+import catClothesimageURL from "../../../Assets/Images/cat/cat_clothes.png";
 
 const ClothesScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
   const [isClothes, setisClothes] = useState(false);
+  const myContext = useContext(AppContext);
+
+  const [petImage] = useState(
+    myContext.petType === "CAT" ? catimageURL : dogimageURL
+  );
+
+  const [clothesPetImage] = useState(
+    myContext.petType === "CAT" ? catClothesimageURL : dogClothesimageURL
+  );
 
   return (
     <Container>
@@ -32,7 +46,7 @@ const ClothesScreen = ({ navigation: { navigate } }) => {
           반려동물과 작별하기
         </Text>
         <DogImage
-          source={isClothes ? dogClothesimageURL : dogimageURL}
+          source={isClothes ? clothesPetImage : petImage}
           resizeMode="center"
         />
         <DraggableImage
@@ -103,14 +117,14 @@ const DraggableImage = ({ source, style, isClothes, setisClothes }) => {
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (_, { dx, dy }) => {
-        console.log({ dx, dy });
+        //console.log({ dx, dy });
         position.setValue({ x: dx, y: dy });
       },
       onPanResponderGrant: () => {
         onPressIn.start();
       },
       onPanResponderRelease: (_, { dx, dy }) => {
-        if (dx > -90 && dy > 240 && dx < -60 && dy < 370) {
+        if (dx > -110 && dy > 240 && dx < -60 && dy < 370) {
           setisClothes(!isClothes);
           Animated.sequence([
             Animated.parallel([onDropScale, onDropOpacity]),

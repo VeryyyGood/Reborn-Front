@@ -18,16 +18,43 @@ import AppContext from "./AppContext";
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 import dog_FeedOneimageURL from "../../../Assets/Images/dog/dog_eat_feed1.png";
 import dog_FeedTwoimageURL from "../../../Assets/Images/dog/dog_eat_feed2.png";
-import bowlNoimageURL from "../../../Assets/Images/dog/dog_bowl_no.png";
+
+import catimageURL from "../../../Assets/Images/cat/cat_idle.png";
+import cat_FeedOneimageURL from "../../../Assets/Images/cat/cat_eat_feed1.png";
+import cat_FeedTwoimageURL from "../../../Assets/Images/cat/cat_eat_feed2.png";
+
+import dogbowlimageURL from "../../../Assets/Images/dog/dog_bowl.png";
+import dogbowlNoimageURL from "../../../Assets/Images/dog/dog_bowl_no.png";
+
+import catbowlimageURL from "../../../Assets/Images/cat/cat_bowl.png";
+import catbowlNoimageURL from "../../../Assets/Images/cat/cat_bowl_no.png";
+
 import feedimageURL from "../../../Assets/stuffs/feed.png";
-import bowlimageURL from "../../../Assets/Images/dog/dog_bowl.png";
 
 const FeedScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
   const myContext = useContext(AppContext);
 
+  const [whereToGo] = useState(myContext.petType === "CAT" ? "Play" : "Walk");
+
   const [isFeed, setisFeed] = useState(false);
-  const [isEnd, setIsEnd] = useState("Walk");
+  const [isEnd, setIsEnd] = useState(whereToGo);
+
+  const [petImage] = useState(
+    myContext.petType === "CAT" ? catimageURL : dogimageURL
+  );
+  const [bowlImage] = useState(
+    myContext.petType === "CAT" ? catbowlimageURL : dogbowlimageURL
+  );
+  const [noBowlImage] = useState(
+    myContext.petType === "CAT" ? catbowlNoimageURL : dogbowlNoimageURL
+  );
+  const [animationImageOne] = useState(
+    myContext.petType === "CAT" ? cat_FeedOneimageURL : dog_FeedOneimageURL
+  );
+  const [animationImageTwo] = useState(
+    myContext.petType === "CAT" ? cat_FeedTwoimageURL : dog_FeedTwoimageURL
+  );
 
   // Server Link for sending data
   const linkArray = [
@@ -63,6 +90,16 @@ const FeedScreen = ({ navigation: { navigate } }) => {
     }
   }, [myContext.contentsDay]);
 
+  const handleText = () => {
+    if (myContext.contentsDay === 15) {
+      return "다음으로";
+    } else if (myContext.petType === "CAT") {
+      return "놀아주러 가기";
+    } else {
+      return "산책하러 가기";
+    }
+  };
+
   return (
     <Container>
       <ImageBackground
@@ -73,7 +110,12 @@ const FeedScreen = ({ navigation: { navigate } }) => {
           충분한 대화 나누기 :{" "}
           <Text style={{ color: colors.palette.Red }}>밥주기</Text>
         </Text>
-        <AnimatedDogImage isFeed={isFeed} />
+        <AnimatedDogImage
+          isFeed={isFeed}
+          petImage={petImage}
+          animationImageOne={animationImageOne}
+          animationImageTwo={animationImageTwo}
+        />
         <DraggableImage
           source={feedimageURL}
           style={{
@@ -88,7 +130,7 @@ const FeedScreen = ({ navigation: { navigate } }) => {
 
         {isFeed ? (
           <ButtonBrownBottom
-            text={myContext.contentsDay === 15 ? "다음으로" : "산책하러 가기"}
+            text={handleText()}
             onPress={() => {
               requestPostProgress(
                 handleLink(myContext.contentsDay),
@@ -103,14 +145,21 @@ const FeedScreen = ({ navigation: { navigate } }) => {
         <AnimatedBowlImage
           style={{ width: "100px", height: "100px" }}
           isFeed={isFeed}
+          bowlImage={bowlImage}
+          noBowlImage={noBowlImage}
         />
       </ImageBackground>
     </Container>
   );
 };
 
-const AnimatedDogImage = ({ isFeed }) => {
-  const [currentImage, setCurrentImage] = useState(dogimageURL);
+const AnimatedDogImage = ({
+  isFeed,
+  petImage,
+  animationImageOne,
+  animationImageTwo,
+}) => {
+  const [currentImage, setCurrentImage] = useState(petImage);
   const [isAnimating, setIsAnimating] = useState(false);
   const animationRef = useRef(null);
 
@@ -119,15 +168,15 @@ const AnimatedDogImage = ({ isFeed }) => {
       setIsAnimating(true);
       animationRef.current = setInterval(() => {
         setCurrentImage((prevImage) =>
-          prevImage === dog_FeedOneimageURL
-            ? dog_FeedTwoimageURL
-            : dog_FeedOneimageURL
+          prevImage === animationImageOne
+            ? animationImageTwo
+            : animationImageOne
         );
       }, 200); // Change image every 200ms
 
       setTimeout(() => {
         clearInterval(animationRef.current);
-        setCurrentImage(dogimageURL);
+        setCurrentImage(petImage);
         setIsAnimating(false);
       }, 2000); // End animation after 2 seconds
     }
@@ -136,7 +185,7 @@ const AnimatedDogImage = ({ isFeed }) => {
   return <DogImage source={currentImage} resizeMode="center" />;
 };
 
-const AnimatedBowlImage = ({ isFeed }) => {
+const AnimatedBowlImage = ({ isFeed, bowlImage, noBowlImage }) => {
   const position = useRef(new Animated.Value(20)).current;
 
   useEffect(() => {
@@ -154,7 +203,7 @@ const AnimatedBowlImage = ({ isFeed }) => {
 
   return (
     <Animated.Image
-      source={isFeed ? bowlimageURL : bowlNoimageURL}
+      source={isFeed ? bowlImage : noBowlImage}
       style={{
         width: 100,
         height: 100,

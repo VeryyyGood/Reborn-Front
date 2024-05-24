@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Text, ImageBackground } from "react-native";
 import { colors } from "../../../theme";
 import { ButtonBrownBottom, textStyles } from "../../../components";
@@ -6,13 +6,20 @@ import { requestPostProgress } from "../../../utiles"; // send data to Server
 import styled from "styled-components/native";
 import AppContext from "./AppContext";
 
+import { useFocusEffect } from "@react-navigation/native";
+
 import { useAccessToken } from "../../../context/AccessTokenContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
+import catimageURL from "../../../Assets/Images/cat/cat_idle.png";
 
 const ReconnectFinishScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
   const myContext = useContext(AppContext);
+
+  const [petImage] = useState(
+    myContext.petType === "CAT" ? catimageURL : dogimageURL
+  );
 
   return (
     <Container>
@@ -24,7 +31,7 @@ const ReconnectFinishScreen = ({ navigation: { navigate } }) => {
           <Text style={{ color: colors.palette.Brown }}>RE</Text>
           CONNECT: 나의 반려동물과 만나기
         </Text>
-        <DogImage source={dogimageURL} resizeMode="center" />
+        <DogImage source={petImage} resizeMode="center" />
 
         <ButtonBrownBottom
           text="다음날로 넘어가기"
