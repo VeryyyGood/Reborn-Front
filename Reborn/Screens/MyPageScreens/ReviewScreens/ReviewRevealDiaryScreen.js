@@ -1,14 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { colors } from "../../../theme";
-import {
-  View,
-  TextInput,
-  Text,
-  Button,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { View, Text, Image, StyleSheet } from "react-native";
 
 import axios from "axios";
 import { useAccessToken } from "../../../context/AccessTokenContext";

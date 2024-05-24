@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   Image,
-  Pressable,
   ImageBackground,
   TouchableOpacity,
   Modal,

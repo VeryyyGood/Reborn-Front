@@ -21,7 +21,7 @@ const ReviewRememberScreen = ({ route, navigation }) => {
             },
           }
         );
-        //console.log(response.data.result);
+
         if (response.data && response.data.result) {
           const mappedData = response.data.result.map((item) => ({
             date: item.date,
@@ -29,7 +29,7 @@ const ReviewRememberScreen = ({ route, navigation }) => {
             rememberImage: item.rememberImage,
             title: item.title,
           }));
-          //console.log(mappedData[0].rememberImage);
+
           setRememberData(mappedData);
         }
       } catch (error) {
