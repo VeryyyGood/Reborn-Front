@@ -1,6 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 
 import ReconnectScreen from "../Screens/RebornScreens/ReconnectScreens/ReconnectScreen";
 

@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ImageBackground,
-} from "react-native";
+import { View, Text, StyleSheet, Image, ImageBackground } from "react-native";
 import { colors } from "../../../theme";
 import { useAccessToken } from "../../../context/AccessTokenContext";
 import axios from "axios";

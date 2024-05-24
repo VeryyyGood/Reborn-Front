@@ -146,7 +146,7 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
         />
       </View>
       <View>
-        <Text style={styles.font}>견종</Text>
+        <Text style={styles.font}>견종/묘종</Text>
         <TextInput style={styles.input} onChangeText={setBreed} value={breed} />
       </View>
       <Text style={styles.font}>색상</Text>

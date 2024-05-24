@@ -26,7 +26,16 @@ const CustomHeaderTitle = () => (
     >
       RE:
     </Text>
-    <Text style={{ fontFamily: "Poppins-Bold", fontSize: 18 }}> VIEW</Text>
+    <Text
+      style={{
+        fontFamily: "Poppins-Bold",
+        fontSize: 18,
+        color: colors.palette.BrownDark,
+      }}
+    >
+      {" "}
+      VIEW
+    </Text>
   </Text>
 );
 
