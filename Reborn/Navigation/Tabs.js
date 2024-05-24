@@ -54,11 +54,12 @@ const Tabs = () => (
         headerShown: false,
         tabBarIcon: ({ color }) => (
           <Image
-            source={require("../Assets/icons/tabIcons/homeicon.png")}
+            source={require("../Assets/icons/tabIcons/homeIcon2.png")}
             style={{
               width: 20,
               height: 20,
               tintColor: color,
+              //backgroundColor: 'red',
             }}
           />
         ),
@@ -72,10 +73,10 @@ const Tabs = () => (
         tabBarLabel: "나눔게시판",
         tabBarIcon: ({ color }) => (
           <Image
-            source={require("../Assets/icons/tabIcons/shardboardicon.png")}
+            source={require("../Assets/icons/tabIcons/shareboardicon.png")}
             style={{
-              width: 25,
-              height: 25,
+              width: 20,
+              height: 20,
               tintColor: color,
             }}
           />
@@ -93,8 +94,9 @@ const Tabs = () => (
           <Image
             source={require("../Assets/icons/tabIcons/rediaryicon.png")}
             style={{
-              width: 18,
+              width: 19,
               height: 22,
+              resizeMode:'contain',
               tintColor: color,
             }}
           />
@@ -111,7 +113,7 @@ const Tabs = () => (
           <Image
             source={require("../Assets/icons/tabIcons/mypageicon.png")}
             style={{
-              width: 20,
+              width: 21,
               height: 20,
               tintColor: color,
             }}

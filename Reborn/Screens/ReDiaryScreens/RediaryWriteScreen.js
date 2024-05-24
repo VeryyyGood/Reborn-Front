@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components/native";
 import { colors } from "../../theme";
 import { API_URL, CLIENT_ID, CLIENT_SECRET } from "@env";
@@ -8,27 +8,23 @@ import {
   RadioButton,
   Toast
 } from "../../components";
-import { View, TextInput,  StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-
 import axios from "axios";
-
 import { useAccessToken } from "../../context/AccessTokenContext";
-
 import sunImage from "../../Assets/icons/rediaryimage/sun.png";
 import cloudImage from "../../Assets/icons/rediaryimage/cloud.png";
 import rainImage from "../../Assets/icons/rediaryimage/rain.png";
 
 const EmotionScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
-
   const mode = "Just";
 
   const [selectedEmotion, setSelectedEmotion] = useState(null);
-  const [showToast, setShowToast] = useState(false); // for Emotion
-  const [showToast_answer, setShowToast_answer] = useState(false); // for answer
-  const [answer, onChangeAnswer] = React.useState("");
-  const [title, onChangeTitle] = React.useState("");
+  const [showToast, setShowToast] = useState(false);
+  const [showToastAnswer, setShowToastAnswer] = useState(false);
+  const [answer, setAnswer] = useState("");
+  const [title, setTitle] = useState("");
 
   const emotions = [
     { id: "SUNNY", image: sunImage },
@@ -36,40 +32,38 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
     { id: "RAINY", image: rainImage },
   ];
 
-  // refresh when Screen is focused
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       setSelectedEmotion(null);
-      onChangeAnswer("");
-      onChangeTitle("");
+      setAnswer("");
+      setTitle("");
     }, [])
   );
 
-  // go to Result Page
   const goToNextPage = async () => {
     if (!selectedEmotion) {
       setShowToast(true);
+      return;
+    }
+    setShowToast(false);
+
+    if (!answer || !title) {
+      setShowToastAnswer(true);
+      return;
+    }
+
+    setShowToastAnswer(false);
+    const analysisResult = await analyzeEmotion(answer);
+    if (analysisResult) {
+      navigate("RediaryResult", {
+        answer,
+        selectedEmotion,
+        analysisResult,
+        title,
+        mode,
+      });
     } else {
-      setShowToast(false);
-      if (answer && title) {
-        setShowToast_answer(false);
-        const analysisResult = await analyzeEmotion(answer);
-        if (analysisResult) {
-          console.log(analysisResult);
-          navigate("RediaryResult", {
-            answer,
-            selectedEmotion,
-            analysisResult,
-            title,
-            mode,
-          });
-        } else {
-          alert("감정 분석에 실패했습니다. 다시 시도해주세요.");
-        }
-      } else {
-        setShowToast_answer(true);
-        console.log(showToast_answer);
-      }
+      alert("감정 분석에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
@@ -95,7 +89,7 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
 
   return (
     <Container>
-      <View style={{ padding: 20, flexDirection: "row" }}>
+      <View style={styles.emotionContainer}>
         {emotions.map((emotion) => (
           <RadioButton
             key={emotion.id}
@@ -108,41 +102,36 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
           />
         ))}
       </View>
-      <TitleText style={{ marginHorizontal: "8%" }}>
-        감정일기
-      </TitleText>
+      <TitleText>감정일기</TitleText>
       <View style={styles.titleText}>
         <TextInput
           placeholder="제목을 입력해주세요."
           style={styles.titleInput}
-          onChangeText={onChangeTitle}
+          onChangeText={setTitle}
           value={title}
         />
       </View>
       <TextInputContainer>
         <TextInput
           keyboardType="default"
-          onChangeText={onChangeAnswer}
+          onChangeText={setAnswer}
           value={answer}
           placeholder="오늘의 감정은 어떤가요?"
           multiline={true}
-        ></TextInput>
+          style={styles.answerInput}
+        />
       </TextInputContainer>
-      <ToastContainer>
-        {showToast ? (
+      {showToast && (
+        <ToastContainer>
           <Toast showToast={showToast} message="감정을 선택해주세요" />
-        ) : (
-          ""
-        )}
-      </ToastContainer>
-      <ToastContainer>
-        {showToast_answer ? (
-          <Toast showToast={showToast_answer} message="일기를 작성해주세요" />
-        ) : (
-          ""
-        )}
-      </ToastContainer>
-      <CompleteButton text="작성완료" onPress={goToNextPage}></CompleteButton>
+        </ToastContainer>
+      )}
+      {showToastAnswer && (
+        <ToastContainer>
+          <Toast showToast={showToastAnswer} message="일기를 작성해주세요" />
+        </ToastContainer>
+      )}
+      <CompleteButton text="작성완료" onPress={goToNextPage} />
     </Container>
   );
 };
@@ -165,12 +154,7 @@ const ToastContainer = styled.View`
 const TitleText = styled.Text`
   font-family: "Poppins-ExtraBold";
   font-size: 20px;
-`;
-
-const MiddleText = styled.Text`
-  font-family: "Poppins-Medium";
-  font-size: 16px;
-  margin: 2% 5% 0% 5%;
+  margin-horizontal: 8%;
 `;
 
 const TextInputContainer = styled.View`
@@ -180,6 +164,10 @@ const TextInputContainer = styled.View`
 `;
 
 const styles = StyleSheet.create({
+  emotionContainer: {
+    padding: 20,
+    flexDirection: "row",
+  },
   titleText: {
     height: 50,
     backgroundColor: colors.palette.Gray200,
@@ -191,6 +179,10 @@ const styles = StyleSheet.create({
   },
   titleInput: {
     fontSize: 14,
-    fontFamily: "Popins-Medium",
+    fontFamily: "Poppins-Medium",
+  },
+  answerInput: {
+    fontSize: 14,
+    fontFamily: "Poppins-Medium",
   },
 });
