@@ -56,12 +56,6 @@ const ReviewRevealDiaryScreen = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.textContainer}>
-        <Text style={styles.boldFont}>
-          <Text style={styles.reColor}>RE</Text>VEAL:
-        </Text>
-        <Text style={styles.normalFont}>나의 감정 들여다보기</Text>
-      </View>
       <View style={styles.imageContainer}>
         <Image source={weatherImages.SUNNY} style={getImageStyle("SUNNY")} />
         <Image source={weatherImages.CLOUDY} style={getImageStyle("CLOUDY")} />
@@ -79,7 +73,7 @@ const ReviewRevealDiaryScreen = ({ route }) => {
         <View
           style={{
             flex: 1,
-            width: "82%",
+            width: "83%",
             borderRadius: 10,
             backgroundColor: colors.palette.Gray200,
           }}
@@ -107,7 +101,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginVertical: 20,
+    marginVertical: 40,
   },
   weatherImages: {
     width: 80,
