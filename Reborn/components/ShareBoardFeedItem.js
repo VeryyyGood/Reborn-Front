@@ -29,11 +29,11 @@ const ShareBoardFeedItem = ({ navigation, id, boardWriter, boardContent, boardCr
                 <View style={{flexDirection:'row', paddingVertical: 10, paddingHorizontal: 20, justifyContent: 'space-between'}}>
                     <View style={{flexDirection:'row'}}>
                         <Image style={{marginLeft: '5%', tintColor: colors.palette.BrownDark}} source={require('../Assets/icons/ShareBoard/commentIcon.png')}/>
-                        <Text style={{marginLeft: '7%', color: colors.palette.BrownDark, fontFamily: 'Poppins-Bold'}}>{commentCount}</Text>
+                        <Text style={{marginLeft: '7%', marginTop: '3%', color: colors.palette.BrownDark, fontFamily: 'Poppins-Bold'}}>{commentCount}</Text>
                     </View>
                     <View style={{flexDirection:'row'}}>
-                        <Image style={{marginRight:'5%', tintColor: colors.palette.Yellow}} source={require('../Assets/icons/ShareBoard/heartIconGrey.png')}/>
-                        <Text style={{color: colors.palette.BrownDark, fontFamily: 'Poppins-Bold'}}>{likeCount}</Text>
+                        <Image style={{width: 23.7, height:22, marginRight: '5%',marginTop: '3%', tintColor: colors.palette.Yellow}} source={require('../Assets/icons/ShareBoard/heartIconGrey.png')}/>
+                        <Text style={{color: colors.palette.BrownDark, marginTop: '3%', fontFamily: 'Poppins-Bold'}}>{likeCount}</Text>
                     </View>
                 </View>
             </View>
@@ -62,7 +62,7 @@ const styles=StyleSheet.create({
     title: {
     	fontSize: 20,
         paddingLeft: 10,
-        marginTop: 20,
+        marginTop: 10,
     },
     date: {
         fontSize: 14,

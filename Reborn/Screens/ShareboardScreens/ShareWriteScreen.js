@@ -134,7 +134,7 @@ const ShareWriteScreen = ({ navigation }) => {
             //listItemContainerStyle={{}}
             />
         </View>
-        <View style={{ flexDirection: 'row' , marginBottom: 80, paddingHorizontal:10,}}>
+        <View style={{ flexDirection: 'row' , marginBottom: 10, paddingHorizontal:10,}}>
           <Image style={{ width: 60, height: 60, borderRadius: 50, marginTop: 20}} source={profileImage} />
           <TextInput
               style={{ marginLeft: '3%', fontFamily: "Poppins-regular", fontSize: 18, marginRight: 70, marginTop: '7%' }}
@@ -146,28 +146,17 @@ const ShareWriteScreen = ({ navigation }) => {
           />
         </View>
         <View style={{marginTop: 40}}>
-        <View style={{justifyContent: 'center', alignItems: 'center', marginVertical: 20}}>
-          {postImage && <Image style={{width: 120, height:120, resizeMode:'contain'}} source={postImage} />}
+        <GrayLine></GrayLine>
+          <View style={{marginVertical: 20, flexDirection: 'row',  marginLeft: 30}}>
+            <TouchableOpacity onPress={selectImage}>
+              <Image style={{ width: 80, height: 80, marginVertical: -30}} source={require('../../Assets/icons/icon_imagePicker.png')} />
+            </TouchableOpacity>
+            <Text>사진 첨부</Text>
           </View>
         <GrayLine></GrayLine>
-        <View style={{marginVertical: 20, flexDirection: 'row',  marginLeft: 30}}>
-          
-          {/* <TouchableOpacity
-            onPress={selectImage}
-            style={{
-              backgroundColor: colors.palette.Blue,
-              borderRadius: 5,
-              alignItems: 'center',
-              width: '25%', justifyContent: 'center', marginRight: 10
-            }}>
-            <Text style={{fontFamily: 'Poppins-Bold', fontSize: 14, paddingVertical:2, color:'white'}}>사진 선택</Text>
-          </TouchableOpacity> */}
-          <TouchableOpacity onPress={selectImage}>
-          <Image style={{ width: 80, height: 80, marginVertical: -30}} source={require('../../Assets/icons/icon_imagePicker.png')} />
-          </TouchableOpacity>
-          <Text>사진 첨부</Text>
-        </View>
-        <GrayLine></GrayLine>
+        <View style={{justifyContent: 'center', alignItems: 'center', marginVertical: 10}}>
+          {postImage && <Image style={{width: 140, height:140, resizeMode:'contain'}} source={postImage} />}
+          </View>
         </View>
       </View>
     </View>

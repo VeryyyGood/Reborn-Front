@@ -4,7 +4,7 @@ import axios from "axios";
 import { buttonStyles } from "../../components";
 import { colors } from "../../theme";
 import NaverLogin from "@react-native-seoul/naver-login";
-import { useAccessToken } from "../../context/AccessTokenContext";
+import { useAccessToken, useDeviceToken } from "../../context/AccessTokenContext";
 
 const consumerKey = "fIaIMi7lrukY7sXnD0_l";
 const consumerSecret = "nvDc5R3Arw";
@@ -18,6 +18,7 @@ const LoginScreen = ({ navigation: { navigate } }) => {
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const { setAccessToken } = useAccessToken();
+  const { deviceToken } = useDeviceToken();
 
   const sendUserProfileToServer = async (accessToken) => {
     try {
@@ -36,11 +37,13 @@ const LoginScreen = ({ navigation: { navigate } }) => {
           username,
           nickname,
           provider,
+          deviceToken,
         };
 
         axios
           .post("http://reborn.persi0815.site/token/generate", userData)
           .then((response) => {
+            console.log("디바이스 토큰"+deviceToken);
             console.log(response.data);
             const { accessToken, signIn } = response.data.result;
             setAccessToken(accessToken);

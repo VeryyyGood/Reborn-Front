@@ -3,10 +3,12 @@ import React, { createContext, useContext, useState } from "react";
 const AccessTokenContext = createContext();
 const GlobalNicknameContext = createContext();
 const GlobalPetNameContext = createContext();
+const DeviceToKenContext = createContext();
 
 export const useAccessToken = () => useContext(AccessTokenContext);
 export const useGlobalNickname = () => useContext(GlobalNicknameContext);
 export const useGlobalPetName = () => useContext(GlobalPetNameContext);
+export const useDeviceToken = () => useContext(DeviceToKenContext);
 
 export const AccessTokenProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState(null);
@@ -37,5 +39,15 @@ export const GlobalPetNameProvider = ({ children }) => {
     <GlobalPetNameContext.Provider value={{ globalPetName, setGlobalPetName }}>
       {children}
     </GlobalPetNameContext.Provider>
+  );
+};
+
+export const DeviceTokenProvider = ({ children }) => {
+  const [deviceToken, setDeviceToken] = useState(null);
+
+  return (
+    <DeviceToKenContext.Provider value={{ deviceToken, setDeviceToken }}>
+      {children}
+    </DeviceToKenContext.Provider>
   );
 };

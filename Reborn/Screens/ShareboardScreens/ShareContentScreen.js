@@ -319,7 +319,7 @@ const renderHeaderComponent = () => (
         >
           <View style={{ flexDirection: "row" , marginBottom: -3}}>
             <Image
-              style={{  width:22, height:23, marginTop:3, marginLeft: "5%", tintColor: colors.palette.BrownDark }}
+              style={{  width:25, height:26, marginLeft: "5%", tintColor: colors.palette.BrownDark }}
               source={require("../../Assets/icons/ShareBoard/commentIcon.png")}
             />
             <Text
@@ -349,7 +349,7 @@ const renderHeaderComponent = () => (
             <TouchableOpacity onPress={handleBookmarkPress}>
                 <Image
                 style={{ marginLeft: 10,
-                tintColor: isBookmark ? colors.palette.Green : colors.palette.Gray400 }}
+                tintColor: isBookmark ? '#4682B4' : colors.palette.Gray400 }}
                 source={require("../../Assets/icons/ShareBoard/bookmarkIconGrey.png")}/>
             </TouchableOpacity>
           </View>
