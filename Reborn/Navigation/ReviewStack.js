@@ -21,7 +21,7 @@ const CustomHeaderTitle = () => (
       style={{
         color: colors.palette.Brown,
         fontFamily: "Poppins-Bold",
-        fontSize: 18,
+        fontSize: 20,
       }}
     >
       RE:
@@ -29,7 +29,7 @@ const CustomHeaderTitle = () => (
     <Text
       style={{
         fontFamily: "Poppins-Bold",
-        fontSize: 18,
+        fontSize: 20,
         color: colors.palette.BrownDark,
       }}
     >

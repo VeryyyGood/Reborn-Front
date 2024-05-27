@@ -105,7 +105,7 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
         throw new Error("Something went wrong");
       }
       console.log(data);
-      alert("저장되었습니다!");
+
       navigate("RebornDogStack", { screen: "Intro" }); // go to Day1, start RE:BORN
       myContext.resetDay(); // reset Day, start from 1
     } catch (error) {

@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  Alert,
 } from "react-native";
 import { buttonStyles } from "../../components/buttonStyles";
 import { colors } from "../../theme";
@@ -78,28 +79,44 @@ const PetProfileManagementScreen = ({ route }) => {
     fetchPetInfo();
   }, [petId]);
 
-  const handleDelete = async () => {
-    try {
-      const response = await axios.delete(
-        `http://reborn.persi0815.site:8080/mypage/delete/${petId}`,
+  const handleDelete = () => {
+    Alert.alert(
+      "반려동물 프로필 삭제",
+      "정말로 반려동물 프로필을 삭제하시겠습니까?",
+      [
         {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+          text: "예",
+          onPress: async () => {
+            try {
+              const response = await axios.delete(
+                `http://reborn.persi0815.site:8080/mypage/delete/${petId}`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                  },
+                }
+              );
 
-      const { isSuccess, message } = response.data;
-      if (isSuccess) {
-        alert("프로필이 삭제되었습니다.");
-        navigation.navigate("PetProfileList");
-      } else {
-        alert(`삭제 실패: ${message}`);
-      }
-    } catch (error) {
-      console.error("오류", error);
-      alert("삭제 중 오류 발생");
-    }
+              const { isSuccess, message } = response.data;
+              if (isSuccess) {
+                console.log("프로필이 삭제되었습니다.");
+                navigation.navigate("PetProfileList");
+              } else {
+                console.log(`삭제 실패: ${message}`);
+              }
+            } catch (error) {
+              console.error("오류", error);
+            }
+          },
+        },
+        {
+          text: "아니오",
+          onPress: () => console.log("삭제 취소"),
+          style: "cancel",
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (

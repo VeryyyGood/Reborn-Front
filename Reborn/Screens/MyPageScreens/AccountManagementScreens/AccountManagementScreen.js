@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import { buttonStyles } from "../../../components";
 import { colors } from "../../../theme";
 import axios from "axios";
@@ -92,44 +99,78 @@ const AccountManagementScreen = ({ navigation: { navigate } }) => {
     }
   };
 
-  const logout = async () => {
-    try {
-      const logoutResponse = await axios.delete(
-        "http://reborn.persi0815.site/users/logout",
+  const logout = () => {
+    Alert.alert(
+      "로그아웃",
+      "로그아웃하시겠습니까?",
+      [
         {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      await NaverLogin.logout();
-      console.log(logoutResponse.status);
-      console.log(logoutResponse.data);
+          text: "예",
+          onPress: async () => {
+            try {
+              const logoutResponse = await axios.delete(
+                "http://reborn.persi0815.site/users/logout",
+                {
+                  headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                  },
+                }
+              );
+              await NaverLogin.logout();
+              console.log(logoutResponse.status);
+              console.log(logoutResponse.data);
 
-      navigate("Login");
-    } catch (e) {
-      console.error(e);
-    }
+              navigate("Login");
+            } catch (e) {
+              console.error(e);
+            }
+          },
+        },
+        {
+          text: "아니오",
+          onPress: () => console.log("로그아웃 취소"),
+          style: "cancel",
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
-  const deleteToken = async () => {
-    try {
-      const deleteResponse = await axios.delete(
-        "http://reborn.persi0815.site/users/me",
+  const deleteToken = () => {
+    Alert.alert(
+      "계정 삭제",
+      "정말로 계정을 삭제하시겠습니까?",
+      [
         {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      await NaverLogin.deleteToken();
-      console.log(deleteResponse.status);
-      console.log(deleteResponse.data);
+          text: "예",
+          onPress: async () => {
+            try {
+              const deleteResponse = await axios.delete(
+                "http://reborn.persi0815.site/users/me",
+                {
+                  headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                  },
+                }
+              );
+              await NaverLogin.deleteToken();
+              console.log(deleteResponse.status);
+              console.log(deleteResponse.data);
 
-      navigate("Login");
-    } catch (e) {
-      console.error(e);
-    }
+              navigate("Login");
+            } catch (e) {
+              console.error(e);
+            }
+          },
+        },
+        {
+          text: "아니오",
+          onPress: () => console.log("삭제 취소"),
+          style: "cancel",
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   const selectImage = (type) => {
