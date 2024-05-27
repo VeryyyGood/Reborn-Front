@@ -85,61 +85,61 @@ const MainScreen = ({ navigation: { navigate } }) => {
       if (response.data.result) {
         if (response.data.result.rebornDate === 1) {
           navigate("RebornDogStack", { screen: "Intro" });
-        }
+        } else {
+          // Contents is already progressed
+          myContext.setDay(response.data.result.rebornDate); // set Day
+          myContext.changePetType(response.data.result.petType); // set PetType
+          setGlobalPetName(response.data.result.petName);
 
-        // Contents is already progressed
-        myContext.setDay(response.data.result.rebornDate); // set Day
-        myContext.changePetType(response.data.result.petType); // set PetType
-        setGlobalPetName(response.data.result.petName);
-
-        // handle navigation according to progress
-        switch (response.data.result.progressState) {
-          case "INTRO":
-            navigate("RebornDogStack", { screen: "ReIntro" });
-            break;
-          case "PAT":
-            navigate("RebornDogStack", { screen: "Pet" });
-            break;
-          case "FEED":
-            navigate("RebornDogStack", { screen: "Feed" });
-            break;
-          case "WALK":
-            navigate("RebornDogStack", { screen: "Walk" });
-            break;
-          case "PLAY":
-            navigate("RebornDogStack", { screen: "Play" });
-            break;
-          case "SNACK":
-            navigate("RebornDogStack", { screen: "Snack" });
-            break;
-          case "FINISH":
-            navigate("RebornDogStack", { screen: "ReFinish" });
-            break;
-          case "DIARY":
-            navigate("RebornDogStack", { screen: "Diary" });
-            break;
-          case "EMOTION":
-            navigate("RebornDogStack", { screen: "Emotion" });
-            break;
-          case "IMAGE":
-            navigate("RebornDogStack", { screen: "ImageDiary" });
-            break;
-          case "CLEAN":
-            navigate("RebornDogStack", { screen: "Clean" });
-            break;
-          case "WASH":
-            navigate("RebornDogStack", { screen: "Wash" });
-            break;
-          case "CLOTHES":
-            navigate("RebornDogStack", { screen: "Clothes" });
-            break;
-          case "LETTER":
-            navigate("RebornDogStack", { screen: "Letter" });
-            break;
-          case "SETREBORN":
-            navigate("RebornDogStack", { screen: "SetReborn" });
-            break;
-          default:
+          // handle navigation according to progress
+          switch (response.data.result.progressState) {
+            case "INTRO":
+              navigate("RebornDogStack", { screen: "ReIntro" });
+              break;
+            case "PAT":
+              navigate("RebornDogStack", { screen: "Pet" });
+              break;
+            case "FEED":
+              navigate("RebornDogStack", { screen: "Feed" });
+              break;
+            case "WALK":
+              navigate("RebornDogStack", { screen: "Walk" });
+              break;
+            case "PLAY":
+              navigate("RebornDogStack", { screen: "Play" });
+              break;
+            case "SNACK":
+              navigate("RebornDogStack", { screen: "Snack" });
+              break;
+            case "FINISH":
+              navigate("RebornDogStack", { screen: "ReFinish" });
+              break;
+            case "DIARY":
+              navigate("RebornDogStack", { screen: "Diary" });
+              break;
+            case "EMOTION":
+              navigate("RebornDogStack", { screen: "Emotion" });
+              break;
+            case "IMAGE":
+              navigate("RebornDogStack", { screen: "ImageDiary" });
+              break;
+            case "CLEAN":
+              navigate("RebornDogStack", { screen: "Clean" });
+              break;
+            case "WASH":
+              navigate("RebornDogStack", { screen: "Wash" });
+              break;
+            case "CLOTHES":
+              navigate("RebornDogStack", { screen: "Clothes" });
+              break;
+            case "LETTER":
+              navigate("RebornDogStack", { screen: "Letter" });
+              break;
+            case "SETREBORN":
+              navigate("RebornDogStack", { screen: "SetReborn" });
+              break;
+            default:
+          }
         }
       } else {
         navigate("ReconnectStack", { screen: "ReconnectProfile" });

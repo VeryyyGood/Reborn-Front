@@ -2,8 +2,11 @@ import React, { useState, useContext, useEffect } from "react";
 import { Text, ImageBackground } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../../../theme";
-import { textStyles, ButtonBrownBottom } from "../../../components";
-import { TutorialModal } from "../../../components/modalStyles";
+import {
+  textStyles,
+  ButtonBrownBottom,
+  TutorialModal,
+} from "../../../components";
 import { useFocusEffect } from "@react-navigation/native";
 import AppContext from "./AppContext";
 

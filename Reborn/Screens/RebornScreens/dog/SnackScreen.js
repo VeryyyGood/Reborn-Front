@@ -98,18 +98,21 @@ const SnackScreen = ({ navigation: { navigate } }) => {
           animationImageOne={animationImageOne}
           animationImageTwo={animationImageTwo}
         />
-
-        <DraggableImage
-          source={snackImage}
-          style={{
-            width: "50%",
-            height: "50%",
-            position: "absolute",
-            marginLeft: "50%",
-          }}
-          isFeed={isFeed}
-          setisFeed={setisFeed}
-        />
+        {isFeed ? (
+          ""
+        ) : (
+          <DraggableImage
+            source={snackImage}
+            style={{
+              width: "50%",
+              height: "50%",
+              position: "absolute",
+              marginLeft: "50%",
+            }}
+            isFeed={isFeed}
+            setisFeed={setisFeed}
+          />
+        )}
         {isFeed ? (
           <ButtonBrownBottom
             text="거실로 돌아가기"
