@@ -17,12 +17,12 @@ const RediaryTitle = () => (
       style={{
         color: colors.palette.Brown,
         fontFamily: "Poppins-Bold",
-        fontSize: 18,
+        fontSize: 20,
       }}
     >
       RE:
     </Text>
-    <Text style={{ fontFamily: "Poppins-Bold", fontSize: 18 }}> DIARY</Text>
+    <Text style={{ fontFamily: "Poppins-Bold", fontSize: 20 }}> DIARY</Text>
   </Text>
 );
 

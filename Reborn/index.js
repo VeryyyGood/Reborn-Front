@@ -2,6 +2,7 @@ import { AppRegistry, Platform } from "react-native";
 import { registerRootComponent } from "expo";
 import App from "./App";
 import { name as appName } from "./app.json";
+import messaging from '@react-native-firebase/messaging';
 
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
@@ -12,3 +13,8 @@ if (Platform.OS == "android") {
   } else {
     AppRegistry.registerComponent(appName, () => App);
   }
+
+messaging().setBackgroundMessageHandler(async remoteMessage => {
+  console.log('Message handled in the background!', remoteMessage);
+  // 필요한 동작
+});

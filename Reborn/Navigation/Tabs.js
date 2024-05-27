@@ -20,7 +20,7 @@ const ReDiaryTitle = () => (
       style={{
         color: colors.palette.Brown,
         fontFamily: "Poppins-Bold",
-        fontSize: 18,
+        fontSize: 20,
       }}
     >
       RE:
@@ -29,13 +29,26 @@ const ReDiaryTitle = () => (
       style={{
         fontFamily: "Poppins-Bold",
         color: colors.palette.BrownDark,
-        fontSize: 18,
+        fontSize: 20,
       }}
     >
       {" "}
       DIARY
     </Text>
   </Text>
+);
+
+const MypageTitle = () => (
+    <Text
+      style={{
+        fontFamily: "Poppins-Bold",
+        color: colors.palette.BrownDark,
+        fontSize: 20,
+      }}
+    >
+      {" "}
+      마이페이지
+    </Text>
 );
 //headerTitle: () => <ReDiaryTitle/>}
 
@@ -109,6 +122,7 @@ const Tabs = () => (
       options={({ navigation }) => ({
         title: "마이페이지",
         headerShown: true,
+        headerTitle: () => <MypageTitle />,
         tabBarIcon: ({ color }) => (
           <Image
             source={require("../Assets/icons/tabIcons/mypageicon.png")}
