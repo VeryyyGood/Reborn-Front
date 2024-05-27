@@ -17,7 +17,7 @@ const ReviewPetListTitle = () => (
       style={{
         color: colors.palette.Brown,
         fontFamily: "Poppins-Bold",
-        fontSize: 18,
+        fontSize: 20,
       }}
     >
       RE:
@@ -26,7 +26,7 @@ const ReviewPetListTitle = () => (
       style={{
         fontFamily: "Poppins-Bold",
         color: colors.palette.BrownDark,
-        fontSize: 18,
+        fontSize: 20,
       }}
     >
       {" "}
@@ -40,7 +40,7 @@ const AccountTitle = () => (
     style={{
       fontFamily: "Poppins-Bold",
       color: colors.palette.BrownDark,
-      fontSize: 18,
+      fontSize: 20,
     }}
   >
     계정 관리
@@ -52,7 +52,7 @@ const PetTitle = () => (
     style={{
       fontFamily: "Poppins-Bold",
       color: colors.palette.BrownDark,
-      fontSize: 18,
+      fontSize: 20,
     }}
   >
     반려동물 프로필 관리

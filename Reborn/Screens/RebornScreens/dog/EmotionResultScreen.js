@@ -4,6 +4,7 @@ import { Pressable } from "react-native";
 import { colors } from "../../../theme";
 import { ButtonBrown } from "../../../components";
 import axios from "axios";
+import Sound from "react-native-sound";
 
 import {
   useAccessToken,
@@ -15,6 +16,12 @@ import cloudImage from "../../../Assets/icons/rediaryimage/cloud.png";
 import rainImage from "../../../Assets/icons/rediaryimage/rain.png";
 
 const EmotionResultScreen = ({ route, navigation: { navigate } }) => {
+  const music = new Sound("holymoly.mp3", Sound.MAIN_BUNDLE, (error) => {
+    if (error) {
+      console.log("Error loading sound: " + error);
+      return;
+    }
+  });
   const { accessToken } = useAccessToken();
   const { globalNickname } = useGlobalNickname();
 
@@ -109,6 +116,7 @@ const EmotionResultScreen = ({ route, navigation: { navigate } }) => {
         <YellowBox>
           <ShowResult
             onPress={() => {
+              music.play();
               setIsVisible(true);
               requestWrite(analysisResult.document.sentiment);
             }}

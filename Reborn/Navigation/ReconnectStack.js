@@ -23,7 +23,7 @@ const ReconnectTitle = () => (
       style={{
         fontFamily: "Poppins-Bold",
         color: colors.palette.BrownDark,
-        fontSize: 18,
+        fontSize: 20,
       }}
     >
       {" "}
