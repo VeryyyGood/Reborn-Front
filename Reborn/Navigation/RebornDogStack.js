@@ -4,7 +4,6 @@ import styled from "styled-components/native";
 import IntroScreen from "../Screens/RebornScreens/dog/IntroScreen";
 import OuttroScreen from "../Screens/RebornScreens/dog/OuttroScreen";
 import ReIntroScreen from "../Screens/RebornScreens/dog/ReIntroScreen";
-import ReconnectFinishScreen from "../Screens/RebornScreens/dog/ReconnectFinishScreen";
 import FeedScreen from "../Screens/RebornScreens/dog/FeedScreen";
 import PetScreen from "../Screens/RebornScreens/dog/PetScreen";
 import SnackScreen from "../Screens/RebornScreens/dog/SnackScreen";
@@ -56,11 +55,7 @@ const RebornDogStack = ({ navigation: { navigate } }) => {
         component={ReIntroScreen}
         options={{ title: `Day ${myContext.contentsDay}` }}
       />
-      <NativeRebornDogStack.Screen
-        name="ReconnectFinish"
-        component={ReconnectFinishScreen}
-        options={{ title: `Day ${myContext.contentsDay}` }}
-      />
+
       <NativeRebornDogStack.Screen
         name="Pet"
         component={PetScreen}

@@ -52,7 +52,7 @@ const WashScreen = ({ navigation: { navigate } }) => {
 
     if (isWashing) {
       setCountWash(countWash + 1);
-      if (countWash >= 5) {
+      if (countWash >= 2) {
         setIsWashed(true);
       }
     }

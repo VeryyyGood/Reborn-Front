@@ -196,7 +196,7 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
                 "http://reborn.persi0815.site/reborn/reborn/finish",
                 accessToken
               );
-              navigate("Main");
+              navigate("Outtro");
             } else {
               setletterVisible(true);
             }

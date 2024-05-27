@@ -116,18 +116,21 @@ const FeedScreen = ({ navigation: { navigate } }) => {
           animationImageOne={animationImageOne}
           animationImageTwo={animationImageTwo}
         />
-        <DraggableImage
-          source={feedimageURL}
-          style={{
-            width: "50%",
-            height: "50%",
-            position: "absolute",
-            marginLeft: "50%",
-          }}
-          isFeed={isFeed}
-          setisFeed={setisFeed}
-        />
-
+        {isFeed ? (
+          ""
+        ) : (
+          <DraggableImage
+            source={feedimageURL}
+            style={{
+              width: "50%",
+              height: "50%",
+              position: "absolute",
+              marginLeft: "50%",
+            }}
+            isFeed={isFeed}
+            setisFeed={setisFeed}
+          />
+        )}
         {isFeed ? (
           <ButtonBrownBottom
             text={handleText()}
