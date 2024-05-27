@@ -225,7 +225,7 @@ const RebornImage = styled.Image`
   height: 15%;
   position: absolute;
   margin: ${({ petType }) =>
-    petType === "CAT" ? "80% 0% 0% 33%" : "90% 0% 0% 39%"};
+    petType === "CAT" ? "80% 0% 0% 33%" : "85% 0% 0% 39%"};
 `;
 
 const BlackContainer = styled.View`
