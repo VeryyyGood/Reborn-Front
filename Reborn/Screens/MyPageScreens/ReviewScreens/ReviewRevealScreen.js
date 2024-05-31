@@ -50,7 +50,7 @@ const ReviewRevealScreen = ({ route, navigation }) => {
         </Text>
         <Text style={styles.normalFont}>나의 감정 들여다보기</Text>
       </View>
-      <View style={{ paddingHorizontal: windowWidth * 0.06, flex: 1 }}>
+      <View style={{ paddingHorizontal: windowWidth * 0.07, flex: 1 }}>
         <FlatList
           data={revealData}
           renderItem={({ item }) => (

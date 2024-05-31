@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
     color: colors.palette.Brown,
   },
   item: {
-    height: windowHeight * 0.185,
-    width: windowWidth * 0.87,
+    height: windowHeight * 0.2,
+    width: windowWidth * 0.85,
     marginVertical: windowHeight * 0.015,
   },
   backgroundImage: {
