@@ -5,7 +5,6 @@ import { GrayLine } from "../../../components";
 import { Image, ImageBackground } from "react-native";
 import axios from "axios";
 import { useAccessToken } from "../../../context/AccessTokenContext";
-
 import imagePickerImage from "../../../Assets/icons/icon_imagePicker.png";
 
 const ReviewRememberDiaryScreen = ({ route }) => {
@@ -56,7 +55,12 @@ const ReviewRememberDiaryScreen = ({ route }) => {
         <TitleText>{title}</TitleText>
         <Image
           source={rememberImage ? { uri: rememberImage } : imagePickerImage}
-          style={{ width: "100%", height: "32%" }}
+          style={{
+            marginLeft: 11,
+            width: "95%",
+            height: "32%",
+            marginBottom: 5,
+          }}
         ></Image>
         <TextContainer>
           <GrayLine />
@@ -85,19 +89,22 @@ const TextContainer = styled.View`
 
 const DateText = styled.Text`
   font-family: "caligraphy";
-  font-size: 30px;
+  color: ${colors.palette.BrownDark};
+  font-size: 32px;
   text-align: center;
   margin: 2% 0% 2% 0%;
 `;
 
 const TitleText = styled.Text`
-  font-family: "Poppins-Bold";
-  font-size: 26px;
-  margin: 0% 5% 0% 5%;
+  font-family: "caligraphy";
+  color: ${colors.palette.BrownDark};
+  font-size: 30px;
+  margin: 3% 5% 3% 5%;
 `;
 
 const ContentsText = styled.Text`
-  font-family: "Poppins-Regular";
-  font-size: 20px;
-  margin: 2% 5% 0% 5%;
+  font-family: "caligraphy";
+  color: ${colors.palette.BrownDark};
+  font-size: 26px;
+  margin: 3% 5% 0% 5%;
 `;

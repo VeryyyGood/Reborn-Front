@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     marginHorizontal: windowWidth * 0.1,
   },
   item: {
-    height: windowHeight * 0.185,
+    height: windowHeight * 0.21,
     width: windowWidth * 0.9,
     marginVertical: windowHeight * 0.015,
   },

@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   letterButton: {
     width: windowWidth * 0.15,
     height: windowHeight * 0.107,
-    top: windowHeight * 0.2,
+    top: windowHeight * 0.25,
     left: windowWidth * 0.3,
   },
 
