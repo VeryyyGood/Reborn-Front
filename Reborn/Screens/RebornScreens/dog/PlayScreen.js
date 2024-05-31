@@ -31,7 +31,6 @@ const PlayScreen = ({ navigation: { navigate } }) => {
     "http://reborn.persi0815.site/reborn/remind/play",
     "http://reborn.persi0815.site/reborn/reveal/play",
     "http://reborn.persi0815.site/reborn/remember/play",
-    "http://reborn.persi0815.site/reborn/reborn/play",
   ];
 
   // refresh

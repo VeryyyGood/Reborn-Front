@@ -138,6 +138,9 @@ const MainScreen = ({ navigation: { navigate } }) => {
             case "SETREBORN":
               navigate("RebornDogStack", { screen: "SetReborn" });
               break;
+            case "OUTRO":
+              navigate("RebornDogStack", { screen: "Outtro" });
+              break;
             default:
           }
         }
@@ -304,7 +307,6 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 90,
     height: 90,
-    //bottom: 25,
     borderRadius: 50,
     marginLeft: "2%",
   },

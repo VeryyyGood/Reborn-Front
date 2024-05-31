@@ -14,9 +14,9 @@ import dog_dirtyimageURL from "../../../Assets/Images/dog/dog_dirty0.png"; // di
 import dog_dirtyOneimageURL from "../../../Assets/Images/dog/dog_dirty1.png"; // dirty Animation with bubble
 import dog_dirtyTwoimageURL from "../../../Assets/Images/dog/dog_dirty2.png"; // dirty Animation with bubble
 
-//import cat_dirtyimageURL from "../../../Assets/Images/cat/cat_dirty0.png"; // dirty Idle
+import cat_dirtyimageURL from "../../../Assets/Images/cat/cat_dirty0.png"; // dirty Idle
 import cat_dirtyOneimageURL from "../../../Assets/Images/cat/cat_dirty1.png"; // dirty Animation with bubble
-//import cat_dirtyTwoimageURL from "../../../Assets/Images/cat/cat_dirty2.png"; // dirty Animation with bubble
+import cat_dirtyTwoimageURL from "../../../Assets/Images/cat/cat_dirty2.png"; // dirty Animation with bubble
 
 import rainimageURL from "../../../Assets/stuffs/shower_rain.png";
 import showergiimageURL from "../../../Assets/stuffs/showergi.png";
@@ -36,18 +36,28 @@ const WashScreen = ({ navigation: { navigate } }) => {
     myContext.petType === "CAT" ? catimageURL : dogimageURL
   );
 
+  const [dirtyimageURL] = useState(
+    myContext.petType === "CAT" ? cat_dirtyimageURL : dog_dirtyimageURL
+  );
+
+  const [dirtyOneimageURL] = useState(
+    myContext.petType === "CAT" ? cat_dirtyOneimageURL : dog_dirtyOneimageURL
+  );
+
+  const [dirtyTwoimageURL] = useState(
+    myContext.petType === "CAT" ? cat_dirtyTwoimageURL : dog_dirtyTwoimageURL
+  );
+
   useEffect(() => {
     let intervalId;
     if (isWashing) {
       intervalId = setInterval(() => {
         setCurrentDogImage((currentImg) =>
-          currentImg === dog_dirtyOneimageURL
-            ? dog_dirtyTwoimageURL
-            : dog_dirtyOneimageURL
+          currentImg === dirtyOneimageURL ? dirtyTwoimageURL : dirtyOneimageURL
         );
       }, 300);
     } else {
-      setCurrentDogImage(dog_dirtyimageURL);
+      setCurrentDogImage(dirtyimageURL);
     }
 
     if (isWashing) {
