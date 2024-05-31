@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, ImageBackground } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ImageBackground,
+  Dimensions,
+} from "react-native";
 import { colors } from "../../../theme";
 import { useAccessToken } from "../../../context/AccessTokenContext";
 import axios from "axios";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const ReviewReconnectScreen = ({ route }) => {
   const { petId } = route.params;
@@ -83,14 +93,14 @@ const styles = StyleSheet.create({
   },
 
   overlayImage: {
-    marginTop: "70%",
+    marginTop: windowHeight * 0.4,
   },
 
   textContainer: {
-    height: "15%",
+    height: windowHeight * 0.15,
     justifyContent: "center",
     alignItems: "flex-start",
-    paddingLeft: "5%",
+    paddingLeft: windowWidth * 0.05,
   },
 
   boldFont: {

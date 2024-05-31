@@ -7,6 +7,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   Modal,
+  Dimensions,
 } from "react-native";
 import { colors } from "../../../theme";
 import styled from "styled-components/native";
@@ -22,6 +23,9 @@ import dogYellowImage from "../../../Assets/Images/dog/dog_cloth_ribbon_yellow.p
 import dogBlackImage from "../../../Assets/Images/dog/dog_cloth_ribbon_black.png";
 import catYellowImage from "../../../Assets/Images/cat/cat_cloth_yellow.png";
 import catBlackImage from "../../../Assets/Images/cat/cat_cloth_black.png";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const ReviewRebornScreen = ({ route }) => {
   const { globalNickname } = useGlobalNickname();
@@ -81,11 +85,11 @@ const ReviewRebornScreen = ({ route }) => {
       >
         <TouchableOpacity
           onPress={() => setModalVisible(true)}
-          style={{ width: "15%", height: "10.7%", top: "33%", left: "35%" }}
+          style={styles.letterButton}
         >
           <Image
             source={require("../../../Assets/icons/letter.png")}
-            style={{ width: "100%", height: "100%" }}
+            style={styles.letterImage}
           />
         </TouchableOpacity>
 
@@ -123,39 +127,13 @@ const ReviewRebornScreen = ({ route }) => {
         <CenteredView>
           <ImageBackground
             source={letterPaperimageURL}
-            style={{
-              width: "95%",
-              height: "98%",
-              justifyContent: "center",
-              alignContent: "center",
-              marginBottom: "-15%",
-            }}
+            style={styles.modalImageBackground}
           >
-            <LetterText
-              style={{
-                textShadowColor: "white",
-                textShadowOffset: { width: 0.7, height: 0.7 },
-                textShadowRadius: 10,
-              }}
-            >
+            <LetterText style={styles.letterText}>
               To. 내가 사랑하는 {globalNickname}
             </LetterText>
-            <LetterText
-              style={{
-                textShadowColor: "white",
-                textShadowOffset: { width: 0.7, height: 0.7 },
-                textShadowRadius: 10,
-              }}
-            >
-              {text}
-            </LetterText>
-            <LetterText
-              style={{
-                textShadowColor: "white",
-                textShadowOffset: { width: 0.7, height: 0.7 },
-                textShadowRadius: 10,
-              }}
-            >
+            <LetterText style={styles.letterText}>{text}</LetterText>
+            <LetterText style={styles.letterText}>
               From. 영원한 너의 가족 {name}
             </LetterText>
           </ImageBackground>
@@ -197,24 +175,24 @@ const styles = StyleSheet.create({
   },
 
   overlayImage: {
-    marginTop: "55%",
+    marginTop: windowHeight * 0.3,
   },
 
   textContainer: {
-    height: "15%",
+    height: windowHeight * 0.15,
     justifyContent: "center",
     alignItems: "flex-start",
-    paddingLeft: "5%",
+    paddingLeft: windowWidth * 0.05,
   },
 
   boldFont: {
-    fontSize: 24,
+    fontSize: windowWidth * 0.06,
     fontFamily: "Poppins-Bold",
     color: colors.palette.BrownDark,
   },
 
   normalFont: {
-    fontSize: 16,
+    fontSize: windowWidth * 0.04,
     fontFamily: "Poppins-Bold",
     color: colors.palette.BrownDark,
   },
@@ -223,15 +201,41 @@ const styles = StyleSheet.create({
     color: colors.palette.Brown,
   },
 
+  letterButton: {
+    width: windowWidth * 0.15,
+    height: windowHeight * 0.107,
+    top: windowHeight * 0.2,
+    left: windowWidth * 0.3,
+  },
+
+  letterImage: {
+    width: windowWidth * 0.2,
+    height: windowHeight * 0.1,
+  },
+
+  modalImageBackground: {
+    width: windowWidth * 0.95,
+    height: windowHeight * 0.98,
+    justifyContent: "center",
+    alignContent: "center",
+    marginBottom: windowHeight * -0.1,
+  },
+
+  letterText: {
+    textShadowColor: "white",
+    textShadowOffset: { width: 0.7, height: 0.7 },
+    textShadowRadius: 10,
+  },
+
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: "15%",
+    marginTop: windowHeight * 0.15,
   },
 
   modalView: {
-    margin: "5%",
+    margin: windowWidth * 0.05,
     backgroundColor: "white",
     borderRadius: 10,
     padding: 35,
@@ -247,20 +251,20 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    paddingHorizontal: "6%",
-    top: "3%",
-    left: "35%",
+    paddingHorizontal: windowWidth * 0.06,
+    top: windowHeight * 0.03,
+    left: windowWidth * 0.35,
   },
 
   textStyle: {
     color: "white",
     fontFamily: "Poppins-Bold",
-    fontSize: 16,
+    fontSize: windowWidth * 0.04,
     textAlign: "center",
   },
   modalText: {
-    marginBottom: "10%",
+    marginBottom: windowHeight * 0.1,
     fontFamily: "Poppins-Bold",
-    fontSize: 16,
+    fontSize: windowWidth * 0.04,
   },
 });

@@ -1,7 +1,10 @@
 import React from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Dimensions } from "react-native";
 import { colors } from "../theme";
 import styled from "styled-components/native";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const RememberDiaryItem = ({ date, id, rememberImage, title, navigation }) => {
   return (
@@ -30,8 +33,8 @@ const RememberDiaryItem = ({ date, id, rememberImage, title, navigation }) => {
 };
 
 const StyledImage = styled.ImageBackground`
-  width: 100%;
-  height: 100%;
+  width: ${windowWidth * 0.9}px;
+  height: ${windowHeight * 0.3}px;
   margin-bottom: 6px;
   border-radius: 10px;
   justify-content: flex-end;
@@ -40,8 +43,7 @@ const StyledImage = styled.ImageBackground`
 
 const ItemContainer = styled.View`
   width: 100%;
-  height: 250px;
-  margin: 5% 0%;
+  height: ${windowHeight * 0.35}px;
 `;
 
 const WhiteContainer = styled.View`
@@ -49,7 +51,7 @@ const WhiteContainer = styled.View`
   border-radius: 10px;
   opacity: 0.7;
   width: 100%;
-  height: 32%;
+  height: ${windowHeight * 0.12}px;
   position: absolute;
   justify-content: flex-end;
 `;
@@ -65,7 +67,7 @@ const TitleText = styled.Text`
   font-family: "Poppins-ExtraBold";
   font-size: 22px;
   color: ${colors.palette.BrownDark};
-  margin: 0% 0% 0% 4%;
+  margin: 0% 0% 1% 4%;
 `;
 
 export default RememberDiaryItem;

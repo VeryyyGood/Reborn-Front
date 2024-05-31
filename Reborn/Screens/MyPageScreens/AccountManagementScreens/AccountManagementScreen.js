@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  Dimensions,
 } from "react-native";
 import { buttonStyles } from "../../../components";
 import { colors } from "../../../theme";
@@ -13,6 +14,9 @@ import axios from "axios";
 import NaverLogin from "@react-native-seoul/naver-login";
 import { useAccessToken } from "../../../context/AccessTokenContext";
 import { launchImageLibrary } from "react-native-image-picker";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const AccountManagementScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
@@ -271,32 +275,32 @@ const styles = StyleSheet.create({
   },
   imageWrapper: {
     position: "relative",
-    height: 190,
+    height: windowHeight * 0.28,
     justifyContent: "center",
     alignItems: "center",
   },
   backgroundImage: {
-    top: 35,
-    width: 320,
-    height: 130,
-    borderRadius: 20,
+    top: windowHeight * 0.02,
+    width: windowWidth * 0.8,
+    height: windowHeight * 0.18,
+    borderRadius: 25,
   },
   profileImage: {
-    width: 100,
-    height: 100,
-    bottom: 25,
+    width: windowWidth * 0.25,
+    height: windowHeight * 0.13,
+    bottom: windowHeight * 0.04,
     borderRadius: 50,
   },
   fontBold: {
     fontSize: 18,
     fontFamily: "Poppins-Bold",
-    marginBottom: "6%",
+    marginBottom: windowHeight * 0.03,
     color: colors.palette.BrownDark,
   },
   fontNormal: {
     fontSize: 16,
     fontFamily: "Poppins-Regular",
-    marginLeft: "3%",
+    marginLeft: windowWidth * 0.03,
     color: colors.palette.BrownDark,
   },
   buttonFont: {
@@ -307,7 +311,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     alignSelf: "stretch",
     alignItems: "flex-start",
-    marginHorizontal: 20,
+    marginHorizontal: windowWidth * 0.06,
   },
   infoRow: {
     flexDirection: "row",
@@ -315,8 +319,8 @@ const styles = StyleSheet.create({
   },
   line: {
     borderBottomColor: colors.palette.Gray250,
-    borderBottomWidth: 1,
+    borderBottomWidth: 2,
     alignSelf: "stretch",
-    marginVertical: 8,
+    marginVertical: windowHeight * 0.015,
   },
 });

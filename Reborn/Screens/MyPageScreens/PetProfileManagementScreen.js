@@ -8,11 +8,15 @@ import {
   TouchableOpacity,
   FlatList,
   Alert,
+  Dimensions,
 } from "react-native";
 import { buttonStyles } from "../../components/buttonStyles";
 import { colors } from "../../theme";
 import axios from "axios";
 import { useAccessToken } from "../../context/AccessTokenContext";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const RadioButton = ({ isSelected, onPress, label }) => {
   return (
@@ -120,75 +124,76 @@ const PetProfileManagementScreen = ({ route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View>
-        <Text style={styles.font}>이름</Text>
-        <Text style={styles.input}>{name}</Text>
+    <View style={{ flex: 1, backgroundColor: colors.palette.White }}>
+      <View style={styles.container}>
+        <View>
+          <Text style={styles.font}>이름</Text>
+          <Text style={styles.input}>{name}</Text>
+        </View>
+        <View>
+          <Text style={styles.font}>기일</Text>
+          <Text style={styles.input}>{date}</Text>
+        </View>
+        <View>
+          <Text style={styles.font}>동물 종류</Text>
+          <RadioButton
+            label="강아지"
+            isSelected={animalType === "DOG"}
+            onPress={() => {}}
+          />
+          <RadioButton
+            label="고양이"
+            isSelected={animalType === "CAT"}
+            onPress={() => {}}
+          />
+        </View>
+        <View>
+          <Text style={styles.font}>견종/묘종</Text>
+          <Text style={styles.input}>{breed}</Text>
+        </View>
+        <Text style={styles.font}>색상</Text>
+        <View style={styles.colorContainer}>
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={Object.keys(colorMap)}
+            renderItem={({ item }) => {
+              const backgroundColor = colorMap[item];
+              return (
+                <View
+                  style={[
+                    styles.colorCircle,
+                    { backgroundColor: backgroundColor },
+                    color === item && styles.selected,
+                  ]}
+                >
+                  {color === item && (
+                    <Image
+                      style={styles.checkmark}
+                      source={item === "WHITE" ? checkBlack : checkWhite}
+                    />
+                  )}
+                </View>
+              );
+            }}
+            keyExtractor={(item) => item}
+          />
+        </View>
+        <TouchableOpacity
+          style={[buttonStyles.buttonBrownBottom, { top: windowHeight * 0.13 }]}
+          onPress={handleDelete}
+        >
+          <Text style={styles.buttonFont}>삭제하기</Text>
+        </TouchableOpacity>
       </View>
-      <View>
-        <Text style={styles.font}>기일</Text>
-        <Text style={styles.input}>{date}</Text>
-      </View>
-      <View>
-        <Text style={styles.font}>동물 종류</Text>
-        <RadioButton
-          label="강아지"
-          isSelected={animalType === "DOG"}
-          onPress={() => {}}
-        />
-        <RadioButton
-          label="고양이"
-          isSelected={animalType === "CAT"}
-          onPress={() => {}}
-        />
-      </View>
-      <View>
-        <Text style={styles.font}>견종</Text>
-        <Text style={styles.input}>{breed}</Text>
-      </View>
-      <Text style={styles.font}>색상</Text>
-      <View style={styles.colorContainer}>
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={Object.keys(colorMap)}
-          renderItem={({ item }) => {
-            const backgroundColor = colorMap[item];
-            return (
-              <View
-                style={[
-                  styles.colorCircle,
-                  { backgroundColor: backgroundColor },
-                  color === item && styles.selected,
-                ]}
-              >
-                {color === item && (
-                  <Image
-                    style={styles.checkmark}
-                    source={item === "WHITE" ? checkBlack : checkWhite}
-                  />
-                )}
-              </View>
-            );
-          }}
-          keyExtractor={(item) => item}
-        />
-      </View>
-      <TouchableOpacity
-        style={[buttonStyles.buttonBrownBottom, { top: "14.5%" }]}
-        onPress={handleDelete}
-      >
-        <Text style={styles.buttonFont}>삭제하기</Text>
-      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: colors.palette.White,
+    paddingHorizontal: windowWidth * 0.05,
+    paddingVertical: windowHeight * 0.03,
   },
 
   input: {
@@ -196,8 +201,8 @@ const styles = StyleSheet.create({
     borderColor: colors.palette.Gray300,
     borderRadius: 16,
     padding: 15,
-    marginBottom: "3%",
-    height: 60,
+    marginBottom: windowHeight * 0.03,
+    height: windowHeight * 0.07,
   },
 
   colorContainer: {
@@ -206,10 +211,10 @@ const styles = StyleSheet.create({
   },
 
   colorCircle: {
-    width: 40,
-    height: 40,
+    width: windowWidth * 0.1,
+    height: windowHeight * 0.05,
     borderRadius: 25,
-    marginRight: 42,
+    marginRight: windowWidth * 0.1,
     borderColor: colors.palette.Black,
     borderWidth: 1,
   },
@@ -222,7 +227,7 @@ const styles = StyleSheet.create({
   font: {
     fontFamily: "Poppins-Regular",
     fontSize: 14,
-    marginBottom: "3%",
+    marginBottom: windowHeight * 0.015,
   },
   buttonFont: {
     fontFamily: "Poppins-Bold",
@@ -232,7 +237,7 @@ const styles = StyleSheet.create({
   radioButtonContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: windowHeight * 0.015,
   },
   radioButton: {
     height: 20,
@@ -242,7 +247,7 @@ const styles = StyleSheet.create({
     borderColor: "#000",
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 10,
+    marginRight: windowWidth * 0.02,
   },
   radioButtonInner: {
     height: 10,
@@ -253,7 +258,7 @@ const styles = StyleSheet.create({
   checkmark: {
     position: "absolute",
     alignSelf: "center",
-    top: "10%",
+    top: windowHeight * 0.005,
   },
 });
 

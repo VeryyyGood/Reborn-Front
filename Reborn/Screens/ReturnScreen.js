@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flexDirection: "row",
-    padding: 10,
+    padding: 15,
     justifyContent: "space-between",
   },
   input: {

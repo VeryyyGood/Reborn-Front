@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, Text, StyleSheet, FlatList, Dimensions } from "react-native";
 import { colors } from "../../../theme";
 import axios from "axios";
 import { useAccessToken } from "../../../context/AccessTokenContext";
 import RememberDiaryItem from "../../../components/RememberDiaryItem";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const ReviewRememberScreen = ({ route, navigation }) => {
   const { petId } = route.params;
@@ -77,10 +80,10 @@ const styles = StyleSheet.create({
   },
 
   textContainer: {
-    height: "15%",
+    height: windowHeight * 0.15,
     justifyContent: "center",
     alignItems: "flex-start",
-    paddingLeft: "5%",
+    paddingLeft: windowWidth * 0.05,
   },
 
   boldFont: {

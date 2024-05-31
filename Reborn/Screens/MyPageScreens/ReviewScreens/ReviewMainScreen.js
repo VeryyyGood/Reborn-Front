@@ -6,10 +6,14 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import { colors } from "../../../theme/colors";
 import axios from "axios";
 import { useAccessToken } from "../../../context/AccessTokenContext";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const ReviewMainScreen = ({ navigation, route }) => {
   const { petId } = route.params;
@@ -160,16 +164,16 @@ const styles = StyleSheet.create({
   imageTextContainer: {
     position: "relative",
     alignItems: "center",
-    marginTop: "3%",
-    marginBottom: "3%",
+    marginTop: windowHeight * 0.02,
+    marginBottom: windowHeight * 0.02,
   },
 
   imageText: {
     position: "absolute",
     fontFamily: "Poppins-Bold",
     fontSize: 24,
-    marginTop: "6%",
-    marginLeft: "6%",
+    marginTop: windowHeight * 0.02,
+    marginLeft: windowWidth * 0.05,
     textAlign: "left",
     left: 0,
     color: colors.palette.BrownDark,
@@ -179,8 +183,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     fontSize: 16,
     fontFamily: "Poppins-Bold",
-    marginTop: "17%",
-    marginLeft: "6%",
+    marginTop: windowHeight * 0.07,
+    marginLeft: windowWidth * 0.05,
     textAlign: "left",
     color: colors.palette.BrownDark,
     left: 0,

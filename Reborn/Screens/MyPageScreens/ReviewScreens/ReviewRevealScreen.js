@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, Text, StyleSheet, FlatList, Dimensions } from "react-native";
 import { colors } from "../../../theme";
 import { useAccessToken } from "../../../context/AccessTokenContext";
 import axios from "axios";
 import RevealDiaryItem from "../../../components/RevealDiaryItem";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const ReviewRevealScreen = ({ route, navigation }) => {
   const { petId } = route.params;
@@ -47,7 +50,7 @@ const ReviewRevealScreen = ({ route, navigation }) => {
         </Text>
         <Text style={styles.normalFont}>나의 감정 들여다보기</Text>
       </View>
-      <View style={{ paddingHorizontal: 20, flex: 1 }}>
+      <View style={{ paddingHorizontal: windowWidth * 0.06, flex: 1 }}>
         <FlatList
           data={revealData}
           renderItem={({ item }) => (
@@ -74,10 +77,10 @@ const styles = StyleSheet.create({
   },
 
   textContainer: {
-    height: "15%",
+    height: windowHeight * 0.15,
     justifyContent: "center",
     alignItems: "flex-start",
-    paddingLeft: "5%",
+    paddingLeft: windowWidth * 0.05,
   },
 
   boldFont: {
