@@ -38,14 +38,14 @@ const AppContent = () => {
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
     if (enabled) {
-      console.log('권한 상태:', authStatus);
+      //console.log('권한 상태:', authStatus);
     }
   }
 
   async function getToken() {
     await requestUserPermission();
     const token = await messaging().getToken();
-    console.log('디바이스 토큰:', token);
+    //console.log('디바이스 토큰:', token);
     setDeviceToken(token); // 디바이스 토큰 설정
   }
 

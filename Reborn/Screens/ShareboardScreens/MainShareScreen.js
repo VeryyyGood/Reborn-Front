@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, FlatList, StyleSheet, Image } from "react-native";
+import { View, Text, TouchableOpacity, FlatList, StyleSheet, Image,ScrollView  } from "react-native";
 import axios from "axios";
 import { useFocusEffect } from '@react-navigation/native';
 import { useAccessToken } from '../../context/AccessTokenContext';
@@ -63,22 +63,25 @@ const MainShareScreen = ({ navigation }) => {
             commentCount={item.commentCount}
             boardImage={item.boardImage}
             writerProfileImage={item.writerProfileImage}
+            disableVirtualization={false}
         />
     );
 
     const renderHeader = () => (
         <View style={styles.header}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {["all", "bookmarked", "mine", "like"].map(screen => (
-                <TouchableOpacity key={screen} onPress={() => setSelectedScreen(screen)}>
-                    <View style={selectedScreen === screen ? styles.selectedItem : {}}>
-                        <Text style={{ ...styles.btnText, color: selectedScreen === screen ? colors.palette.BrownDark : colors.palette.Gray400 }}>
-                            {screen === 'all' ? '전체글' : screen === 'bookmarked' ? '북마크' : screen === 'mine' ? 'MY글' : '인기글'}
-                        </Text>
-                    </View>
-                </TouchableOpacity>
+              <TouchableOpacity key={screen} onPress={() => setSelectedScreen(screen)}>
+                <View style={selectedScreen === screen ? styles.selectedItem : {}}>
+                  <Text style={{ ...styles.btnText, color: selectedScreen === screen ? colors.palette.BrownDark : colors.palette.Gray400 }}>
+                    {screen === 'all' ? '전체글' : screen === 'bookmarked' ? '북마크' : screen === 'mine' ? 'MY글' : '인기글'}
+                  </Text>
+                </View>
+              </TouchableOpacity>
             ))}
+          </ScrollView>
         </View>
-    );
+      );
 
     return (
         <View style={styles.container}>
@@ -111,7 +114,7 @@ const styles = StyleSheet.create({
     },
     btnText: {
         fontSize: 23,
-        marginHorizontal: 5,
+        marginHorizontal: 13,
         fontFamily: 'Poppins-Bold',
         paddingHorizontal: '2%',
     },

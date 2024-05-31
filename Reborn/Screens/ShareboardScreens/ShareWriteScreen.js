@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, TouchableOpacity, TextInput, Image, StyleSheet } from "react-native";
+import { View, Text, Button, TouchableOpacity, TextInput, Image, StyleSheet, Alert } from "react-native";
 import styled from "styled-components/native";
 import DropDownPicker from 'react-native-dropdown-picker';
 import { CompleteButton, GrayLine } from "../../components";
@@ -87,11 +87,16 @@ const ShareWriteScreen = ({ navigation }) => {
       });
       const jsonResponse = await response.json();
       console.log("Post response:", jsonResponse);
-
-      setValue(null);
-      setBoardContent("");
-      setPostImage(null);
-      navigation.goBack();
+      if(jsonResponse.isSuccess){
+        setValue(null);
+        setBoardContent("");
+        setPostImage(null);
+        navigation.goBack();
+      }
+      else{
+        Alert.alert("게시글 작성 실패", "게시글을 올릴 게시판을 선택해주세요.");
+      }
+      
     } catch (error) {
       console.error("Post content error:", error);
     }
@@ -117,24 +122,47 @@ const ShareWriteScreen = ({ navigation }) => {
         </View>
         </View>
         <GrayLine></GrayLine> 
-        <View style={{marginVertical: 20,}}>
+        <View style={{marginVertical: 20,zIndex: 100,alignItems: 'center',}}>
             <DropDownPicker
-            open={open}
-            value={value}
-            items={items}
-            setOpen={setOpen}
-            setValue={setValue}
-            setItems={setItems}
-            placeholder="게시판을 선택해주세요"
-            listMode="FLATLIST"
-            modalProps={{
-                animationType: 'fade',
-            }}
-            modalTitle="선택해주세요."
-            //listItemContainerStyle={{}}
-            />
+              open={open}
+              value={value}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems}
+              placeholder="게시판을 선택해주세요"
+              placeholderTextColor={"grey"}
+              listMode="FLATLIST"
+              modalProps={{
+                  animationType: 'fade',
+              }}
+              modalTitle="선택해주세요."
+              style={{
+              	// width : '80%',
+              	borderWidth : 0,
+                //borderRadius: 20,
+              }}
+              containerStyle={{
+                width: '90%',
+                borderWidth: 2,
+                borderColor: colors.palette.YellowLight,
+                borderRadius: 10,
+              }}
+              textStyle={{
+                fontSize: 14,
+                fontFamily: 'Poppins-Regular',
+                color: colors.palette.BrownDark,
+              }}
+              dropDownContainerStyle={{
+                borderWidth: 2,
+                borderColor: colors.palette.YellowLight,
+                color: colors.palette.BrownDark,
+              }}
+
+              //listItemContainerStyle={{}}
+              />
         </View>
-        <View style={{ flexDirection: 'row' , marginBottom: 10, paddingHorizontal:10,}}>
+        <View style={{ flexDirection: 'row' , marginBottom: 10, paddingHorizontal:20,}}>
           <Image style={{ width: 60, height: 60, borderRadius: 50, marginTop: 20}} source={profileImage} />
           <TextInput
               style={{ marginLeft: '3%', fontFamily: "Poppins-regular", fontSize: 18, marginRight: 70, marginTop: '7%' }}

@@ -38,6 +38,33 @@ const ShareContentScreen = ({ route, navigation }) => {
   const [commentItemData, setCommentItemData] = useState([]);
 
   //const [commentItemData, setCommentItemData] = useState([]);
+  const getCommentItem = async () => {
+    try {
+      const response = await axios.get(
+        `http://reborn.persi0815.site/board/comment/${id}/list`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      
+      if (response.data && response.data.result) {
+        //리스트
+        console.log(response.data.result.commentList);
+        const mappedData = response.data.result.commentList.map(item => ({
+            id: item.id,
+            commentCreatedAt: item.commentCreatedAt,
+            commentWriter: item.commentWriter,
+            commentContent: item.commentContent,
+            writerProfileImage: item.writerProfileImage,
+        }));
+        setCommentItemData(mappedData);
+    }
+    } catch (e) {
+      console.error(e);
+    }
+  };
   
   useFocusEffect(
     React.useCallback(() => {
@@ -63,34 +90,6 @@ const ShareContentScreen = ({ route, navigation }) => {
             setLikeCount(initialLikeCount);
             //console.log('좋아요 안 눌림. 갯수'+initialLikeCount);
           }
-        } catch (e) {
-          console.error(e);
-        }
-      };
-
-      const getCommentItem = async () => {
-        try {
-          const response = await axios.get(
-            `http://reborn.persi0815.site/board/comment/${id}/list`,
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
-          );
-          
-          if (response.data && response.data.result) {
-            //리스트
-            console.log(response.data.result.commentList);
-            const mappedData = response.data.result.commentList.map(item => ({
-                id: item.id,
-                commentCreatedAt: item.commentCreatedAt,
-                commentWriter: item.commentWriter,
-                commentContent: item.commentContent,
-                writerProfileImage: item.writerProfileImage,
-            }));
-            setCommentItemData(mappedData);
-        }
         } catch (e) {
           console.error(e);
         }
@@ -122,7 +121,7 @@ const ShareContentScreen = ({ route, navigation }) => {
       getCheckBookmark();
       setLikeCount(initialLikeCount);
       //console.log(boardImage);
-    }, [accessToken, id, initialLikeCount, commentContent])
+    }, [accessToken, id, initialLikeCount,])
   );
 
   
@@ -261,7 +260,7 @@ const ShareContentScreen = ({ route, navigation }) => {
           });
       console.log(response.data);
       setcommentContent("");
-      //getCommentItem();
+      getCommentItem();
       return response;
   }
   catch (error) {
@@ -363,15 +362,16 @@ const renderHeaderComponent = () => (
       <GrayLine></GrayLine>
       <View>
         <FlatList 
-        data={commentItemData}
-          renderItem={({item}) => (
-            <ShareBoardCommentItem
-              id={item.id}
-              commentCreatedAt={`${item.commentCreatedAt.split('T')[0]} ${item.commentCreatedAt.split('T')[1].slice(0, 5)}`}
-              commentWriter={item.commentWriter}
-              commentContent={item.commentContent}
-              writerProfileImage={item.writerProfileImage}/>
-          )} 
+          data={commentItemData}
+            renderItem={({item}) => (
+              <ShareBoardCommentItem
+                id={item.id}
+                commentCreatedAt={`${item.commentCreatedAt.split('T')[0]} ${item.commentCreatedAt.split('T')[1].slice(0, 5)}`}
+                commentWriter={item.commentWriter}
+                commentContent={item.commentContent}
+                writerProfileImage={item.writerProfileImage}
+                ondelete={()=> getCommentItem()}/>
+            )} 
           keyExtractor={item => item.id}
           ListHeaderComponent={renderHeaderComponent}
           contentContainerStyle={{ paddingBottom: 200 }} />

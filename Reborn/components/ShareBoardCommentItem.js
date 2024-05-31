@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, ImageBackground, Touchable, TouchableOpacity, TextInput, Button } from 'react-native';
+import {View, Text, Alert, Image, StyleSheet, ImageBackground, Touchable, TouchableOpacity, TextInput, Button } from 'react-native';
 import styled from "styled-components/native";
 import { colors } from '../theme';
 import { GrayLine, ViewStyles } from './viewStyles';
@@ -7,10 +7,26 @@ import { GrayLine, ViewStyles } from './viewStyles';
 import axios from "axios";
 import { useAccessToken } from "../context/AccessTokenContext";
 
-const ShareBoardCommentItem = ({id, commentCreatedAt, commentWriter, commentContent, writerProfileImage}) => {
+const ShareBoardCommentItem = ({id, commentCreatedAt, commentWriter, commentContent, writerProfileImage, ondelete}) => {
 	const { accessToken } = useAccessToken();
 
-    const handlecommentDeletePress  = async () => {
+    const handlecommentDeletePress  = () => {
+        Alert.alert(
+            "댓글 삭제",
+            "정말로 댓글을 삭제하시겠습니까?",
+            [
+                {
+                    text: "아니오",
+                    onPress: () => console.log("삭제 취소"),
+                    style: "cancel"
+                },
+                { text: "예", onPress: () => deleteComment() }
+            ],
+            { cancelable: false }
+        );
+    };
+
+    const deleteComment = async () => {
         console.log(id);
         try {
             const response = await axios.delete(
@@ -22,11 +38,13 @@ const ShareBoardCommentItem = ({id, commentCreatedAt, commentWriter, commentCont
               }
             );
             console.log(response.data);
-          } catch (error) {
-            //console.log("Error Response Body:", error.response?.data);
+            ondelete();
+            Alert.alert("댓글 삭제", "댓글이 성공적으로 삭제되었습니다.");
+        } catch (error) {
             console.error(error);
-          }
-        };   
+            Alert.alert("댓글 삭제 실패", "댓글 삭제에 실패하였습니다.");
+        }
+    };
     
     return (
         <View style={styles.shareItem}>
