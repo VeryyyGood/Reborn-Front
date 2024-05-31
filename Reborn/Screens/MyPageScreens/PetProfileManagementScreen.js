@@ -180,7 +180,7 @@ const PetProfileManagementScreen = ({ route }) => {
           />
         </View>
         <TouchableOpacity
-          style={[buttonStyles.buttonBrownBottom, { top: windowHeight * 0.13 }]}
+          style={[buttonStyles.buttonBrownBottom, { top: windowHeight * 0.12 }]}
           onPress={handleDelete}
         >
           <Text style={styles.buttonFont}>삭제하기</Text>
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
 
   colorCircle: {
     width: windowWidth * 0.1,
-    height: windowHeight * 0.05,
+    height: windowHeight * 0.06,
     borderRadius: 25,
     marginRight: windowWidth * 0.1,
     borderColor: colors.palette.Black,
@@ -228,6 +228,7 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins-Regular",
     fontSize: 14,
     marginBottom: windowHeight * 0.015,
+    color: colors.palette.BrownDark,
   },
   buttonFont: {
     fontFamily: "Poppins-Bold",
@@ -237,7 +238,7 @@ const styles = StyleSheet.create({
   radioButtonContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: windowHeight * 0.015,
+    marginBottom: windowHeight * 0.02,
   },
   radioButton: {
     height: 20,
@@ -258,7 +259,7 @@ const styles = StyleSheet.create({
   checkmark: {
     position: "absolute",
     alignSelf: "center",
-    top: windowHeight * 0.005,
+    top: windowHeight * 0.008,
   },
 });
 
