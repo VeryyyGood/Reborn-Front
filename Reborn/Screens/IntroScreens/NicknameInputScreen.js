@@ -71,7 +71,7 @@ const NicknameInputScreen = ({ navigation: { navigate } }) => {
                 Alert.alert("중복", "별명이 중복입니다. 다시 해주세용");
             }
         } else {
-            Alert.alert("어허", "사용자 별명을 입력해주세요.");
+            Alert.alert("별명 입력", "사용자 별명을 입력해주세요.");
         }
     };
 
