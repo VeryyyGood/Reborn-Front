@@ -6,8 +6,12 @@ import {
   StyleSheet,
   ImageBackground,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import { colors } from "../theme";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const weatherImages = {
   SUNNY: require("../Assets/icons/rediaryimage/sun.png"),
@@ -61,9 +65,8 @@ const RevealDiaryItem = ({
             <Text style={styles.date}>DAY {date}</Text>
             <Image
               style={{
-                marginLeft: -20,
-                marginBottom: 3,
                 tintColor: colors.palette.BrownDark,
+                marginBottom: windowHeight * 0.005,
               }}
               source={require("../Assets/icons/rediaryimage/arrow2.png")}
             />
@@ -78,23 +81,24 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 10,
   },
   image: {
-    width: 85,
-    height: 85,
-    marginBottom: 6,
+    width: windowWidth * 0.2,
+    height: windowHeight * 0.1,
+    marginBottom: windowHeight * 0.01,
+    marginLeft: windowWidth * 0.01,
     resizeMode: "contain",
   },
   date: {
     fontSize: 24,
     fontFamily: "Poppins-ExtraBold",
-    marginHorizontal: "10%",
+    marginHorizontal: windowWidth * 0.1,
     color: colors.palette.Brown,
   },
   item: {
-    height: 150,
-    marginVertical: 10,
+    height: windowHeight * 0.185,
+    width: windowWidth * 0.87,
+    marginVertical: windowHeight * 0.015,
   },
   backgroundImage: {
     flex: 1,

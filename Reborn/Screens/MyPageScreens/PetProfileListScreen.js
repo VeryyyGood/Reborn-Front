@@ -6,11 +6,15 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import axios from "axios";
 import { colors } from "../../theme";
 import { useAccessToken } from "../../context/AccessTokenContext";
 import { useFocusEffect } from "@react-navigation/native";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const PetProfileListScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
@@ -84,8 +88,8 @@ const styles = StyleSheet.create({
 
   imageTextContainer: {
     alignItems: "center",
-    marginTop: "3%",
-    marginBottom: "3%",
+    marginTop: windowHeight * 0.03,
+    marginBottom: windowHeight * 0.01,
   },
 
   imageContainer: {
@@ -94,28 +98,27 @@ const styles = StyleSheet.create({
 
   ribbonImage: {
     position: "absolute",
-    width: 40,
-    height: 40,
+    width: windowWidth * 0.3,
+    height: windowHeight * 0.06,
     resizeMode: "contain",
     marginTop: "9.7%",
-    marginLeft: "6%",
   },
 
   textContainer: {
     position: "absolute",
-    marginLeft: "26%",
-    marginTop: "8%",
+    marginLeft: windowWidth * 0.25,
+    marginTop: windowHeight * 0.03,
   },
 
   imageText: {
     fontFamily: "Poppins-Bold",
-    fontSize: 24,
+    fontSize: 23,
     textAlign: "left",
     color: colors.palette.BrownDark,
   },
 
   font: {
-    fontSize: 18,
+    fontSize: 17,
     fontFamily: "Poppins-Bold",
     textAlign: "left",
     color: colors.palette.BrownDark,

@@ -1,6 +1,17 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import { colors } from "../../theme/colors";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+
 const MypageMainScreen = ({ navigation: { navigate } }) => (
   <View style={styles.container}>
     <TouchableOpacity
@@ -13,10 +24,7 @@ const MypageMainScreen = ({ navigation: { navigate } }) => (
           style={styles.icon}
         />
         <Text style={styles.font}>계정 관리</Text>
-        <Image
-          source={require("../../Assets/icons/right_arrow.png")}
-          style={styles.arrow_icon1}
-        />
+        <View style={styles.flexSpacer} />
       </View>
     </TouchableOpacity>
     <TouchableOpacity
@@ -29,10 +37,7 @@ const MypageMainScreen = ({ navigation: { navigate } }) => (
           style={styles.icon}
         />
         <Text style={styles.font}>반려동물 프로필 관리</Text>
-        <Image
-          source={require("../../Assets/icons/right_arrow.png")}
-          style={styles.arrow_icon2}
-        />
+        <View style={styles.flexSpacer} />
       </View>
     </TouchableOpacity>
     <TouchableOpacity
@@ -48,10 +53,6 @@ const MypageMainScreen = ({ navigation: { navigate } }) => (
           <Text style={styles.reColor}>RE:</Text>
           <Text> VIEW</Text>
         </Text>
-        <Image
-          source={require("../../Assets/icons/right_arrow.png")}
-          style={styles.arrow_icon3}
-        />
       </View>
     </TouchableOpacity>
   </View>
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "flex-start",
-    paddingLeft: "8%",
+    paddingLeft: windowWidth * 0.08,
     backgroundColor: colors.palette.White,
   },
 
@@ -73,13 +74,13 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    marginVertical: "8%",
+    marginVertical: windowWidth * 0.08,
   },
 
   font: {
     fontSize: 16,
     fontFamily: "Poppins-Regular",
-    top: "0.2%",
+    top: windowHeight * 0.002,
     color: colors.palette.BrownDark,
   },
 
@@ -90,22 +91,6 @@ const styles = StyleSheet.create({
   },
 
   icon: {
-    marginRight: "5%",
-  },
-
-  arrow_icon1: {
-    marginLeft: "53%",
-  },
-
-  arrow_icon2: {
-    marginLeft: "31%",
-  },
-
-  arrow_icon3: {
-    marginLeft: "53%",
-  },
-
-  arrow_icon4: {
-    marginLeft: "49%",
+    marginRight: windowWidth * 0.05,
   },
 });

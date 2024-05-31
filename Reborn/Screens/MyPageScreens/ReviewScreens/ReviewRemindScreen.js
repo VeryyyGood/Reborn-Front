@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+  Dimensions,
+} from "react-native";
 import { colors } from "../../../theme";
 import { useAccessToken } from "../../../context/AccessTokenContext";
 import axios from "axios";
 import dogImage from "../../../Assets/Images/dog/dog_profile.jpg";
 import catImage from "../../../Assets/Images/cat/cat_profile.png";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const ChatBubble = ({ text, isMe, petType }) => {
   const profileImage = petType === "DOG" ? dogImage : catImage;
@@ -98,10 +108,10 @@ const styles = StyleSheet.create({
   },
 
   textContainer: {
-    height: "15%",
+    height: windowHeight * 0.15,
     justifyContent: "center",
     alignItems: "flex-start",
-    paddingLeft: "5%",
+    paddingLeft: windowWidth * 0.05,
     backgroundColor: colors.palette.White,
   },
 
@@ -122,7 +132,8 @@ const styles = StyleSheet.create({
   },
 
   contentContainer: {
-    padding: 10,
+    paddingHorizontal: windowWidth * 0.025,
+    paddingVertical: windowHeight * 0.015,
   },
   profileImageContainer: {
     marginBottom: -30,
@@ -131,7 +142,7 @@ const styles = StyleSheet.create({
   leftMessageContainer: {
     flexDirection: "row",
     alignItems: "flex-end",
-    marginTop: 25,
+    marginTop: windowHeight * 0.03,
   },
   rightMessageContainer: {
     flexDirection: "row",
@@ -139,12 +150,12 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   smallProfileImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 30,
+    width: windowWidth * 0.17,
+    height: windowHeight * 0.09,
+    borderRadius: 40,
     borderColor: colors.palette.White,
     borderWidth: 2,
-    marginLeft: 5,
+    marginLeft: windowWidth * 0.01,
   },
 
   leftBubble: {
@@ -155,7 +166,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     maxWidth: "80%",
-    marginLeft: 5,
+    marginLeft: windowWidth * 0.01,
   },
   rightBubble: {
     backgroundColor: "#E0EDC2",
