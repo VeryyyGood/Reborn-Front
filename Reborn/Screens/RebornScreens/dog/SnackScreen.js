@@ -9,6 +9,7 @@ import {
 import { colors } from "../../../theme";
 import { textStyles, ButtonBrownBottom } from "../../../components";
 import { requestPostProgress } from "../../../utiles"; // send data to Server
+import { useFocusEffect } from "@react-navigation/native";
 import { useAccessToken } from "../../../context/AccessTokenContext";
 import styled from "styled-components/native";
 
@@ -44,6 +45,13 @@ const SnackScreen = ({ navigation: { navigate } }) => {
     myContext.petType === "CAT" ? catsnack_twoimageURL : dogsnack_twoimageURL
   );
   const [isFeed, setisFeed] = useState(false);
+
+  // refresh
+  useFocusEffect(
+    React.useCallback(() => {
+      setisFeed(false);
+    }, [])
+  );
 
   const destinationMap = {
     2: "Diary",
@@ -210,7 +218,7 @@ const DraggableImage = ({ source, style, isFeed, setisFeed }) => {
         onPressIn.start();
       },
       onPanResponderRelease: (_, { dx, dy }) => {
-        if (dx > -100 && dy > 250 && dx < -30 && dy < 310) {
+        if (dx > -100 && dy > 240 && dx < -20 && dy < 310) {
           setisFeed(!isFeed);
           Animated.sequence([
             Animated.parallel([onDropScale, onDropOpacity]),

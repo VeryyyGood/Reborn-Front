@@ -193,7 +193,7 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
           onPress={() => {
             if (isEnd) {
               requestPostProgress(
-                "http://reborn.persi0815.site/reborn/reborn/finish",
+                "http://reborn.persi0815.site/reborn/reborn/outro",
                 accessToken
               );
               navigate("Outtro");

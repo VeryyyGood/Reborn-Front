@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -10,6 +11,7 @@ import {
   FlatList,
   Pressable,
 } from "react-native";
+import { Toast } from "../../../components";
 import AppContext from "../../RebornScreens/dog/AppContext";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { colors } from "../../../theme";
@@ -42,6 +44,8 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
   const [animalType, setAnimalType] = useState(null);
   const [color, setColor] = useState("");
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+
   const navigation = useNavigation();
   const myContext = useContext(AppContext);
 
@@ -76,41 +80,49 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
   };
 
   const handleSubmit = async () => {
-    try {
-      setGlobalPetName(name);
-      const petType = animalType === "강아지" ? "DOG" : "CAT";
-      myContext.changePetType(petType);
-      console.log(myContext.petType);
-      let colorName = colorNameMap[color] || "";
+    if (!name || !date || !breed || !animalType || !color) {
+      setShowToast(true);
+      setTimeout(() => {
+        setShowToast(false);
+      }, 3000); // 3초 후에 showToast를 false로 변경
+    } else {
+      setShowToast(false);
+      try {
+        setGlobalPetName(name);
+        const petType = animalType === "강아지" ? "DOG" : "CAT";
+        myContext.changePetType(petType);
+        console.log(myContext.petType);
+        let colorName = colorNameMap[color] || "";
 
-      const response = await fetch(
-        "http://reborn.persi0815.site:8080/reborn/reconnect/create",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            petName: name,
-            anniversary: date,
-            petType: petType,
-            detailPetType: breed,
-            petColor: colorName,
-          }),
+        const response = await fetch(
+          "http://reborn.persi0815.site:8080/reborn/reconnect/create",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              petName: name,
+              anniversary: date,
+              petType: petType,
+              detailPetType: breed,
+              petColor: colorName,
+            }),
+          }
+        );
+        const data = await response.json();
+        if (!data) {
+          throw new Error("Something went wrong");
         }
-      );
-      const data = await response.json();
-      if (!data) {
-        throw new Error("Something went wrong");
-      }
-      console.log(data);
+        console.log(data);
 
-      navigate("RebornDogStack", { screen: "Intro" }); // go to Day1, start RE:BORN
-      myContext.resetDay(); // reset Day, start from 1
-    } catch (error) {
-      console.error(error);
-      alert("저장 실패:" + error);
+        navigate("RebornDogStack", { screen: "Intro" }); // go to Day1, start RE:BORN
+        myContext.resetDay(); // reset Day, start from 1
+      } catch (error) {
+        console.error(error);
+        alert("저장 실패:" + error);
+      }
     }
   };
 
@@ -177,12 +189,20 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
           keyExtractor={(item) => item}
         />
       </View>
+
       <TouchableOpacity
         style={[styles.buttonBrownBottom, { top: "14.5%" }]}
         onPress={handleSubmit}
       >
         <Text style={styles.buttonFont}>저장하기</Text>
       </TouchableOpacity>
+      <ToastContainer>
+        {showToast ? (
+          <Toast showToast={showToast} message="프로필을 작성해주세요" />
+        ) : (
+          ""
+        )}
+      </ToastContainer>
     </View>
   );
 };
@@ -269,5 +289,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 100,
   },
 });
+
+const ToastContainer = styled.View`
+  position: absolute;
+  bottom: 50px;
+  left: 34%;
+  align-items: "center";
+`;
 
 export default ReconnectScreen;

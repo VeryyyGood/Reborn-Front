@@ -138,6 +138,9 @@ const MainScreen = ({ navigation: { navigate } }) => {
             case "SETREBORN":
               navigate("RebornDogStack", { screen: "SetReborn" });
               break;
+            case "OUTRO":
+              navigate("RebornDogStack", { screen: "Outtro" });
+              break;
             default:
           }
         }

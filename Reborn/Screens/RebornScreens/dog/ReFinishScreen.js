@@ -3,9 +3,8 @@ import { Text, ImageBackground } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../../../theme";
 import { textStyles, ButtonBrownBottom } from "../../../components";
-import { requestPostProgress } from "../../../utiles"; // send data to Server
 import AppContext from "./AppContext";
-
+import axios from "axios"; // axios import 추가
 import { useAccessToken } from "../../../context/AccessTokenContext";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
@@ -38,6 +37,39 @@ const ReFinishScreen = ({ navigation: { navigate } }) => {
     return linkArray[3];
   };
 
+  const requestPostProgress = async (link, accessToken) => {
+    try {
+      const response = await axios.post(
+        link,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      //console.log(response.data);
+      myContext.setDay(response.data.result);
+      return response; // 함수에서 서버 응답 반환
+    } catch (error) {
+      console.log("Error Response Body:", error.response.data);
+      throw error;
+    }
+  };
+
+  const handleButtonPress = async () => {
+    try {
+      const response = await requestPostProgress(
+        handleLink(myContext.contentsDay),
+        accessToken
+      );
+      console.log(response.data);
+      navigate("ReIntro");
+    } catch (error) {
+      console.error("Error occurred:", error);
+    }
+  };
+
   return (
     <Container>
       <ImageBackground
@@ -54,11 +86,7 @@ const ReFinishScreen = ({ navigation: { navigate } }) => {
         <DogImage source={petImage} resizeMode="center" />
         <ButtonBrownBottom
           text={"다음날로 넘어가기"}
-          onPress={() => {
-            requestPostProgress(handleLink(myContext.contentsDay), accessToken),
-              myContext.plusDay(),
-              navigate("ReIntro");
-          }}
+          onPress={handleButtonPress}
         />
       </ImageBackground>
     </Container>
