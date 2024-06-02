@@ -106,8 +106,8 @@ const LoginScreen = ({ navigation: { navigate } }) => {
       </View>
       <View style={styles.contentContainer}>
         <Image
-          style={{ width: "83%", height: "83%", bottom: "8%" }}
-          source={require("../../Assets/icons/app_icon.png")}
+          style={{ width: "83%", height: "83%", bottom: "8%", resizeMode: 'cover' }}
+          source={require("../../Assets/icons/app_icon22.png")}
         />
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={buttonStyles.buttonLogin} onPress={login}>
