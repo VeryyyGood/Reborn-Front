@@ -136,6 +136,11 @@ const SnackScreen = ({ navigation: { navigate } }) => {
         ) : (
           ""
         )}
+        {isFeed ? (
+          <SnackImage source={catsnackimageURL} resizeMode="center" />
+        ) : (
+          ""
+        )}
       </ImageBackground>
     </Container>
   );
@@ -211,14 +216,14 @@ const DraggableImage = ({ source, style, isFeed, setisFeed }) => {
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (_, { dx, dy }) => {
-        //console.log({ dx, dy });
+        console.log({ dx, dy });
         position.setValue({ x: dx, y: dy });
       },
       onPanResponderGrant: () => {
         onPressIn.start();
       },
       onPanResponderRelease: (_, { dx, dy }) => {
-        if (dx > -100 && dy > 240 && dx < -20 && dy < 310) {
+        if (dx > -150 && dy > 200 && dx < -10 && dy < 350) {
           setisFeed(!isFeed);
           Animated.sequence([
             Animated.parallel([onDropScale, onDropOpacity]),
@@ -260,4 +265,11 @@ const DogImage = styled.Image`
   height: 50%;
   margin-left: 30%;
   margin-top: 55%;
+`;
+
+const SnackImage = styled.Image`
+  width: 50%;
+  height: 45%;
+  position: absolute;
+  margin: 72% 0% 0% 10%;
 `;
