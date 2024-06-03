@@ -1,9 +1,6 @@
 # RE:BORN App FrontEnd 🐾
 
-## 프론트엔드 개발 팀
-- [김보경](https://github.com/kimbodle)
-- [문채영](https://github.com/mcy0325)
-- [이서정](https://github.com/girin-sj) ⭐ 
+반려 동물과 건강한 작별 인사를 할 수 있도록 도와주는 반려동물 추모 애플리케이션 "RE:BORN" 프론트엔드 Github입니다.
 
 ## 🎨 디자인
 ### 강아지 및 고양이 Asset
@@ -71,6 +68,11 @@
 - 소리 이펙트 추가
 - 반려동물 기일 알림 기능
 
-**#REBORN #반려동물 #펫로스증후군 #감정치유** 
+## 👩‍💻 프론트엔드 팀 구성
+- [김보경](https://github.com/kimbodle)
+- [문채영](https://github.com/mcy0325)
+- [이서정](https://github.com/girin-sj) ⭐ 
+
+**#REBORN #반려동물 #펫로스증후군 #감정일기 #건강한작별** 
 
 
