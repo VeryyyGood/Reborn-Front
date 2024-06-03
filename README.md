@@ -1,9 +1,9 @@
 # RE:BORN App FrontEnd 🐾
 
 ## 프론트엔드 개발 팀
-[김보경](https://github.com/kimbodle)
-[문채영](https://github.com/mcy0325)
-[이서정](https://github.com/girin-sj) ⭐ 
+- [김보경](https://github.com/kimbodle)
+- [문채영](https://github.com/mcy0325)
+- [이서정](https://github.com/girin-sj) ⭐ 
 
 ## 🎨 디자인
 ### 강아지 및 고양이 Asset
@@ -14,12 +14,12 @@
 - **배경 Asset**: 산책하기, 밥 주기, 인트로, 아웃트로 등
 
 ### 챗봇 및 UX/UI 디자인
-- **챗봇 Asset**: 프로필 디자인
-- **UX/UI 디자인**: Figma를 활용
+- **챗봇 Asset**: 프로필
 
-## 🛠 개발 준비
-- React Native 강의 수강
-- 프로젝트 생성 및 개발환경 세팅
+## 🛠 기술 스택
+- React Native(JavaScript, TypeScript): 애플리케이션 기능 구현
+- Figma: UX/UI 디자인
+- Medibang: Asset 디자인
 
 ## 🔒 로그인
 - Naver 소셜 로그인 구현
