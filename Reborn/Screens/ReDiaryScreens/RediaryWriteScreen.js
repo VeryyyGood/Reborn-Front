@@ -105,7 +105,7 @@ const EmotionScreen = ({ navigation: { navigate } }) => {
       <TitleText>감정일기</TitleText>
       <View style={styles.titleText}>
         <TextInput
-          placeholder="제목을 입력해주세요."
+          placeholder="7자 이하의 제목을 입력해주세요."
           style={styles.titleInput}
           onChangeText={setTitle}
           value={title}

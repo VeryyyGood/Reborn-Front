@@ -200,7 +200,7 @@ const ReDiaryModifyScreen = ({route, navigation}) => {
           multiline={true}
         />
         ) : (
-          <Text style={styles.dataText}>{rediaryContent}</Text>
+          <Text style={styles.dataText2}>{rediaryContent}</Text>
           )}
       </TextInputContainer>
       <ToastContainer>
@@ -333,6 +333,12 @@ const styles = StyleSheet.create({
       fontSize: 18,
       paddingVertical: '5%',
       fontFamily: 'Poppins-Bold'
+    },
+    dataText2: {
+      fontSize: 18,
+      paddingVertical: '5%',
+      fontFamily: 'Poppins-Bold',
+      marginTop: -10,
     },
     buttonDisabled: {
       backgroundColor: colors.palette.Gray300,
