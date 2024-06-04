@@ -10,8 +10,11 @@ import {
   TouchableOpacity,
   FlatList,
   Pressable,
+  Dimensions,
+  KeyboardAvoidingView,
 } from "react-native";
 import { Toast } from "../../../components";
+import { buttonStyles } from "../../../components";
 import AppContext from "../../RebornScreens/dog/AppContext";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { colors } from "../../../theme";
@@ -19,6 +22,9 @@ import {
   useAccessToken,
   useGlobalPetName,
 } from "../../../context/AccessTokenContext";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const RadioButton = ({ isSelected, onPress, label }) => {
   return (
@@ -129,7 +135,7 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.font}>이름</Text>
+        <Text style={styles.font}>반려동물 이름</Text>
         <TextInput style={styles.input} onChangeText={setName} value={name} />
       </View>
       <View>
@@ -157,10 +163,12 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
           onPress={() => setAnimalType("고양이")}
         />
       </View>
+
       <View>
         <Text style={styles.font}>견종/묘종</Text>
         <TextInput style={styles.input} onChangeText={setBreed} value={breed} />
       </View>
+
       <Text style={styles.font}>색상</Text>
       <View style={styles.colorContainer}>
         <FlatList
@@ -191,7 +199,7 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
       </View>
 
       <TouchableOpacity
-        style={[styles.buttonBrownBottom, { top: "14.5%" }]}
+        style={[buttonStyles.buttonBrownBottom, { top: windowHeight * 0.11 }]}
         onPress={handleSubmit}
       >
         <Text style={styles.buttonFont}>저장하기</Text>
@@ -210,7 +218,8 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: windowWidth * 0.05,
+    paddingVertical: windowHeight * 0.03,
     backgroundColor: colors.palette.White,
   },
 
@@ -219,7 +228,7 @@ const styles = StyleSheet.create({
     borderColor: colors.palette.Gray300,
     borderRadius: 16,
     padding: 15,
-    marginBottom: "3%",
+    marginBottom: windowHeight * 0.03,
     height: 60,
   },
 
@@ -232,7 +241,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 25,
-    marginRight: 42,
+    marginRight: windowWidth * 0.1,
     borderColor: colors.palette.Black,
     borderWidth: 1,
   },
@@ -245,7 +254,7 @@ const styles = StyleSheet.create({
   font: {
     fontFamily: "Poppins-Regular",
     fontSize: 14,
-    marginBottom: "3%",
+    marginBottom: windowHeight * 0.011,
     color: colors.palette.BrownDark,
   },
   buttonFont: {
@@ -256,7 +265,7 @@ const styles = StyleSheet.create({
   radioButtonContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: windowHeight * 0.02,
   },
   radioButton: {
     height: 20,
@@ -266,7 +275,7 @@ const styles = StyleSheet.create({
     borderColor: colors.palette.BrownDark,
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 10,
+    marginRight: windowWidth * 0.02,
   },
   radioButtonInner: {
     height: 10,
@@ -277,16 +286,7 @@ const styles = StyleSheet.create({
   checkmark: {
     position: "absolute",
     alignSelf: "center",
-    top: "10%",
-  },
-  buttonBrownBottom: {
-    backgroundColor: colors.palette.Brown,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: -50,
-    borderRadius: 30,
-    height: 50,
-    marginHorizontal: 100,
+    top: windowHeight * 0.008,
   },
 });
 

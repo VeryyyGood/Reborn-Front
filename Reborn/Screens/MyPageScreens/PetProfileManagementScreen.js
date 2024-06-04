@@ -127,7 +127,7 @@ const PetProfileManagementScreen = ({ route }) => {
     <View style={{ flex: 1, backgroundColor: colors.palette.White }}>
       <View style={styles.container}>
         <View>
-          <Text style={styles.font}>이름</Text>
+          <Text style={styles.font}>반려동물 이름</Text>
           <Text style={styles.input}>{name}</Text>
         </View>
         <View>
@@ -180,7 +180,7 @@ const PetProfileManagementScreen = ({ route }) => {
           />
         </View>
         <TouchableOpacity
-          style={[buttonStyles.buttonBrownBottom, { top: windowHeight * 0.12 }]}
+          style={[buttonStyles.buttonBrownBottom, { top: windowHeight * 0.11 }]}
           onPress={handleDelete}
         >
           <Text style={styles.buttonFont}>삭제하기</Text>
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 15,
     marginBottom: windowHeight * 0.03,
-    height: windowHeight * 0.07,
+    height: 60,
   },
 
   colorContainer: {
@@ -211,8 +211,8 @@ const styles = StyleSheet.create({
   },
 
   colorCircle: {
-    width: windowWidth * 0.1,
-    height: windowHeight * 0.06,
+    width: 40,
+    height: 40,
     borderRadius: 25,
     marginRight: windowWidth * 0.1,
     borderColor: colors.palette.Black,
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
   font: {
     fontFamily: "Poppins-Regular",
     fontSize: 14,
-    marginBottom: windowHeight * 0.015,
+    marginBottom: windowHeight * 0.011,
     color: colors.palette.BrownDark,
   },
   buttonFont: {
