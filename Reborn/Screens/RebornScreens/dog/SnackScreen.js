@@ -121,6 +121,11 @@ const SnackScreen = ({ navigation: { navigate } }) => {
             setisFeed={setisFeed}
           />
         )}
+        {myContext.petType === "CAT" && isFeed ? (
+          <SnackImage source={catsnackimageURL} resizeMode="center" />
+        ) : (
+          ""
+        )}
         {isFeed ? (
           <ButtonBrownBottom
             text="거실로 돌아가기"
@@ -133,11 +138,6 @@ const SnackScreen = ({ navigation: { navigate } }) => {
               navigate(screen);
             }}
           />
-        ) : (
-          ""
-        )}
-        {isFeed ? (
-          <SnackImage source={catsnackimageURL} resizeMode="center" />
         ) : (
           ""
         )}
@@ -216,7 +216,7 @@ const DraggableImage = ({ source, style, isFeed, setisFeed }) => {
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (_, { dx, dy }) => {
-        console.log({ dx, dy });
+        // console.log({ dx, dy });
         position.setValue({ x: dx, y: dy });
       },
       onPanResponderGrant: () => {
