@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components/native";
 import { Pressable } from "react-native";
 import { colors } from "../../../theme";
-import { ButtonBrown } from "../../../components";
+import { ButtonBrown, Toast } from "../../../components";
 import axios from "axios";
 import Sound from "react-native-sound";
 
@@ -28,7 +28,8 @@ const EmotionResultScreen = ({ route, navigation: { navigate } }) => {
   const { answer, selectedEmotion, analysisResult } = route.params;
 
   const [isVisible, setIsVisible] = useState(false); // AI result visible
-
+  const [showToast, setShowToast] = useState(false);
+  const [isAnalyzed, setIsAnalyzed] = useState(false);
   const [percentageOfSentiment, SetPercentageOfSentiment] = useState(0);
 
   const weather = [
@@ -75,10 +76,21 @@ const EmotionResultScreen = ({ route, navigation: { navigate } }) => {
       }
       console.log(data);
       SetPercentageOfSentiment(data.result);
+      setIsAnalyzed(true);
       alert("저장되었습니다!");
     } catch (error) {
       console.error(error);
       alert("저장 실패:" + error);
+    }
+  };
+
+  // go to Result Page
+  const goToNextPage = async () => {
+    if (!isAnalyzed) {
+      setShowToast(true);
+    } else {
+      setShowToast(false);
+      navigate("ReFinish");
     }
   };
 
@@ -118,13 +130,20 @@ const EmotionResultScreen = ({ route, navigation: { navigate } }) => {
             onPress={() => {
               music.play();
               setIsVisible(true);
+              setShowToast(false);
               requestWrite(analysisResult.document.sentiment);
             }}
           />
         </YellowBox>
       )}
-
-      <ButtonBrown text={"다음으로"} onPress={() => navigate("ReFinish")} />
+      <ToastContainer>
+        {showToast ? (
+          <Toast showToast={showToast} message="분석 결과 보기를 눌러주세요" />
+        ) : (
+          ""
+        )}
+      </ToastContainer>
+      <ButtonBrown text={"다음으로"} onPress={goToNextPage} />
     </Container>
   );
 };
@@ -183,6 +202,14 @@ const YellowBox = styled.View`
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+`;
+
+const ToastContainer = styled.View`
+  position: absolute;
+  bottom: 110px;
+  left: 0;
+  right: 0;
+  align-items: center;
 `;
 
 const ShowResult = ({ onPress }) => {
