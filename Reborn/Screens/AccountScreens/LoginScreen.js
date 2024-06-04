@@ -106,7 +106,7 @@ const LoginScreen = ({ navigation: { navigate } }) => {
       </View>
       <View style={styles.contentContainer}>
         <Image
-          style={{ marginHorizontal: 10, width: "83%", height: "83%", bottom: "8%", resizeMode: 'cover' }}
+          style={{ width: "90%", height: "83%", bottom: "8%", resizeMode: 'center' }}
           source={require("../../Assets/icons/app_icon22.png")}
         />
         <View style={styles.buttonContainer}>
