@@ -174,6 +174,8 @@ const AnimatedDogImage = ({
         setCurrentImage(animationImageOne);
         setIsAnimating(false);
       }, 2000); // End animation after 2 seconds
+    } else {
+      setCurrentImage(petImage);
     }
   }, [isFeed]);
 
