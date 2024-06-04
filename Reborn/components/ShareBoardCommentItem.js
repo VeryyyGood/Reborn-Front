@@ -64,9 +64,9 @@ const ShareBoardCommentItem = ({id, commentCreatedAt, commentWriter, commentCont
                     <Text style={[styles.date, {fontFamily: 'Poppins-Medium'}]}>{commentCreatedAt}</Text>
                 </Text>
             </View>
-            <TouchableOpacity style={{justifyContent: 'flex-end'}}>
+            {/* <TouchableOpacity style={{justifyContent: 'flex-end'}}>
                 <Text style={styles.recomment}>답글 쓰기</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <View style={{paddingVertical: 15,}}>
             </View>
             <GrayLine></GrayLine>

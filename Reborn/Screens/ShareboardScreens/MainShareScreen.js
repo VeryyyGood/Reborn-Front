@@ -18,8 +18,8 @@ const MainShareScreen = ({ navigation }) => {
             const urlMap = {
                 all: `${baseUrl}?type=ALL&way=time`,
                 bookmarked: `${baseUrl}/bookmark?type=ALL&way=time`,
-                mine: `${baseUrl}/my?type=ALL&way=time&scrollPosition=0&fetchSize=10`,
-                like: `${baseUrl}?type=ALL&way=like&scrollPosition=0&fetchSize=10`,
+                mine: `${baseUrl}/my?type=ALL&way=time`,
+                like: `${baseUrl}?type=ALL&way=like`,
             };
             const response = await axios.get(urlMap[selectedScreen], {
                 headers: { Authorization: `Bearer ${accessToken}` },
@@ -92,6 +92,7 @@ const MainShareScreen = ({ navigation }) => {
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 contentContainerStyle={styles.listContent}
+                initialNumToRender={30}
             />
             <TouchableOpacity style={styles.writeButton} onPress={() => navigation.navigate("ShareWrite")}>
                 <Image source={require('../../Assets/icons/ShareBoard/write.png')} />

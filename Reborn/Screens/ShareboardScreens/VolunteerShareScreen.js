@@ -16,10 +16,10 @@ const VolunteerShareScreen = ({navigation} ) => {
         try {
             const baseUrl = "http://reborn.persi0815.site/board/list";
             const urlMap = {
-                all: `${baseUrl}?type=ACTIVITY&way=time&scrollPosition=0&fetchSize=10`,
-                bookmarked: `${baseUrl}/bookmark?type=ACTIVITY&way=time&scrollPosition=0&fetchSize=10`,
-                mine: `${baseUrl}/my?type=ACTIVITY&way=time&scrollPosition=0&fetchSize=10`,
-                like: `${baseUrl}?type=ACTIVITY&way=like&scrollPosition=0&fetchSize=10`,
+                all: `${baseUrl}?type=ALL&way=time`,
+                bookmarked: `${baseUrl}/bookmark?type=ALL&way=time`,
+                mine: `${baseUrl}/my?type=ALL&way=time`,
+                like: `${baseUrl}?type=ALL&way=like`,
             };
             const response = await axios.get(urlMap[selectedScreen], {
                 headers: { Authorization: `Bearer ${accessToken}` },
