@@ -153,7 +153,7 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
                   textShadowRadius: 10,
                 }}
               >
-                To. 내가 사랑하는 {globalPetName}
+                To. 내가 사랑하는 {globalNickname}
               </LetterText>
               <LetterText
                 style={{
@@ -171,7 +171,7 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
                   textShadowRadius: 10,
                 }}
               >
-                From. 영원한 너의 가족 {globalNickname}
+                From. 영원한 너의 가족 {globalPetName}
               </LetterText>
             </ImageBackground>
             <ButtonYellow
