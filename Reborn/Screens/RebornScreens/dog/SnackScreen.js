@@ -45,11 +45,13 @@ const SnackScreen = ({ navigation: { navigate } }) => {
     myContext.petType === "CAT" ? catsnack_twoimageURL : dogsnack_twoimageURL
   );
   const [isFeed, setisFeed] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // refresh
   useFocusEffect(
     React.useCallback(() => {
       setisFeed(false);
+      setIsSubmitted(false);
     }, [])
   );
 
@@ -90,6 +92,22 @@ const SnackScreen = ({ navigation: { navigate } }) => {
     return linkArray[2];
   };
 
+  const handleSubmit = async () => {
+    if (!isSubmitted) {
+      setIsSubmitted(true); // lock double click
+      try {
+        await requestPostProgress(
+          handleLink(myContext.contentsDay),
+          accessToken
+        );
+        const screen = getDestination(myContext.contentsDay);
+        navigate(screen);
+      } catch (error) {
+        setIsSubmitted(false); // release double click
+      }
+    }
+  };
+
   return (
     <Container>
       <ImageBackground
@@ -127,17 +145,7 @@ const SnackScreen = ({ navigation: { navigate } }) => {
           ""
         )}
         {isFeed ? (
-          <ButtonBrownBottom
-            text="거실로 돌아가기"
-            onPress={() => {
-              const screen = getDestination(myContext.contentsDay);
-              requestPostProgress(
-                handleLink(myContext.contentsDay),
-                accessToken
-              );
-              navigate(screen);
-            }}
-          />
+          <ButtonBrownBottom text="거실로 돌아가기" onPress={handleSubmit} />
         ) : (
           ""
         )}

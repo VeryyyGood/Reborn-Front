@@ -24,6 +24,7 @@ const ImageScreen = ({ navigation: { navigate } }) => {
 
   const [imageFile, setImageFile] = useState(""); // image
   const [uploadedImage, setUploadedImage] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // is answer writed -> toast
   const CheckWrited = async () => {
@@ -45,6 +46,7 @@ const ImageScreen = ({ navigation: { navigate } }) => {
       onChangeContents("");
       setImageFile("");
       setUploadedImage("");
+      setIsSubmitted(false);
     }, [])
   );
 
@@ -85,6 +87,10 @@ const ImageScreen = ({ navigation: { navigate } }) => {
 
   // send Data to Server
   const requestWrite = async () => {
+    if (isSubmitted) {
+      return; // for prevent double click
+    }
+    setIsSubmitted(true); // lock submit click
     const formData = new FormData();
     const jsonData = JSON.stringify({
       title: title,
@@ -115,6 +121,7 @@ const ImageScreen = ({ navigation: { navigate } }) => {
       const jsonResponse = await response.json();
       console.log("Post response:", jsonResponse);
     } catch (error) {
+      setIsSubmitted(false); // release submit click
       console.error("Post content error:", error);
     }
   };

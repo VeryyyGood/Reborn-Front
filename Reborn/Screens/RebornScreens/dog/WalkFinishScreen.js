@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components/native";
 import { Text, ImageBackground } from "react-native";
 import { colors } from "../../../theme";
@@ -13,6 +13,7 @@ import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 const WalkFinishScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
   const myContext = useContext(AppContext);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Server Link for sending data
   const linkArray = [
@@ -31,6 +32,21 @@ const WalkFinishScreen = ({ navigation: { navigate } }) => {
     return linkArray[2];
   };
 
+  const handleSubmit = async () => {
+    if (!isSubmitted) {
+      setIsSubmitted(true); // lock double click
+      try {
+        await requestPostProgress(
+          handleLink(myContext.contentsDay),
+          accessToken
+        );
+        navigate("Snack");
+      } catch (error) {
+        setIsSubmitted(false); // release double click
+      }
+    }
+  };
+
   return (
     <Container>
       <ImageBackground
@@ -42,13 +58,7 @@ const WalkFinishScreen = ({ navigation: { navigate } }) => {
           <Text style={{ color: colors.palette.Red }}>산책하기</Text>
         </Text>
         <DogImage source={dogimageURL} resizeMode="center" />
-        <ButtonBrownBottom
-          text="간식주러 가기"
-          onPress={() => {
-            requestPostProgress(handleLink(myContext.contentsDay), accessToken),
-              navigate("Snack");
-          }}
-        />
+        <ButtonBrownBottom text="간식주러 가기" onPress={handleSubmit} />
       </ImageBackground>
     </Container>
   );

@@ -39,6 +39,7 @@ const FeedScreen = ({ navigation: { navigate } }) => {
 
   const [isFeed, setisFeed] = useState(false);
   const [isEnd, setIsEnd] = useState(whereToGo);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [petImage] = useState(
     myContext.petType === "CAT" ? catimageURL : dogimageURL
@@ -80,6 +81,7 @@ const FeedScreen = ({ navigation: { navigate } }) => {
   useFocusEffect(
     React.useCallback(() => {
       setisFeed(false);
+      setIsSubmitted(false);
     }, [])
   );
 
@@ -97,6 +99,21 @@ const FeedScreen = ({ navigation: { navigate } }) => {
       return "놀아주러 가기";
     } else {
       return "산책하러 가기";
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!isSubmitted) {
+      setIsSubmitted(true); // lock double click
+      try {
+        await requestPostProgress(
+          handleLink(myContext.contentsDay),
+          accessToken
+        );
+        navigate(isEnd);
+      } catch (error) {
+        setIsSubmitted(false); // release double click
+      }
     }
   };
 
@@ -132,16 +149,7 @@ const FeedScreen = ({ navigation: { navigate } }) => {
           />
         )}
         {isFeed ? (
-          <ButtonBrownBottom
-            text={handleText()}
-            onPress={() => {
-              requestPostProgress(
-                handleLink(myContext.contentsDay),
-                accessToken
-              ),
-                navigate(isEnd);
-            }}
-          />
+          <ButtonBrownBottom text={handleText()} onPress={handleSubmit} />
         ) : (
           ""
         )}

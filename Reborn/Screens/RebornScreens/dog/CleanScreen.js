@@ -9,6 +9,7 @@ import {
 import styled from "styled-components/native";
 import { colors } from "../../../theme";
 import { textStyles, ButtonBrownBottom } from "../../../components";
+import { requestPostProgress } from "../../../utiles"; // send data to Server
 import { TutorialModal } from "../../../components";
 import AppContext from "./AppContext";
 import { useFocusEffect } from "@react-navigation/native";
@@ -39,6 +40,7 @@ const CleanScreen = ({ navigation: { navigate } }) => {
   const [isCleaned, setIsCleaned] = useState(0);
   const [isNextDayButtonVisible, setIsNextDayButtonVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(true);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [boxImage] = useState(
     myContext.petType === "CAT" ? cat_boxURL : dog_boxURL
@@ -83,7 +85,7 @@ const CleanScreen = ({ navigation: { navigate } }) => {
     stuff: false,
   });
 
-  // bath, pad, bowl, snack, cushion, toy
+  // bath, stuff, bowl, snack, cushion, toy
   const goalPositionArray = [
     [-25, 165],
     [-235, 165],
@@ -92,6 +94,16 @@ const CleanScreen = ({ navigation: { navigate } }) => {
     [-215, 15],
     [-135, 285],
   ];
+
+  // refresh
+  useFocusEffect(
+    React.useCallback(() => {
+      setIsCleaned(0);
+      setModalVisible(true);
+      setIsNextDayButtonVisible(false);
+      setIsSubmitted(false);
+    }, [])
+  );
 
   useEffect(() => {
     // console.log(isCleaned);
@@ -107,32 +119,18 @@ const CleanScreen = ({ navigation: { navigate } }) => {
     }
   }, [myContext.contentsDay, isCleaned]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      setIsCleaned(0);
-      setModalVisible(true);
-      setIsNextDayButtonVisible(false);
-    }, [])
-  );
-
-  // send data to Server
-  const requestPostClean = async () => {
-    try {
-      const response = await axios.post(
-        "http://reborn.persi0815.site:8080/reborn/remember/clean",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log(response.data);
-      return response; //함수에서 서버 응답 반환
-    } catch (error) {
-      //console.error("ERROR", error);
-      console.log("Error Response Body:", error.response.data);
-      throw error; //에러를 다시 던져서 외부에서 처리할 수 있게 함
+  const handleSubmit = async () => {
+    if (!isSubmitted) {
+      setIsSubmitted(true); // lock double click
+      try {
+        await requestPostProgress(
+          "http://reborn.persi0815.site/reborn/remember/clean",
+          accessToken
+        );
+        navigate("ReFinish");
+      } catch (error) {
+        setIsSubmitted(false); // release double click
+      }
     }
   };
 
@@ -264,9 +262,7 @@ const CleanScreen = ({ navigation: { navigate } }) => {
           <ButtonBox>
             <ButtonBrownBottom
               text={"거실로 돌아가기"}
-              onPress={() => {
-                requestPostClean(), navigate("ReFinish");
-              }}
+              onPress={handleSubmit}
             />
           </ButtonBox>
         ) : (
@@ -351,8 +347,8 @@ const DraggableImage = ({
         if (
           dx > goalPositionArray[0] &&
           dy > goalPositionArray[1] &&
-          dx < goalPositionArray[0] + 60 &&
-          dy < goalPositionArray[1] + 60
+          dx < goalPositionArray[0] + 100 &&
+          dy < goalPositionArray[1] + 100
         ) {
           // console.log("Cleaned Up!!!");
           setIsCleaned((isCleaned) => isCleaned + 1);

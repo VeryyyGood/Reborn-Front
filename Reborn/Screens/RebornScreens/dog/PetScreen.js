@@ -34,6 +34,7 @@ const PetScreen = ({ navigation: { navigate } }) => {
     myContext.petType === "CAT" ? cat_petOneimageURL : dog_petOneimageURL
   );
   const [animationToggle, setAnimationToggle] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Server Link for sending data
   const linkArray = [
@@ -50,6 +51,7 @@ const PetScreen = ({ navigation: { navigate } }) => {
       setIsPet(false);
       setIsFinish(false);
       setAnimationToggle(false);
+      setIsSubmitted(false);
     }, [])
   );
 
@@ -95,6 +97,21 @@ const PetScreen = ({ navigation: { navigate } }) => {
     return linkArray[3];
   };
 
+  const handleSubmit = async () => {
+    if (!isSubmitted) {
+      setIsSubmitted(true); // lock double click
+      try {
+        await requestPostProgress(
+          handleLink(myContext.contentsDay),
+          accessToken
+        );
+        navigate("Feed");
+      } catch (error) {
+        setIsSubmitted(false); // release double click
+      }
+    }
+  };
+
   return (
     <Container>
       <ImageBackground
@@ -120,16 +137,7 @@ const PetScreen = ({ navigation: { navigate } }) => {
           setIsPet={setIsPet}
         />
         {isFinish ? (
-          <ButtonBrownBottom
-            text="밥주러 가기"
-            onPress={() => {
-              requestPostProgress(
-                handleLink(myContext.contentsDay),
-                accessToken
-              ),
-                navigate("Feed");
-            }}
-          />
+          <ButtonBrownBottom text="밥주러 가기" onPress={handleSubmit} />
         ) : (
           ""
         )}
