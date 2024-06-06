@@ -23,6 +23,7 @@ const PlayScreen = ({ navigation: { navigate } }) => {
   const [isPlay, setIsPlay] = useState(false);
   const [isFinish, setIsFinish] = useState(false);
   const [PlayImage, setPlayImage] = useState(cat_PlayOneimageURL);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const translateY = useRef(new Animated.Value(0)).current; // Initialize animated value for translateY
 
@@ -39,6 +40,7 @@ const PlayScreen = ({ navigation: { navigate } }) => {
       setCountPlay(0);
       setIsPlay(false);
       setIsFinish(false);
+      setIsSubmitted(false);
     }, [])
   );
 
@@ -93,6 +95,21 @@ const PlayScreen = ({ navigation: { navigate } }) => {
     return linkArray[3];
   };
 
+  const handleSubmit = async () => {
+    if (!isSubmitted) {
+      setIsSubmitted(true); // lock double click
+      try {
+        await requestPostProgress(
+          handleLink(myContext.contentsDay),
+          accessToken
+        );
+        navigate("Snack");
+      } catch (error) {
+        setIsSubmitted(false); // release double click
+      }
+    }
+  };
+
   return (
     <Container>
       <ImageBackground
@@ -121,16 +138,7 @@ const PlayScreen = ({ navigation: { navigate } }) => {
           setIsPlay={setIsPlay}
         />
         {isFinish ? (
-          <ButtonBrownBottom
-            text="간식주러 가기"
-            onPress={() => {
-              requestPostProgress(
-                handleLink(myContext.contentsDay),
-                accessToken
-              ),
-                navigate("Snack");
-            }}
-          />
+          <ButtonBrownBottom text="간식주러 가기" onPress={handleSubmit} />
         ) : (
           ""
         )}

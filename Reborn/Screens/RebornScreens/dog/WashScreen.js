@@ -31,6 +31,7 @@ const WashScreen = ({ navigation: { navigate } }) => {
 
   const [countWash, setCountWash] = useState(0);
   const [currentDogImage, setCurrentDogImage] = useState(dogimageURL);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [petImage] = useState(
     myContext.petType === "CAT" ? catimageURL : dogimageURL
@@ -62,13 +63,28 @@ const WashScreen = ({ navigation: { navigate } }) => {
 
     if (isWashing) {
       setCountWash(countWash + 1);
-      if (countWash >= 2) {
+      if (countWash >= 4) {
         setIsWashed(true);
       }
     }
 
     return () => clearInterval(intervalId);
   }, [isWashing]);
+
+  const handleSubmit = async () => {
+    if (!isSubmitted) {
+      setIsSubmitted(true); // lock double click
+      try {
+        await requestPostProgress(
+          "http://reborn.persi0815.site:8080/reborn/reborn/wash",
+          accessToken
+        ),
+          navigate("Clothes");
+      } catch (error) {
+        setIsSubmitted(false); // release double click
+      }
+    }
+  };
 
   return (
     <Container>
@@ -107,16 +123,7 @@ const WashScreen = ({ navigation: { navigate } }) => {
         </DraggableContainer>
 
         {isWashed && (
-          <ButtonBrownBottom
-            text={"다음으로"}
-            onPress={() => {
-              requestPostProgress(
-                "http://reborn.persi0815.site:8080/reborn/reborn/wash",
-                accessToken
-              ),
-                navigate("Clothes");
-            }}
-          />
+          <ButtonBrownBottom text={"다음으로"} onPress={handleSubmit} />
         )}
       </ImageBackground>
     </Container>

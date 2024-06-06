@@ -6,6 +6,7 @@ import { textStyles, ButtonBrownBottom } from "../../../components";
 import AppContext from "./AppContext";
 import axios from "axios"; // axios import 추가
 import { useAccessToken } from "../../../context/AccessTokenContext";
+import { useFocusEffect } from "@react-navigation/native";
 
 import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
 import catimageURL from "../../../Assets/Images/cat/cat_idle.png";
@@ -17,6 +18,7 @@ const ReFinishScreen = ({ navigation: { navigate } }) => {
   const [petImage] = useState(
     myContext.petType === "CAT" ? catimageURL : dogimageURL
   );
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const linkArray = [
     "http://reborn.persi0815.site/reborn/remind/create",
@@ -24,6 +26,13 @@ const ReFinishScreen = ({ navigation: { navigate } }) => {
     "http://reborn.persi0815.site/reborn/remember/create",
     "http://reborn.persi0815.site/reborn/reborn/create",
   ];
+
+  // refresh
+  useFocusEffect(
+    React.useCallback(() => {
+      setIsSubmitted(false);
+    }, [])
+  );
 
   // RE:MIND & RE:VEAL & RE:MEMBER& RE:BORN what day? => Post Link
   const handleLink = (day) => {
@@ -38,6 +47,10 @@ const ReFinishScreen = ({ navigation: { navigate } }) => {
   };
 
   const requestPostProgress = async (link, accessToken) => {
+    if (isSubmitted) {
+      return; // for prevent double click
+    }
+    setIsSubmitted(true); // lock submit click
     try {
       const response = await axios.post(
         link,
@@ -52,6 +65,7 @@ const ReFinishScreen = ({ navigation: { navigate } }) => {
       myContext.setDay(response.data.result);
       return response; // 함수에서 서버 응답 반환
     } catch (error) {
+      setIsSubmitted(false); // release submit click
       console.log("Error Response Body:", error.response.data);
       throw error;
     }

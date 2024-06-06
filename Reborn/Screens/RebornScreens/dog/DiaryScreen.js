@@ -29,6 +29,7 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
   const [answer, onChangeAnswer] = React.useState("");
   const [qaVisible, setqaVisible] = useState(true); // Q&A Modal
   const [showToast, setShowToast] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [petImage] = useState(
     myContext.petType === "CAT" ? catimageURL : dogimageURL
@@ -59,11 +60,16 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
     React.useCallback(() => {
       onChangeAnswer("");
       setqaVisible(true);
+      setIsSubmitted(false);
     }, [])
   );
 
   // send data to Server
   const requestWrite = async () => {
+    if (isSubmitted) {
+      return;
+    }
+    setIsSubmitted(true);
     try {
       const response = await fetch(
         "http://reborn.persi0815.site:8080/reborn/remind/write",
@@ -81,6 +87,7 @@ const DiaryScreen = ({ navigation: { navigate } }) => {
       );
       const data = await response.json();
       if (!data) {
+        isSubmitted(false);
         throw new Error("Something went wrong");
       }
       console.log(data);

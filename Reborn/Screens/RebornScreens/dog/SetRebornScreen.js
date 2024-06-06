@@ -39,6 +39,8 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
   const [isBlack, setIsBlack] = useState(true); // true -> black, false -> yellow
   const [isEnd, setIsEnd] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false); // reborn submit
+  const [isOutroSubmitted, setIsOutroSubmitted] = useState(false); // outro submit
 
   const text = `
   안녕? 나의 생애에서 가장 소중하고 특별한존재인 너에게 이 편지를 남기려고 해. 
@@ -49,6 +51,10 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
 
   // send data to Server
   const requestWrite = async () => {
+    if (isSubmitted) {
+      return; // for prevent double click
+    }
+    setIsSubmitted(true); // lock submit click
     try {
       const response = await fetch(
         "http://reborn.persi0815.site:8080/reborn/reborn/set",
@@ -70,8 +76,25 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
       console.log(data);
       alert("저장되었습니다!");
     } catch (error) {
+      setIsSubmitted(false); // release submit click
       console.error(error);
       alert("저장 실패:" + error);
+    }
+  };
+
+  // call Outro API
+  const handleSubmit = async () => {
+    if (!isOutroSubmitted) {
+      setIsOutroSubmitted(true); // lock double click
+      try {
+        await requestPostProgress(
+          "http://reborn.persi0815.site/reborn/reborn/outro",
+          accessToken
+        );
+        navigate("Outtro");
+      } catch (error) {
+        setIsOutroSubmitted(false); // release double click
+      }
     }
   };
 
@@ -192,11 +215,7 @@ const SetRebornScreen = ({ navigation: { navigate } }) => {
           text={isEnd ? "작별하기" : "편지 열람하기"}
           onPress={() => {
             if (isEnd) {
-              requestPostProgress(
-                "http://reborn.persi0815.site/reborn/reborn/outro",
-                accessToken
-              );
-              navigate("Outtro");
+              handleSubmit();
             } else {
               setletterVisible(true);
             }

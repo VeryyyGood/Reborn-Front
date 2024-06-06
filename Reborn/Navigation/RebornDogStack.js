@@ -82,6 +82,11 @@ const RebornDogStack = ({ navigation: { navigate } }) => {
         options={{ title: `Day ${myContext.contentsDay}` }}
       />
       <NativeRebornDogStack.Screen
+        name="Play"
+        component={PlayScreen}
+        options={{ title: `Day ${myContext.contentsDay}` }}
+      />
+      <NativeRebornDogStack.Screen
         name="Diary"
         component={DiaryScreen}
         options={{ title: `Day ${myContext.contentsDay}` }}
@@ -97,11 +102,6 @@ const RebornDogStack = ({ navigation: { navigate } }) => {
         options={{ title: `감정 일기 분석 결과` }}
       />
       <NativeRebornDogStack.Screen
-        name="ReFinish"
-        component={ReFinishScreen}
-        options={{ title: `Day ${myContext.contentsDay}` }}
-      />
-      <NativeRebornDogStack.Screen
         name="ImageDiary"
         component={ImageScreen}
         options={{ title: `Day ${myContext.contentsDay}` }}
@@ -109,6 +109,11 @@ const RebornDogStack = ({ navigation: { navigate } }) => {
       <NativeRebornDogStack.Screen
         name="Clean"
         component={CleanScreen}
+        options={{ title: `Day ${myContext.contentsDay}` }}
+      />
+      <NativeRebornDogStack.Screen
+        name="ReFinish"
+        component={ReFinishScreen}
         options={{ title: `Day ${myContext.contentsDay}` }}
       />
       <NativeRebornDogStack.Screen
@@ -129,11 +134,6 @@ const RebornDogStack = ({ navigation: { navigate } }) => {
       <NativeRebornDogStack.Screen
         name="SetReborn"
         component={SetRebornScreen}
-        options={{ title: `Day ${myContext.contentsDay}` }}
-      />
-      <NativeRebornDogStack.Screen
-        name="Play"
-        component={PlayScreen}
         options={{ title: `Day ${myContext.contentsDay}` }}
       />
     </NativeRebornDogStack.Navigator>

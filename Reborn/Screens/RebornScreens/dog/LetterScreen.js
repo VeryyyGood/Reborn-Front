@@ -31,6 +31,7 @@ const LetterScreen = ({ navigation: { navigate } }) => {
   const [answer, onChangeAnswer] = React.useState("");
   const [qaVisible, setqaVisible] = useState(true); // Q&A Modal
   const [showToast, setShowToast] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // is answer writed -> toast
   const CheckWrited = async () => {
@@ -45,6 +46,10 @@ const LetterScreen = ({ navigation: { navigate } }) => {
 
   // send data to Server
   const requestWrite = async () => {
+    if (isSubmitted) {
+      return; // for prevent double click
+    }
+    setIsSubmitted(true); // lock submit click
     try {
       const response = await fetch(
         "http://reborn.persi0815.site:8080/reborn/reborn/write",
@@ -66,6 +71,7 @@ const LetterScreen = ({ navigation: { navigate } }) => {
       console.log(data);
       alert("저장되었습니다!");
     } catch (error) {
+      setIsSubmitted(false); // release submit click
       console.error(error);
       alert("저장 실패:" + error);
     }

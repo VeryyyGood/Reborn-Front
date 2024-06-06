@@ -34,6 +34,22 @@ const ClothesScreen = ({ navigation: { navigate } }) => {
   const [clothesPetImage] = useState(
     myContext.petType === "CAT" ? catClothesimageURL : dogClothesimageURL
   );
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!isSubmitted) {
+      setIsSubmitted(true); // lock double click
+      try {
+        await requestPostProgress(
+          "http://reborn.persi0815.site:8080/reborn/reborn/clothe",
+          accessToken
+        ),
+          navigate("Letter");
+      } catch (error) {
+        setIsSubmitted(false); // release double click
+      }
+    }
+  };
 
   return (
     <Container>
@@ -61,16 +77,7 @@ const ClothesScreen = ({ navigation: { navigate } }) => {
           setisClothes={setisClothes}
         />
         {isClothes ? (
-          <ButtonBrownBottom
-            text="다음으로"
-            onPress={() => {
-              requestPostProgress(
-                "http://reborn.persi0815.site:8080/reborn/reborn/clothe",
-                accessToken
-              ),
-                navigate("Letter");
-            }}
-          />
+          <ButtonBrownBottom text="다음으로" onPress={handleSubmit} />
         ) : (
           ""
         )}

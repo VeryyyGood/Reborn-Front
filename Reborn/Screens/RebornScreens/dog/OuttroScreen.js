@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, ImageBackground } from "react-native";
 import { colors } from "../../../theme";
 import { ButtonBrownBottom, textStyles } from "../../../components";
@@ -8,6 +8,7 @@ import styled from "styled-components/native";
 
 const OuttroScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const OuttroText = `
 천국의 저쪽 편에는 
 '무지개 다리' 라는 곳이 있답니다.
@@ -62,6 +63,21 @@ const OuttroScreen = ({ navigation: { navigate } }) => {
 ― 작자 미상의 시, 《무지개 다리를 건너다》
     `;
 
+  const handleSubmit = async () => {
+    if (!isSubmitted) {
+      setIsSubmitted(true); // lock double click
+      try {
+        await requestPostProgress(
+          "http://reborn.persi0815.site/reborn/reborn/finish",
+          accessToken
+        ),
+          navigate("Main");
+      } catch (error) {
+        setIsSubmitted(false); // release double click
+      }
+    }
+  };
+
   return (
     <Container>
       <ImageBackground
@@ -86,16 +102,7 @@ const OuttroScreen = ({ navigation: { navigate } }) => {
           </Text>
         </ScrollContainer>
         <ButtonContainer>
-          <ButtonBrownBottom
-            text="안녕"
-            onPress={() => {
-              requestPostProgress(
-                "http://reborn.persi0815.site/reborn/reborn/finish",
-                accessToken
-              ),
-                navigate("Main");
-            }}
-          />
+          <ButtonBrownBottom text="안녕" onPress={handleSubmit} />
         </ButtonContainer>
       </ImageBackground>
     </Container>

@@ -29,6 +29,23 @@ const IntroScreen = ({ navigation: { navigate } }) => {
   const [petImage] = useState(
     myContext.petType === "CAT" ? catimageURL : dogimageURL
   );
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!isSubmitted) {
+      setIsSubmitted(true); // lock double click
+      try {
+        await requestPostProgress(
+          "http://reborn.persi0815.site/reborn/remind/create",
+          accessToken
+        ),
+          myContext.plusDay(),
+          navigate("ReIntro");
+      } catch (error) {
+        setIsSubmitted(false); // release double click
+      }
+    }
+  };
 
   return (
     <Container>
@@ -54,17 +71,7 @@ const IntroScreen = ({ navigation: { navigate } }) => {
         ) : (
           ""
         )}
-        <ButtonBrownBottom
-          text="다음날로 넘어가기"
-          onPress={() => {
-            requestPostProgress(
-              "http://reborn.persi0815.site/reborn/remind/create",
-              accessToken
-            ),
-              myContext.plusDay(),
-              navigate("ReIntro");
-          }}
-        />
+        <ButtonBrownBottom text="다음날로 넘어가기" onPress={handleSubmit} />
       </ImageBackground>
     </Container>
   );

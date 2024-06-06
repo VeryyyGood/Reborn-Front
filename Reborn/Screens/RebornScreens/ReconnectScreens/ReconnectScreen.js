@@ -10,11 +10,8 @@ import {
   TouchableOpacity,
   FlatList,
   Pressable,
-  Dimensions,
-  KeyboardAvoidingView,
 } from "react-native";
 import { Toast } from "../../../components";
-import { buttonStyles } from "../../../components";
 import AppContext from "../../RebornScreens/dog/AppContext";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { colors } from "../../../theme";
@@ -22,9 +19,6 @@ import {
   useAccessToken,
   useGlobalPetName,
 } from "../../../context/AccessTokenContext";
-
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
 
 const RadioButton = ({ isSelected, onPress, label }) => {
   return (
@@ -51,6 +45,7 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
   const [color, setColor] = useState("");
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const navigation = useNavigation();
   const myContext = useContext(AppContext);
@@ -86,6 +81,9 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
   };
 
   const handleSubmit = async () => {
+    if (isSubmitted) {
+      return; // for prevent double click
+    }
     if (!name || !date || !breed || !animalType || !color) {
       setShowToast(true);
       setTimeout(() => {
@@ -93,6 +91,7 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
       }, 3000); // 3초 후에 showToast를 false로 변경
     } else {
       setShowToast(false);
+      setIsSubmitted(true); // lock submit click
       try {
         setGlobalPetName(name);
         const petType = animalType === "강아지" ? "DOG" : "CAT";
@@ -119,8 +118,10 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
         );
         const data = await response.json();
         if (!data) {
+          setIsSubmitted(false); // release submit click
           throw new Error("Something went wrong");
         }
+
         console.log(data);
 
         navigate("RebornDogStack", { screen: "Intro" }); // go to Day1, start RE:BORN
@@ -135,7 +136,7 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.font}>반려동물 이름</Text>
+        <Text style={styles.font}>이름</Text>
         <TextInput style={styles.input} onChangeText={setName} value={name} />
       </View>
       <View>
@@ -163,12 +164,10 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
           onPress={() => setAnimalType("고양이")}
         />
       </View>
-
       <View>
         <Text style={styles.font}>견종/묘종</Text>
         <TextInput style={styles.input} onChangeText={setBreed} value={breed} />
       </View>
-
       <Text style={styles.font}>색상</Text>
       <View style={styles.colorContainer}>
         <FlatList
@@ -199,7 +198,7 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
       </View>
 
       <TouchableOpacity
-        style={[buttonStyles.buttonBrownBottom, { top: windowHeight * 0.11 }]}
+        style={[styles.buttonBrownBottom, { top: "14.5%" }]}
         onPress={handleSubmit}
       >
         <Text style={styles.buttonFont}>저장하기</Text>
@@ -218,8 +217,7 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: windowWidth * 0.05,
-    paddingVertical: windowHeight * 0.03,
+    padding: 20,
     backgroundColor: colors.palette.White,
   },
 
@@ -228,7 +226,7 @@ const styles = StyleSheet.create({
     borderColor: colors.palette.Gray300,
     borderRadius: 16,
     padding: 15,
-    marginBottom: windowHeight * 0.03,
+    marginBottom: "3%",
     height: 60,
   },
 
@@ -241,7 +239,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 25,
-    marginRight: windowWidth * 0.1,
+    marginRight: 42,
     borderColor: colors.palette.Black,
     borderWidth: 1,
   },
@@ -254,7 +252,7 @@ const styles = StyleSheet.create({
   font: {
     fontFamily: "Poppins-Regular",
     fontSize: 14,
-    marginBottom: windowHeight * 0.011,
+    marginBottom: "3%",
     color: colors.palette.BrownDark,
   },
   buttonFont: {
@@ -265,7 +263,7 @@ const styles = StyleSheet.create({
   radioButtonContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: windowHeight * 0.02,
+    marginBottom: 10,
   },
   radioButton: {
     height: 20,
@@ -275,7 +273,7 @@ const styles = StyleSheet.create({
     borderColor: colors.palette.BrownDark,
     alignItems: "center",
     justifyContent: "center",
-    marginRight: windowWidth * 0.02,
+    marginRight: 10,
   },
   radioButtonInner: {
     height: 10,
@@ -286,7 +284,16 @@ const styles = StyleSheet.create({
   checkmark: {
     position: "absolute",
     alignSelf: "center",
-    top: windowHeight * 0.008,
+    top: "10%",
+  },
+  buttonBrownBottom: {
+    backgroundColor: colors.palette.Brown,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: -50,
+    borderRadius: 30,
+    height: 50,
+    marginHorizontal: 100,
   },
 });
 
