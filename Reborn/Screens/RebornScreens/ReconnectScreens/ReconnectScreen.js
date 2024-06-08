@@ -136,7 +136,7 @@ const ReconnectScreen = ({ navigation: { navigate } }) => {
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.font}>이름</Text>
+        <Text style={styles.font}>반려동물 이름</Text>
         <TextInput style={styles.input} onChangeText={setName} value={name} />
       </View>
       <View>
