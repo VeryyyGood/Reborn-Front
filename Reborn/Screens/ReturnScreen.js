@@ -38,7 +38,7 @@ const ReturnScreen = () => {
     setMessages((prevMessages) => [...prevMessages, loadingMessage]);
 
     try {
-      const response = await axios.post("http://43.200.199.77:5000", {
+      const response = await axios.post("http://13.124.4.242:5000", {
         message: inputText,
       });
 
