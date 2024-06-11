@@ -7,34 +7,42 @@ import {
   ButtonBrownBottom,
 } from "../../../components";
 import styled from "styled-components/native";
-import dogimageURL from "../../../Assets/Images/dog/dog_idle.png";
-import bgimageURL from "./../../../Assets/Images/bg/bg_park.png";
+
+import dogIdleImageURL from "../../../Assets/Images/dog/dog_idle.png";
+import dogWalkOneImageURL from "../../../Assets/Images/dog/dog_walk1.png";
+import dogWalkTwoImageURL from "../../../Assets/Images/dog/dog_walk2.png";
+
+import bgImageURL from "../../../Assets/Images/bg/bg_park.png";
+
 import { Pedometer } from "expo-sensors";
-import axios from "axios";
 
 const WalkScreen = ({ navigation: { navigate } }) => {
-  const ModalText = `휴대전화를 들고 걸어보세요.\n반려동물과 같이 산책했던 곳을 걸어보아도 좋고,\n여건이 안 된다면 집 안에서 움직여도 좋습니다.\n\n만보기의 숫자가 3000이 되면 다음 단계로 넘어갑니다.`;
-  const moveDistance = 112.2; // how many to move
+  const ModalText = `휴대전화를 들고 걸어보세요.\n반려동물과 같이 산책했던 곳을 걸어보아도 좋고,\n여건이 안 된다면 집 안에서 움직여도 좋습니다.\n\n만보기의 숫자가 100이 되면 다음 단계로 넘어갑니다.`;
+  const maxMoveDistance = 112.2; // max distance to move per step count update
 
+  const [currentImage, setCurrentImage] = useState(dogIdleImageURL);
   const [modalVisible, setModalVisible] = useState(true);
-  const [isPedometerAvailable, setIsPedometerAvailable] = useState("checking");
   const [currentStepCount, setCurrentStepCount] = useState(0);
+  const [countTouch, setCountTouch] = useState(0); // for emulator
+  const [isWalkOne, setIsWalkOne] = useState(true); // flag to alternate images
 
-  const [countTouch, setCountTouch] = useState(0);
+  const [translateX] = useState(new Animated.Value(-300)); // initialize position, for emulator set -300 / for phone set -267
 
-  const translateX = useRef(new Animated.Value(-300)).current; // initialize position, for amulator set -300 / for phone set -267
+  const AnimatedBGImage = Animated.createAnimatedComponent(ImageBackground);
+  const inactivityTimer = useRef(null);
 
-  const AnimetedBGImage = Animated.createAnimatedComponent(ImageBackground);
+  const moveBackground = (stepsDifference) => {
+    const moveDistance = Math.min(
+      stepsDifference * maxMoveDistance,
+      maxMoveDistance
+    );
 
-  const moveBackground = () => {
     const nextPosition = translateX._value - moveDistance;
 
-    // go to next page on amulator without pedometer
     if (countTouch === 1) {
       navigate("WalkFinish");
     } else if (Math.abs(nextPosition) >= 1417) {
-      // end of image
-      translateX.setValue(-300); // initialize position
+      translateX.setValue(-300);
       Animated.timing(translateX, {
         toValue: -379.2,
         duration: 800,
@@ -42,7 +50,9 @@ const WalkScreen = ({ navigation: { navigate } }) => {
         easing: Easing.ease,
       }).start();
     } else {
-      // move
+      // Alternate the dog walking images
+      setCurrentImage(isWalkOne ? dogWalkOneImageURL : dogWalkTwoImageURL);
+      setIsWalkOne(!isWalkOne);
       Animated.timing(translateX, {
         toValue: nextPosition,
         duration: 800,
@@ -56,18 +66,18 @@ const WalkScreen = ({ navigation: { navigate } }) => {
     let subscription;
     const subscribe = async () => {
       const isAvailable = await Pedometer.isAvailableAsync();
-      setIsPedometerAvailable(String(isAvailable));
 
       if (isAvailable) {
-        // count steps
         subscription = Pedometer.watchStepCount((result) => {
-          setCurrentStepCount(result.steps);
-          console.log(result.steps);
-          if (result.steps % 10 === 0) {
-            moveBackground();
-          }
-          if (result.steps > 45) {
-            navigate("WalkFinish");
+          const stepsDifference = result.steps - currentStepCount;
+          if (stepsDifference > 0) {
+            setCurrentStepCount(result.steps);
+            if (stepsDifference >= 1) {
+              moveBackground(stepsDifference);
+            }
+            if (result.steps >= 100) {
+              navigate("WalkFinish");
+            }
           }
         });
       }
@@ -75,17 +85,19 @@ const WalkScreen = ({ navigation: { navigate } }) => {
 
     subscribe();
 
-    // release step counter
     return () => {
       if (subscription) {
         subscription.remove();
       }
+      if (inactivityTimer.current) {
+        clearTimeout(inactivityTimer.current);
+      }
     };
-  }, []);
+  }, [currentStepCount]);
 
   return (
     <Container>
-      <AnimetedBGImage
+      <AnimatedBGImage
         style={{
           width: 2012,
           height: "100%",
@@ -93,7 +105,7 @@ const WalkScreen = ({ navigation: { navigate } }) => {
           transform: [{ translateX }],
         }}
         resizeMode="contain"
-        source={bgimageURL}
+        source={bgImageURL}
       />
       <Text style={textStyles.contentsTextBox}>
         충분한 대화 나누기 :{" "}
@@ -103,16 +115,16 @@ const WalkScreen = ({ navigation: { navigate } }) => {
         text={ModalText}
         modalVisible={modalVisible}
         onPress={() => {
-          {
-            setModalVisible(!modalVisible), moveBackground();
-          }
+          setModalVisible(!modalVisible);
+          moveBackground(1);
         }}
       ></TutorialModal>
-      <DogImage source={dogimageURL} resizeMode="center" />
+      <DogImage source={currentImage} resizeMode="center" />
       <ButtonBrownBottom
-        text={currentStepCount}
+        text={`걸음 수: ${currentStepCount} / 100`}
         onPress={() => {
-          moveBackground(), setCountTouch(countTouch + 1);
+          moveBackground(1);
+          setCountTouch(countTouch + 1);
         }}
       />
     </Container>

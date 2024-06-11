@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, ImageBackground } from "react-native";
 import { colors } from "../../../theme";
 import { ButtonBrownBottom, textStyles } from "../../../components";
 import { useAccessToken } from "../../../context/AccessTokenContext";
 import { requestPostProgress } from "../../../utiles"; // send data to Server
+import { useFocusEffect } from "@react-navigation/native";
 import styled from "styled-components/native";
+import Sound from "react-native-sound";
 
 const OuttroScreen = ({ navigation: { navigate } }) => {
   const { accessToken } = useAccessToken();
+  const [music, setMusic] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const OuttroText = `
 천국의 저쪽 편에는 
@@ -70,13 +73,47 @@ const OuttroScreen = ({ navigation: { navigate } }) => {
         await requestPostProgress(
           "http://reborn.persi0815.site/reborn/reborn/finish",
           accessToken
-        ),
-          navigate("Main");
+        );
+        navigate("Main");
       } catch (error) {
         setIsSubmitted(false); // release double click
       }
     }
   };
+
+  // Initialize sound
+  useEffect(() => {
+    const sound = new Sound("outro.mp3", Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log("Error loading sound: " + error);
+        return;
+      }
+      sound.setNumberOfLoops(-1); // Infinite loop
+      setMusic(sound);
+    });
+
+    return () => {
+      if (music) {
+        music.release();
+      }
+    };
+  }, []);
+
+  // Play and stop music on screen focus
+  useFocusEffect(
+    React.useCallback(() => {
+      if (music) {
+        music.play();
+      }
+      return () => {
+        if (music) {
+          music.stop(() => {
+            music.setCurrentTime(0); // Reset to the beginning
+          });
+        }
+      };
+    }, [music])
+  );
 
   return (
     <Container>
