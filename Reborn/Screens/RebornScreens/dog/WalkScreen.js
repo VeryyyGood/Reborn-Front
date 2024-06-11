@@ -17,7 +17,7 @@ import bgImageURL from "../../../Assets/Images/bg/bg_park.png";
 import { Pedometer } from "expo-sensors";
 
 const WalkScreen = ({ navigation: { navigate } }) => {
-  const ModalText = `휴대전화를 들고 걸어보세요.\n반려동물과 같이 산책했던 곳을 걸어보아도 좋고,\n여건이 안 된다면 집 안에서 움직여도 좋습니다.\n\n만보기의 숫자가 100이 되면 다음 단계로 넘어갑니다.`;
+  const ModalText = `휴대전화를 들고 걸어보세요.\n반려동물과 같이 산책했던 곳을 걸어보아도 좋고,\n여건이 안 된다면 집 안에서 움직여도 좋습니다.\n\n만보기의 숫자가 50이 되면 다음 단계로 넘어갑니다.`;
   const maxMoveDistance = 112.2; // max distance to move per step count update
 
   const [currentImage, setCurrentImage] = useState(dogIdleImageURL);
@@ -75,7 +75,7 @@ const WalkScreen = ({ navigation: { navigate } }) => {
             if (stepsDifference >= 1) {
               moveBackground(stepsDifference);
             }
-            if (result.steps >= 100) {
+            if (result.steps >= 15) {
               navigate("WalkFinish");
             }
           }
@@ -121,7 +121,7 @@ const WalkScreen = ({ navigation: { navigate } }) => {
       ></TutorialModal>
       <DogImage source={currentImage} resizeMode="center" />
       <ButtonBrownBottom
-        text={`걸음 수: ${currentStepCount} / 100`}
+        text={`걸음 수: ${currentStepCount} / 50`}
         onPress={() => {
           moveBackground(1);
           setCountTouch(countTouch + 1);
