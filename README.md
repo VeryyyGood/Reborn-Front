@@ -71,7 +71,7 @@
 ## 👩‍💻 프론트엔드 팀 구성
 - [김보경](https://github.com/kimbodle)
 - [문채영](https://github.com/mcy0325)
-- [이서정](https://github.com/girin-sj) ⭐ 
+- [이서정](https://github.com/girin-sj) 
 
 **#REBORN #반려동물 #펫로스증후군 #감정일기 #건강한작별** 
 
